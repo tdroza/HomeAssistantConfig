@@ -1,0 +1,87 @@
+person.tom:
+  entity_picture: /local/tom.jpg
+person.anna:
+  entity_picture: /local/anna.jpg
+light.advent:
+  icon: mdi:warehouse
+light.hall:
+  icon: mdi:lamp
+sensor.tradfri_blind:
+  device_class: DEVICE_CLASS_SHADE
+  icon: mdi:blinds
+  
+sensor.bed1_temperature:
+  friendly_name: Master bedroom
+sensor.bed1_humidity_2:  
+  friendly_name: Master bedroom
+sensor.white_temperature_2:
+  friendly_name: Kitchen
+sensor.white_humidity_2:  
+  friendly_name: Kitchen
+sensor.seb_temperature:
+  friendly_name: Seb
+sensor.seb_humidity:
+  friendly_name: Seb
+sensor.reu_temperature:
+  friendly_name: Reu
+sensor.reu_humidity:
+  friendly_name: Reu
+sensor.living_room_temp:
+  friendly_name: Living Room
+sensor.living_room_humidity:
+  friendly_name: Living Room
+sensor.bathroom_temperature:
+  friendly_name: Bathroom
+sensor.bathroom_humidity:
+  friendly_name: Bathroom
+sensor.ensuite_humidity:
+  friendly_name: Ensuite
+sensor.ensuite_temperature:
+  friendly_name: Enuite
+sensor.hallway_motion_sensor_temperature: 
+  friendly_name: Hall
+
+sensor.kitchen_voltage:
+  friendly_name: Battery
+
+sensor.bed1_voltage_2:
+  friendly_name: Battery
+binary_sensor.kitchen_motion_sensor:
+  friendly_name: Motion
+  icon: mdi:motion-sensor
+
+sensor.tradfri_open_close_remote:
+  icon: mdi:remote
+light.living_room:
+  icon: mdi:floor-lamp
+light.living_room_2:
+  icon: mdi:floor-lamp
+light.bloom:
+  icon: mdi:desk-lamp
+light.main_bedroom:
+  icon: mdi:ceiling-light
+light.seb_s_colour:
+  icon: mdi:ceiling-light
+light.sebastian_s_bedroom:
+  icon: mdi:ceiling-light
+light.reuben_s_room:
+  icon: mdi:ceiling-light
+sensor.mi_temp_1_temperature:
+  friendly_name: Temperature
+sensor.mi_temp_1_humidity:
+  friendly_name: Humidity
+sensor.mi_temp_1_battery:
+  friendly_name: Battery
+sensor.mi_temp_2_temperature:
+  friendly_name: Temperature
+sensor.mi_temp_2_humidity:
+  friendly_name: Humidity
+sensor.mi_temp_2_battery:
+  friendly_name: Battery
+light.lightstrip:
+  icon: mdi:led-strip-variant
+  friendly_name: Movie Light
+switch.christmas_star:
+  icon: mdi:star-outline
+switch.sonoff_10001f5fa0:
+  icon: mdi:pine-tree

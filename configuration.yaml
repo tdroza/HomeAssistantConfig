@@ -1,0 +1,111 @@
+
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+# Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+http:
+   base_url: https://tdroza.duckdns.org
+   ssl_certificate: /ssl/fullchain.pem
+   ssl_key: /ssl/privkey.pem
+   
+# Text to speech
+tts:
+  - platform: google_translate
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+
+recorder:
+  purge_keep_days: 2
+  
+speedtestdotnet:
+  scan_interval:  
+    hours: 1
+  monitored_conditions:
+    - ping
+    - download
+    - upload
+    
+telegram_bot:
+  - platform: polling
+    api_key: !secret telegram_ha_bot_key
+    allowed_chat_ids: !secret telegram_bot_chat_ids
+    
+notify:
+  - name: telegram
+    platform: telegram
+    chat_id: !secret telegram_bot_main_chat_id
+   
+sonoff:
+  username: tdroza@gmail.com
+  password: !secret ewelink_password
+  
+sensor:
+  - platform: synologydsm
+    host: 192.168.1.205
+    username: hassio
+    password: !secret synology
+    monitored_conditions:
+      - cpu_total_load
+      - memory_real_usage
+      - network_up
+      - volume_percentage_used
+
+  - platform: template
+    sensors:
+      hallway_motion_sensor_temperature_rounded:
+        friendly_name: 'Hall Temp'
+        value_template: '{{states.sensor.hallway_motion_sensor_temperature.state |round(0)}}'
+  - platform: template
+    sensors:
+      white_temperature_2_rounded:
+        friendly_name: 'Kitchen Temp'
+        value_template: '{{states.sensor.white_temperature_2.state |round(0)}}'
+  - platform: template
+    sensors:
+      bed1_temperature_rounded:
+        friendly_name: 'Bed1 Temp'
+        value_template: '{{states.sensor.bed1_temperature.state |round(0)}}'
+  - platform: template
+    sensors:
+      seb_temperature_rounded:
+        friendly_name: 'Seb Temp'
+        value_template: '{{states.sensor.seb_temperature.state |round(0)}}'
+  - platform: template
+    sensors:
+      reuben_temperature_rounded:
+        friendly_name: 'Reuben Temp'
+        value_template: '{{states.sensor.reu_temperature.state |round(0)}}'
+  - platform: template
+    sensors:
+      bathroom_temperature_rounded:
+        friendly_name: 'Bathroom Temp'
+        value_template: '{{states.sensor.bathroom_temperature.state |round(0)}}'
+  - platform: template
+    sensors:
+      ensuite_temperature_rounded:
+        friendly_name: 'Ensuite Temp'
+        value_template: '{{states.sensor.ensuite_temperature.state |round(0)}}'
+
+homeassistant:
+  customize: !include customize.yaml
+  name: Home
+  unit_system: metric
+
+zone: !include zones.yaml
+    
+ifttt:
+  key:
+    tom: !secret tom_ifttt
+    anna: !secret anna_ifttt
+
+device_tracker:
+  - platform: bt_smarthub
+    host: 192.168.1.254
+    interval_seconds: 30
+    new_device_defaults:
+      track_new_devices: false
+      hide_if_away: false
+  - platform: google_maps
+    username: tom.annalou@gmail.com
