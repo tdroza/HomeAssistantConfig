@@ -1,0 +1,32 @@
+esphome:
+  name: light_d1mini_star
+  platform: ESP8266
+  board: d1_mini
+  
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  domain: ".home"
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Light D1Mini Star"
+    password: !secret portal_password
+
+captive_portal:
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+
+ota:
+
+switch:
+  - platform: gpio
+    pin: 
+      number: D8
+      inverted: yes
+    restore_mode: RESTORE_DEFAULT_OFF
+    name: "Christmas Star"

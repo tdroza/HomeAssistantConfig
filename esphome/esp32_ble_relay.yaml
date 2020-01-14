@@ -1,0 +1,52 @@
+esphome:
+  name: esp32_ble_relay
+  platform: ESP32
+  board: esp-wrover-kit
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  domain: ".home"
+  
+logger:
+
+api: 
+
+ota: 
+
+# Enable Bluetooth scanning for this ESP32
+esp32_ble_tracker:
+
+sensor:
+  - platform: xiaomi_lywsdcgq
+    mac_address: 58:2D:34:35:F1:F7
+    temperature:
+      name: "Seb Temperature"
+    humidity:
+      name: "Seb Humidity"
+    battery_level:
+      name: "Seb Battery"
+  - platform: xiaomi_lywsdcgq
+    mac_address: 58:2D:34:35:ED:5E
+    temperature:
+      name: "Reu Temperature"
+    humidity:
+      name: "Reu Humidity"
+    battery_level:
+      name: "Reu Battery"
+  - platform: xiaomi_lywsdcgq
+    mac_address: 58:2D:34:36:B3:94
+    temperature:
+      name: "Bathroom temperature"
+    humidity:
+      name: "Bathroom Humidity"
+    battery_level:
+      name: "Bathroom Battery"
+  - platform: xiaomi_lywsdcgq
+    mac_address: 58:2D:34:36:B8:3D
+    temperature:
+      name: "Ensuite Temperature"
+    humidity:
+      name: "Ensuite Humidity"
+    battery_level:
+      name: "Ensuite Battery"
