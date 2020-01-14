@@ -109,3 +109,4 @@ device_tracker:
       hide_if_away: false
   - platform: google_maps
     username: tom.annalou@gmail.com
+    

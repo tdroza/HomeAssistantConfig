@@ -1,0 +1,12 @@
+all_the_things:
+  name: All lights and switches
+  entities:
+    - group.all_lights
+    - switch.sonoff_10001f5fa0
+    - switch.christmas_star
+
+all_persons:
+  name: All Persons
+  entities:
+    - person.tom
+    - person.anna

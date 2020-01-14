@@ -160,8 +160,10 @@
     to: home
   condition: []
   action:
-  - data:
-      message: Someone just arrived home
+  - data_template:
+      message: "{%- for person in states.group.all_persons.attributes.entity_id -%}\n\
+        \  {%- if is_state(person, 'home') -%} \n    {{ state_attr(person, 'friendly_name')\
+        \ }} just arrived home\n  {%- endif -%}\n{%- endfor -%} \n"
     service: notify.telegram
 - id: '1576773914306'
   alias: Telegram /off
@@ -187,18 +189,18 @@
     service: switch.turn_off
 - id: '1577980276286'
   alias: Presence - Left work (Tom)
-  description: Send a telegram notification when Tom has been away from work for 5
+  description: Send a telegram notification when Tom has been away from work for 2
     minutes
   trigger:
   - entity_id: person.tom
-    for: 00:05:00
-    from: bjss
+    for: 00:02:00
+    from: BJSS
     platform: state
     to: not_home
   condition: []
   action:
   - data:
-      message: Tom left work 5 minutes ago
+      message: Tom left work 2 minutes ago
     service: notify.telegram
 - id: '1578494385278'
   alias: Presence - Left work (Anna)
@@ -206,11 +208,25 @@
   trigger:
   - entity_id: person.anna
     for: 00:05:00
-    from: ad_work
+    from: AD_Work
     platform: state
     to: not_home
   condition: []
   action:
   - data:
       message: Anna left work 5 minutes ago
+    service: notify.telegram
+- id: '1578592845893'
+  alias: 'Presence: Left Leeds (Tom)'
+  description: ''
+  trigger:
+  - entity_id: person.tom
+    for: 00:02:00
+    from: Leeds_Station
+    platform: state
+    to: not_home
+  condition: []
+  action:
+  - data:
+      message: Tom left
     service: notify.telegram
