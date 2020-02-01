@@ -41,8 +41,14 @@ notify:
     chat_id: !secret telegram_bot_main_chat_id
    
 sonoff:
-  username: tdroza@gmail.com
+  username: !secret ewelink_username
   password: !secret ewelink_password
+  
+tuya: 
+  username: !secret smartlife_username
+  password: !secret smartlife_password
+  country_code: '44'
+  platform: smart_life
   
 sensor:
   - platform: synologydsm
