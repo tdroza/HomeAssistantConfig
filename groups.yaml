@@ -10,3 +10,25 @@ all_persons:
   entities:
     - person.tom
     - person.anna
+    
+all_my_lights:
+  name: All My Lights
+  entities: 
+    -  light.advent
+    - light.bloom
+    - light.extended_color_light_1
+    - light.hall
+    - light.lightstick
+    - light.lightstick_2
+    - light.lightstrip
+    - light.living_room
+    - light.living_room_2
+    - light.main_bedroom
+    - light.our_bedroom
+    - light.reuben_s_bedroom
+    - light.reuben_s_room
+    - light.seb_s_colour
+    - light.sebastian_s_bedroom
+    - light.sebastian_s_bedroom_2
+    - light.wled_light
+    - light.xmas    
