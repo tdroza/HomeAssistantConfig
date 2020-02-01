@@ -68,7 +68,7 @@
   alias: Presence - Nobody home
   description: ''
   trigger:
-  - entity_id: group.all_devices
+  - entity_id: group.all_persons
     from: home
     platform: state
     to: not_home
@@ -81,8 +81,8 @@
   alias: 'Lights on: Nobody home and lights on'
   description: ''
   trigger:
-  - entity_id: group.all_devices
-    for: 00:05:00
+  - entity_id: group.all_persons
+    for: 00:02:00
     from: home
     platform: state
     to: not_home
@@ -90,7 +90,7 @@
   - condition: or
     conditions:
     - condition: state
-      entity_id: group.all_lights
+      entity_id: group.all_my_lights
       state: 'on'
     - condition: state
       entity_id: switch.christmas_star
@@ -103,8 +103,8 @@
       message: Nobody is home but lights have been left on
     service: notify.telegram
   - alias: ''
-    data:
-      entity_id: automation.lights_on_repeat_notification
+    data: {}
+    entity_id: automation.lights_on_repeat_notification
     service: automation.turn_on
 - id: '1576771228052'
   alias: 'Lights on: repeat notification'
@@ -116,14 +116,17 @@
   condition: []
   action:
   - data:
-      message: The lights are on but nobody is home (repeat notification)
+      data:
+        inline_keyboard:
+        - Turn off:/off
+      message: Nobody is home but lights have been left on
     service: notify.telegram
   initial_state: false
 - id: '1576772552665'
   alias: 'Lights on: disable repeat notification'
   description: ''
   trigger:
-  - entity_id: group.all_lights
+  - entity_id: group.all_my_lights
     from: 'on'
     platform: state
     to: 'off'
@@ -138,7 +141,7 @@
       entity_id: automation.lights_on_repeat_notification
       state: 'on'
     - condition: state
-      entity_id: group.all_lights
+      entity_id: group.all_my_lights
       state: 'off'
     - condition: state
       entity_id: switch.sonoff_10001f5fa0
@@ -154,7 +157,7 @@
   alias: Presence - Somebody arrived home
   description: ''
   trigger:
-  - entity_id: group.all_devices
+  - entity_id: group.all_persons
     from: not_home
     platform: state
     to: home
@@ -176,7 +179,7 @@
   condition: []
   action:
   - data:
-      entity_id: group.all_lights
+      entity_id: all
     service: light.turn_off
   - data:
       message: All lights turned off
@@ -187,6 +190,8 @@
   - data:
       entity_id: switch.christmas_star
     service: switch.turn_off
+  - entity_id: automation.lights_on_disable_repeat_notification
+    service: automation.turn_off
 - id: '1577980276286'
   alias: Presence - Left work (Tom)
   description: Send a telegram notification when Tom has been away from work for 2
@@ -204,17 +209,17 @@
     service: notify.telegram
 - id: '1578494385278'
   alias: Presence - Left work (Anna)
-  description: Send a Telegram notification when Anna been away from work for 5 minutes
+  description: Send a Telegram notification when Anna been away from work for 2 minutes
   trigger:
   - entity_id: person.anna
-    for: 00:05:00
-    from: AD_Work
+    for: 00:02:00
+    from: AD Work
     platform: state
     to: not_home
   condition: []
   action:
   - data:
-      message: Anna left work 5 minutes ago
+      message: Anna left work 2 minutes ago.
     service: notify.telegram
 - id: '1578592845893'
   alias: 'Presence: Left Leeds (Tom)'
@@ -222,11 +227,11 @@
   trigger:
   - entity_id: person.tom
     for: 00:02:00
-    from: Leeds_Station
+    from: leeds_station
     platform: state
     to: not_home
   condition: []
   action:
   - data:
-      message: Tom left
+      message: Tom left Leeds
     service: notify.telegram
