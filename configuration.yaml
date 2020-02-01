@@ -2,6 +2,9 @@
 # Configure a default setup of Home Assistant (frontend, api, etc)
 default_config:
 
+frontend:
+  themes: !include_dir_merge_named ./themes
+  
 # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
 http:
    base_url: https://tdroza.duckdns.org
@@ -87,6 +90,40 @@ sensor:
       ensuite_temperature_rounded:
         friendly_name: 'Ensuite Temp'
         value_template: '{{states.sensor.ensuite_temperature.state |round(0)}}'
+  - platform: feedparser
+    scan_interval: 43200
+    name: QOTD
+    feed_url: http://feeds.feedburner.com/theysaidso/qod/inspire
+  - platform: feedparser
+    name: BBC News
+    feed_url: http://feeds.bbci.co.uk/news/rss.xml
+    show_topn: 5
+  - platform: google_travel_time
+    name: 'Shipley to Leeds'
+    api_key: !secret gcloud_api_key
+    origin: Shipley, UK
+    destination: Leeds, UK
+    scan_interval: 3600
+    options:
+      mode: transit
+      transit_mode: train
+#  - platform: google_travel_time
+#    name: 'Shipley to Bradford'
+#    api_key: !secret gcloud_api_key
+#    origin: Shipley, UK
+#    destination: Bradford, UK
+#    scan_interval: 3600
+#    options:
+#      mode: transit
+#      transit_mode: train      
+  - platform: uk_transport
+    scan_interval: 86400
+    app_id: !secret uk_transport-app_id
+    app_key: !secret uk_transport-app_key
+    queries:
+      - mode: train
+        origin: SHY
+        destination: LDS      
 
 homeassistant:
   customize: !include customize.yaml
