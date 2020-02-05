@@ -64,6 +64,19 @@
       brightness: '{{ trigger.event.data.brightness }}'
       effect: '{{ trigger.event.data.effect }}'
       entity_id: '{{ trigger.event.data.entity_id }}'
+- id: '1580936086819'
+  alias: ifttt kodi rpc
+  description: ''
+  trigger:
+  - platform: event
+    event_data:
+      action: kodi_rpc_service
+    event_type: ifttt_webhook_received
+  condition: []
+  action:
+  - service_template: '{{ trigger.event.data.service }}'
+    data_template:
+      method: '{{ trigger.event.data.method }}'
 - id: '1576675828079'
   alias: Presence - Nobody home
   description: ''
@@ -247,6 +260,73 @@
   action:
   - delay: 00:00:30
   - data_template:
-      message: Hello Tom, {{state('sensor.compliment') }}
+      message: Hello Tom, {{ states('sensor.compliment') }}
     entity_id: media_player.hallway_home
     service: tts.google_translate_say
+- id: '1580921419430'
+  alias: 'Trains: Update Next LDS-SHY train'
+  description: Between the hours of 16:00 and 18:00 update the LDS-SHY train sensor
+    every 15 minutes
+  trigger:
+  - hours: '16'
+    minutes: /2
+    platform: time_pattern
+  - hours: '17'
+    minutes: /15
+    platform: time_pattern
+  condition: []
+  action:
+  - entity_id: sensor.next_train_to_shy
+    service: homeassistant.update_entity
+- id: '1580923110072'
+  alias: 'Trains: Update Next SHY-LDS train'
+  description: Between the hours of 07:00 and 09:00 update the SHY-LDS train sensor
+  trigger:
+  - hours: '07'
+    minutes: /2
+    platform: time_pattern
+  - hours: 08
+    minutes: /15
+    platform: time_pattern
+  condition: []
+  action:
+  - entity_id: sensor.next_train_to_lds
+    service: homeassistant.update_entity
+- id: '1580937267396'
+  alias: 'Kodi: Dim lights when playing'
+  description: ''
+  trigger:
+  - entity_id: media_player.kodi
+    platform: state
+    to: playing
+  condition:
+  - condition: state
+    entity_id: light.living_room
+    state: 'on'
+  action:
+  - data:
+      brightness: 10
+    entity_id: light.extended_color_light_1,  light.living_room_2
+    service: light.turn_on
+- id: '1580937548623'
+  alias: 'Kodi: Brighten lights when stop playing'
+  description: ''
+  trigger:
+  - entity_id: media_player.kodi
+    from: playing
+    platform: state
+    to: paused
+  - entity_id: media_player.kodi
+    from: playing
+    platform: state
+    to: idle
+  - entity_id: media_player.kodi
+    from: paused
+    platform: state
+    to: idle
+  condition: []
+  action:
+  - data:
+      brightness: 200
+    entity_id: light.extended_color_light_1, light.living_room_2
+    service: light.turn_on
