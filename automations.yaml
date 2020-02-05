@@ -235,3 +235,18 @@
   - data:
       message: Tom left Leeds
     service: notify.telegram
+- id: '1580903225785'
+  alias: 'Presence: Greeting'
+  description: Play a greeting when Tom arrives home
+  trigger:
+  - entity_id: person.tom
+    from: not_home
+    platform: state
+    to: home
+  condition: []
+  action:
+  - delay: 00:00:30
+  - data_template:
+      message: Hello Tom, {{state('sensor.compliment') }}
+    entity_id: media_player.hallway_home
+    service: tts.google_translate_say
