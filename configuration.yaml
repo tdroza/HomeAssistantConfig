@@ -22,6 +22,10 @@ script: !include scripts.yaml
 recorder:
   purge_keep_days: 2
   
+media_player:
+  - platform: kodi
+    host: 192.168.1.238
+    
 speedtestdotnet:
   scan_interval:  
     hours: 1
@@ -40,6 +44,10 @@ notify:
     platform: telegram
     chat_id: !secret telegram_bot_main_chat_id
    
+google: 
+  client_id: !secret google_client_id
+  client_secret: !secret google_client_secret
+  
 sonoff:
   username: !secret ewelink_username
   password: !secret ewelink_password
@@ -48,9 +56,28 @@ tuya:
   username: !secret smartlife_username
   password: !secret smartlife_password
   country_code: '44'
-  platform: smart_life
+  platform: 'smart_life'
   
+binary_sensor:
+  - platform: template
+    sensors:
+      show_commute_work:
+        friendly_name: Display card between 07:00 and 09:00.
+        entity_id: sensor.time
+        value_template: >
+           {{ 7 <= now().hour < 9 }}
+  - platform: template
+    sensors:
+      show_commute_home:
+        friendly_name: Display card between 16:00 and 18:00.
+        entity_id: sensor.time
+        value_template: >
+           {{ 16 <= now().hour < 18 }}           
 sensor:
+  - platform: time_date
+    display_options:
+      - 'time'
+      - 'date'
   - platform: synologydsm
     host: 192.168.1.205
     username: hassio
@@ -129,7 +156,21 @@ sensor:
     queries:
       - mode: train
         origin: SHY
-        destination: LDS      
+        destination: LDS    
+  - platform: uk_transport
+    scan_interval: 86400
+    app_id: !secret uk_transport-app_id
+    app_key: !secret uk_transport-app_key
+    queries:
+      - mode: train
+        origin: LDS
+        destination: SHY   
+  - platform: rest
+    resource: https://complimentr.com/api
+    method: GET
+    name: compliment
+    scan_interval: 3600
+    value_template: '{{ value_json.compliment }}'
 
 homeassistant:
   customize: !include customize.yaml
