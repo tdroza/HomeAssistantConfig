@@ -156,12 +156,6 @@
     - condition: state
       entity_id: group.all_my_lights
       state: 'off'
-    - condition: state
-      entity_id: switch.sonoff_10001f5fa0
-      state: 'off'
-    - condition: state
-      entity_id: switch.christmas_star
-      state: 'off'
   action:
   - data:
       entity_id: automation.lights_on_repeat_notification
@@ -330,3 +324,27 @@
       brightness: 200
     entity_id: light.extended_color_light_1, light.living_room_2
     service: light.turn_on
+- id: '1581026602537'
+  alias: 'Dehumidifier: Turn on'
+  description: ''
+  trigger:
+  - above: '80'
+    entity_id: sensor.ensuite_humidity
+    platform: numeric_state
+  condition: []
+  action:
+  - data: {}
+    entity_id: switch.dehumidifier
+    service: switch.turn_on
+- id: '1581026980222'
+  alias: 'Dehumidifier: Turn off'
+  description: ''
+  trigger:
+  - below: '70'
+    entity_id: sensor.ensuite_humidity
+    for: 00:05:00
+    platform: numeric_state
+  condition: []
+  action:
+  - entity_id: switch.dehumidifier
+    service: switch.turn_off
