@@ -52,7 +52,7 @@ binary_sensor.kitchen_motion_sensor:
 
 sensor.tradfri_open_close_remote:
   icon: mdi:remote
-light.living_room:
+light.living_room_1:
   icon: mdi:floor-lamp
 light.living_room_2:
   icon: mdi:floor-lamp
@@ -85,3 +85,10 @@ switch.christmas_star:
   icon: mdi:star-outline
 switch.sonoff_10001f5fa0:
   icon: mdi:pine-tree
+switch.blanket_tom:
+  icon: mdi:bed-empty
+switch.blanket_anna:
+  icon: mdi:bed-empty
+switch.dehumidifier:
+  friendly_name: Dehumidifier
+  icon: mdi:air-humidifier
