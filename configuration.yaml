@@ -21,6 +21,9 @@ script: !include scripts.yaml
 
 recorder:
   purge_keep_days: 2
+
+pi_hole:
+  - host: 192.168.1.215
   
 media_player:
   - platform: kodi
