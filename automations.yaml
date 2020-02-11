@@ -105,9 +105,6 @@
     - condition: state
       entity_id: group.all_my_lights
       state: 'on'
-    - condition: state
-      entity_id: switch.christmas_star
-      state: 'on'
   action:
   - data:
       data:
@@ -197,8 +194,6 @@
   - data:
       entity_id: switch.christmas_star
     service: switch.turn_off
-  - entity_id: automation.lights_on_disable_repeat_notification
-    service: automation.turn_off
 - id: '1577980276286'
   alias: Presence - Left work (Tom)
   description: Send a telegram notification when Tom has been away from work for 2
@@ -299,8 +294,8 @@
     state: 'on'
   action:
   - data:
-      brightness: 10
-    entity_id: light.extended_color_light_1,  light.living_room_2
+      brightness: 5
+    entity_id: light.living_room_1, light.living_room_2
     service: light.turn_on
 - id: '1580937548623'
   alias: 'Kodi: Brighten lights when stop playing'
@@ -322,7 +317,7 @@
   action:
   - data:
       brightness: 200
-    entity_id: light.extended_color_light_1, light.living_room_2
+    entity_id: light.living_room_1, light.living_room_2
     service: light.turn_on
 - id: '1581026602537'
   alias: 'Dehumidifier: Turn on'
@@ -344,7 +339,10 @@
     entity_id: sensor.ensuite_humidity
     for: 00:05:00
     platform: numeric_state
-  condition: []
+  condition:
+  - condition: state
+    entity_id: switch.dehumidifier
+    state: 'on'
   action:
   - entity_id: switch.dehumidifier
     service: switch.turn_off
