@@ -24,7 +24,15 @@ recorder:
 
 pi_hole:
   - host: 192.168.1.215
+
+octoprint:
+  host: octoi.lan
+  api_key: '97D2B94F6BE14938871A03CE0E1D23C0'
+  name: '3D Printer'
+  bed: true
+  number_of_tools: 1
   
+
 media_player:
   - platform: kodi
     host: 192.168.1.238
@@ -40,13 +48,24 @@ speedtestdotnet:
 telegram_bot:
   - platform: polling
     api_key: !secret telegram_ha_bot_key
-    allowed_chat_ids: !secret telegram_bot_chat_ids
-    
+    allowed_chat_ids: 
+      - !secret telegram_bot_chat_id_td
+      - !secret telegram_bot_chat_id_ad
+      
 notify:
-  - name: telegram
+  - name: telegram_td
     platform: telegram
-    chat_id: !secret telegram_bot_main_chat_id
+    chat_id: !secret telegram_bot_chat_id_td
+  - name: telegram_ad
+    platform: telegram
+    chat_id: !secret telegram_bot_chat_id_ad
    
+input_text:
+  telegram_td: 
+    initial: !secret telegram_bot_chat_id_td
+  telegram_ad: 
+    initial: !secret telegram_bot_chat_id_ad
+    
 google: 
   client_id: !secret google_client_id
   client_secret: !secret google_client_secret

@@ -89,7 +89,7 @@
   action:
   - data:
       message: Nobody is home right now
-    service: notify.telegram
+    service: notify.telegram_td
 - id: '1576676147603'
   alias: 'Lights on: Nobody home and lights on'
   description: ''
@@ -106,16 +106,18 @@
       entity_id: group.all_my_lights
       state: 'on'
   action:
-  - data:
-      data:
+    - service: telegram_bot.send_message
+      data_template:
         inline_keyboard:
-        - Turn off:/off
-      message: Nobody is home but lights have been left on
-    service: notify.telegram
-  - alias: ''
-    data: {}
-    entity_id: automation.lights_on_repeat_notification
-    service: automation.turn_on
+          - Turn off:/off
+        target:
+          - {{ states('input_text.telegram_td') }}
+          - {{ states('input_text.telegram_ad') }}
+        message: Nobody is home but lights have been left on
+    - alias: ''
+      data: {}
+      entity_id: automation.lights_on_repeat_notification
+      service: automation.turn_on
 - id: '1576771228052'
   alias: 'Lights on: repeat notification'
   description: This automation is turned on by the "nobody home" automation and fires
@@ -211,7 +213,8 @@
     to: not_home
   condition:
   - condition: template
-    value_template: "{{not is_state('sensor.oneplus5t_wifi_connection', 'BJSS-Staff') }}"
+    value_template: '{{not is_state(''sensor.oneplus5t_wifi_connection'', ''BJSS-Staff'')
+      }}'
   action:
   - data:
       message: Tom left work 2 minutes ago
@@ -229,7 +232,7 @@
   action:
   - data:
       message: Anna left work 2 minutes ago.
-    service: notify.telegram
+    service: notify.telegram_td
 - id: '1578592845893'
   alias: 'Presence: Left Leeds (Tom)'
   description: ''
@@ -244,8 +247,11 @@
     condition: time
   action:
   - data:
-      message: Tom left Leeds
-    service: notify.telegram
+      message: Tom left Leeds 2 minutes ago
+    service: notify.telegram_td
+  - data:
+      message: Tom left Leeds 2 minutes ago
+    service: notify.telegram_ad
 - id: '1580903225785'
   alias: 'Presence: Greeting'
   description: Play a greeting when Tom arrives home
