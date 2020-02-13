@@ -174,8 +174,13 @@
     service: notify.telegram
 - id: '1576773914306'
   alias: Telegram /off
-  description: ''
+  description: Respond to a manually typed Telegram message of "/off" (using telegram_command)
+    or a "/off"  message from the inline_keyboard notification button (using telegram_callback)
   trigger:
+  - event_data:
+      command: /off
+    event_type: telegram_callback
+    platform: event
   - event_data:
       command: /off
     event_type: telegram_command
@@ -204,7 +209,9 @@
     from: BJSS
     platform: state
     to: not_home
-  condition: []
+  condition:
+  - condition: template
+    value_template: "{{not is_state('sensor.oneplus5t_wifi_connection', 'BJSS-Staff') }}"
   action:
   - data:
       message: Tom left work 2 minutes ago
@@ -229,10 +236,12 @@
   trigger:
   - entity_id: person.tom
     for: 00:02:00
-    from: leeds_station
+    from: Leeds Station
     platform: state
     to: not_home
-  condition: []
+  condition:
+  - after: '16:30'
+    condition: time
   action:
   - data:
       message: Tom left Leeds
