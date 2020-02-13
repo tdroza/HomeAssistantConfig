@@ -77,6 +77,17 @@ binary_sensor:
         value_template: >
            {{ 16 <= now().hour < 18 }}           
 sensor:
+  - platform: template
+    sensors:
+      vacuum_state:
+        value_template: 'Ditto: {{ states.vacuum.ditto.attributes.status }}'
+      vacuum_last_run:
+        value_template: '{{ as_timestamp(states.vacuum.ditto.attributes.clean_start) | timestamp_custom("%d.%m.%Y") }}'
+      vacuum_last_qm:
+        value_template: '{{ states.vacuum.ditto.attributes.clean_area | round(0) }} m²'
+      vacuum_battery:
+        value_template: '{{ states.vacuum.ditto.attributes.battery_level }} %'
+        icon_template: '{{ states.vacuum.ditto.attributes.battery_icon }}'
   - platform: time_date
     display_options:
       - 'time'
@@ -98,9 +109,9 @@ sensor:
         value_template: '{{states.sensor.hallway_motion_sensor_temperature.state |round(0)}}'
   - platform: template
     sensors:
-      white_temperature_2_rounded:
+      white_temperature_rounded:
         friendly_name: 'Kitchen Temp'
-        value_template: '{{states.sensor.white_temperature_2.state |round(0)}}'
+        value_template: '{{states.sensor.white_temperature.state |round(0)}}'
   - platform: template
     sensors:
       bed1_temperature_rounded:
