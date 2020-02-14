@@ -1,0 +1,11 @@
+'1581685010172':
+  alias: Turn off all lights and switches
+  sequence:
+  - data:
+      entity_id: all
+    service: light.turn_off
+  - data: {}
+    entity_id: switch.christmas_star
+    service: switch.turn_off
+  - entity_id: switch.sonoff_10001f5fa0
+    service: switch.turn_off

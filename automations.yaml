@@ -100,8 +100,6 @@
     platform: state
     to: not_home
   condition:
-  - condition: or
-    conditions:
     - condition: state
       entity_id: group.all_my_lights
       state: 'on'
@@ -111,8 +109,8 @@
         inline_keyboard:
           - Turn off:/off
         target:
-          - {{ states('input_text.telegram_td') }}
-          - {{ states('input_text.telegram_ad') }}
+          - "{{ states('input_text.telegram_td') }}"
+          - "{{ states('input_text.telegram_ad') }}"
         message: Nobody is home but lights have been left on
     - alias: ''
       data: {}
@@ -132,8 +130,8 @@
         inline_keyboard:
           - Turn off:/off
         target:
-          - {{ states('input_text.telegram_td') }}
-          - {{ states('input_text.telegram_ad') }}
+          - "{{ states('input_text.telegram_td') }}"
+          - "{{ states('input_text.telegram_ad') }}"
         message: Nobody is home but lights have been left on . I'll remind you every 15 minutes.
   initial_state: false
 - id: '1576772552665'
@@ -203,23 +201,21 @@
     - service: telegram_bot.send_message
       data_template:
         target:
-          - {{ states('input_text.telegram_td') }}
-          - {{ states('input_text.telegram_ad') }}
+          - "{{ states('input_text.telegram_td') }}"
+          - "{{ states('input_text.telegram_ad') }}"
         message: "All lights turned off."
 - id: '1577980276286'
   alias: Presence - Left work (Tom)
-  description: Send a telegram notification when Tom has been away from work for 2
-    minutes
+  description: Send a telegram notification when Tom has been away from work for 2 minutes
   trigger:
   - entity_id: person.tom
-    for: 00:02:00
-    from: BJSS
     platform: state
+    from: BJSS
     to: not_home
+    for: 00:02:00
   condition:
   - condition: template
-    value_template: '{{not is_state(''sensor.oneplus5t_wifi_connection'', ''BJSS-Staff'')
-      }}'
+    value_template: "{{ not is_state('sensor.oneplus5t_wifi_connection', 'BJSS-Staff') }}"
   action:
   - data:
       message: Tom left work 2 minutes ago
@@ -254,8 +250,8 @@
     - service: telegram_bot.send_message
       data_template:
         target:
-          - {{ states('input_text.telegram_td') }}
-          - {{ states('input_text.telegram_ad') }}
+          - "{{ states('input_text.telegram_td') }}"
+          - "{{ states('input_text.telegram_ad') }}"
         message: Tom left Leeds Station 2 minutes ago
 - id: '1580903225785'
   alias: 'Presence: Greeting'
