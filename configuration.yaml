@@ -26,7 +26,7 @@ pi_hole:
   - host: 192.168.1.215
 
 octoprint:
-  host: octoi.lan
+  host: octopi.lan
   api_key: '97D2B94F6BE14938871A03CE0E1D23C0'
   name: '3D Printer'
   bed: true
