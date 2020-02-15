@@ -100,22 +100,22 @@
     platform: state
     to: not_home
   condition:
-    - condition: state
-      entity_id: group.all_my_lights
-      state: 'on'
+  - condition: state
+    entity_id: group.all_my_lights
+    state: 'on'
   action:
-    - service: telegram_bot.send_message
-      data_template:
-        inline_keyboard:
-          - Turn off:/off
-        target:
-          - "{{ states('input_text.telegram_td') }}"
-          - "{{ states('input_text.telegram_ad') }}"
-        message: Nobody is home but lights have been left on
-    - alias: ''
-      data: {}
-      entity_id: automation.lights_on_repeat_notification
-      service: automation.turn_on
+  - service: telegram_bot.send_message
+    data_template:
+      inline_keyboard:
+      - Turn off:/off
+      target:
+      - '{{ states(''input_text.telegram_td'') }}'
+      - '{{ states(''input_text.telegram_ad'') }}'
+      message: Nobody is home but lights have been left on
+  - alias: ''
+    data: {}
+    entity_id: automation.lights_on_repeat_notification
+    service: automation.turn_on
 - id: '1576771228052'
   alias: 'Lights on: repeat notification'
   description: This automation is turned on by the "nobody home" automation and fires
@@ -125,14 +125,15 @@
     platform: time_pattern
   condition: []
   action:
-    - service: telegram_bot.send_message
-      data_template:
-        inline_keyboard:
-          - Turn off:/off
-        target:
-          - "{{ states('input_text.telegram_td') }}"
-          - "{{ states('input_text.telegram_ad') }}"
-        message: Nobody is home but lights have been left on . I'll remind you every 15 minutes.
+  - service: telegram_bot.send_message
+    data_template:
+      inline_keyboard:
+      - Turn off:/off
+      target:
+      - '{{ states(''input_text.telegram_td'') }}'
+      - '{{ states(''input_text.telegram_ad'') }}'
+      message: Nobody is home but lights have been left on . I'll remind you every
+        15 minutes.
   initial_state: false
 - id: '1576772552665'
   alias: 'Lights on: disable repeat notification'
@@ -189,24 +190,25 @@
     platform: event
   condition: []
   action:
-    - data:
-        entity_id: all
-      service: light.turn_off
-    - data:
-        entity_id: switch.sonoff_10001f5fa0
-      service: switch.turn_off
-    - data:
-        entity_id: switch.christmas_star
-      service: switch.turn_off
-    - service: telegram_bot.send_message
-      data_template:
-        target:
-          - "{{ states('input_text.telegram_td') }}"
-          - "{{ states('input_text.telegram_ad') }}"
-        message: "All lights turned off."
+  - data:
+      entity_id: all
+    service: light.turn_off
+  - data:
+      entity_id: switch.sonoff_10001f5fa0
+    service: switch.turn_off
+  - data:
+      entity_id: switch.christmas_star
+    service: switch.turn_off
+  - service: telegram_bot.send_message
+    data_template:
+      target:
+      - '{{ states(''input_text.telegram_td'') }}'
+      - '{{ states(''input_text.telegram_ad'') }}'
+      message: All lights turned off.
 - id: '1577980276286'
   alias: Presence - Left work (Tom)
-  description: Send a telegram notification when Tom has been away from work for 2 minutes
+  description: Send a telegram notification when Tom has been away from work for 2
+    minutes
   trigger:
   - entity_id: person.tom
     platform: state
@@ -215,7 +217,8 @@
     for: 00:02:00
   condition:
   - condition: template
-    value_template: "{{ not is_state('sensor.oneplus5t_wifi_connection', 'BJSS-Staff') }}"
+    value_template: '{{ not is_state(''sensor.oneplus5t_wifi_connection'', ''BJSS-Staff'')
+      }}'
   action:
   - data:
       message: Tom left work 2 minutes ago
@@ -236,7 +239,7 @@
     service: notify.telegram_td
 - id: '1578592845893'
   alias: 'Presence: Left Leeds (Tom)'
-  description: 'Send a Telegram notification when Tom been away from work for 2 minutes'
+  description: Send a Telegram notification when Tom been away from work for 2 minutes
   trigger:
   - entity_id: person.tom
     for: 00:02:00
@@ -247,12 +250,12 @@
   - after: '16:30'
     condition: time
   action:
-    - service: telegram_bot.send_message
-      data_template:
-        target:
-          - "{{ states('input_text.telegram_td') }}"
-          - "{{ states('input_text.telegram_ad') }}"
-        message: Tom left Leeds Station 2 minutes ago
+  - service: telegram_bot.send_message
+    data_template:
+      target:
+      - '{{ states(''input_text.telegram_td'') }}'
+      - '{{ states(''input_text.telegram_ad'') }}'
+      message: Tom left Leeds Station 2 minutes ago
 - id: '1580903225785'
   alias: 'Presence: Greeting'
   description: Play a greeting when Tom arrives home
@@ -362,3 +365,19 @@
   action:
   - entity_id: switch.dehumidifier
     service: switch.turn_off
+- id: '1581757504089'
+  alias: 3D Printer
+  description: ''
+  trigger:
+  - entity_id: sensor.3d_printer_current_state
+    from: Printing
+    platform: state
+  condition: []
+  action:
+  - data:
+      message: The 3D Printer has finished
+    service: notify.telegram_td
+  - data:
+      entity_id: media_player.living_room_display
+      message: The printer has finished
+    service: tts.google_translate_say
