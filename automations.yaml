@@ -381,3 +381,53 @@
       entity_id: media_player.living_room_display
       message: The printer has finished
     service: tts.google_translate_say
+- id: '1581776307274'
+  alias: 'Washer: Notify done'
+  description: ''
+  trigger:
+  - minutes: /15
+    platform: time_pattern
+  condition: []
+  action:
+  - service: tts.google_translate_say
+    data:
+      entity_id: media_player.living_room_display
+      message: The washing machine has finished, please hang out the washing
+  - service: telegram_bot.send_message
+    data_template:
+      target:
+      - '{{ states(''input_text.telegram_td'') }}'
+      - '{{ states(''input_text.telegram_ad'') }}'
+      message: The washing machine has finished, please hang out the washing
+      inline_keyboard:
+      - Washer Emptied:/washer_emptied
+- id: '1581777155699'
+  alias: 'Washer: Machine finished'
+  description: ''
+  trigger:
+  - below: '20'
+    entity_id: sensor.sonoff_10003a0e20_power
+    for: '"00:02:00"'
+    platform: numeric_state
+  condition: []
+  action:
+  - entity_id: automation.washer_notify_done
+    service: automation.turn_on
+  - entity_id: automation.washer_notify_done
+    service: automation.trigger
+- id: '1581777529393'
+  alias: 'Washer: Handle "washer_emptied" telegram message'
+  description: ''
+  trigger:
+  - event_data:
+      command: /washer_emptied
+    event_type: telegram_callback
+    platform: event
+  - event_data:
+      command: /washer_emptied
+    event_type: telegram_command
+    platform: event
+  condition: []
+  action:
+  - entity_id: automation.washer_notify_done
+    service: automation.turn_off
