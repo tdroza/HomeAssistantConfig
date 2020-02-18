@@ -28,14 +28,14 @@ pi_hole:
 octoprint:
   host: octopi.lan
   api_key: '97D2B94F6BE14938871A03CE0E1D23C0'
-  name: '3D Printer'
+  name: 'Printer'
   bed: true
   number_of_tools: 1
   
 
 media_player:
   - platform: kodi
-    host: 192.168.1.238
+    host: 192.168.1.171
     
 speedtestdotnet:
   scan_interval:  
@@ -70,9 +70,9 @@ google:
   client_id: !secret google_client_id
   client_secret: !secret google_client_secret
   
-sonoff:
-  username: !secret ewelink_username
-  password: !secret ewelink_password
+#sonoff:
+#  username: !secret ewelink_username
+#  password: !secret ewelink_password
   
 tuya: 
   username: !secret tuya_username
