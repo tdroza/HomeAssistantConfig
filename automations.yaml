@@ -366,8 +366,8 @@
   - entity_id: switch.dehumidifier
     service: switch.turn_off
 - id: '1581757504089'
-  alias: 3D Printer
-  description: ''
+  alias: Printer - Notify when complete
+  description: Send a telegram and broadcast to Google Home when 3D Printer is done
   trigger:
   - entity_id: sensor.3d_printer_current_state
     from: Printing
@@ -405,7 +405,7 @@
   alias: 'Washer: Machine finished'
   description: ''
   trigger:
-  - below: '20'
+  - below: '10'
     entity_id: sensor.sonoff_10003a0e20_power
     for: '"00:02:00"'
     platform: numeric_state
@@ -431,3 +431,26 @@
   action:
   - entity_id: automation.washer_notify_done
     service: automation.turn_off
+- id: '1582057191428'
+  alias: Printer - Telegram command
+  description: Respond to "/print" Telegram command with stats about 3D printer
+  trigger:
+  - event_data:
+      command: /printer
+    event_type: telegram_callback
+    platform: event
+  - event_data:
+      command: /printer
+    event_type: telegram_command
+    platform: event
+  condition: []
+  action:
+  - data_template:
+      message: "Status: {{ states('sensor.printer_current_state') }}\nElapsed: {%-\
+        \ if states('sensor.printer_time_elapsed') |int > 3600 -%} {{ states('sensor.printer_time_elapsed')\
+        \  | multiply(0.0002777778) | round(2)}}h {%- else %} {{ states('sensor.printer_time_elapsed')}}m\
+        \ {% endif %}\nRemaining: {%- if states('sensor.printer_time_remaining') |int\
+        \ > 3600 -%} {{ states('sensor.printer_time_remaining')  | multiply(0.0002777778)\
+        \ | round(2)}}h {%- else %} {{ states('sensor.printer_time_remaining')}}m\
+        \ {% endif %} \nProgress: {{ states('sensor.printer_job_percentage') }}%\n"
+    service: notify.telegram_td
