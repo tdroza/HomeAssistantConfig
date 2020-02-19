@@ -367,9 +367,9 @@
     service: switch.turn_off
 - id: '1581757504089'
   alias: Printer - Notify when complete
-  description: Send a telegram and broadcast to Google Home when 3D Printer is done
+  description: Send a telegram and broadcast to Google Home when Printer is done
   trigger:
-  - entity_id: sensor.3d_printer_current_state
+  - entity_id: sensor.printer_current_state
     from: Printing
     platform: state
   condition: []
