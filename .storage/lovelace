@@ -1,0 +1,1513 @@
+{
+    "data": {
+        "config": {
+            "custom_header": {
+                "chevrons": false,
+                "exceptions": [
+                    {
+                        "conditions": {
+                            "user": "Mirror"
+                        },
+                        "config": {
+                            "default_tab": "6",
+                            "hide_tabs": [],
+                            "kiosk_mode": true
+                        }
+                    },
+                    {
+                        "conditions": {
+                            "user": "Anna"
+                        },
+                        "config": {
+                            "hide_tabs": "3,4,6"
+                        }
+                    }
+                ],
+                "hidden_tab_redirect": false,
+                "shadow": false
+            },
+            "resources": [
+                {
+                    "type": "module",
+                    "url": "/community_plugin/mini-graph-card/mini-graph-card-bundle.js"
+                },
+                {
+                    "type": "module",
+                    "url": "/community_plugin/button-card/button-card.js"
+                },
+                {
+                    "type": "module",
+                    "url": "/community_plugin/weather-card/weather-card.js"
+                },
+                {
+                    "type": "js",
+                    "url": "/community_plugin/lovelace-swipe-navigation/swipe-navigation.js"
+                },
+                {
+                    "type": "module",
+                    "url": "/community_plugin/custom-header/custom-header.js"
+                },
+                {
+                    "type": "js",
+                    "url": "/community_plugin/list-card/list-card.js?v=0"
+                },
+                {
+                    "type": "js",
+                    "url": "/community_plugin/travel-time-card/travel-time-card.js"
+                },
+                {
+                    "type": "js",
+                    "url": "/community_plugin/slideshow-card/slideshow-card.js"
+                },
+                {
+                    "type": "module",
+                    "url": "/community_plugin/atomic_calendar/atomic_calendar.js"
+                },
+                {
+                    "type": "css",
+                    "url": "https://fonts.googleapis.com/css?family=Raleway"
+                }
+            ],
+            "swipe_nav": {
+                "animate": "swipe",
+                "wrap": true
+            },
+            "title": "Millview",
+            "views": [
+                {
+                    "badges": [
+                        "binary_sensor.updater",
+                        "person.tom",
+                        "person.anna",
+                        "sun.sun"
+                    ],
+                    "cards": [
+                        {
+                            "card": {
+                                "icon": "mdi:light-switch",
+                                "name": "Turn everything off",
+                                "tap_action": {
+                                    "action": "call-service",
+                                    "service": "automation.trigger",
+                                    "service_data": {
+                                        "entity_id": "automation.telegram_off"
+                                    }
+                                },
+                                "type": "custom:button-card"
+                            },
+                            "conditions": [
+                                {
+                                    "entity": "group.all_my_lights",
+                                    "state_not": "off"
+                                }
+                            ],
+                            "type": "conditional"
+                        },
+                        {
+                            "entity": "weather.millview",
+                            "type": "custom:weather-card"
+                        },
+                        {
+                            "cards": [
+                                {
+                                    "cards": [
+                                        {
+                                            "card": null,
+                                            "color_thresholds": [
+                                                {
+                                                    "color": "var(--temp-twenty-color)",
+                                                    "value": 20
+                                                },
+                                                {
+                                                    "color": "var(--temp-nineteen-color)",
+                                                    "value": 19
+                                                },
+                                                {
+                                                    "color": "var(--temp-eighteen-color)",
+                                                    "value": 18
+                                                },
+                                                {
+                                                    "color": "var(--temp-seventeen-color)",
+                                                    "value": 17
+                                                },
+                                                {
+                                                    "color": "var(--temp-sixteen-color)",
+                                                    "value": 16
+                                                }
+                                            ],
+                                            "entities": [
+                                                {
+                                                    "entity": "sensor.living_room_temp",
+                                                    "index": 0,
+                                                    "name": "Temp"
+                                                },
+                                                {
+                                                    "color": "var(--humidity-color)",
+                                                    "entity": "sensor.living_room_humidity",
+                                                    "index": 1,
+                                                    "name": "Humidity",
+                                                    "y_axis": "secondary"
+                                                }
+                                            ],
+                                            "name": "Living room",
+                                            "points_per_hour": 1,
+                                            "show": {
+                                                "labels": true
+                                            },
+                                            "type": "custom:mini-graph-card"
+                                        },
+                                        {
+                                            "card": null,
+                                            "color_thresholds": [
+                                                {
+                                                    "color": "var(--temp-twenty-color)",
+                                                    "value": 20
+                                                },
+                                                {
+                                                    "color": "var(--temp-nineteen-color)",
+                                                    "value": 19
+                                                },
+                                                {
+                                                    "color": "var(--temp-eighteen-color)",
+                                                    "value": 18
+                                                },
+                                                {
+                                                    "color": "var(--temp-seventeen-color)",
+                                                    "value": 17
+                                                }
+                                            ],
+                                            "entities": [
+                                                {
+                                                    "entity": "sensor.hallway_motion_sensor_temperature",
+                                                    "index": 0,
+                                                    "name": "Temp"
+                                                }
+                                            ],
+                                            "name": "Hall",
+                                            "points_per_hour": 1,
+                                            "show": {
+                                                "labels": true
+                                            },
+                                            "type": "custom:mini-graph-card"
+                                        }
+                                    ],
+                                    "type": "horizontal-stack"
+                                },
+                                {
+                                    "cards": [
+                                        {
+                                            "card": null,
+                                            "color_thresholds": [
+                                                {
+                                                    "color": "var(--temp-twenty-color)",
+                                                    "value": 20
+                                                },
+                                                {
+                                                    "color": "var(--temp-nineteen-color)",
+                                                    "value": 19
+                                                },
+                                                {
+                                                    "color": "var(--temp-eighteen-color)",
+                                                    "value": 18
+                                                },
+                                                {
+                                                    "color": "var(--temp-seventeen-color)",
+                                                    "value": 17
+                                                },
+                                                {
+                                                    "color": "var(--temp-sixteen-color)",
+                                                    "value": 16
+                                                }
+                                            ],
+                                            "entities": [
+                                                {
+                                                    "entity": "sensor.seb_temperature",
+                                                    "index": 0,
+                                                    "name": "Temp"
+                                                },
+                                                {
+                                                    "color": "var(--humidity-color)",
+                                                    "entity": "sensor.seb_humidity",
+                                                    "index": 1,
+                                                    "name": "Humidity",
+                                                    "y_axis": "secondary"
+                                                }
+                                            ],
+                                            "name": "Seb's Room",
+                                            "points_per_hour": 1,
+                                            "show": {
+                                                "labels": true
+                                            },
+                                            "type": "custom:mini-graph-card"
+                                        },
+                                        {
+                                            "card": null,
+                                            "color_thresholds": [
+                                                {
+                                                    "color": "var(--temp-twenty-color)",
+                                                    "value": 20
+                                                },
+                                                {
+                                                    "color": "var(--temp-nineteen-color)",
+                                                    "value": 19
+                                                },
+                                                {
+                                                    "color": "var(--temp-eighteen-color)",
+                                                    "value": 18
+                                                },
+                                                {
+                                                    "color": "var(--temp-seventeen-color)",
+                                                    "value": 17
+                                                }
+                                            ],
+                                            "entities": [
+                                                {
+                                                    "entity": "sensor.reu_temperature",
+                                                    "index": 0,
+                                                    "name": "Temp"
+                                                },
+                                                {
+                                                    "color": "var(--humidity-color)",
+                                                    "entity": "sensor.reu_humidity",
+                                                    "index": 1,
+                                                    "name": "Humidity",
+                                                    "y_axis": "secondary"
+                                                }
+                                            ],
+                                            "name": "Reuben's Room",
+                                            "points_per_hour": 1,
+                                            "show": {
+                                                "labels": true
+                                            },
+                                            "type": "custom:mini-graph-card"
+                                        }
+                                    ],
+                                    "type": "horizontal-stack"
+                                },
+                                {
+                                    "cards": [
+                                        {
+                                            "card": null,
+                                            "color_thresholds": [
+                                                {
+                                                    "color": "var(--temp-twenty-color)",
+                                                    "value": 20
+                                                },
+                                                {
+                                                    "color": "var(--temp-nineteen-color)",
+                                                    "value": 19
+                                                },
+                                                {
+                                                    "color": "var(--temp-eighteen-color)",
+                                                    "value": 18
+                                                },
+                                                {
+                                                    "color": "var(--temp-seventeen-color)",
+                                                    "value": 17
+                                                }
+                                            ],
+                                            "entities": [
+                                                {
+                                                    "entity": "sensor.bed1_temperature",
+                                                    "index": 0,
+                                                    "name": "Temp"
+                                                },
+                                                {
+                                                    "color": "var(--humidity-color)",
+                                                    "entity": "sensor.bed1_humidity",
+                                                    "index": 1,
+                                                    "name": "Humidity",
+                                                    "y_axis": "secondary"
+                                                }
+                                            ],
+                                            "name": "Master Bedroom",
+                                            "points_per_hour": 1,
+                                            "show": {
+                                                "labels": true
+                                            },
+                                            "type": "custom:mini-graph-card"
+                                        },
+                                        {
+                                            "card": null,
+                                            "color_thresholds": [
+                                                {
+                                                    "color": "var(--temp-twenty-color)",
+                                                    "value": 20
+                                                },
+                                                {
+                                                    "color": "var(--temp-nineteen-color)",
+                                                    "value": 19
+                                                },
+                                                {
+                                                    "color": "var(--temp-eighteen-color)",
+                                                    "value": 18
+                                                },
+                                                {
+                                                    "color": "var(--temp-seventeen-color)",
+                                                    "value": 17
+                                                }
+                                            ],
+                                            "entities": [
+                                                {
+                                                    "entity": "sensor.white_temperature",
+                                                    "index": 0,
+                                                    "name": "Temp"
+                                                },
+                                                {
+                                                    "color": "var(--humidity-color)",
+                                                    "entity": "sensor.white_humidity",
+                                                    "index": 1,
+                                                    "name": "Humidity",
+                                                    "y_axis": "secondary"
+                                                }
+                                            ],
+                                            "name": "Kitchen",
+                                            "points_per_hour": 1,
+                                            "show": {
+                                                "labels": true
+                                            },
+                                            "type": "custom:mini-graph-card"
+                                        }
+                                    ],
+                                    "type": "horizontal-stack"
+                                },
+                                {
+                                    "cards": [
+                                        {
+                                            "card": null,
+                                            "color_thresholds": [
+                                                {
+                                                    "color": "var(--temp-twenty-color)",
+                                                    "value": 20
+                                                },
+                                                {
+                                                    "color": "var(--temp-nineteen-color)",
+                                                    "value": 19
+                                                },
+                                                {
+                                                    "color": "var(--temp-eighteen-color)",
+                                                    "value": 18
+                                                },
+                                                {
+                                                    "color": "var(--temp-seventeen-color)",
+                                                    "value": 17
+                                                }
+                                            ],
+                                            "entities": [
+                                                {
+                                                    "entity": "sensor.bathroom_temperature",
+                                                    "index": 0,
+                                                    "name": "Temp"
+                                                },
+                                                {
+                                                    "color": "var(--humidity-color)",
+                                                    "entity": "sensor.bathroom_humidity",
+                                                    "index": 1,
+                                                    "name": "Humidity",
+                                                    "y_axis": "secondary"
+                                                }
+                                            ],
+                                            "name": "Bathroom",
+                                            "points_per_hour": 1,
+                                            "show": {
+                                                "labels": true
+                                            },
+                                            "type": "custom:mini-graph-card"
+                                        },
+                                        {
+                                            "card": null,
+                                            "color_thresholds": [
+                                                {
+                                                    "color": "var(--temp-twenty-color)",
+                                                    "value": 20
+                                                },
+                                                {
+                                                    "color": "var(--temp-nineteen-color)",
+                                                    "value": 19
+                                                },
+                                                {
+                                                    "color": "var(--temp-eighteen-color)",
+                                                    "value": 18
+                                                },
+                                                {
+                                                    "color": "var(--temp-seventeen-color)",
+                                                    "value": 17
+                                                }
+                                            ],
+                                            "entities": [
+                                                {
+                                                    "entity": "sensor.ensuite_temperature",
+                                                    "index": 0,
+                                                    "name": "Temp"
+                                                },
+                                                {
+                                                    "color": "var(--humidity-color)",
+                                                    "entity": "sensor.ensuite_humidity",
+                                                    "index": 1,
+                                                    "name": "Humidity",
+                                                    "y_axis": "secondary"
+                                                }
+                                            ],
+                                            "name": "Ensuite",
+                                            "points_per_hour": 1,
+                                            "show": {
+                                                "labels": true
+                                            },
+                                            "type": "custom:mini-graph-card"
+                                        }
+                                    ],
+                                    "type": "horizontal-stack"
+                                }
+                            ],
+                            "type": "vertical-stack"
+                        },
+                        {
+                            "cards": [
+                                {
+                                    "cards": [
+                                        {
+                                            "entity": "light.living_room",
+                                            "type": "light"
+                                        },
+                                        {
+                                            "entity": "light.main_bedroom",
+                                            "type": "light"
+                                        }
+                                    ],
+                                    "type": "horizontal-stack"
+                                },
+                                {
+                                    "cards": [
+                                        {
+                                            "entity": "light.sebastian_s_bedroom",
+                                            "type": "light"
+                                        },
+                                        {
+                                            "entity": "light.reuben_s_room",
+                                            "type": "light"
+                                        }
+                                    ],
+                                    "type": "horizontal-stack"
+                                },
+                                {
+                                    "cards": [
+                                        {
+                                            "entity": "light.second_bedroom",
+                                            "type": "light"
+                                        },
+                                        {
+                                            "entity": "light.hall",
+                                            "type": "light"
+                                        }
+                                    ],
+                                    "type": "horizontal-stack"
+                                }
+                            ],
+                            "type": "vertical-stack"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "sensor.speedtest_download",
+                                    "name": "Download"
+                                },
+                                {
+                                    "entity": "sensor.speedtest_upload",
+                                    "name": "Upload"
+                                },
+                                {
+                                    "entity": "sensor.speedtest_ping",
+                                    "name": "Ping"
+                                }
+                            ],
+                            "show_header_toggle": false,
+                            "title": "Network",
+                            "type": "glance"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "light.main_bedroom"
+                                },
+                                {
+                                    "entity": "light.bloom"
+                                },
+                                {
+                                    "entity": "cover.tradfri_blind"
+                                },
+                                {
+                                    "entity": "cover.small_blind"
+                                },
+                                {
+                                    "entity": "sensor.bed1_temperature"
+                                },
+                                {
+                                    "entity": "sensor.bed1_humidity"
+                                },
+                                {
+                                    "entity": "switch.blanket_anna"
+                                },
+                                {
+                                    "entity": "switch.blanket_tom"
+                                },
+                                {
+                                    "entity": "switch.dehumidifier"
+                                }
+                            ],
+                            "show_header_toggle": false,
+                            "title": "Master bedroom",
+                            "type": "entities"
+                        },
+                        {
+                            "elements": [
+                                {
+                                    "entity": "sensor.vacuum_state",
+                                    "style": {
+                                        "background-color": "rgba(0, 0, 0, 0.3)",
+                                        "bottom": 0,
+                                        "color": "white",
+                                        "font-size": "16px",
+                                        "left": 0,
+                                        "line-height": "32px",
+                                        "padding": "0 8px",
+                                        "pointer-events": "none",
+                                        "transform": "initial",
+                                        "width": "100%"
+                                    },
+                                    "type": "state-label"
+                                },
+                                {
+                                    "entity": "vacuum.ditto",
+                                    "icon": "mdi:home",
+                                    "service": "vacuum.return_to_base",
+                                    "style": {
+                                        "bottom": 0,
+                                        "color": "white",
+                                        "line-height": "32px",
+                                        "margin": "0 152px 0 0",
+                                        "padding": "8px",
+                                        "right": 0,
+                                        "transform": "initial"
+                                    },
+                                    "tap_action": "call-service",
+                                    "type": "icon"
+                                },
+                                {
+                                    "entity": "vacuum.ditto",
+                                    "icon": "mdi:bell-ring",
+                                    "service": "vacuum.locate",
+                                    "style": {
+                                        "bottom": 0,
+                                        "color": "white",
+                                        "line-height": "32px",
+                                        "margin": "0 112px 0 0",
+                                        "padding": "8px",
+                                        "right": 0,
+                                        "transform": "initial"
+                                    },
+                                    "tap_action": "call-service",
+                                    "type": "icon"
+                                },
+                                {
+                                    "entity": "switch.ditto_schedule",
+                                    "style": {
+                                        "--paper-item-icon-color": "rgb(255,255,255)",
+                                        "bottom": 0,
+                                        "color": "white",
+                                        "line-height": "32px",
+                                        "margin": "0 42px -4px 0",
+                                        "padding": "8px",
+                                        "right": 0,
+                                        "transform": "initial"
+                                    },
+                                    "tap_action": "toggle",
+                                    "type": "state-icon"
+                                },
+                                {
+                                    "entity": "camera.ditto_cleaning_map",
+                                    "icon": "mdi:map",
+                                    "style": {
+                                        "bottom": 0,
+                                        "color": "white",
+                                        "line-height": "32px",
+                                        "margin": "0 8px 0 0",
+                                        "padding": "8px",
+                                        "right": 0,
+                                        "transform": "initial"
+                                    },
+                                    "type": "icon"
+                                },
+                                {
+                                    "entity": "sensor.vacuum_battery",
+                                    "style": {
+                                        "color": "rgba(255,255,255,1)",
+                                        "font-size": "12px",
+                                        "line-height": "32px",
+                                        "margin": "1px 35px",
+                                        "pointer-events": "none",
+                                        "right": 0,
+                                        "text-shadow": "rgba(0, 0, 0, 0.8) 0px 0px 2px",
+                                        "top": 0,
+                                        "transform": "initial"
+                                    },
+                                    "type": "state-label"
+                                },
+                                {
+                                    "entity": "sensor.vacuum_battery",
+                                    "style": {
+                                        "--paper-item-icon-color": "rgb(255,255,255)",
+                                        "color": "rgba(255,255,255,1)",
+                                        "line-height": "32px",
+                                        "margin": "3px 5px 0 0",
+                                        "pointer-events": "none",
+                                        "right": 0,
+                                        "top": 0,
+                                        "transform": "scale(0.8)"
+                                    },
+                                    "type": "state-icon"
+                                },
+                                {
+                                    "entity": "sensor.vacuum_last_run",
+                                    "style": {
+                                        "color": "rgba(255,255,255,1)",
+                                        "font-size": "12px",
+                                        "line-height": "32px",
+                                        "margin": "30px 35px",
+                                        "pointer-events": "none",
+                                        "right": 0,
+                                        "text-shadow": "rgba(0, 0, 0, 0.8) 0px 0px 2px",
+                                        "top": 0,
+                                        "transform": "initial"
+                                    },
+                                    "type": "state-label"
+                                },
+                                {
+                                    "icon": "mdi:calendar-check",
+                                    "style": {
+                                        "color": "rgba(255,255,255,1)",
+                                        "line-height": "32px",
+                                        "margin": "36px 13px",
+                                        "pointer-events": "none",
+                                        "right": 0,
+                                        "top": 0,
+                                        "transform": "scale(0.8)"
+                                    },
+                                    "type": "icon"
+                                },
+                                {
+                                    "entity": "sensor.vacuum_last_qm",
+                                    "style": {
+                                        "color": "rgba(255,255,255,1)",
+                                        "font-size": "12px",
+                                        "line-height": "32px",
+                                        "margin": "59px 35px",
+                                        "pointer-events": "none",
+                                        "right": 0,
+                                        "text-shadow": "rgba(0, 0, 0, 0.8) 0px 0px 2px",
+                                        "top": 0,
+                                        "transform": "initial"
+                                    },
+                                    "type": "state-label"
+                                },
+                                {
+                                    "icon": "mdi:floor-plan",
+                                    "style": {
+                                        "color": "rgba(255,255,255,1)",
+                                        "line-height": "32px",
+                                        "margin": "65px 13px",
+                                        "pointer-events": "none",
+                                        "right": 0,
+                                        "top": 0,
+                                        "transform": "scale(0.8)"
+                                    },
+                                    "type": "icon"
+                                }
+                            ],
+                            "image": "/local/neato.jpg",
+                            "type": "picture-elements"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "sensor.speedtest_download",
+                                    "name": "Download"
+                                },
+                                {
+                                    "entity": "sensor.speedtest_upload",
+                                    "name": "Upload"
+                                },
+                                {
+                                    "entity": "sensor.speedtest_ping",
+                                    "name": "Ping"
+                                }
+                            ],
+                            "hours_to_show": 24,
+                            "refresh_interval": 0,
+                            "title": "Network",
+                            "type": "history-graph"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "sensor.hallway_motion_sensor_light_level"
+                                },
+                                {
+                                    "entity": "sensor.hallway_motion_sensor_temperature"
+                                },
+                                {
+                                    "entity": "binary_sensor.hallway_motion_sensor_motion"
+                                },
+                                {
+                                    "entity": "light.hall"
+                                }
+                            ],
+                            "show_header_toggle": false,
+                            "title": "Hallway",
+                            "type": "entities"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "light.living_room_1"
+                                },
+                                {
+                                    "entity": "light.living_room_2"
+                                },
+                                {
+                                    "entity": "light.lightstrip"
+                                }
+                            ],
+                            "show_header_toggle": true,
+                            "title": "Living Room",
+                            "type": "entities"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "light.reuben_s_room"
+                                },
+                                {
+                                    "entity": "light.reuben"
+                                }
+                            ],
+                            "show_header_toggle": false,
+                            "title": "Reuben's Bedroom",
+                            "type": "entities"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "light.seb_s_colour"
+                                }
+                            ],
+                            "show_header_toggle": false,
+                            "title": "Seb's Bedroom",
+                            "type": "entities"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "light.sebastian_s_bedroom"
+                                },
+                                {
+                                    "entity": "light.living_room"
+                                },
+                                {
+                                    "entity": "light.main_bedroom"
+                                },
+                                {
+                                    "entity": "light.reuben_s_room"
+                                },
+                                {
+                                    "entity": "light.hall"
+                                }
+                            ],
+                            "title": "Light",
+                            "type": "entities"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "sensor.oneplus5t_battery_level"
+                                },
+                                {
+                                    "entity": "device_tracker.oneplus_a5010"
+                                },
+                                {
+                                    "entity": "sensor.oneplus5t_wifi_connection"
+                                }
+                            ],
+                            "type": "entities"
+                        }
+                    ],
+                    "icon": "mdi:home-assistant",
+                    "path": "default_view",
+                    "title": "Home"
+                },
+                {
+                    "badges": [],
+                    "cards": [
+                        {
+                            "elements": [
+                                {
+                                    "entity": "sensor.white_temperature_rounded",
+                                    "style": {
+                                        "background": "center / contain no-repeat url(\"/local/nest.png\")",
+                                        "font-size": "13px",
+                                        "left": "80%",
+                                        "top": "39%"
+                                    },
+                                    "type": "state-label"
+                                },
+                                {
+                                    "entity": "sensor.soil_moisture_level",
+                                    "style": {
+                                        "font-size": "12px",
+                                        "left": "36%",
+                                        "top": "30%"
+                                    },
+                                    "type": "state-icon"
+                                },
+                                {
+                                    "entity": "binary_sensor.kitchen_motion_sensor",
+                                    "style": {
+                                        "font-size": "12px",
+                                        "left": "93%",
+                                        "top": "39%"
+                                    },
+                                    "title": null,
+                                    "type": "state-icon"
+                                },
+                                {
+                                    "entity": "light.advent",
+                                    "hold_action": {
+                                        "action": "more-info"
+                                    },
+                                    "style": {
+                                        "font-size": "12px",
+                                        "left": "87%",
+                                        "top": "39%"
+                                    },
+                                    "tap_action": {
+                                        "action": "toggle"
+                                    },
+                                    "type": "state-icon"
+                                },
+                                {
+                                    "entity": "sensor.hallway_motion_sensor_temperature_rounded",
+                                    "style": {
+                                        "background": "center / contain no-repeat url(\"/local/nest.png\")",
+                                        "font-size": "13px",
+                                        "left": "47%",
+                                        "top": "44%"
+                                    },
+                                    "type": "state-label"
+                                },
+                                {
+                                    "entity": "light.hall",
+                                    "hold_action": {
+                                        "action": "more-info"
+                                    },
+                                    "style": {
+                                        "font-size": "12px",
+                                        "left": "60%",
+                                        "top": "53%"
+                                    },
+                                    "tap_action": {
+                                        "action": "toggle"
+                                    },
+                                    "type": "state-icon"
+                                },
+                                {
+                                    "entity": "switch.christmas_star",
+                                    "hold_action": {
+                                        "action": "more-info"
+                                    },
+                                    "style": {
+                                        "font-size": "12px",
+                                        "left": "93%",
+                                        "top": "70%"
+                                    },
+                                    "tap_action": {
+                                        "action": "toggle"
+                                    },
+                                    "type": "state-icon"
+                                },
+                                {
+                                    "entity": "light.lightstrip",
+                                    "hold_action": {
+                                        "action": "more-info"
+                                    },
+                                    "style": {
+                                        "font-size": "12px",
+                                        "left": "80%",
+                                        "top": "45%"
+                                    },
+                                    "tap_action": {
+                                        "action": "toggle"
+                                    },
+                                    "type": "state-icon"
+                                },
+                                {
+                                    "entity": "light.living_room_1",
+                                    "hold_action": {
+                                        "action": "more-info"
+                                    },
+                                    "style": {
+                                        "font-size": "12px",
+                                        "left": "65%",
+                                        "top": "90%"
+                                    },
+                                    "tap_action": {
+                                        "action": "toggle"
+                                    },
+                                    "type": "state-icon"
+                                },
+                                {
+                                    "entity": "light.living_room_2",
+                                    "hold_action": {
+                                        "action": "more-info"
+                                    },
+                                    "style": {
+                                        "font-size": "12px",
+                                        "left": "90%",
+                                        "top": "90%"
+                                    },
+                                    "tap_action": {
+                                        "action": "toggle"
+                                    },
+                                    "type": "state-icon"
+                                }
+                            ],
+                            "image": "/local/FloorPlan_Downstairs.png",
+                            "type": "picture-elements"
+                        },
+                        {
+                            "elements": [
+                                {
+                                    "entity": "sensor.reuben_temperature_rounded",
+                                    "style": {
+                                        "background": "center / contain no-repeat url(\"/local/nest.png\")",
+                                        "font-size": "12px",
+                                        "left": "27%",
+                                        "top": "70%"
+                                    },
+                                    "type": "state-label"
+                                },
+                                {
+                                    "entity": "light.main_bedroom",
+                                    "hold_action": {
+                                        "action": "more-info"
+                                    },
+                                    "style": {
+                                        "font-size": "12px",
+                                        "left": "78%",
+                                        "top": "72%"
+                                    },
+                                    "tap_action": {
+                                        "action": "toggle"
+                                    },
+                                    "type": "state-icon"
+                                },
+                                {
+                                    "entity": "light.bloom",
+                                    "hold_action": {
+                                        "action": "more-info"
+                                    },
+                                    "style": {
+                                        "font-size": "12px",
+                                        "left": "94%",
+                                        "top": "72%"
+                                    },
+                                    "tap_action": {
+                                        "action": "toggle"
+                                    },
+                                    "type": "state-icon"
+                                },
+                                {
+                                    "entity": "sensor.bed1_temperature_rounded",
+                                    "style": {
+                                        "background": "center / contain no-repeat url(\"/local/nest.png\")",
+                                        "font-size": "12px",
+                                        "left": "63%",
+                                        "top": "90%"
+                                    },
+                                    "type": "state-label"
+                                },
+                                {
+                                    "entity": "cover.tradfri_blind",
+                                    "style": {
+                                        "left": "79%",
+                                        "top": "90%"
+                                    },
+                                    "type": "state-icon"
+                                },
+                                {
+                                    "entity": "cover.small_blind",
+                                    "style": {
+                                        "left": "94%",
+                                        "top": "85%"
+                                    },
+                                    "type": "state-icon"
+                                },
+                                {
+                                    "entity": "light.reuben_s_bedroom",
+                                    "hold_action": {
+                                        "action": "more-info"
+                                    },
+                                    "style": {
+                                        "font-size": "12px",
+                                        "left": "18%",
+                                        "top": "80%"
+                                    },
+                                    "tap_action": {
+                                        "action": "toggle"
+                                    },
+                                    "type": "state-icon"
+                                },
+                                {
+                                    "entity": "light.sebastian_s_bedroom",
+                                    "hold_action": {
+                                        "action": "more-info"
+                                    },
+                                    "style": {
+                                        "font-size": "12px",
+                                        "left": "50%",
+                                        "top": "20%"
+                                    },
+                                    "tap_action": {
+                                        "action": "toggle"
+                                    },
+                                    "type": "state-icon"
+                                },
+                                {
+                                    "entity": "sensor.seb_temperature_rounded",
+                                    "style": {
+                                        "background": "center / contain no-repeat url(\"/local/nest.png\")",
+                                        "font-size": "12px",
+                                        "left": "38%",
+                                        "top": "10%"
+                                    },
+                                    "type": "state-label"
+                                },
+                                {
+                                    "entity": "sensor.bathroom_temperature_rounded",
+                                    "style": {
+                                        "background": "center / contain no-repeat url(\"/local/nest.png\")",
+                                        "font-size": "12px",
+                                        "left": "28%",
+                                        "top": "45%"
+                                    },
+                                    "type": "state-label"
+                                },
+                                {
+                                    "entity": "sensor.ensuite_temperature_rounded",
+                                    "style": {
+                                        "background": "center / contain no-repeat url(\"/local/nest.png\")",
+                                        "font-size": "12px",
+                                        "left": "93%",
+                                        "top": "44.7%"
+                                    },
+                                    "type": "state-label"
+                                }
+                            ],
+                            "image": "/local/FloorPlan_Upstairs.png",
+                            "type": "picture-elements"
+                        }
+                    ],
+                    "icon": "mdi:floor-plan",
+                    "panel": false,
+                    "path": "floorplan",
+                    "title": "Floorplan"
+                },
+                {
+                    "badges": [],
+                    "cards": [
+                        {
+                            "entity": "media_player.hallway_home",
+                            "type": "media-control"
+                        },
+                        {
+                            "entity": "media_player.kitchen_home",
+                            "type": "media-control"
+                        },
+                        {
+                            "entity": "media_player.kitchen_chromecast",
+                            "type": "media-control"
+                        },
+                        {
+                            "entity": "media_player.living_room",
+                            "type": "media-control"
+                        },
+                        {
+                            "entity": "media_player.living_room_display",
+                            "type": "media-control"
+                        },
+                        {
+                            "entity": "media_player.seb_s_home",
+                            "type": "media-control"
+                        },
+                        {
+                            "entity": "media_player.bedroom_speaker",
+                            "type": "media-control"
+                        },
+                        {
+                            "entity": "media_player.whole_house",
+                            "type": "media-control"
+                        },
+                        {
+                            "entity": "media_player.everywhere_except_lounge",
+                            "type": "media-control"
+                        },
+                        {
+                            "entity": "media_player.downstairs",
+                            "type": "media-control"
+                        },
+                        {
+                            "entity": "media_player.living_room_amp",
+                            "type": "media-control"
+                        },
+                        {
+                            "entity": "media_player.living_room_tv",
+                            "type": "media-control"
+                        }
+                    ],
+                    "icon": "mdi:google-assistant",
+                    "path": "google",
+                    "title": "Google"
+                },
+                {
+                    "badges": [],
+                    "cards": [
+                        {
+                            "entities": [
+                                {
+                                    "entity": "sensor.bed1_temperature"
+                                },
+                                {
+                                    "entity": "sensor.white_temperature_2"
+                                },
+                                {
+                                    "entity": "sensor.seb_temperature"
+                                },
+                                {
+                                    "entity": "sensor.reu_temperature"
+                                },
+                                {
+                                    "entity": "sensor.living_room_temp"
+                                },
+                                {
+                                    "entity": "sensor.bathroom_temperature"
+                                },
+                                {
+                                    "entity": "sensor.ensuite_temperature"
+                                },
+                                {
+                                    "entity": "sensor.hallway_motion_sensor_temperature"
+                                },
+                                {
+                                    "entity": "sensor.bed1_humidity_2"
+                                },
+                                {
+                                    "entity": "sensor.white_humidity_2"
+                                },
+                                {
+                                    "entity": "sensor.seb_humidity"
+                                },
+                                {
+                                    "entity": "sensor.reu_humidity"
+                                },
+                                {
+                                    "entity": "sensor.living_room_humidity"
+                                },
+                                {
+                                    "entity": "sensor.bathroom_humidity"
+                                },
+                                {
+                                    "entity": "sensor.ensuite_humidity"
+                                }
+                            ],
+                            "hours_to_show": 24,
+                            "refresh_interval": 0,
+                            "title": "Temp & Humidity (48h)",
+                            "type": "history-graph"
+                        }
+                    ],
+                    "icon": "mdi:history",
+                    "panel": true,
+                    "path": "history",
+                    "title": "History"
+                },
+                {
+                    "badges": [],
+                    "cards": [
+                        {
+                            "cards": [
+                                {
+                                    "cards": [
+                                        {
+                                            "entity": "switch.sonoff_10001f5fa0",
+                                            "type": "entity-button"
+                                        },
+                                        {
+                                            "entity": "switch.christmas_star",
+                                            "type": "entity-button"
+                                        }
+                                    ],
+                                    "type": "horizontal-stack"
+                                },
+                                {
+                                    "cards": [
+                                        {
+                                            "entity": "light.xmas",
+                                            "type": "light"
+                                        }
+                                    ],
+                                    "type": "horizontal-stack"
+                                }
+                            ],
+                            "type": "vertical-stack"
+                        },
+                        {
+                            "entities": [
+                                "sensor.shipley_to_bradford",
+                                "sensor.shipley_to_leeds"
+                            ],
+                            "title": "Commute",
+                            "type": "custom:travel-time-card"
+                        }
+                    ],
+                    "icon": "mdi:archive",
+                    "path": "archived",
+                    "title": "Archived"
+                },
+                {
+                    "badges": [],
+                    "cards": [
+                        {
+                            "cards": [
+                                {
+                                    "content": "{{ states('sensor.date') }}\n{{ states('sensor.time') }}\n===",
+                                    "type": "markdown"
+                                },
+                                {
+                                    "entity": "weather.millview",
+                                    "type": "custom:weather-card"
+                                },
+                                {
+                                    "card": {
+                                        "columns": [
+                                            {
+                                                "field": "origin_name",
+                                                "title": "Origin"
+                                            },
+                                            {
+                                                "field": "destination_name",
+                                                "title": "Destination"
+                                            },
+                                            {
+                                                "field": "platform",
+                                                "title": "Platform"
+                                            },
+                                            {
+                                                "field": "scheduled",
+                                                "title": "Schdeuled"
+                                            },
+                                            {
+                                                "field": "estimated",
+                                                "title": "Due"
+                                            },
+                                            {
+                                                "field": "status",
+                                                "title": "Status"
+                                            }
+                                        ],
+                                        "entity": "sensor.next_train_to_lds",
+                                        "feed_attribute": "next_trains",
+                                        "row_limit": 5,
+                                        "title": "Shipley to Leeds",
+                                        "type": "custom:list-card"
+                                    },
+                                    "conditions": [
+                                        {
+                                            "entity": "binary_sensor.show_commute_work",
+                                            "state": "on"
+                                        }
+                                    ],
+                                    "type": "conditional"
+                                },
+                                {
+                                    "card": {
+                                        "columns": [
+                                            {
+                                                "field": "origin_name",
+                                                "title": "Origin"
+                                            },
+                                            {
+                                                "field": "destination_name",
+                                                "title": "Destination"
+                                            },
+                                            {
+                                                "field": "platform",
+                                                "title": "Platform"
+                                            },
+                                            {
+                                                "field": "scheduled",
+                                                "title": "Schdeuled"
+                                            },
+                                            {
+                                                "field": "estimated",
+                                                "title": "Due"
+                                            },
+                                            {
+                                                "field": "status",
+                                                "title": "Status"
+                                            }
+                                        ],
+                                        "entity": "sensor.next_train_to_shy",
+                                        "feed_attribute": "next_trains",
+                                        "row_limit": 5,
+                                        "title": "Leeds to Shipley",
+                                        "type": "custom:list-card"
+                                    },
+                                    "conditions": [
+                                        {
+                                            "entity": "binary_sensor.show_commute_home",
+                                            "state": "on"
+                                        }
+                                    ],
+                                    "type": "conditional"
+                                },
+                                {
+                                    "arrow_opacity": 0.2,
+                                    "auto_delay": 10,
+                                    "auto_play": true,
+                                    "cards": [
+                                        {
+                                            "content": "{% set entry = states.sensor.bbc_news.attributes.entries[0] %}\n**{{ entry.title }}**\n`{{ entry.published }}`\n  >  {{entry.summary }}",
+                                            "type": "markdown"
+                                        },
+                                        {
+                                            "content": "{% set entry = states.sensor.bbc_news.attributes.entries[1] %}\n**{{ entry.title }}**\n`{{ entry.published }}`\n  >  {{entry.summary }}     ",
+                                            "type": "markdown"
+                                        },
+                                        {
+                                            "content": "{% set entry = states.sensor.bbc_news.attributes.entries[2] %}\n**{{ entry.title }}**\n`{{ entry.published }}`\n  >  {{entry.summary }}  ",
+                                            "type": "markdown"
+                                        },
+                                        {
+                                            "content": "{% set entry = states.sensor.bbc_news.attributes.entries[3] %}\n**{{ entry.title }}**\n`{{ entry.published }}`\n  >  {{entry.summary }} ",
+                                            "type": "markdown"
+                                        },
+                                        {
+                                            "content": "{% set entry = states.sensor.bbc_news.attributes.entries[4] %}\n**{{ entry.title }}**\n`{{ entry.published }}`\n  >  {{entry.summary }}                 ",
+                                            "type": "markdown"
+                                        }
+                                    ],
+                                    "type": "custom:slideshow-card"
+                                },
+                                {
+                                    "CalEventIcon1": "mdi:gift",
+                                    "entities": [
+                                        {
+                                            "entity": "calendar.tdroza_gmail_com"
+                                        },
+                                        {
+                                            "entity": "calendar.family"
+                                        }
+                                    ],
+                                    "showNoEventsForToday": true,
+                                    "title": "Calendar",
+                                    "type": "custom:atomic-calendar"
+                                },
+                                {
+                                    "content": "## _{{ states.sensor.qotd.attributes.entries[0].summary }}_",
+                                    "type": "markdown"
+                                },
+                                {
+                                    "content": "## {{ states('sensor.compliment') | title }}",
+                                    "type": "markdown"
+                                }
+                            ],
+                            "type": "vertical-stack"
+                        }
+                    ],
+                    "icon": "mdi:image-frame",
+                    "panel": true,
+                    "path": "kiosk",
+                    "title": "Smart Mirror"
+                },
+                {
+                    "badges": [
+                        {
+                            "entity": "sensor.printer_current_state"
+                        }
+                    ],
+                    "cards": [
+                        {
+                            "cards": null,
+                            "entities": [
+                                {
+                                    "entity": "sensor.printer_current_state",
+                                    "name": "Status"
+                                },
+                                {
+                                    "entity": "sensor.printer_actual_bed_temp",
+                                    "name": "Bed"
+                                },
+                                {
+                                    "entity": "sensor.printer_actual_tool0_temp",
+                                    "name": "Tool"
+                                }
+                            ],
+                            "type": "glance"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "sensor.printer_time_elapsed"
+                                },
+                                {
+                                    "entity": "sensor.printer_time_remaining"
+                                },
+                                {
+                                    "entity": "sensor.printer_job_percentage"
+                                }
+                            ],
+                            "type": "glance"
+                        },
+                        {
+                            "cards": null,
+                            "entities": [
+                                {
+                                    "entity": "sensor.printer_target_bed_temp",
+                                    "index": 0
+                                },
+                                {
+                                    "entity": "sensor.printer_actual_bed_temp",
+                                    "index": 1
+                                },
+                                {
+                                    "entity": "sensor.printer_target_tool0_temp",
+                                    "index": 2
+                                },
+                                {
+                                    "entity": "sensor.printer_actual_tool0_temp",
+                                    "index": 3
+                                }
+                            ],
+                            "hours_to_show": 12,
+                            "points_per_hour": 12,
+                            "type": "custom:mini-graph-card"
+                        }
+                    ],
+                    "icon": "mdi:printer-3d",
+                    "path": "printer",
+                    "title": "3DPrinter"
+                }
+            ]
+        }
+    },
+    "key": "lovelace",
+    "version": 1
+}
