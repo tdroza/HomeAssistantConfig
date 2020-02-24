@@ -211,14 +211,15 @@
     minutes
   trigger:
   - entity_id: person.tom
-    platform: state
-    from: BJSS
-    to: not_home
     for: 00:02:00
+    from: BJSS
+    platform: state
+    to: not_home
   condition:
   - condition: template
-    value_template: '{{ not is_state(''sensor.oneplus5t_wifi_connection'', ''BJSS-Staff'')
-      }}'
+    value_template: "{{ not is_state('sensor.oneplus5t_wifi_connection', 'BJSS-Staff) }}""
+  - after: '16:30'
+    condition: time
   action:
   - data:
       message: Tom left work 2 minutes ago
@@ -407,7 +408,7 @@
   trigger:
   - below: '10'
     entity_id: sensor.sonoff_10003a0e20_power
-    for: '"00:02:00"'
+    for: '00:02:00'
     platform: numeric_state
   condition: []
   action:
@@ -416,7 +417,7 @@
   - entity_id: automation.washer_notify_done
     service: automation.trigger
 - id: '1581777529393'
-  alias: 'Washer: Handle "washer_emptied" telegram message'
+  alias: 'Washer: Handle *washer_emptied* telegram message'
   description: ''
   trigger:
   - event_data:
@@ -433,7 +434,7 @@
     service: automation.turn_off
 - id: '1582057191428'
   alias: Printer - Telegram command
-  description: Respond to "/print" Telegram command with stats about 3D printer
+  description: 'Respond to */print* Telegram command with stats about 3D printer'
   trigger:
   - event_data:
       command: /printer
@@ -446,7 +447,8 @@
   condition: []
   action:
   - data_template:
-      message: "Status: {{ states('sensor.printer_current_state') }}\nElapsed: {%-\
+      message: "Status: {{ states('sensor.printer_current_state') }} \
+        \ Elapsed: {%-\
         \ if states('sensor.printer_time_elapsed') |int > 3600 -%} {{ states('sensor.printer_time_elapsed')\
         \  | multiply(0.0002777778) | round(2)}}h {%- else %} {{ states('sensor.printer_time_elapsed')}}m\
         \ {% endif %}\nRemaining: {%- if states('sensor.printer_time_remaining') |int\
