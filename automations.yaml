@@ -217,7 +217,7 @@
     to: not_home
   condition:
   - condition: template
-    value_template: "{{ not is_state('sensor.oneplus5t_wifi_connection', 'BJSS-Staff) }}""
+    value_template: "{{ not is_state('sensor.oneplus5t_wifi_connection', 'BJSS-Staff') }}"
   - after: '16:30'
     condition: time
   action:
@@ -448,7 +448,7 @@
   action:
   - data_template:
       message: "Status: {{ states('sensor.printer_current_state') }} \
-        \ Elapsed: {%-\
+        \ \nElapsed: {%-\
         \ if states('sensor.printer_time_elapsed') |int > 3600 -%} {{ states('sensor.printer_time_elapsed')\
         \  | multiply(0.0002777778) | round(2)}}h {%- else %} {{ states('sensor.printer_time_elapsed')}}m\
         \ {% endif %}\nRemaining: {%- if states('sensor.printer_time_remaining') |int\
