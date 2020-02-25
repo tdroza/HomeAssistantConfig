@@ -1496,7 +1496,7 @@
                                     "index": 3
                                 }
                             ],
-                            "hours_to_show": 12,
+                            "hours_to_show": 2,
                             "points_per_hour": 12,
                             "type": "custom:mini-graph-card"
                         }
