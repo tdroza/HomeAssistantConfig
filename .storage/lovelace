@@ -115,23 +115,23 @@
                                             "card": null,
                                             "color_thresholds": [
                                                 {
-                                                    "color": "var(--temp-twenty-color)",
+                                                    "color": "var(--temp-twenty)",
                                                     "value": 20
                                                 },
                                                 {
-                                                    "color": "var(--temp-nineteen-color)",
+                                                    "color": "var(--temp-nineteen)",
                                                     "value": 19
                                                 },
                                                 {
-                                                    "color": "var(--temp-eighteen-color)",
+                                                    "color": "var(--temp-eighteen)",
                                                     "value": 18
                                                 },
                                                 {
-                                                    "color": "var(--temp-seventeen-color)",
+                                                    "color": "var(--temp-seventeen)",
                                                     "value": 17
                                                 },
                                                 {
-                                                    "color": "var(--temp-sixteen-color)",
+                                                    "color": "var(--temp-sixteen)",
                                                     "value": 16
                                                 }
                                             ],
@@ -142,7 +142,7 @@
                                                     "name": "Temp"
                                                 },
                                                 {
-                                                    "color": "var(--humidity-color)",
+                                                    "color": "var(--humidity)",
                                                     "entity": "sensor.living_room_humidity",
                                                     "index": 1,
                                                     "name": "Humidity",
@@ -160,191 +160,24 @@
                                             "card": null,
                                             "color_thresholds": [
                                                 {
-                                                    "color": "var(--temp-twenty-color)",
+                                                    "color": "var(--temp-twenty)",
                                                     "value": 20
                                                 },
                                                 {
-                                                    "color": "var(--temp-nineteen-color)",
+                                                    "color": "var(--temp-nineteen)",
                                                     "value": 19
                                                 },
                                                 {
-                                                    "color": "var(--temp-eighteen-color)",
+                                                    "color": "var(--temp-eighteen)",
                                                     "value": 18
                                                 },
                                                 {
-                                                    "color": "var(--temp-seventeen-color)",
-                                                    "value": 17
-                                                }
-                                            ],
-                                            "entities": [
-                                                {
-                                                    "entity": "sensor.hallway_motion_sensor_temperature",
-                                                    "index": 0,
-                                                    "name": "Temp"
-                                                }
-                                            ],
-                                            "name": "Hall",
-                                            "points_per_hour": 1,
-                                            "show": {
-                                                "labels": true
-                                            },
-                                            "type": "custom:mini-graph-card"
-                                        }
-                                    ],
-                                    "type": "horizontal-stack"
-                                },
-                                {
-                                    "cards": [
-                                        {
-                                            "card": null,
-                                            "color_thresholds": [
-                                                {
-                                                    "color": "var(--temp-twenty-color)",
-                                                    "value": 20
-                                                },
-                                                {
-                                                    "color": "var(--temp-nineteen-color)",
-                                                    "value": 19
-                                                },
-                                                {
-                                                    "color": "var(--temp-eighteen-color)",
-                                                    "value": 18
-                                                },
-                                                {
-                                                    "color": "var(--temp-seventeen-color)",
+                                                    "color": "var(--temp-seventeen)",
                                                     "value": 17
                                                 },
                                                 {
-                                                    "color": "var(--temp-sixteen-color)",
+                                                    "color": "var(--temp-sixteen)",
                                                     "value": 16
-                                                }
-                                            ],
-                                            "entities": [
-                                                {
-                                                    "entity": "sensor.seb_temperature",
-                                                    "index": 0,
-                                                    "name": "Temp"
-                                                },
-                                                {
-                                                    "color": "var(--humidity-color)",
-                                                    "entity": "sensor.seb_humidity",
-                                                    "index": 1,
-                                                    "name": "Humidity",
-                                                    "y_axis": "secondary"
-                                                }
-                                            ],
-                                            "name": "Seb's Room",
-                                            "points_per_hour": 1,
-                                            "show": {
-                                                "labels": true
-                                            },
-                                            "type": "custom:mini-graph-card"
-                                        },
-                                        {
-                                            "card": null,
-                                            "color_thresholds": [
-                                                {
-                                                    "color": "var(--temp-twenty-color)",
-                                                    "value": 20
-                                                },
-                                                {
-                                                    "color": "var(--temp-nineteen-color)",
-                                                    "value": 19
-                                                },
-                                                {
-                                                    "color": "var(--temp-eighteen-color)",
-                                                    "value": 18
-                                                },
-                                                {
-                                                    "color": "var(--temp-seventeen-color)",
-                                                    "value": 17
-                                                }
-                                            ],
-                                            "entities": [
-                                                {
-                                                    "entity": "sensor.reu_temperature",
-                                                    "index": 0,
-                                                    "name": "Temp"
-                                                },
-                                                {
-                                                    "color": "var(--humidity-color)",
-                                                    "entity": "sensor.reu_humidity",
-                                                    "index": 1,
-                                                    "name": "Humidity",
-                                                    "y_axis": "secondary"
-                                                }
-                                            ],
-                                            "name": "Reuben's Room",
-                                            "points_per_hour": 1,
-                                            "show": {
-                                                "labels": true
-                                            },
-                                            "type": "custom:mini-graph-card"
-                                        }
-                                    ],
-                                    "type": "horizontal-stack"
-                                },
-                                {
-                                    "cards": [
-                                        {
-                                            "card": null,
-                                            "color_thresholds": [
-                                                {
-                                                    "color": "var(--temp-twenty-color)",
-                                                    "value": 20
-                                                },
-                                                {
-                                                    "color": "var(--temp-nineteen-color)",
-                                                    "value": 19
-                                                },
-                                                {
-                                                    "color": "var(--temp-eighteen-color)",
-                                                    "value": 18
-                                                },
-                                                {
-                                                    "color": "var(--temp-seventeen-color)",
-                                                    "value": 17
-                                                }
-                                            ],
-                                            "entities": [
-                                                {
-                                                    "entity": "sensor.bed1_temperature",
-                                                    "index": 0,
-                                                    "name": "Temp"
-                                                },
-                                                {
-                                                    "color": "var(--humidity-color)",
-                                                    "entity": "sensor.bed1_humidity",
-                                                    "index": 1,
-                                                    "name": "Humidity",
-                                                    "y_axis": "secondary"
-                                                }
-                                            ],
-                                            "name": "Master Bedroom",
-                                            "points_per_hour": 1,
-                                            "show": {
-                                                "labels": true
-                                            },
-                                            "type": "custom:mini-graph-card"
-                                        },
-                                        {
-                                            "card": null,
-                                            "color_thresholds": [
-                                                {
-                                                    "color": "var(--temp-twenty-color)",
-                                                    "value": 20
-                                                },
-                                                {
-                                                    "color": "var(--temp-nineteen-color)",
-                                                    "value": 19
-                                                },
-                                                {
-                                                    "color": "var(--temp-eighteen-color)",
-                                                    "value": 18
-                                                },
-                                                {
-                                                    "color": "var(--temp-seventeen-color)",
-                                                    "value": 17
                                                 }
                                             ],
                                             "entities": [
@@ -354,7 +187,7 @@
                                                     "name": "Temp"
                                                 },
                                                 {
-                                                    "color": "var(--humidity-color)",
+                                                    "color": "var(--humidity)",
                                                     "entity": "sensor.white_humidity",
                                                     "index": 1,
                                                     "name": "Humidity",
@@ -377,20 +210,206 @@
                                             "card": null,
                                             "color_thresholds": [
                                                 {
-                                                    "color": "var(--temp-twenty-color)",
+                                                    "color": "var(--temp-twenty)",
                                                     "value": 20
                                                 },
                                                 {
-                                                    "color": "var(--temp-nineteen-color)",
+                                                    "color": "var(--temp-nineteen)",
                                                     "value": 19
                                                 },
                                                 {
-                                                    "color": "var(--temp-eighteen-color)",
+                                                    "color": "var(--temp-eighteen)",
                                                     "value": 18
                                                 },
                                                 {
-                                                    "color": "var(--temp-seventeen-color)",
+                                                    "color": "var(--temp-seventeen)",
                                                     "value": 17
+                                                },
+                                                {
+                                                    "color": "var(--temp-sixteen)",
+                                                    "value": 16
+                                                }
+                                            ],
+                                            "entities": [
+                                                {
+                                                    "entity": "sensor.seb_temperature",
+                                                    "name": "Temp"
+                                                },
+                                                {
+                                                    "color": "var(--humidity)",
+                                                    "entity": "sensor.seb_humidity",
+                                                    "name": "Humidity",
+                                                    "y_axis": "secondary"
+                                                }
+                                            ],
+                                            "name": "Seb's Room",
+                                            "points_per_hour": 1,
+                                            "show": {
+                                                "labels": true
+                                            },
+                                            "type": "custom:mini-graph-card"
+                                        },
+                                        {
+                                            "card": null,
+                                            "color_thresholds": [
+                                                {
+                                                    "color": "var(--temp-twenty)",
+                                                    "value": 20
+                                                },
+                                                {
+                                                    "color": "var(--temp-nineteen)",
+                                                    "value": 19
+                                                },
+                                                {
+                                                    "color": "var(--temp-eighteen)",
+                                                    "value": 18
+                                                },
+                                                {
+                                                    "color": "var(--temp-seventeen)",
+                                                    "value": 17
+                                                },
+                                                {
+                                                    "color": "var(--temp-sixteen)",
+                                                    "value": 16
+                                                }
+                                            ],
+                                            "entities": [
+                                                {
+                                                    "entity": "sensor.reu_temperature",
+                                                    "index": 0,
+                                                    "name": "Temp"
+                                                },
+                                                {
+                                                    "color": "var(--humidity)",
+                                                    "entity": "sensor.reu_humidity",
+                                                    "index": 1,
+                                                    "name": "Humidity",
+                                                    "y_axis": "secondary"
+                                                }
+                                            ],
+                                            "name": "Reuben's Room",
+                                            "points_per_hour": 1,
+                                            "show": {
+                                                "labels": true
+                                            },
+                                            "type": "custom:mini-graph-card"
+                                        }
+                                    ],
+                                    "type": "horizontal-stack"
+                                },
+                                {
+                                    "cards": [
+                                        {
+                                            "card": null,
+                                            "color_thresholds": [
+                                                {
+                                                    "color": "var(--temp-twenty)",
+                                                    "value": 20
+                                                },
+                                                {
+                                                    "color": "var(--temp-nineteen)",
+                                                    "value": 19
+                                                },
+                                                {
+                                                    "color": "var(--temp-eighteen)",
+                                                    "value": 18
+                                                },
+                                                {
+                                                    "color": "var(--temp-seventeen)",
+                                                    "value": 17
+                                                },
+                                                {
+                                                    "color": "var(--temp-sixteen)",
+                                                    "value": 16
+                                                }
+                                            ],
+                                            "entities": [
+                                                {
+                                                    "entity": "sensor.bed1_temperature",
+                                                    "index": 0,
+                                                    "name": "Temp"
+                                                },
+                                                {
+                                                    "color": "var(--humidity)",
+                                                    "entity": "sensor.bed1_humidity",
+                                                    "index": 1,
+                                                    "name": "Humidity",
+                                                    "y_axis": "secondary"
+                                                }
+                                            ],
+                                            "name": "Master Bedroom",
+                                            "points_per_hour": 1,
+                                            "show": {
+                                                "labels": true
+                                            },
+                                            "type": "custom:mini-graph-card"
+                                        },
+                                        {
+                                            "card": null,
+                                            "color_thresholds": [
+                                                {
+                                                    "color": "var(--temp-twenty)",
+                                                    "value": 20
+                                                },
+                                                {
+                                                    "color": "var(--temp-nineteen)",
+                                                    "value": 19
+                                                },
+                                                {
+                                                    "color": "var(--temp-eighteen)",
+                                                    "value": 18
+                                                },
+                                                {
+                                                    "color": "var(--temp-seventeen)",
+                                                    "value": 17
+                                                },
+                                                {
+                                                    "color": "var(--temp-sixteen)",
+                                                    "value": 16
+                                                }
+                                            ],
+                                            "entities": [
+                                                {
+                                                    "entity": "sensor.hallway_motion_sensor_temperature",
+                                                    "index": 0,
+                                                    "name": "Temp"
+                                                }
+                                            ],
+                                            "name": "Hall",
+                                            "points_per_hour": 1,
+                                            "show": {
+                                                "icon_adaptive_color": true,
+                                                "labels": true
+                                            },
+                                            "type": "custom:mini-graph-card"
+                                        }
+                                    ],
+                                    "type": "horizontal-stack"
+                                },
+                                {
+                                    "cards": [
+                                        {
+                                            "card": null,
+                                            "color_thresholds": [
+                                                {
+                                                    "color": "var(--temp-twenty)",
+                                                    "value": 20
+                                                },
+                                                {
+                                                    "color": "var(--temp-nineteen)",
+                                                    "value": 19
+                                                },
+                                                {
+                                                    "color": "var(--temp-eighteen)",
+                                                    "value": 18
+                                                },
+                                                {
+                                                    "color": "var(--temp-seventeen)",
+                                                    "value": 17
+                                                },
+                                                {
+                                                    "color": "var(--temp-sixteen)",
+                                                    "value": 16
                                                 }
                                             ],
                                             "entities": [
@@ -400,7 +419,7 @@
                                                     "name": "Temp"
                                                 },
                                                 {
-                                                    "color": "var(--humidity-color)",
+                                                    "color": "var(--humidity)",
                                                     "entity": "sensor.bathroom_humidity",
                                                     "index": 1,
                                                     "name": "Humidity",
@@ -418,20 +437,24 @@
                                             "card": null,
                                             "color_thresholds": [
                                                 {
-                                                    "color": "var(--temp-twenty-color)",
+                                                    "color": "var(--temp-twenty)",
                                                     "value": 20
                                                 },
                                                 {
-                                                    "color": "var(--temp-nineteen-color)",
+                                                    "color": "var(--temp-nineteen)",
                                                     "value": 19
                                                 },
                                                 {
-                                                    "color": "var(--temp-eighteen-color)",
+                                                    "color": "var(--temp-eighteen)",
                                                     "value": 18
                                                 },
                                                 {
-                                                    "color": "var(--temp-seventeen-color)",
+                                                    "color": "var(--temp-seventeen)",
                                                     "value": 17
+                                                },
+                                                {
+                                                    "color": "var(--temp-sixteen)",
+                                                    "value": 16
                                                 }
                                             ],
                                             "entities": [
@@ -441,7 +464,7 @@
                                                     "name": "Temp"
                                                 },
                                                 {
-                                                    "color": "var(--humidity-color)",
+                                                    "color": "var(--humidity)",
                                                     "entity": "sensor.ensuite_humidity",
                                                     "index": 1,
                                                     "name": "Humidity",
@@ -1504,6 +1527,25 @@
                     "icon": "mdi:printer-3d",
                     "path": "printer",
                     "title": "3DPrinter"
+                },
+                {
+                    "badges": [],
+                    "cards": [
+                        {
+                            "entities": [
+                                {
+                                    "entity": "sensor.pi_hole_ads_blocked_today"
+                                }
+                            ],
+                            "show": {
+                                "graph": "bar"
+                            },
+                            "type": "custom:mini-graph-card"
+                        }
+                    ],
+                    "icon": "mdi:network",
+                    "path": "network",
+                    "title": "Network"
                 }
             ]
         }
