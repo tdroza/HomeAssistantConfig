@@ -217,7 +217,8 @@
     to: not_home
   condition:
   - condition: template
-    value_template: "{{ not is_state('sensor.oneplus5t_wifi_connection', 'BJSS-Staff') }}"
+    value_template: '{{ not is_state(''sensor.oneplus5t_wifi_connection'', ''BJSS-Staff'')
+      }}'
   - after: '16:30'
     condition: time
   action:
@@ -408,7 +409,7 @@
   trigger:
   - below: '10'
     entity_id: sensor.sonoff_10003a0e20_power
-    for: '00:02:00'
+    for: 00:02:00
     platform: numeric_state
   condition: []
   action:
@@ -434,7 +435,7 @@
     service: automation.turn_off
 - id: '1582057191428'
   alias: Printer - Telegram command
-  description: 'Respond to */print* Telegram command with stats about 3D printer'
+  description: Respond to */print* Telegram command with stats about 3D printer
   trigger:
   - event_data:
       command: /printer
@@ -447,8 +448,7 @@
   condition: []
   action:
   - data_template:
-      message: "Status: {{ states('sensor.printer_current_state') }} \
-        \ \nElapsed: {%-\
+      message: "Status: {{ states('sensor.printer_current_state') }}  \nElapsed: {%-\
         \ if states('sensor.printer_time_elapsed') |int > 3600 -%} {{ states('sensor.printer_time_elapsed')\
         \  | multiply(0.0002777778) | round(2)}}h {%- else %} {{ states('sensor.printer_time_elapsed')}}m\
         \ {% endif %}\nRemaining: {%- if states('sensor.printer_time_remaining') |int\
@@ -456,3 +456,17 @@
         \ | round(2)}}h {%- else %} {{ states('sensor.printer_time_remaining')}}m\
         \ {% endif %} \nProgress: {{ states('sensor.printer_job_percentage') }}%\n"
     service: notify.telegram_td
+- id: '1582836882523'
+  alias: Blanket - turn off TD after 10m
+  description: Turn off Toms blanket 10m after it is turned on
+  trigger:
+  - entity_id: switch.blanket_tom
+    for: 00:15:00
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - data: {}
+    entity_id: switch.blanket_tom
+    service: switch.turn_off
