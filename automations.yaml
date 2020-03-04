@@ -384,39 +384,43 @@
       message: The printer has finished
     service: tts.google_translate_say
 - id: '1581776307274'
-  alias: 'Washer: Notify done'
+  alias: 'Washer: Notify done (repeat)'
   description: ''
   trigger:
   - minutes: /15
     platform: time_pattern
   condition: []
   action:
-  - service: tts.google_translate_say
-    data:
+  - data:
       entity_id: media_player.living_room_display
       message: The washing machine has finished, please hang out the washing
-  - service: telegram_bot.send_message
-    data_template:
+    service: tts.google_translate_say
+  - data_template:
+      inline_keyboard:
+      - Washer Emptied:/washer_emptied
+      message: The washing machine has finished, please hang out the washing
       target:
       - '{{ states(''input_text.telegram_td'') }}'
       - '{{ states(''input_text.telegram_ad'') }}'
-      message: The washing machine has finished, please hang out the washing
-      inline_keyboard:
-      - Washer Emptied:/washer_emptied
+    service: telegram_bot.send_message
 - id: '1581777155699'
   alias: 'Washer: Machine finished'
   description: ''
   trigger:
-  - below: '10'
-    entity_id: sensor.sonoff_10003a0e20_power
+  - entity_id: binary_sensor.washer
     for: 00:02:00
-    platform: numeric_state
+    from: 'on'
+    platform: state
+    to: 'off'
   condition: []
   action:
   - entity_id: automation.washer_notify_done
     service: automation.turn_on
   - entity_id: automation.washer_notify_done
     service: automation.trigger
+  - data: {}
+    entity_id: automation.washer_machine_finished
+    service: automation.turn_off
 - id: '1581777529393'
   alias: 'Washer: Handle *washer_emptied* telegram message'
   description: ''
@@ -433,6 +437,12 @@
   action:
   - entity_id: automation.washer_notify_done
     service: automation.turn_off
+  - data_template:
+      message: Great, hopefully it won't rain!
+      target:
+      - '{{ states(''input_text.telegram_td'') }}'
+      - '{{ states(''input_text.telegram_ad'') }}'
+    service: telegram_bot.send_message
 - id: '1582057191428'
   alias: Printer - Telegram command
   description: Respond to */print* Telegram command with stats about 3D printer
@@ -470,3 +480,17 @@
   - data: {}
     entity_id: switch.blanket_tom
     service: switch.turn_off
+- id: '1583183000004'
+  alias: 'Washer: Machine on'
+  description: ''
+  trigger:
+  - entity_id: binary_sensor.washer
+    for: 00:10:00
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - data: {}
+    entity_id: automation.washer_machine_finished
+    service: automation.turn_on
