@@ -72,9 +72,9 @@ google:
   client_id: !secret google_client_id
   client_secret: !secret google_client_secret
   
-#sonoff:
-#  username: !secret ewelink_username
-#  password: !secret ewelink_password
+sonoff:
+  username: !secret ewelink_username
+  password: !secret ewelink_password
   
 tuya: 
   username: !secret tuya_username
@@ -83,6 +83,12 @@ tuya:
   platform: 'tuya'
   
 binary_sensor:
+  - platform: template
+    sensors:
+      washer:
+        friendly_name: "Washing machine"
+        value_template: >-
+          {{ states('sensor.sonoff_10003a0e20_power')|float > 5 }}
   - platform: template
     sensors:
       show_commute_work:

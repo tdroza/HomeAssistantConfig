@@ -96,3 +96,5 @@ switch.blanket_anna:
 switch.dehumidifier:
   friendly_name: Dehumidifier
   icon: mdi:air-humidifier
+binary_sensor.washer:
+  icon: mdi:washing-machine
