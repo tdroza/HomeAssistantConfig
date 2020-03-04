@@ -9,7 +9,7 @@
                             "user": "Mirror"
                         },
                         "config": {
-                            "default_tab": "6",
+                            "default_tab": "5",
                             "hide_tabs": [],
                             "kiosk_mode": true
                         }
@@ -748,6 +748,16 @@
                             ],
                             "image": "/local/neato.jpg",
                             "type": "picture-elements"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "binary_sensor.washer"
+                                }
+                            ],
+                            "show_header_toggle": false,
+                            "title": "Utility",
+                            "type": "entities"
                         },
                         {
                             "entities": [
@@ -1546,6 +1556,104 @@
                     "icon": "mdi:network",
                     "path": "network",
                     "title": "Network"
+                },
+                {
+                    "badges": [],
+                    "cards": [
+                        {
+                            "cards": [
+                                {
+                                    "card": null,
+                                    "entities": [
+                                        {
+                                            "entity": "sensor.uk_coronavirus_current",
+                                            "icon": "mdi:medical-bag",
+                                            "name": "Current"
+                                        },
+                                        {
+                                            "entity": "sensor.uk_coronavirus_deaths",
+                                            "icon": "mdi:emoticon-dead",
+                                            "name": "Deaths"
+                                        },
+                                        {
+                                            "entity": "sensor.uk_coronavirus_recovered",
+                                            "icon": "mdi:doctor",
+                                            "name": "Recovered"
+                                        },
+                                        {
+                                            "entity": "sensor.uk_coronavirus_confirmed",
+                                            "icon": "mdi:account-multiple",
+                                            "name": "Confirmed"
+                                        }
+                                    ],
+                                    "show_icon": true,
+                                    "show_name": true,
+                                    "show_state": true,
+                                    "title": "UK",
+                                    "type": "glance"
+                                },
+                                {
+                                    "card": null,
+                                    "entities": [
+                                        "sensor.uk_coronavirus_confirmed",
+                                        "sensor.uk_coronavirus_current",
+                                        "sensor.uk_coronavirus_deaths",
+                                        "sensor.uk_coronavirus_recovered"
+                                    ],
+                                    "type": "custom:mini-graph-card"
+                                }
+                            ],
+                            "type": "vertical-stack"
+                        },
+                        {
+                            "cards": [
+                                {
+                                    "card": null,
+                                    "entities": [
+                                        {
+                                            "entity": "sensor.worldwide_coronavirus_current",
+                                            "icon": "mdi:medical-bag",
+                                            "name": "Current"
+                                        },
+                                        {
+                                            "entity": "sensor.worldwide_coronavirus_deaths",
+                                            "icon": "mdi:emoticon-dead",
+                                            "name": "Deaths"
+                                        },
+                                        {
+                                            "entity": "sensor.worldwide_coronavirus_recovered",
+                                            "icon": "mdi:doctor",
+                                            "name": "Recovered"
+                                        },
+                                        {
+                                            "entity": "sensor.worldwide_coronavirus_confirmed",
+                                            "icon": "mdi:account-multiple",
+                                            "name": "Confirmed"
+                                        }
+                                    ],
+                                    "show_icon": true,
+                                    "show_name": true,
+                                    "show_state": true,
+                                    "title": "Worldwide",
+                                    "type": "glance"
+                                },
+                                {
+                                    "card": null,
+                                    "entities": [
+                                        "sensor.worldwide_coronavirus_confirmed",
+                                        "sensor.worldwide_coronavirus_current",
+                                        "sensor.worldwide_coronavirus_deaths",
+                                        "sensor.worldwide_coronavirus_recovered"
+                                    ],
+                                    "type": "custom:mini-graph-card"
+                                }
+                            ],
+                            "type": "vertical-stack"
+                        }
+                    ],
+                    "icon": "mdi:biohazard",
+                    "path": "coronavirus",
+                    "title": "Coronavirus"
                 }
             ]
         }
