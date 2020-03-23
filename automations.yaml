@@ -494,3 +494,45 @@
   - data: {}
     entity_id: automation.washer_machine_finished
     service: automation.turn_on
+- id: '1583963701174'
+  alias: Telegram - cam1
+  description: ''
+  trigger:
+  - event_data:
+      command: /cam1
+    event_type: telegram_callback
+    platform: event
+  - event_data:
+      command: /cam1
+    event_type: telegram_command
+    platform: event
+  condition: []
+  action:
+  - data:
+      entity_id: camera.esp32cam_one
+      filename: /tmp/cam1.jpg
+    service: camera.snapshot
+  - delay: '5'
+  - data:
+      data:
+        photo:
+          caption: Camera 1
+          url: /tmp/cam1.jpg
+      message: Camera 1
+    service: notify.telegram_td
+- id: '1584977470639'
+  alias: Telegram - Daily Beautiful News
+  description: Every day send the daily Beautiful News image from https://informationisbeautiful.net/beautifulnews/
+  trigger:
+  - at: '14:00'
+    platform: time
+  condition: []
+  action:
+  - data:
+      data:
+        photo:
+          caption: '{{ state_attr(''sensor.beautifulnews'',''entries'')[0].title }}'
+          url: '{{ (state_attr(''sensor.beautifulnews'',''entries'')[0].links | selectattr(''rel'',
+            ''eq'',''enclosure'') | list)[0].href }}'
+      message: test
+    service: notify.telegram_td
