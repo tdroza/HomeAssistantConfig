@@ -169,6 +169,11 @@ sensor:
     name: QOTD
     feed_url: http://feeds.feedburner.com/theysaidso/qod/inspire
   - platform: feedparser
+    name: BeautifulNews
+    feed_url: http://feeds.feedburner.com/beautifulnewsdaily
+    scan_interval: 43200
+    show_topn: 1  
+  - platform: feedparser
     name: BBC News
     feed_url: http://feeds.bbci.co.uk/news/rss.xml
     show_topn: 5
@@ -217,6 +222,8 @@ homeassistant:
   customize: !include customize.yaml
   name: Home
   unit_system: metric
+  whitelist_external_dirs:
+    - /tmp
 
 zone: !include zones.yaml
     
@@ -231,7 +238,6 @@ device_tracker:
     interval_seconds: 30
     new_device_defaults:
       track_new_devices: false
-      hide_if_away: false
   - platform: google_maps
     username: tom.annalou@gmail.com
     
