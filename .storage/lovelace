@@ -375,6 +375,7 @@
                                                     "name": "Temp"
                                                 }
                                             ],
+                                            "icon": "mdi:water-percent",
                                             "name": "Hall",
                                             "points_per_hour": 1,
                                             "show": {
@@ -853,6 +854,9 @@
                                 },
                                 {
                                     "entity": "light.hall"
+                                },
+                                {
+                                    "entity": "light.esp32cam_one_flash"
                                 }
                             ],
                             "title": "Light",
@@ -871,6 +875,23 @@
                                 }
                             ],
                             "type": "entities"
+                        },
+                        {
+                            "aspect_ratio": "0%",
+                            "camera_image": "camera.esp32cam_one",
+                            "entities": [
+                                {
+                                    "entity": "camera.esp32cam_one"
+                                },
+                                {
+                                    "entity": "light.esp32cam_one_flash"
+                                }
+                            ],
+                            "image": "https://www.home-assistant.io/images/merchandise/shirt-frontpage.png",
+                            "tap_action": {
+                                "action": "more-info"
+                            },
+                            "type": "picture-glance"
                         }
                     ],
                     "icon": "mdi:home-assistant",
@@ -1566,22 +1587,22 @@
                                     "card": null,
                                     "entities": [
                                         {
-                                            "entity": "sensor.uk_coronavirus_current",
+                                            "entity": "sensor.united_kingdom_coronavirus_current",
                                             "icon": "mdi:medical-bag",
                                             "name": "Current"
                                         },
                                         {
-                                            "entity": "sensor.uk_coronavirus_deaths",
+                                            "entity": "sensor.united_kingdom_coronavirus_deaths",
                                             "icon": "mdi:emoticon-dead",
                                             "name": "Deaths"
                                         },
                                         {
-                                            "entity": "sensor.uk_coronavirus_recovered",
+                                            "entity": "sensor.united_kingdom_coronavirus_recovered",
                                             "icon": "mdi:doctor",
                                             "name": "Recovered"
                                         },
                                         {
-                                            "entity": "sensor.uk_coronavirus_confirmed",
+                                            "entity": "sensor.united_kingdom_coronavirus_confirmed",
                                             "icon": "mdi:account-multiple",
                                             "name": "Confirmed"
                                         }
