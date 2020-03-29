@@ -528,6 +528,10 @@
     platform: time
   condition: []
   action:
+  - data: {}
+    entity_id: sensor.beautifulnews
+    service: homeassistant.update_entity
+  - delay: '10'
   - data:
       data:
         photo:
