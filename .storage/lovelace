@@ -26,48 +26,6 @@
                 "hidden_tab_redirect": false,
                 "shadow": false
             },
-            "resources": [
-                {
-                    "type": "module",
-                    "url": "/community_plugin/mini-graph-card/mini-graph-card-bundle.js"
-                },
-                {
-                    "type": "module",
-                    "url": "/community_plugin/button-card/button-card.js"
-                },
-                {
-                    "type": "module",
-                    "url": "/community_plugin/weather-card/weather-card.js"
-                },
-                {
-                    "type": "js",
-                    "url": "/community_plugin/lovelace-swipe-navigation/swipe-navigation.js"
-                },
-                {
-                    "type": "module",
-                    "url": "/community_plugin/custom-header/custom-header.js"
-                },
-                {
-                    "type": "js",
-                    "url": "/community_plugin/list-card/list-card.js?v=0"
-                },
-                {
-                    "type": "js",
-                    "url": "/community_plugin/travel-time-card/travel-time-card.js"
-                },
-                {
-                    "type": "js",
-                    "url": "/community_plugin/slideshow-card/slideshow-card.js"
-                },
-                {
-                    "type": "module",
-                    "url": "/community_plugin/atomic_calendar/atomic_calendar.js"
-                },
-                {
-                    "type": "css",
-                    "url": "https://fonts.googleapis.com/css?family=Raleway"
-                }
-            ],
             "swipe_nav": {
                 "animate": "swipe",
                 "wrap": true
@@ -491,10 +449,12 @@
                                     "cards": [
                                         {
                                             "entity": "light.living_room",
+                                            "icon": "mdi:lightbulb-group-outline",
                                             "type": "light"
                                         },
                                         {
                                             "entity": "light.main_bedroom",
+                                            "icon": "mdi:lightbulb-group-outline",
                                             "type": "light"
                                         }
                                     ],
@@ -503,11 +463,12 @@
                                 {
                                     "cards": [
                                         {
-                                            "entity": "light.sebastian_s_bedroom",
+                                            "entity": "light.seb_s_colour",
+                                            "name": "Sebastian's Room",
                                             "type": "light"
                                         },
                                         {
-                                            "entity": "light.reuben_s_room",
+                                            "entity": "light.reuben_s_bedroom",
                                             "type": "light"
                                         }
                                     ],
@@ -516,11 +477,11 @@
                                 {
                                     "cards": [
                                         {
-                                            "entity": "light.second_bedroom",
+                                            "entity": "light.second_bedroom_light",
                                             "type": "light"
                                         },
                                         {
-                                            "entity": "light.hall",
+                                            "entity": "light.hallway",
                                             "type": "light"
                                         }
                                     ],
@@ -551,10 +512,10 @@
                         {
                             "entities": [
                                 {
-                                    "entity": "light.main_bedroom"
+                                    "entity": "light.main_bedroom_colour"
                                 },
                                 {
-                                    "entity": "light.bloom"
+                                    "entity": "light.main_bedroom_bloom"
                                 },
                                 {
                                     "entity": "cover.tradfri_blind"
@@ -792,7 +753,7 @@
                                     "entity": "binary_sensor.hallway_motion_sensor_motion"
                                 },
                                 {
-                                    "entity": "light.hall"
+                                    "entity": "light.hallway"
                                 }
                             ],
                             "show_header_toggle": false,
@@ -818,7 +779,7 @@
                         {
                             "entities": [
                                 {
-                                    "entity": "light.reuben_s_room"
+                                    "entity": "light.reuben_s_bedroom"
                                 },
                                 {
                                     "entity": "light.reuben"
@@ -836,30 +797,6 @@
                             ],
                             "show_header_toggle": false,
                             "title": "Seb's Bedroom",
-                            "type": "entities"
-                        },
-                        {
-                            "entities": [
-                                {
-                                    "entity": "light.sebastian_s_bedroom"
-                                },
-                                {
-                                    "entity": "light.living_room"
-                                },
-                                {
-                                    "entity": "light.main_bedroom"
-                                },
-                                {
-                                    "entity": "light.reuben_s_room"
-                                },
-                                {
-                                    "entity": "light.hall"
-                                },
-                                {
-                                    "entity": "light.esp32cam_one_flash"
-                                }
-                            ],
-                            "title": "Light",
                             "type": "entities"
                         },
                         {
