@@ -792,6 +792,9 @@
                             "entities": [
                                 {
                                     "entity": "light.seb_s_colour"
+                                },
+                                {
+                                    "entity": "switch.sonoff_1000d4baef_1"
                                 }
                             ],
                             "show_header_toggle": false,

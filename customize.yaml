@@ -98,3 +98,22 @@ switch.dehumidifier:
   icon: mdi:air-humidifier
 binary_sensor.washer:
   icon: mdi:washing-machine
+ 
+switch.sonoff_1000d4bae8_1:
+  friendly_name: Sonoff Micro 1
+  icon: mdi:power-socket-uk
+switch.sonoff_1000d4bae8_2:
+  hidden: true
+switch.sonoff_1000d4bae8_3:
+  hidden: true
+switch.sonoff_1000d4bae8_4:
+  hidden: true
+switch.sonoff_1000d4baef_1:
+  friendly_name: Globe
+  icon: mdi:globe-model
+switch.sonoff_1000d4baef_2:
+  hidden: true
+switch.sonoff_1000d4baef_3:
+  hidden: true
+switch.sonoff_1000d4baef_4:
+  hidden: true  
