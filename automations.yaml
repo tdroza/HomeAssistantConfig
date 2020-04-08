@@ -371,10 +371,16 @@
   alias: Printer - Notify when complete
   description: Send a telegram and broadcast to Google Home when Printer is done
   trigger:
-  - entity_id: sensor.printer_current_state
-    from: Printing
+  - entity_id: binary_sensor.printer_printing
+    from: 'On'
     platform: state
-  condition: []
+    to: 'Off'
+  condition:
+  - condition: and
+    conditions:
+    - above: '95'
+      condition: numeric_state
+      entity_id: sensor.printer_job_percentage
   action:
   - data:
       message: The 3D Printer has finished
