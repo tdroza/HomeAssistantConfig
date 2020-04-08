@@ -10,8 +10,7 @@
                         },
                         "config": {
                             "default_tab": "5",
-                            "hide_tabs": [],
-                            "kiosk_mode": true
+                            "hide_tabs": []
                         }
                     },
                     {
@@ -1278,7 +1277,7 @@
                         {
                             "cards": [
                                 {
-                                    "content": "{{ states('sensor.date') }}\n{{ states('sensor.time') }}\n===",
+                                    "content": "{{ as_timestamp(states('sensor.date')) | timestamp_custom(\"%A, %d %B %Y\", True)}}\n{{ states('sensor.time') }}\n===",
                                     "type": "markdown"
                                 },
                                 {
