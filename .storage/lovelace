@@ -511,7 +511,7 @@
                         {
                             "entities": [
                                 {
-                                    "entity": "light.main_bedroom_colour"
+                                    "entity": "light.main_bedroom_ceiling"
                                 },
                                 {
                                     "entity": "light.main_bedroom_bloom"
@@ -769,6 +769,12 @@
                                 },
                                 {
                                     "entity": "light.lightstrip"
+                                },
+                                {
+                                    "entity": "sensor.living_room_temp"
+                                },
+                                {
+                                    "entity": "sensor.living_room_humidity"
                                 }
                             ],
                             "show_header_toggle": true,
@@ -782,6 +788,12 @@
                                 },
                                 {
                                     "entity": "light.reuben"
+                                },
+                                {
+                                    "entity": "sensor.reu_temperature"
+                                },
+                                {
+                                    "entity": "sensor.reu_humidity"
                                 }
                             ],
                             "show_header_toggle": false,
@@ -795,6 +807,12 @@
                                 },
                                 {
                                     "entity": "switch.sonoff_1000d4baef_1"
+                                },
+                                {
+                                    "entity": "sensor.seb_temperature"
+                                },
+                                {
+                                    "entity": "sensor.seb_humidity"
                                 }
                             ],
                             "show_header_toggle": false,
