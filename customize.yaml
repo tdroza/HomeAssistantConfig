@@ -60,7 +60,7 @@ light.living_room_2:
   icon: mdi:floor-lamp
 light.bloom:
   icon: mdi:desk-lamp
-light.main_bedroom:
+light.main_bedroom_ceiling:
   icon: mdi:ceiling-light
 light.second_bedroom:
   icon: mdi:ceiling-light

@@ -8,17 +8,13 @@ all_my_lights:
   name: All My Lights
   entities: 
     - light.advent
-    - light.bloom
-    - light.dimmable_light_1
-    - light.extended_color_light_1_2
-    - light.hall
+    - light.hallway
     - light.lightstick
-    - light.lightstick_2
     - light.lightstrip
-    - light.living_room_1
-    - light.living_room_2
+    - light.living_room
     - light.main_bedroom
     - light.reuben_s_bedroom
+    - light.reuben
+    - light.bloom
     - light.seb_s_colour
-    - light.wled_light
-    - light.xmas
+    - light.second_bedroom_light
