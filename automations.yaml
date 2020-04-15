@@ -372,9 +372,9 @@
   description: Send a telegram and broadcast to Google Home when Printer is done
   trigger:
   - entity_id: binary_sensor.printer_printing
-    from: 'On'
+    from: 'on'
     platform: state
-    to: 'Off'
+    to: 'off'
   condition:
   - condition: and
     conditions:
@@ -444,7 +444,7 @@
   - entity_id: automation.washer_notify_done
     service: automation.turn_off
   - data_template:
-      message: Great, hopefully it won't rain!
+      message: "Great! The forecast for today is: {{ state_attr('weather.millview', 'temperature') }}°C, {{ states('weather.millview')}}. Wind speed is {{ state_attr('weather.millview', 'wind_speed') }}km/h."
       target:
       - '{{ states(''input_text.telegram_td'') }}'
       - '{{ states(''input_text.telegram_ad'') }}'
@@ -546,3 +546,17 @@
             ''eq'',''enclosure'') | list)[0].href }}'
       message: test
     service: notify.telegram_td
+- id: '1586469687141'
+  alias: 'Globe: turn off after 30m'
+  description: ''
+  trigger:
+  - entity_id: switch.sonoff_1000d4baef_1
+    for: 00:30:00
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - data: {}
+    entity_id: switch.sonoff_1000d4baef_1
+    service: switch.turn_off
