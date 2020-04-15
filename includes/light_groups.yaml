@@ -1,0 +1,11 @@
+- platform: group
+  name: Living Room
+  entities:
+  - light.living_room_1
+  - light.living_room_2
+  - light.lightstrip
+- platform: group
+  name: Main bedroom
+  entities:
+  - light.main_bedroom_ceiling
+  - light.main_bedroom_bloom

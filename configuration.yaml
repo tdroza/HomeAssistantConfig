@@ -7,22 +7,22 @@ frontend:
   extra_module_url:
     - /local/GlobalVariables.js
   
-# Uncomment this if you are using SSL/TLS, running in Docker container, etc.
-http:
-   base_url: https://tdroza.duckdns.org
-   ssl_certificate: /ssl/fullchain.pem
-   ssl_key: /ssl/privkey.pem
-   
 # Text to speech
 tts:
   - platform: google_translate
 
-group: !include groups.yaml
 automation: !include automations.yaml
+automation old: !include_dir_merge_list automations
+binary_sensor: !include includes/binary_sensors.yaml
+device_tracker: !include includes/device_trackers.yaml
+group: !include groups.yaml
+http: !include includes/http.yaml
+light: !include includes/light_groups.yaml
+notify: !include includes/notify.yaml
+recorder: !include includes/recorder.yaml
 script: !include scripts.yaml
-
-recorder:
-  purge_keep_days: 2
+sensor: !include includes/sensors.yaml
+zone: !include zones.yaml
 
 pi_hole:
   - host: 192.168.1.215
@@ -33,12 +33,11 @@ octoprint:
   name: 'Printer'
   bed: true
   number_of_tools: 1
-  
 
 media_player:
   - platform: kodi
     host: 192.168.1.170
-    
+
 speedtestdotnet:
   scan_interval:  
     hours: 1
@@ -46,22 +45,14 @@ speedtestdotnet:
     - ping
     - download
     - upload
-    
+
 telegram_bot:
   - platform: polling
     api_key: !secret telegram_ha_bot_key
     allowed_chat_ids: 
       - !secret telegram_bot_chat_id_td
       - !secret telegram_bot_chat_id_ad
-      
-notify:
-  - name: telegram_td
-    platform: telegram
-    chat_id: !secret telegram_bot_chat_id_td
-  - name: telegram_ad
-    platform: telegram
-    chat_id: !secret telegram_bot_chat_id_ad
-   
+
 input_text:
   telegram_td: 
     initial: !secret telegram_bot_chat_id_td
@@ -81,156 +72,7 @@ tuya:
   password: !secret tuya_password
   country_code: '44'
   platform: 'tuya'
-  
-binary_sensor:
-  - platform: template
-    sensors:
-      washer:
-        friendly_name: "Washing machine"
-        value_template: >-
-          {{ states('sensor.sonoff_10003a0e20_power')|float > 5 }}
-  - platform: template
-    sensors:
-      show_commute_work:
-        friendly_name: Display card between 07:00 and 09:00.
-        entity_id: sensor.time
-        value_template: >
-           {{ 7 <= now().hour < 9 }}
-  - platform: template
-    sensors:
-      show_commute_home:
-        friendly_name: Display card between 16:00 and 18:00.
-        entity_id: sensor.time
-        value_template: >
-           {{ 16 <= now().hour < 18 }}           
-sensor:
-  - platform: template
-    sensors:
-      vacuum_state:
-        value_template: 'Ditto: {{ states.vacuum.ditto.attributes.status }}'
-      vacuum_last_run:
-        value_template: '{{ as_timestamp(states.vacuum.ditto.attributes.clean_start) | timestamp_custom("%d.%m.%Y") }}'
-      vacuum_last_qm:
-        value_template: '{{ states.vacuum.ditto.attributes.clean_area | round(0) }} m²'
-      vacuum_battery:
-        value_template: '{{ states.vacuum.ditto.attributes.battery_level }} %'
-        icon_template: '{{ states.vacuum.ditto.attributes.battery_icon }}'
-  - platform: time_date
-    display_options:
-      - 'time'
-      - 'date'
-  - platform: synologydsm
-    host: 192.168.1.205
-    username: hassio
-    password: !secret synology
-    monitored_conditions:
-      - cpu_total_load
-      - memory_real_usage
-      - network_up
-      - volume_percentage_used
 
-  - platform: template
-    sensors:
-      hallway_motion_sensor_temperature_rounded:
-        friendly_name: 'Hall Temp'
-        value_template: '{{states.sensor.hallway_motion_sensor_temperature.state |round(0)}}'
-  - platform: template
-    sensors:
-      white_temperature_rounded:
-        friendly_name: 'Kitchen Temp'
-        value_template: '{{states.sensor.white_temperature.state |round(0)}}'
-  - platform: template
-    sensors:
-      bed1_temperature_rounded:
-        friendly_name: 'Bed1 Temp'
-        value_template: '{{states.sensor.bed1_temperature.state |round(0)}}'
-  - platform: template
-    sensors:
-      seb_temperature_rounded:
-        friendly_name: 'Seb Temp'
-        value_template: '{{states.sensor.seb_temperature.state |round(0)}}'
-  - platform: template
-    sensors:
-      reuben_temperature_rounded:
-        friendly_name: 'Reuben Temp'
-        value_template: '{{states.sensor.reu_temperature.state |round(0)}}'
-  - platform: template
-    sensors:
-      bathroom_temperature_rounded:
-        friendly_name: 'Bathroom Temp'
-        value_template: '{{states.sensor.bathroom_temperature.state |round(0)}}'
-  - platform: template
-    sensors:
-      ensuite_temperature_rounded:
-        friendly_name: 'Ensuite Temp'
-        value_template: '{{states.sensor.ensuite_temperature.state |round(0)}}'
-  - platform: feedparser
-    scan_interval: 43200
-    name: QOTD
-    feed_url: http://feeds.feedburner.com/theysaidso/qod/inspire
-  - platform: feedparser
-    name: BeautifulNews
-    feed_url: http://feeds.feedburner.com/beautifulnewsdaily
-    scan_interval: 43200
-    show_topn: 1  
-  - platform: feedparser
-    name: BBC News
-    feed_url: http://feeds.bbci.co.uk/news/rss.xml
-    show_topn: 5
-  - platform: google_travel_time
-    name: 'Shipley to Leeds'
-    api_key: !secret gcloud_api_key
-    origin: Shipley, UK
-    destination: Leeds, UK
-    scan_interval: 3600
-    options:
-      mode: transit
-      transit_mode: train
-#  - platform: google_travel_time
-#    name: 'Shipley to Bradford'
-#    api_key: !secret gcloud_api_key
-#    origin: Shipley, UK
-#    destination: Bradford, UK
-#    scan_interval: 3600
-#    options:
-#      mode: transit
-#      transit_mode: train      
-  - platform: uk_transport
-    scan_interval: 86400
-    app_id: !secret uk_transport-app_id
-    app_key: !secret uk_transport-app_key
-    queries:
-      - mode: train
-        origin: SHY
-        destination: LDS    
-  - platform: uk_transport
-    scan_interval: 86400
-    app_id: !secret uk_transport-app_id
-    app_key: !secret uk_transport-app_key
-    queries:
-      - mode: train
-        origin: LDS
-        destination: SHY   
-  - platform: rest
-    resource: https://complimentr.com/api
-    method: GET
-    name: compliment
-    scan_interval: 3600
-    value_template: '{{ value_json.compliment }}'
-
-light:
-  - platform: group
-    name: Living Room
-    entities:
-      - light.living_room_1
-      - light.living_room_2
-      - light.lightstrip
-  - platform: group
-    name: Main bedroom
-    entities:
-      - light.main_bedroom_colour
-      - light.main_bedroom_bloom
-      
 homeassistant:
   customize: !include customize.yaml
   name: Home
@@ -238,19 +80,7 @@ homeassistant:
   whitelist_external_dirs:
     - /tmp
 
-zone: !include zones.yaml
-    
 ifttt:
   key:
     tom: !secret tom_ifttt
     anna: !secret anna_ifttt
-
-device_tracker:
-  - platform: bt_smarthub
-    host: 192.168.1.254
-    interval_seconds: 30
-    new_device_defaults:
-      track_new_devices: false
-  - platform: google_maps
-    username: tom.annalou@gmail.com
-    

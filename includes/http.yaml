@@ -1,0 +1,3 @@
+base_url: https://tdroza.duckdns.org
+ssl_certificate: /ssl/fullchain.pem
+ssl_key: /ssl/privkey.pem

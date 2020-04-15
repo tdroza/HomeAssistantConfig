@@ -1,0 +1,26 @@
+- platform: template
+  sensors:
+    washer:
+      friendly_name: "Washing machine"
+      value_template: >-
+        {{ states('sensor.sonoff_10003a0e20_power')|float > 5 }}
+      icon_template: >
+        {% if is_state("binary_sensor.washer", "on") %}
+          mdi:washing-machine
+        {% else %}
+          mdi:washing-machine-off
+        {% endif %}
+- platform: template
+  sensors:
+    show_commute_work:
+      friendly_name: Display card between 07:00 and 09:00.
+      entity_id: sensor.time
+      value_template: >
+         {{ 7 <= now().hour < 9 }}
+- platform: template
+  sensors:
+    show_commute_home:
+      friendly_name: Display card between 16:00 and 18:00.
+      entity_id: sensor.time
+      value_template: >
+         {{ 16 <= now().hour < 18 }}           
