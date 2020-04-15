@@ -96,8 +96,6 @@ switch.blanket_anna:
 switch.dehumidifier:
   friendly_name: Dehumidifier
   icon: mdi:air-humidifier
-binary_sensor.washer:
-  icon: mdi:washing-machine
  
 switch.sonoff_1000d4bae8_1:
   friendly_name: Sonoff Micro 1
