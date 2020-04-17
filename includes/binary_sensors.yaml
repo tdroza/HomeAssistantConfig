@@ -10,6 +10,11 @@
         {% else %}
           mdi:washing-machine-off
         {% endif %}
+      delay_on: 
+        minutes: 10
+      delay_off:
+        seconds: 30
+            
 - platform: template
   sensors:
     show_commute_work:

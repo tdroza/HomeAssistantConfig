@@ -385,7 +385,6 @@
   description: ''
   trigger:
   - entity_id: binary_sensor.washer
-    for: 00:02:00
     from: 'on'
     platform: state
     to: 'off'
@@ -415,7 +414,9 @@
   - entity_id: automation.washer_notify_done
     service: automation.turn_off
   - data_template:
-      message: "Great! The forecast for today is: {{ state_attr('weather.millview', 'temperature') }}°C, {{ states('weather.millview')}}. Wind speed is {{ state_attr('weather.millview', 'wind_speed') }}km/h."
+      message: 'Great! The forecast for today is: {{ state_attr(''weather.millview'',
+        ''temperature'') }}°C, {{ states(''weather.millview'')}}. Wind speed is {{
+        state_attr(''weather.millview'', ''wind_speed'') }}km/h.'
       target:
       - '{{ states(''input_text.telegram_td'') }}'
       - '{{ states(''input_text.telegram_ad'') }}'
@@ -457,20 +458,6 @@
   - data: {}
     entity_id: switch.blanket_tom
     service: switch.turn_off
-- id: '1583183000004'
-  alias: 'Washer: Machine on'
-  description: ''
-  trigger:
-  - entity_id: binary_sensor.washer
-    for: 00:10:00
-    from: 'off'
-    platform: state
-    to: 'on'
-  condition: []
-  action:
-  - data: {}
-    entity_id: automation.washer_machine_finished
-    service: automation.turn_on
 - id: '1583963701174'
   alias: Telegram - cam1
   description: ''
