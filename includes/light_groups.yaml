@@ -9,3 +9,8 @@
   entities:
   - light.main_bedroom_ceiling
   - light.main_bedroom_bloom
+- platform: group
+  name: Reubens bedroom
+  entities:
+  - light.reuben
+  - light.reuben_ceiling
