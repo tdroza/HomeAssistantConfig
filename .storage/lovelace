@@ -340,6 +340,81 @@
                         {
                             "cards": [
                                 {
+                                    "card": null,
+                                    "name": "Living Room",
+                                    "template": "button-card-headers",
+                                    "type": "custom:button-card"
+                                },
+                                {
+                                    "cards": [
+                                        {
+                                            "entity": "light.living_room_1",
+                                            "type": "light"
+                                        },
+                                        {
+                                            "entity": "light.living_room_2",
+                                            "type": "light"
+                                        },
+                                        {
+                                            "entity": "light.lightstrip",
+                                            "type": "light"
+                                        }
+                                    ],
+                                    "type": "horizontal-stack"
+                                },
+                                {
+                                    "card": null,
+                                    "color_thresholds": [
+                                        {
+                                            "color": "var(--temp-twenty)",
+                                            "value": 20
+                                        },
+                                        {
+                                            "color": "var(--temp-nineteen)",
+                                            "value": 19
+                                        },
+                                        {
+                                            "color": "var(--temp-eighteen)",
+                                            "value": 18
+                                        },
+                                        {
+                                            "color": "var(--temp-seventeen)",
+                                            "value": 17
+                                        },
+                                        {
+                                            "color": "var(--temp-sixteen)",
+                                            "value": 16
+                                        }
+                                    ],
+                                    "entities": [
+                                        {
+                                            "entity": "sensor.living_room_temp",
+                                            "index": 0,
+                                            "name": "Temp"
+                                        },
+                                        {
+                                            "color": "var(--humidity)",
+                                            "entity": "sensor.living_room_humidity",
+                                            "index": 1,
+                                            "name": "Humidity",
+                                            "y_axis": "secondary"
+                                        }
+                                    ],
+                                    "name": "Living room",
+                                    "points_per_hour": 1,
+                                    "show": {
+                                        "icon": false,
+                                        "labels": true,
+                                        "name": false
+                                    },
+                                    "type": "custom:mini-graph-card"
+                                }
+                            ],
+                            "type": "vertical-stack"
+                        },
+                        {
+                            "cards": [
+                                {
                                     "name": "Master Bedroom",
                                     "template": "button-card-headers",
                                     "type": "custom:button-card"
@@ -438,42 +513,6 @@
                                         "name": false
                                     },
                                     "type": "custom:mini-graph-card"
-                                }
-                            ],
-                            "type": "vertical-stack"
-                        },
-                        {
-                            "cards": [
-                                {
-                                    "name": "Utility",
-                                    "template": "button-card-headers",
-                                    "type": "custom:button-card"
-                                },
-                                {
-                                    "cards": [
-                                        {
-                                            "aspect_ratio": "1/1.25",
-                                            "card": null,
-                                            "entity": "binary_sensor.washer",
-                                            "show_name": false,
-                                            "state": [
-                                                {
-                                                    "color": "var(--state-icon-active-color)",
-                                                    "value": "on"
-                                                }
-                                            ],
-                                            "type": "custom:button-card"
-                                        },
-                                        {
-                                            "card": null,
-                                            "entities": [
-                                                "sensor.sonoff_10003a0e20_power"
-                                            ],
-                                            "name": "Washer Power",
-                                            "type": "custom:mini-graph-card"
-                                        }
-                                    ],
-                                    "type": "horizontal-stack"
                                 }
                             ],
                             "type": "vertical-stack"
@@ -589,13 +628,13 @@
                                     ],
                                     "entities": [
                                         {
-                                            "entity": "sensor.living_room_temp",
+                                            "entity": "sensor.reu_temperature",
                                             "index": 0,
                                             "name": "Temp"
                                         },
                                         {
                                             "color": "var(--humidity)",
-                                            "entity": "sensor.living_room_humidity",
+                                            "entity": "sensor.reu_humidity",
                                             "index": 1,
                                             "name": "Humidity",
                                             "y_axis": "secondary"
@@ -660,13 +699,13 @@
                                     ],
                                     "entities": [
                                         {
-                                            "entity": "sensor.living_room_temp",
+                                            "entity": "sensor.seb_temperature",
                                             "index": 0,
                                             "name": "Temp"
                                         },
                                         {
                                             "color": "var(--humidity)",
-                                            "entity": "sensor.living_room_humidity",
+                                            "entity": "sensor.seb_humidity",
                                             "index": 1,
                                             "name": "Humidity",
                                             "y_axis": "secondary"
@@ -680,6 +719,42 @@
                                         "name": false
                                     },
                                     "type": "custom:mini-graph-card"
+                                }
+                            ],
+                            "type": "vertical-stack"
+                        },
+                        {
+                            "cards": [
+                                {
+                                    "name": "Utility",
+                                    "template": "button-card-headers",
+                                    "type": "custom:button-card"
+                                },
+                                {
+                                    "cards": [
+                                        {
+                                            "aspect_ratio": "1/1.25",
+                                            "card": null,
+                                            "entity": "binary_sensor.washer",
+                                            "show_name": false,
+                                            "state": [
+                                                {
+                                                    "color": "var(--state-icon-active-color)",
+                                                    "value": "on"
+                                                }
+                                            ],
+                                            "type": "custom:button-card"
+                                        },
+                                        {
+                                            "card": null,
+                                            "entities": [
+                                                "sensor.sonoff_10003a0e20_power"
+                                            ],
+                                            "name": "Washer Power",
+                                            "type": "custom:mini-graph-card"
+                                        }
+                                    ],
+                                    "type": "horizontal-stack"
                                 }
                             ],
                             "type": "vertical-stack"
@@ -865,81 +940,6 @@
                                 }
                             ],
                             "type": "entities"
-                        },
-                        {
-                            "cards": [
-                                {
-                                    "card": null,
-                                    "name": "Living Room",
-                                    "template": "button-card-headers",
-                                    "type": "custom:button-card"
-                                },
-                                {
-                                    "cards": [
-                                        {
-                                            "entity": "light.living_room_1",
-                                            "type": "light"
-                                        },
-                                        {
-                                            "entity": "light.living_room_2",
-                                            "type": "light"
-                                        },
-                                        {
-                                            "entity": "light.lightstrip",
-                                            "type": "light"
-                                        }
-                                    ],
-                                    "type": "horizontal-stack"
-                                },
-                                {
-                                    "card": null,
-                                    "color_thresholds": [
-                                        {
-                                            "color": "var(--temp-twenty)",
-                                            "value": 20
-                                        },
-                                        {
-                                            "color": "var(--temp-nineteen)",
-                                            "value": 19
-                                        },
-                                        {
-                                            "color": "var(--temp-eighteen)",
-                                            "value": 18
-                                        },
-                                        {
-                                            "color": "var(--temp-seventeen)",
-                                            "value": 17
-                                        },
-                                        {
-                                            "color": "var(--temp-sixteen)",
-                                            "value": 16
-                                        }
-                                    ],
-                                    "entities": [
-                                        {
-                                            "entity": "sensor.living_room_temp",
-                                            "index": 0,
-                                            "name": "Temp"
-                                        },
-                                        {
-                                            "color": "var(--humidity)",
-                                            "entity": "sensor.living_room_humidity",
-                                            "index": 1,
-                                            "name": "Humidity",
-                                            "y_axis": "secondary"
-                                        }
-                                    ],
-                                    "name": "Living room",
-                                    "points_per_hour": 1,
-                                    "show": {
-                                        "icon": false,
-                                        "labels": true,
-                                        "name": false
-                                    },
-                                    "type": "custom:mini-graph-card"
-                                }
-                            ],
-                            "type": "vertical-stack"
                         },
                         {
                             "aspect_ratio": "0%",
