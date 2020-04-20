@@ -1,0 +1,13 @@
+{
+    "data": {
+        "devices": [
+            {
+                "ieee": "00:12:4b:00:19:3b:18:68",
+                "last_seen": null,
+                "name": "Texas Instruments ZNP Coordinator"
+            }
+        ]
+    },
+    "key": "zha.storage",
+    "version": 1
+}
