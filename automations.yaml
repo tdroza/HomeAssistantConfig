@@ -82,7 +82,7 @@
       target:
       - '{{ states(''input_text.telegram_td'') }}'
       - '{{ states(''input_text.telegram_ad'') }}'
-      message: Nobody is home but lights have been left on
+      message: 💡 Nobody is home but lights have been left on
   - alias: ''
     data: {}
     entity_id: automation.lights_on_repeat_notification
@@ -375,7 +375,7 @@
   - data_template:
       inline_keyboard:
       - Washer Emptied:/washer_emptied
-      message: The washing machine has finished, please hang out the washing
+      message: 🧺 The washing machine has finished, please hang out the washing
       target:
       - '{{ states(''input_text.telegram_td'') }}'
       - '{{ states(''input_text.telegram_ad'') }}'
@@ -394,9 +394,6 @@
     service: automation.turn_on
   - entity_id: automation.washer_notify_done
     service: automation.trigger
-  - data: {}
-    entity_id: automation.washer_machine_finished
-    service: automation.turn_off
 - id: '1581777529393'
   alias: 'Washer: Handle *washer_emptied* telegram message'
   description: ''
