@@ -11,7 +11,7 @@
           mdi:washing-machine-off
         {% endif %}
       delay_on: 
-        minutes: 10
+        minutes: 5
       delay_off:
         seconds: 30
             
