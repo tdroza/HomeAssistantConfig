@@ -745,12 +745,18 @@
                                         {
                                             "entities": [
                                                 {
+                                                    "entity": "sensor.washing_machine_count",
+                                                    "name": "Washes in last 7d"
+                                                },
+                                                {
                                                     "entity": "sensor.sonoff_10003a0e20_power",
-                                                    "name": false
+                                                    "name": "Power"
                                                 }
                                             ],
                                             "entity": "binary_sensor.washer",
                                             "secondary_info": "last-changed",
+                                            "show_state": false,
+                                            "state": false,
                                             "state_color": true,
                                             "type": "custom:multiple-entity-row"
                                         }

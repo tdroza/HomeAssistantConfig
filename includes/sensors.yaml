@@ -101,3 +101,27 @@
   name: compliment
   scan_interval: 3600
   value_template: '{{ value_json.compliment }}'
+- platform: history_stats
+  name: Quarantine meter Tom
+  entity_id: person.tom
+  state: "home"
+  type: ratio
+  duration:
+    days: 7
+  end: "{{ now() }}"
+- platform: history_stats
+  name: Quarantine meter Tom count left
+  entity_id: person.tom
+  state: "home"
+  type: count
+  duration:
+    days: 7
+  end: "{{ now() }}"
+- platform: history_stats
+  name: Washing Machine Count
+  entity_id: binary_sensor.washer
+  state: "on"
+  type: count
+  duration:
+    days: 7
+  end: "{{ now() }}"
