@@ -423,10 +423,12 @@
                                     "cards": [
                                         {
                                             "entity": "light.main_bedroom_ceiling",
+                                            "name": "Ceiling",
                                             "type": "light"
                                         },
                                         {
                                             "entity": "light.main_bedroom_bloom",
+                                            "name": "Bloom",
                                             "type": "light"
                                         }
                                     ],
@@ -528,13 +530,14 @@
                                     "cards": [
                                         {
                                             "entity": "light.hallway",
+                                            "name": " ",
                                             "type": "light"
                                         },
                                         {
                                             "aspect_ratio": "1/1.25",
                                             "entity": "binary_sensor.hallway_motion_sensor_motion",
                                             "icon": "mdi:motion-sensor",
-                                            "name": "Motion",
+                                            "show_name": false,
                                             "type": "custom:button-card"
                                         }
                                     ],
@@ -593,10 +596,12 @@
                                     "cards": [
                                         {
                                             "entity": "light.reuben_ceiling",
+                                            "name": " ",
                                             "type": "light"
                                         },
                                         {
                                             "entity": "light.reuben",
+                                            "name": " ",
                                             "type": "light"
                                         }
                                     ],
@@ -663,12 +668,14 @@
                                     "cards": [
                                         {
                                             "entity": "light.seb_s_colour",
+                                            "name": " ",
                                             "type": "light"
                                         },
                                         {
                                             "aspect_ratio": "1/1.5",
                                             "entity": "switch.sonoff_1000d4baef_1",
-                                            "type": "custom:button-card"
+                                            "show_name": false,
+                                            "type": "button"
                                         }
                                     ],
                                     "type": "horizontal-stack"
@@ -726,35 +733,37 @@
                         {
                             "cards": [
                                 {
+                                    "entities": [
+                                        "sensor.sonoff_10003a0e20_power"
+                                    ],
                                     "name": "Utility",
                                     "template": "button-card-headers",
                                     "type": "custom:button-card"
                                 },
                                 {
-                                    "cards": [
+                                    "entities": [
                                         {
-                                            "aspect_ratio": "1/1.25",
-                                            "card": null,
-                                            "entity": "binary_sensor.washer",
-                                            "show_name": false,
-                                            "state": [
+                                            "entities": [
                                                 {
-                                                    "color": "var(--state-icon-active-color)",
-                                                    "value": "on"
+                                                    "entity": "sensor.sonoff_10003a0e20_power",
+                                                    "name": false
                                                 }
                                             ],
-                                            "type": "custom:button-card"
-                                        },
-                                        {
-                                            "card": null,
-                                            "entities": [
-                                                "sensor.sonoff_10003a0e20_power"
-                                            ],
-                                            "name": "Washer Power",
-                                            "type": "custom:mini-graph-card"
+                                            "entity": "binary_sensor.washer",
+                                            "secondary_info": "last-changed",
+                                            "state_color": true,
+                                            "type": "custom:multiple-entity-row"
                                         }
                                     ],
-                                    "type": "horizontal-stack"
+                                    "type": "entities"
+                                },
+                                {
+                                    "card": null,
+                                    "entities": [
+                                        "sensor.sonoff_10003a0e20_power"
+                                    ],
+                                    "name": "Washer Power",
+                                    "type": "custom:mini-graph-card"
                                 }
                             ],
                             "type": "vertical-stack"
