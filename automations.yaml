@@ -368,14 +368,16 @@
     platform: time_pattern
   condition: []
   action:
-  - data:
+  - data_template:
       entity_id: media_player.living_room_display
-      message: The washing machine has finished, please hang out the washing
+      message: The washing machine finished {{ relative_time(states.binary_sensor.washer.last_changed)
+        }}ago, please hang out the washing
     service: tts.google_translate_say
   - data_template:
       inline_keyboard:
       - Washer Emptied:/washer_emptied
-      message: 🧺 The washing machine has finished, please hang out the washing
+      message: 🧺 The washing machine finished {{ relative_time(states.binary_sensor.washer.last_changed)
+        }} ago, please hang out the washing
       target:
       - '{{ states(''input_text.telegram_td'') }}'
       - '{{ states(''input_text.telegram_ad'') }}'
