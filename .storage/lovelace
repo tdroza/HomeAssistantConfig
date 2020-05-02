@@ -286,53 +286,67 @@
                         {
                             "cards": [
                                 {
-                                    "entities": [
-                                        {
-                                            "entity": "light.living_room_1",
-                                            "type": "custom:slider-entity-row"
-                                        },
-                                        {
-                                            "entity": "light.living_room_2",
-                                            "type": "custom:slider-entity-row"
-                                        },
-                                        "light.lightstrip"
-                                    ],
-                                    "head": {
-                                        "entity": "light.living_room",
-                                        "icon": "mdi:lightbulb-group-outline"
-                                    },
-                                    "type": "custom:fold-entity-row"
+                                    "name": "Lights",
+                                    "template": "button-card-headers",
+                                    "type": "custom:button-card"
                                 },
                                 {
                                     "entities": [
+                                        "light.hallway",
                                         {
-                                            "entity": "light.main_bedroom_ceiling",
-                                            "type": "custom:slider-entity-row"
+                                            "entities": [
+                                                {
+                                                    "entity": "light.living_room_1",
+                                                    "type": "custom:slider-entity-row"
+                                                },
+                                                {
+                                                    "entity": "light.living_room_2",
+                                                    "type": "custom:slider-entity-row"
+                                                },
+                                                "light.lightstrip"
+                                            ],
+                                            "head": {
+                                                "entity": "light.living_room",
+                                                "icon": "mdi:lightbulb-group-outline"
+                                            },
+                                            "type": "custom:fold-entity-row"
                                         },
                                         {
-                                            "entity": "light.main_bedroom_bloom",
-                                            "type": "custom:slider-entity-row"
+                                            "entities": [
+                                                {
+                                                    "entity": "light.main_bedroom_ceiling",
+                                                    "type": "custom:slider-entity-row"
+                                                },
+                                                {
+                                                    "entity": "light.main_bedroom_bloom",
+                                                    "type": "custom:slider-entity-row"
+                                                }
+                                            ],
+                                            "head": {
+                                                "entity": "light.main_bedroom",
+                                                "icon": "mdi:lightbulb-group-outline"
+                                            },
+                                            "type": "custom:fold-entity-row"
+                                        },
+                                        "light.second_bedroom_light",
+                                        "light.seb_s_colour",
+                                        {
+                                            "entities": [
+                                                {
+                                                    "entity": "light.reuben_ceiling",
+                                                    "type": "custom:slider-entity-row"
+                                                },
+                                                "light.reuben"
+                                            ],
+                                            "head": {
+                                                "entity": "light.reubens_bedroom",
+                                                "icon": "mdi:lightbulb-group-outline"
+                                            },
+                                            "type": "custom:fold-entity-row"
                                         }
                                     ],
-                                    "head": {
-                                        "entity": "light.main_bedroom",
-                                        "icon": "mdi:lightbulb-group-outline"
-                                    },
-                                    "type": "custom:fold-entity-row"
-                                },
-                                {
-                                    "entities": [
-                                        {
-                                            "entity": "light.reuben_ceiling",
-                                            "type": "custom:slider-entity-row"
-                                        },
-                                        "light.reuben"
-                                    ],
-                                    "head": {
-                                        "entity": "light.reubens_bedroom",
-                                        "icon": "mdi:lightbulb-group-outline"
-                                    },
-                                    "type": "custom:fold-entity-row"
+                                    "show_header_toggle": false,
+                                    "type": "entities"
                                 }
                             ],
                             "type": "vertical-stack"
@@ -745,18 +759,12 @@
                                         {
                                             "entities": [
                                                 {
-                                                    "entity": "sensor.washing_machine_count",
-                                                    "name": "Washes in last 7d"
-                                                },
-                                                {
                                                     "entity": "sensor.sonoff_10003a0e20_power",
-                                                    "name": "Power"
+                                                    "name": false
                                                 }
                                             ],
                                             "entity": "binary_sensor.washer",
                                             "secondary_info": "last-changed",
-                                            "show_state": false,
-                                            "state": false,
                                             "state_color": true,
                                             "type": "custom:multiple-entity-row"
                                         }
@@ -943,18 +951,54 @@
                             "type": "picture-elements"
                         },
                         {
-                            "entities": [
+                            "cards": [
                                 {
-                                    "entity": "sensor.oneplus5t_battery_level"
+                                    "name": "Phones",
+                                    "template": "button-card-headers",
+                                    "type": "custom:button-card"
                                 },
                                 {
-                                    "entity": "device_tracker.oneplus_a5010"
+                                    "entities": [
+                                        {
+                                            "entity": "sensor.oneplus5t_battery_level",
+                                            "name": "Battery"
+                                        },
+                                        {
+                                            "entity": "sensor.oneplus5t_wifi_connection",
+                                            "name": "Wifi"
+                                        },
+                                        {
+                                            "entity": "person.tom",
+                                            "name": "Location"
+                                        }
+                                    ],
+                                    "entity": "person.tom",
+                                    "secondary_info": "last-changed",
+                                    "show_state": false,
+                                    "type": "custom:multiple-entity-row"
                                 },
                                 {
-                                    "entity": "sensor.oneplus5t_wifi_connection"
+                                    "entities": [
+                                        {
+                                            "entity": "sensor.motog5_battery_level",
+                                            "name": "Battery"
+                                        },
+                                        {
+                                            "entity": "sensor.motog5_wifi_connection",
+                                            "name": "Wifi"
+                                        },
+                                        {
+                                            "entity": "person.anna",
+                                            "name": "Location"
+                                        }
+                                    ],
+                                    "entity": "person.anna",
+                                    "secondary_info": "last-changed",
+                                    "show_state": false,
+                                    "type": "custom:multiple-entity-row"
                                 }
                             ],
-                            "type": "entities"
+                            "type": "vertical-stack"
                         },
                         {
                             "aspect_ratio": "0%",
@@ -972,6 +1016,16 @@
                                 "action": "more-info"
                             },
                             "type": "picture-glance"
+                        },
+                        {
+                            "cards": [
+                                {
+                                    "name": "Garage",
+                                    "template": "button-card-headers",
+                                    "type": "custom:button-card"
+                                }
+                            ],
+                            "type": "vertical-stack"
                         }
                     ],
                     "icon": "mdi:home-assistant",
