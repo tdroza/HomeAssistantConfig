@@ -13,15 +13,6 @@
   display_options:
     - 'time'
     - 'date'
-- platform: synologydsm
-  host: 192.168.1.205
-  username: hassio
-  password: !secret synology
-  monitored_conditions:
-    - cpu_total_load
-    - memory_real_usage
-    - network_up
-    - volume_percentage_used
 - platform: template
   sensors:
     hallway_motion_sensor_temperature_rounded:
