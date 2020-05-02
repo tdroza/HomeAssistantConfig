@@ -5,6 +5,11 @@
                 "ieee": "00:12:4b:00:19:3b:18:68",
                 "last_seen": null,
                 "name": "Texas Instruments ZNP Coordinator"
+            },
+            {
+                "ieee": "00:15:8d:00:04:46:ef:c8",
+                "last_seen": 1588449127.8264382,
+                "name": "LUMI lumi.sensor_magnet.aq2"
             }
         ]
     },

@@ -985,6 +985,10 @@
                                     "name": "Garage",
                                     "template": "button-card-headers",
                                     "type": "custom:button-card"
+                                },
+                                {
+                                    "entity": "binary_sensor.garage_door",
+                                    "type": "entity"
                                 }
                             ],
                             "type": "vertical-stack"

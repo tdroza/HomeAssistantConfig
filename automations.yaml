@@ -517,3 +517,69 @@
   - data: {}
     entity_id: switch.sonoff_1000d4baef_1
     service: switch.turn_off
+- id: '1588449990654'
+  alias: 'Garage: Notification (repeat)'
+  description: ''
+  trigger:
+  - minutes: /15
+    platform: time_pattern
+  condition: []
+  action:
+  - data_template:
+      entity_id: media_player.living_room_display
+      message: The garage door was opened {{ relative_time(states.binary_sensor.garage_door.last_changed)
+        }} ago
+    service: tts.google_translate_say
+  - data_template:
+      message: The garage door was opened {{ relative_time(states.binary_sensor.garage_door.last_changed)
+        }} ago
+      target:
+      - '{{ states(''input_text.telegram_td'') }}'
+      - '{{ states(''input_text.telegram_ad'') }}'
+    service: telegram_bot.send_message
+- id: '1588450174191'
+  alias: 'Garage: Open'
+  description: ''
+  trigger:
+  - device_id: 1278b53baee94a0092621cb7e29f04f5
+    domain: binary_sensor
+    entity_id: binary_sensor.garage_door
+    platform: device
+    type: opened
+  condition: []
+  action:
+  - data_template:
+      message: The garage door was opened
+      target:
+      - '{{ states(''input_text.telegram_td'') }}'
+    service: telegram_bot.send_message
+  - data: {}
+    entity_id: automation.garage_notification_repeat
+    service: automation.turn_on
+  - data:
+      entity_id: media_player.living_room_display
+      message: The garage door was opened
+    service: tts.google_translate_say
+- id: '1588450370943'
+  alias: 'Garage: Closed'
+  description: ''
+  trigger:
+  - device_id: 1278b53baee94a0092621cb7e29f04f5
+    domain: binary_sensor
+    entity_id: binary_sensor.garage_door
+    platform: device
+    type: not_opened
+  condition: []
+  action:
+  - data_template:
+      message: The garage door was closed
+      target:
+      - '{{ states(''input_text.telegram_td'') }}'
+    service: telegram_bot.send_message
+  - data: {}
+    entity_id: automation.garage_notification_repeat
+    service: automation.turn_off
+  - data:
+        entity_id: media_player.living_room_display
+        message: The garage door was closed
+    service: tts.google_translate_say
