@@ -988,6 +988,34 @@
                                 }
                             ],
                             "type": "vertical-stack"
+                        },
+                        {
+                            "cards": [
+                                {
+                                    "name": "Sourdough",
+                                    "template": "button-card-headers",
+                                    "type": "custom:button-card"
+                                },
+                                {
+                                    "entities": [
+                                        "sensor.sourdough_height",
+                                        "sensor.sourdough_temperature"
+                                    ],
+                                    "type": "entities"
+                                },
+                                {
+                                    "entities": [
+                                        "sensor.sourdough_height",
+                                        "sensor.sourdough_temperature"
+                                    ],
+                                    "show": {
+                                        "icon": false,
+                                        "name": false
+                                    },
+                                    "type": "custom:mini-graph-card"
+                                }
+                            ],
+                            "type": "vertical-stack"
                         }
                     ],
                     "icon": "mdi:home-assistant",
