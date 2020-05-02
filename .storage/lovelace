@@ -118,101 +118,6 @@
                                             ],
                                             "entities": [
                                                 {
-                                                    "entity": "sensor.white_temperature",
-                                                    "index": 0,
-                                                    "name": "Temp"
-                                                },
-                                                {
-                                                    "color": "var(--humidity)",
-                                                    "entity": "sensor.white_humidity",
-                                                    "index": 1,
-                                                    "name": "Humidity",
-                                                    "y_axis": "secondary"
-                                                }
-                                            ],
-                                            "name": "Kitchen",
-                                            "points_per_hour": 1,
-                                            "show": {
-                                                "labels": true
-                                            },
-                                            "type": "custom:mini-graph-card"
-                                        },
-                                        {
-                                            "card": null,
-                                            "color_thresholds": [
-                                                {
-                                                    "color": "var(--temp-twenty)",
-                                                    "value": 20
-                                                },
-                                                {
-                                                    "color": "var(--temp-nineteen)",
-                                                    "value": 19
-                                                },
-                                                {
-                                                    "color": "var(--temp-eighteen)",
-                                                    "value": 18
-                                                },
-                                                {
-                                                    "color": "var(--temp-seventeen)",
-                                                    "value": 17
-                                                },
-                                                {
-                                                    "color": "var(--temp-sixteen)",
-                                                    "value": 16
-                                                }
-                                            ],
-                                            "entities": [
-                                                {
-                                                    "entity": "sensor.bed1_temperature",
-                                                    "index": 0,
-                                                    "name": "Temp"
-                                                },
-                                                {
-                                                    "color": "var(--humidity)",
-                                                    "entity": "sensor.bed1_humidity",
-                                                    "index": 1,
-                                                    "name": "Humidity",
-                                                    "y_axis": "secondary"
-                                                }
-                                            ],
-                                            "name": "Master Bedroom",
-                                            "points_per_hour": 1,
-                                            "show": {
-                                                "labels": true
-                                            },
-                                            "type": "custom:mini-graph-card"
-                                        }
-                                    ],
-                                    "type": "horizontal-stack"
-                                },
-                                {
-                                    "cards": [
-                                        {
-                                            "card": null,
-                                            "color_thresholds": [
-                                                {
-                                                    "color": "var(--temp-twenty)",
-                                                    "value": 20
-                                                },
-                                                {
-                                                    "color": "var(--temp-nineteen)",
-                                                    "value": 19
-                                                },
-                                                {
-                                                    "color": "var(--temp-eighteen)",
-                                                    "value": 18
-                                                },
-                                                {
-                                                    "color": "var(--temp-seventeen)",
-                                                    "value": 17
-                                                },
-                                                {
-                                                    "color": "var(--temp-sixteen)",
-                                                    "value": 16
-                                                }
-                                            ],
-                                            "entities": [
-                                                {
                                                     "entity": "sensor.bathroom_temperature",
                                                     "index": 0,
                                                     "name": "Temp"
@@ -429,6 +334,72 @@
                         {
                             "cards": [
                                 {
+                                    "name": "Hallway",
+                                    "template": "button-card-headers",
+                                    "type": "custom:button-card"
+                                },
+                                {
+                                    "cards": [
+                                        {
+                                            "entity": "light.hallway",
+                                            "name": " ",
+                                            "type": "light"
+                                        },
+                                        {
+                                            "aspect_ratio": "1/1.25",
+                                            "entity": "binary_sensor.hallway_motion_sensor_motion",
+                                            "icon": "mdi:motion-sensor",
+                                            "show_name": false,
+                                            "type": "custom:button-card"
+                                        }
+                                    ],
+                                    "type": "horizontal-stack"
+                                },
+                                {
+                                    "card": null,
+                                    "color_thresholds": [
+                                        {
+                                            "color": "var(--temp-twenty)",
+                                            "value": 20
+                                        },
+                                        {
+                                            "color": "var(--temp-nineteen)",
+                                            "value": 19
+                                        },
+                                        {
+                                            "color": "var(--temp-eighteen)",
+                                            "value": 18
+                                        },
+                                        {
+                                            "color": "var(--temp-seventeen)",
+                                            "value": 17
+                                        },
+                                        {
+                                            "color": "var(--temp-sixteen)",
+                                            "value": 16
+                                        }
+                                    ],
+                                    "entities": [
+                                        {
+                                            "entity": "sensor.hallway_motion_sensor_temperature",
+                                            "index": 0,
+                                            "name": "Temp"
+                                        }
+                                    ],
+                                    "points_per_hour": 1,
+                                    "show": {
+                                        "icon": false,
+                                        "labels": true,
+                                        "name": false
+                                    },
+                                    "type": "custom:mini-graph-card"
+                                }
+                            ],
+                            "type": "vertical-stack"
+                        },
+                        {
+                            "cards": [
+                                {
                                     "name": "Master Bedroom",
                                     "template": "button-card-headers",
                                     "type": "custom:button-card"
@@ -536,23 +507,22 @@
                         {
                             "cards": [
                                 {
-                                    "name": "Hallway",
+                                    "name": "Seb's Bedroom",
                                     "template": "button-card-headers",
                                     "type": "custom:button-card"
                                 },
                                 {
                                     "cards": [
                                         {
-                                            "entity": "light.hallway",
+                                            "entity": "light.seb_s_colour",
                                             "name": " ",
                                             "type": "light"
                                         },
                                         {
-                                            "aspect_ratio": "1/1.25",
-                                            "entity": "binary_sensor.hallway_motion_sensor_motion",
-                                            "icon": "mdi:motion-sensor",
+                                            "aspect_ratio": "1/1.5",
+                                            "entity": "switch.sonoff_1000d4baef_1",
                                             "show_name": false,
-                                            "type": "custom:button-card"
+                                            "type": "button"
                                         }
                                     ],
                                     "type": "horizontal-stack"
@@ -583,11 +553,19 @@
                                     ],
                                     "entities": [
                                         {
-                                            "entity": "sensor.hallway_motion_sensor_temperature",
+                                            "entity": "sensor.seb_temperature",
                                             "index": 0,
                                             "name": "Temp"
+                                        },
+                                        {
+                                            "color": "var(--humidity)",
+                                            "entity": "sensor.seb_humidity",
+                                            "index": 1,
+                                            "name": "Humidity",
+                                            "y_axis": "secondary"
                                         }
                                     ],
+                                    "name": "Living room",
                                     "points_per_hour": 1,
                                     "show": {
                                         "icon": false,
@@ -674,25 +652,177 @@
                         {
                             "cards": [
                                 {
-                                    "name": "Seb's Bedroom",
+                                    "name": "Kitchen/Dining room",
                                     "template": "button-card-headers",
                                     "type": "custom:button-card"
                                 },
                                 {
-                                    "cards": [
+                                    "elements": [
                                         {
-                                            "entity": "light.seb_s_colour",
-                                            "name": " ",
-                                            "type": "light"
+                                            "entity": "sensor.vacuum_state",
+                                            "style": {
+                                                "background-color": "rgba(0, 0, 0, 0.3)",
+                                                "bottom": 0,
+                                                "color": "white",
+                                                "font-size": "16px",
+                                                "left": 0,
+                                                "line-height": "32px",
+                                                "padding": "0 8px",
+                                                "pointer-events": "none",
+                                                "transform": "initial",
+                                                "width": "100%"
+                                            },
+                                            "type": "state-label"
                                         },
                                         {
-                                            "aspect_ratio": "1/1.5",
-                                            "entity": "switch.sonoff_1000d4baef_1",
-                                            "show_name": false,
-                                            "type": "button"
+                                            "entity": "vacuum.ditto",
+                                            "icon": "mdi:home",
+                                            "service": "vacuum.return_to_base",
+                                            "style": {
+                                                "bottom": 0,
+                                                "color": "white",
+                                                "line-height": "32px",
+                                                "margin": "0 152px 0 0",
+                                                "padding": "8px",
+                                                "right": 0,
+                                                "transform": "initial"
+                                            },
+                                            "tap_action": "call-service",
+                                            "type": "icon"
+                                        },
+                                        {
+                                            "entity": "vacuum.ditto",
+                                            "icon": "mdi:bell-ring",
+                                            "service": "vacuum.locate",
+                                            "style": {
+                                                "bottom": 0,
+                                                "color": "white",
+                                                "line-height": "32px",
+                                                "margin": "0 112px 0 0",
+                                                "padding": "8px",
+                                                "right": 0,
+                                                "transform": "initial"
+                                            },
+                                            "tap_action": "call-service",
+                                            "type": "icon"
+                                        },
+                                        {
+                                            "entity": "switch.ditto_schedule",
+                                            "style": {
+                                                "--paper-item-icon-color": "rgb(255,255,255)",
+                                                "bottom": 0,
+                                                "color": "white",
+                                                "line-height": "32px",
+                                                "margin": "0 42px -4px 0",
+                                                "padding": "8px",
+                                                "right": 0,
+                                                "transform": "initial"
+                                            },
+                                            "tap_action": "toggle",
+                                            "type": "state-icon"
+                                        },
+                                        {
+                                            "entity": "camera.ditto_cleaning_map",
+                                            "icon": "mdi:map",
+                                            "style": {
+                                                "bottom": 0,
+                                                "color": "white",
+                                                "line-height": "32px",
+                                                "margin": "0 8px 0 0",
+                                                "padding": "8px",
+                                                "right": 0,
+                                                "transform": "initial"
+                                            },
+                                            "type": "icon"
+                                        },
+                                        {
+                                            "entity": "sensor.vacuum_battery",
+                                            "style": {
+                                                "color": "rgba(255,255,255,1)",
+                                                "font-size": "12px",
+                                                "line-height": "32px",
+                                                "margin": "1px 35px",
+                                                "pointer-events": "none",
+                                                "right": 0,
+                                                "text-shadow": "rgba(0, 0, 0, 0.8) 0px 0px 2px",
+                                                "top": 0,
+                                                "transform": "initial"
+                                            },
+                                            "type": "state-label"
+                                        },
+                                        {
+                                            "entity": "sensor.vacuum_battery",
+                                            "style": {
+                                                "--paper-item-icon-color": "rgb(255,255,255)",
+                                                "color": "rgba(255,255,255,1)",
+                                                "line-height": "32px",
+                                                "margin": "3px 5px 0 0",
+                                                "pointer-events": "none",
+                                                "right": 0,
+                                                "top": 0,
+                                                "transform": "scale(0.8)"
+                                            },
+                                            "type": "state-icon"
+                                        },
+                                        {
+                                            "entity": "sensor.vacuum_last_run",
+                                            "style": {
+                                                "color": "rgba(255,255,255,1)",
+                                                "font-size": "12px",
+                                                "line-height": "32px",
+                                                "margin": "30px 35px",
+                                                "pointer-events": "none",
+                                                "right": 0,
+                                                "text-shadow": "rgba(0, 0, 0, 0.8) 0px 0px 2px",
+                                                "top": 0,
+                                                "transform": "initial"
+                                            },
+                                            "type": "state-label"
+                                        },
+                                        {
+                                            "icon": "mdi:calendar-check",
+                                            "style": {
+                                                "color": "rgba(255,255,255,1)",
+                                                "line-height": "32px",
+                                                "margin": "36px 13px",
+                                                "pointer-events": "none",
+                                                "right": 0,
+                                                "top": 0,
+                                                "transform": "scale(0.8)"
+                                            },
+                                            "type": "icon"
+                                        },
+                                        {
+                                            "entity": "sensor.vacuum_last_qm",
+                                            "style": {
+                                                "color": "rgba(255,255,255,1)",
+                                                "font-size": "12px",
+                                                "line-height": "32px",
+                                                "margin": "59px 35px",
+                                                "pointer-events": "none",
+                                                "right": 0,
+                                                "text-shadow": "rgba(0, 0, 0, 0.8) 0px 0px 2px",
+                                                "top": 0,
+                                                "transform": "initial"
+                                            },
+                                            "type": "state-label"
+                                        },
+                                        {
+                                            "icon": "mdi:floor-plan",
+                                            "style": {
+                                                "color": "rgba(255,255,255,1)",
+                                                "line-height": "32px",
+                                                "margin": "65px 13px",
+                                                "pointer-events": "none",
+                                                "right": 0,
+                                                "top": 0,
+                                                "transform": "scale(0.8)"
+                                            },
+                                            "type": "icon"
                                         }
                                     ],
-                                    "type": "horizontal-stack"
+                                    "image": "/local/neato.jpg",
+                                    "type": "picture-elements"
                                 },
                                 {
                                     "card": null,
@@ -720,13 +850,13 @@
                                     ],
                                     "entities": [
                                         {
-                                            "entity": "sensor.seb_temperature",
+                                            "entity": "sensor.white_temperature",
                                             "index": 0,
                                             "name": "Temp"
                                         },
                                         {
                                             "color": "var(--humidity)",
-                                            "entity": "sensor.seb_humidity",
+                                            "entity": "sensor.white_humidity",
                                             "index": 1,
                                             "name": "Humidity",
                                             "y_axis": "secondary"
@@ -783,172 +913,21 @@
                             "type": "vertical-stack"
                         },
                         {
-                            "elements": [
+                            "aspect_ratio": "0%",
+                            "camera_image": "camera.esp32cam_one",
+                            "entities": [
                                 {
-                                    "entity": "sensor.vacuum_state",
-                                    "style": {
-                                        "background-color": "rgba(0, 0, 0, 0.3)",
-                                        "bottom": 0,
-                                        "color": "white",
-                                        "font-size": "16px",
-                                        "left": 0,
-                                        "line-height": "32px",
-                                        "padding": "0 8px",
-                                        "pointer-events": "none",
-                                        "transform": "initial",
-                                        "width": "100%"
-                                    },
-                                    "type": "state-label"
+                                    "entity": "camera.esp32cam_one"
                                 },
                                 {
-                                    "entity": "vacuum.ditto",
-                                    "icon": "mdi:home",
-                                    "service": "vacuum.return_to_base",
-                                    "style": {
-                                        "bottom": 0,
-                                        "color": "white",
-                                        "line-height": "32px",
-                                        "margin": "0 152px 0 0",
-                                        "padding": "8px",
-                                        "right": 0,
-                                        "transform": "initial"
-                                    },
-                                    "tap_action": "call-service",
-                                    "type": "icon"
-                                },
-                                {
-                                    "entity": "vacuum.ditto",
-                                    "icon": "mdi:bell-ring",
-                                    "service": "vacuum.locate",
-                                    "style": {
-                                        "bottom": 0,
-                                        "color": "white",
-                                        "line-height": "32px",
-                                        "margin": "0 112px 0 0",
-                                        "padding": "8px",
-                                        "right": 0,
-                                        "transform": "initial"
-                                    },
-                                    "tap_action": "call-service",
-                                    "type": "icon"
-                                },
-                                {
-                                    "entity": "switch.ditto_schedule",
-                                    "style": {
-                                        "--paper-item-icon-color": "rgb(255,255,255)",
-                                        "bottom": 0,
-                                        "color": "white",
-                                        "line-height": "32px",
-                                        "margin": "0 42px -4px 0",
-                                        "padding": "8px",
-                                        "right": 0,
-                                        "transform": "initial"
-                                    },
-                                    "tap_action": "toggle",
-                                    "type": "state-icon"
-                                },
-                                {
-                                    "entity": "camera.ditto_cleaning_map",
-                                    "icon": "mdi:map",
-                                    "style": {
-                                        "bottom": 0,
-                                        "color": "white",
-                                        "line-height": "32px",
-                                        "margin": "0 8px 0 0",
-                                        "padding": "8px",
-                                        "right": 0,
-                                        "transform": "initial"
-                                    },
-                                    "type": "icon"
-                                },
-                                {
-                                    "entity": "sensor.vacuum_battery",
-                                    "style": {
-                                        "color": "rgba(255,255,255,1)",
-                                        "font-size": "12px",
-                                        "line-height": "32px",
-                                        "margin": "1px 35px",
-                                        "pointer-events": "none",
-                                        "right": 0,
-                                        "text-shadow": "rgba(0, 0, 0, 0.8) 0px 0px 2px",
-                                        "top": 0,
-                                        "transform": "initial"
-                                    },
-                                    "type": "state-label"
-                                },
-                                {
-                                    "entity": "sensor.vacuum_battery",
-                                    "style": {
-                                        "--paper-item-icon-color": "rgb(255,255,255)",
-                                        "color": "rgba(255,255,255,1)",
-                                        "line-height": "32px",
-                                        "margin": "3px 5px 0 0",
-                                        "pointer-events": "none",
-                                        "right": 0,
-                                        "top": 0,
-                                        "transform": "scale(0.8)"
-                                    },
-                                    "type": "state-icon"
-                                },
-                                {
-                                    "entity": "sensor.vacuum_last_run",
-                                    "style": {
-                                        "color": "rgba(255,255,255,1)",
-                                        "font-size": "12px",
-                                        "line-height": "32px",
-                                        "margin": "30px 35px",
-                                        "pointer-events": "none",
-                                        "right": 0,
-                                        "text-shadow": "rgba(0, 0, 0, 0.8) 0px 0px 2px",
-                                        "top": 0,
-                                        "transform": "initial"
-                                    },
-                                    "type": "state-label"
-                                },
-                                {
-                                    "icon": "mdi:calendar-check",
-                                    "style": {
-                                        "color": "rgba(255,255,255,1)",
-                                        "line-height": "32px",
-                                        "margin": "36px 13px",
-                                        "pointer-events": "none",
-                                        "right": 0,
-                                        "top": 0,
-                                        "transform": "scale(0.8)"
-                                    },
-                                    "type": "icon"
-                                },
-                                {
-                                    "entity": "sensor.vacuum_last_qm",
-                                    "style": {
-                                        "color": "rgba(255,255,255,1)",
-                                        "font-size": "12px",
-                                        "line-height": "32px",
-                                        "margin": "59px 35px",
-                                        "pointer-events": "none",
-                                        "right": 0,
-                                        "text-shadow": "rgba(0, 0, 0, 0.8) 0px 0px 2px",
-                                        "top": 0,
-                                        "transform": "initial"
-                                    },
-                                    "type": "state-label"
-                                },
-                                {
-                                    "icon": "mdi:floor-plan",
-                                    "style": {
-                                        "color": "rgba(255,255,255,1)",
-                                        "line-height": "32px",
-                                        "margin": "65px 13px",
-                                        "pointer-events": "none",
-                                        "right": 0,
-                                        "top": 0,
-                                        "transform": "scale(0.8)"
-                                    },
-                                    "type": "icon"
+                                    "entity": "light.esp32cam_one_flash"
                                 }
                             ],
-                            "image": "/local/neato.jpg",
-                            "type": "picture-elements"
+                            "image": "https://www.home-assistant.io/images/merchandise/shirt-frontpage.png",
+                            "tap_action": {
+                                "action": "more-info"
+                            },
+                            "type": "picture-glance"
                         },
                         {
                             "cards": [
@@ -980,11 +959,11 @@
                                 {
                                     "entities": [
                                         {
-                                            "entity": "sensor.motog5_battery_level",
+                                            "entity": "sensor.moto_g_5_plus_battery_level",
                                             "name": "Battery"
                                         },
                                         {
-                                            "entity": "sensor.motog5_wifi_connection",
+                                            "entity": "sensor.moto_g_5_plus_wifi_connection",
                                             "name": "Wifi"
                                         },
                                         {
@@ -999,23 +978,6 @@
                                 }
                             ],
                             "type": "vertical-stack"
-                        },
-                        {
-                            "aspect_ratio": "0%",
-                            "camera_image": "camera.esp32cam_one",
-                            "entities": [
-                                {
-                                    "entity": "camera.esp32cam_one"
-                                },
-                                {
-                                    "entity": "light.esp32cam_one_flash"
-                                }
-                            ],
-                            "image": "https://www.home-assistant.io/images/merchandise/shirt-frontpage.png",
-                            "tap_action": {
-                                "action": "more-info"
-                            },
-                            "type": "picture-glance"
                         },
                         {
                             "cards": [
