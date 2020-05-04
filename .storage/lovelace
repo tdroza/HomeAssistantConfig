@@ -21,8 +21,7 @@
                                 "background-color": "#e5e5e5"
                             }
                         ]
-                    },
-                    "template": "header"
+                    }
                 }
             },
             "custom_header": {
