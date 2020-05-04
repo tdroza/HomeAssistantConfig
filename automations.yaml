@@ -313,7 +313,7 @@
     service: light.turn_on
 - id: '1581026602537'
   alias: 'Dehumidifier: Turn on'
-  description: ''
+  description: Turn on when humidity above 80
   trigger:
   - above: '80'
     entity_id: sensor.ensuite_humidity
@@ -325,7 +325,7 @@
     service: switch.turn_on
 - id: '1581026980222'
   alias: 'Dehumidifier: Turn off'
-  description: ''
+  description: Turn off when humidity below 70 for 5 minutes
   trigger:
   - below: '70'
     entity_id: sensor.ensuite_humidity
@@ -580,6 +580,6 @@
     entity_id: automation.garage_notification_repeat
     service: automation.turn_off
   - data:
-        entity_id: media_player.living_room_display
-        message: The garage door was closed
+      entity_id: media_player.living_room_display
+      message: The garage door was closed
     service: tts.google_translate_say
