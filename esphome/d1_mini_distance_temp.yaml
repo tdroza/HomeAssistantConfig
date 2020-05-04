@@ -1,0 +1,40 @@
+esphome:
+  name: d1_mini_distance_temp
+  platform: ESP8266
+  board: d1_mini
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  domain: ".lan"
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "D1 Mini Distance Temp"
+    password: !secret wifi_password
+
+captive_portal:
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+
+ota:
+
+dallas:
+  - pin: D5
+  
+sensor:
+  - platform: dallas
+    address: 0xB701187D0433FF28
+    name: "Sourdough Temperature"
+
+  - platform: ultrasonic
+    trigger_pin: D1
+    echo_pin: D2
+    filters:
+    - lambda: return 10.0 - (100 * x);
+    unit_of_measurement: "cm"
+    name: "Sourdough Height"
