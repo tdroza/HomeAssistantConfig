@@ -394,8 +394,14 @@
   action:
   - entity_id: automation.washer_notify_done
     service: automation.turn_on
-  - entity_id: automation.washer_notify_done
-    service: automation.trigger
+  - data_template:
+      inline_keyboard:
+      - Washer Emptied:/washer_emptied
+      message: 🧺 The washing machine has finished, please hang out the washing
+      target:
+      - '{{ states(''input_text.telegram_td'') }}'
+      - '{{ states(''input_text.telegram_ad'') }}'
+    service: telegram_bot.send_message
 - id: '1581777529393'
   alias: 'Washer: Handle *washer_emptied* telegram message'
   description: ''
