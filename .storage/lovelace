@@ -1503,6 +1503,10 @@
                             ],
                             "title": "Commute",
                             "type": "custom:travel-time-card"
+                        },
+                        {
+                            "entity": "input_number.diffuser_delay",
+                            "type": "entity"
                         }
                     ],
                     "icon": "mdi:archive",
