@@ -935,19 +935,28 @@
                                 {
                                     "entities": [
                                         {
-                                            "entity": "sensor.in2013_battery_level",
-                                            "name": "Battery"
+                                            "entity": "person.tom",
+                                            "icon": true,
+                                            "name": "Location"
                                         },
                                         {
                                             "entity": "sensor.in2013_wifi_connection",
-                                            "name": "Wifi"
+                                            "name": "SSID"
                                         },
                                         {
-                                            "entity": "person.tom",
-                                            "name": "Location"
+                                            "entity": "sensor.in2013_wifi_connection",
+                                            "icon": true,
+                                            "name": false
+                                        },
+                                        {
+                                            "entity": "sensor.in2013_battery_level",
+                                            "icon": true,
+                                            "name": false
                                         }
                                     ],
-                                    "entity": "person.tom",
+                                    "entity": "device_tracker.in2013",
+                                    "icon": "mdi:human-male",
+                                    "name": "Tom",
                                     "secondary_info": "last-changed",
                                     "show_state": false,
                                     "type": "custom:multiple-entity-row"
@@ -955,19 +964,27 @@
                                 {
                                     "entities": [
                                         {
-                                            "entity": "sensor.moto_g_5_plus_battery_level",
-                                            "name": "Battery"
+                                            "entity": "person.anna",
+                                            "name": "Location"
                                         },
                                         {
                                             "entity": "sensor.moto_g_5_plus_wifi_connection",
                                             "name": "Wifi"
                                         },
                                         {
-                                            "entity": "person.anna",
-                                            "name": "Location"
+                                            "entity": "sensor.moto_g_5_plus_wifi_connection",
+                                            "icon": true,
+                                            "name": false
+                                        },
+                                        {
+                                            "entity": "sensor.moto_g_5_plus_battery_level",
+                                            "icon": true,
+                                            "name": false
                                         }
                                     ],
-                                    "entity": "person.anna",
+                                    "entity": "device_tracker.moto_g_5_plus",
+                                    "icon": "mdi:human-female",
+                                    "name": "Anna",
                                     "secondary_info": "last-changed",
                                     "show_state": false,
                                     "type": "custom:multiple-entity-row"
