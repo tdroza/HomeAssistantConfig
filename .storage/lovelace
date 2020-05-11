@@ -219,10 +219,12 @@
                                             "entities": [
                                                 {
                                                     "entity": "light.main_bedroom_ceiling",
+                                                    "name": "Ceiling",
                                                     "type": "custom:slider-entity-row"
                                                 },
                                                 {
                                                     "entity": "light.main_bedroom_bloom",
+                                                    "name": "Bloom",
                                                     "type": "custom:slider-entity-row"
                                                 }
                                             ],
@@ -238,6 +240,7 @@
                                             "entities": [
                                                 {
                                                     "entity": "light.reuben_ceiling",
+                                                    "name": "Ceiling",
                                                     "type": "custom:slider-entity-row"
                                                 },
                                                 "light.reuben"
@@ -902,7 +905,9 @@
                                     "entities": [
                                         "sensor.sonoff_10003a0e20_power"
                                     ],
+                                    "hours_to_show": 168,
                                     "name": "Washer Power",
+                                    "points_per_hour": 5,
                                     "type": "custom:mini-graph-card"
                                 }
                             ],
