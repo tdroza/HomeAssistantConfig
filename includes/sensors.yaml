@@ -109,6 +109,22 @@
     days: 7
   end: "{{ now() }}"
 - platform: history_stats
+  name: Quarantine meter Anna count left
+  entity_id: person.anna
+  state: "home"
+  type: count
+  duration:
+    days: 7
+  end: "{{ now() }}"
+- platform: history_stats
+  name: Quarantine meter Anna
+  entity_id: person.anna
+  state: "home"
+  type: ratio
+  duration:
+    days: 7
+  end: "{{ now() }}"
+- platform: history_stats
   name: Washing Machine Count
   entity_id: binary_sensor.washer
   state: "on"

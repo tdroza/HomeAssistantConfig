@@ -1908,6 +1908,38 @@
                                 }
                             ],
                             "type": "vertical-stack"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "sensor.quarantine_meter_tom",
+                                    "name": "Proportion at home"
+                                },
+                                {
+                                    "entity": "sensor.quarantine_meter_tom_count_left",
+                                    "name": "Times left home"
+                                }
+                            ],
+                            "show_icon": false,
+                            "title": "Lockdown Meter, 7d (Tom)",
+                            "type": "glance"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "sensor.quarantine_meter_anna",
+                                    "name": "Proportion at home"
+                                },
+                                {
+                                    "entity": "sensor.quarantine_meter_anna_count_left",
+                                    "name": "Times left home"
+                                }
+                            ],
+                            "show_icon": false,
+                            "show_name": true,
+                            "show_state": true,
+                            "title": "Lockdown meter, 7d (Anna)",
+                            "type": "glance"
                         }
                     ],
                     "icon": "mdi:biohazard",
