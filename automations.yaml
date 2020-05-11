@@ -589,3 +589,15 @@
       entity_id: media_player.living_room_display
       message: The garage door was closed
     service: tts.google_translate_say
+- id: '1589231983089'
+  alias: 'Kodi: Turn off power after shutdown'
+  description: ''
+  trigger:
+  - entity_id: media_player.kodi
+    platform: state
+    to: 'off'
+  condition: []
+  action:
+  - delay: 00:00:15
+  - entity_id: switch.kodi
+    service: switch.turn_off
