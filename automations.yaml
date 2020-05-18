@@ -581,6 +581,7 @@
       message: The garage door was closed
       target:
       - '{{ states(''input_text.telegram_td'') }}'
+      - '{{ states(''input_text.telegram_ad'') }}'
     service: telegram_bot.send_message
   - data: {}
     entity_id: automation.garage_notification_repeat
