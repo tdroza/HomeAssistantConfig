@@ -1006,7 +1006,22 @@
                                 },
                                 {
                                     "entity": "binary_sensor.garage_door",
-                                    "type": "entity"
+                                    "icon": "mdi:garage",
+                                    "name": "Garage Door",
+                                    "show_last_changed": true,
+                                    "state": [
+                                        {
+                                            "color": "#EF4F1A",
+                                            "icon": "mdi:garage-open",
+                                            "value": "on"
+                                        },
+                                        {
+                                            "color": "#000000",
+                                            "icon": "mdi:garage",
+                                            "value": "off"
+                                        }
+                                    ],
+                                    "type": "custom:button-card"
                                 }
                             ],
                             "type": "vertical-stack"
