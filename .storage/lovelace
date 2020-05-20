@@ -602,6 +602,25 @@
                                     "type": "horizontal-stack"
                                 },
                                 {
+                                    "entity": "light.reuben_ceiling",
+                                    "hold_action": {
+                                        "action": "more-info"
+                                    },
+                                    "icon": "mdi:weather-night",
+                                    "name": "Night Light (20m)",
+                                    "show_icon": true,
+                                    "show_name": true,
+                                    "tap_action": {
+                                        "action": "call-service",
+                                        "service": "light.turn_off",
+                                        "service_data": {
+                                            "entity_id": "light.reuben_ceiling",
+                                            "transition": 5
+                                        }
+                                    },
+                                    "type": "button"
+                                },
+                                {
                                     "card": null,
                                     "color_thresholds": [
                                         {
@@ -1954,6 +1973,13 @@
                             "show_name": true,
                             "show_state": true,
                             "title": "Lockdown Meter, 7d (Anna)",
+                            "type": "glance"
+                        },
+                        {
+                            "entities": [
+                                "binary_sensor.motion_sensor",
+                                "sensor.temperature"
+                            ],
                             "type": "glance"
                         }
                     ],
