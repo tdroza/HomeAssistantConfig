@@ -1,0 +1,41 @@
+esphome:
+  name: d1mini_temp_pir
+  platform: ESP8266
+  board: d1_mini
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  domain: ".lan"
+
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "D1Mini Temp Pir Fallback Hotspot"
+    password: !secret wifi_password
+
+captive_portal:
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+
+ota:
+
+dallas:
+  - pin: D3
+    update_interval: 300s
+  
+sensor:
+  - platform: dallas
+    address: 0x760119500218FF28
+    name: "Temperature"
+
+
+binary_sensor:
+  - platform: gpio
+    pin: D1
+    name: "Motion Sensor"
+    device_class: motion

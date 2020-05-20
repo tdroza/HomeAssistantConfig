@@ -1,0 +1,44 @@
+esphome:
+  name: esp32_epaper
+  platform: ESP32
+  board: esp32dev
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  domain: ".lan"
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Esp32 Epaper Fallback Hotspot"
+    password: !secret wifi_password
+
+captive_portal:
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+
+ota:
+
+spi:
+  clk_pin: 18
+  mosi_pin: 23
+
+font:
+  - file: 'fonts/calibri.ttf'
+    id: calibri
+    size: 10
+
+display:
+  - platform: waveshare_epaper
+    cs_pin: 5
+    dc_pin: 19
+    busy_pin: 4
+    reset_pin: 12
+    model: 2.90in
+    full_update_every: 30
+    lambda: |-
+      it.print(0, 0, id(calibri), "Hello World!");
