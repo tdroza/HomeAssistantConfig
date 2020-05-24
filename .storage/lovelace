@@ -607,7 +607,7 @@
                                         "action": "more-info"
                                     },
                                     "icon": "mdi:weather-night",
-                                    "name": "Night Light (20m)",
+                                    "name": "Night Light (15m)",
                                     "show_icon": true,
                                     "show_name": true,
                                     "tap_action": {
@@ -615,7 +615,7 @@
                                         "service": "light.turn_off",
                                         "service_data": {
                                             "entity_id": "light.reuben_ceiling",
-                                            "transition": 5
+                                            "transition": 900
                                         }
                                     },
                                     "type": "button"
@@ -1041,6 +1041,16 @@
                                         }
                                     ],
                                     "type": "custom:button-card"
+                                },
+                                {
+                                    "entities": [
+                                        {
+                                            "entity": "binary_sensor.garage_door"
+                                        }
+                                    ],
+                                    "hours_to_show": 24,
+                                    "refresh_interval": 0,
+                                    "type": "history-graph"
                                 }
                             ],
                             "type": "vertical-stack"
