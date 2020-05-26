@@ -9,47 +9,58 @@ light.hall:
 sensor.tradfri_blind:
   device_class: DEVICE_CLASS_SHADE
   icon: mdi:blinds
-  
 sensor.bed1_temperature:
   friendly_name: Master bedroom
-sensor.bed1_humidity:  
+  device_class: temperature
+sensor.bed1_humidity:
+  device_class: humidity
   friendly_name: Master bedroom
 sensor.white_temperature_2:
   friendly_name: Kitchen
-sensor.white_humidity_2:  
+  device_class: temperature
+sensor.white_humidity_2:
   friendly_name: Kitchen
+  device_class: humidity
 sensor.seb_temperature:
   friendly_name: Seb
+  device_class: temperature
 sensor.seb_humidity:
   friendly_name: Seb
+  device_class: humidity
 sensor.reu_temperature:
   friendly_name: Reu
+  device_class: temperature
 sensor.reu_humidity:
   friendly_name: Reu
+  device_class: humidity
 sensor.living_room_temp:
   friendly_name: Living Room
+  device_class: temperature
 sensor.living_room_humidity:
   friendly_name: Living Room
+  device_class: humidity
 sensor.bathroom_temperature:
   friendly_name: Bathroom
+  device_class: temperature
 sensor.bathroom_humidity:
+  device_class: humidity
   friendly_name: Bathroom
 sensor.ensuite_humidity:
+  device_class: humidity
   friendly_name: Ensuite
 sensor.ensuite_temperature:
   friendly_name: Ensuite
-sensor.hallway_motion_sensor_temperature: 
+  device_class: temperature
+sensor.hallway_motion_sensor_temperature:
   friendly_name: Hall
-
+  device_class: temperature
 sensor.kitchen_voltage:
   friendly_name: Battery
-
 sensor.bed1_voltage_2:
   friendly_name: Battery
 binary_sensor.kitchen_motion_sensor:
   friendly_name: Motion
   icon: mdi:motion-sensor
-
 sensor.tradfri_open_close_remote:
   icon: mdi:remote
 light.living_room:
@@ -70,18 +81,6 @@ light.sebastian_s_bedroom:
   icon: mdi:ceiling-light
 light.reuben_s_room:
   icon: mdi:ceiling-light
-sensor.mi_temp_1_temperature:
-  friendly_name: Temperature
-sensor.mi_temp_1_humidity:
-  friendly_name: Humidity
-sensor.mi_temp_1_battery:
-  friendly_name: Battery
-sensor.mi_temp_2_temperature:
-  friendly_name: Temperature
-sensor.mi_temp_2_humidity:
-  friendly_name: Humidity
-sensor.mi_temp_2_battery:
-  friendly_name: Battery
 light.lightstrip:
   icon: mdi:led-strip-variant
   friendly_name: Movie Light
@@ -96,7 +95,6 @@ switch.blanket_anna:
 switch.dehumidifier:
   friendly_name: Dehumidifier
   icon: mdi:air-humidifier
- 
 switch.sonoff_1000d4bae8_1:
   friendly_name: Sonoff Micro 1
   icon: mdi:power-socket-uk
@@ -114,4 +112,10 @@ switch.sonoff_1000d4baef_2:
 switch.sonoff_1000d4baef_3:
   hidden: true
 switch.sonoff_1000d4baef_4:
-  hidden: true  
+  hidden: true
+sensor.white_temperature:
+  device_class: temperature
+sensor.white_humidity:
+  device_class: humidity
+sensor.sourdough_temperature:
+  device_class: temperature

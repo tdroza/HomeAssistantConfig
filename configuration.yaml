@@ -57,7 +57,6 @@ input_text:
     initial: !secret telegram_bot_chat_id_td
   telegram_ad: 
     initial: !secret telegram_bot_chat_id_ad
-    
 google: 
   client_id: !secret google_client_id
   client_secret: !secret google_client_secret
@@ -83,3 +82,12 @@ ifttt:
   key:
     tom: !secret tom_ifttt
     anna: !secret anna_ifttt
+
+google_assistant:
+  project_id: !secret google_assistant_project_id
+  service_account: !include includes/google_service_account.json
+  report_state: true
+  exposed_domains:
+    - sensor
+    - binary_sensor
+    - climate
