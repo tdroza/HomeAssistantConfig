@@ -602,3 +602,26 @@
   - delay: 00:00:15
   - entity_id: switch.kodi
     service: switch.turn_off
+- id: '1590597141876'
+  alias: Turn of Seb's light if no motion
+  description: ''
+  trigger:
+  - entity_id: binary_sensor.motion_sensor
+    for: 00:10:00
+    from: 'on'
+    platform: state
+    to: 'off'
+  condition:
+  - condition: device
+    device_id: a5013daedfd54ea398815eb2bfaa9a66
+    domain: light
+    entity_id: light.seb_s_colour
+    type: is_on
+  action:
+  - device_id: a5013daedfd54ea398815eb2bfaa9a66
+    domain: light
+    entity_id: light.seb_s_colour
+    type: turn_off
+  - data:
+      message: Turned off Seb's light due to no motion
+    service: notify.telegram_td
