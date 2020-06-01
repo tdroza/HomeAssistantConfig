@@ -1865,6 +1865,35 @@
                     "badges": [],
                     "cards": [
                         {
+                            "entities": [
+                                {
+                                    "entity": "sensor.worldwide_coronavirus_current",
+                                    "icon": "mdi:medical-bag",
+                                    "name": "Current"
+                                },
+                                {
+                                    "entity": "sensor.worldwide_coronavirus_deaths",
+                                    "icon": "mdi:emoticon-dead",
+                                    "name": "Deaths"
+                                },
+                                {
+                                    "entity": "sensor.worldwide_coronavirus_recovered",
+                                    "icon": "mdi:doctor",
+                                    "name": "Recovered"
+                                },
+                                {
+                                    "entity": "sensor.worldwide_coronavirus_confirmed",
+                                    "icon": "mdi:account-multiple",
+                                    "name": "Confirmed"
+                                }
+                            ],
+                            "show_icon": true,
+                            "show_name": true,
+                            "show_state": true,
+                            "title": "Worldwide",
+                            "type": "glance"
+                        },
+                        {
                             "cards": [
                                 {
                                     "card": null,
@@ -1910,51 +1939,6 @@
                             "type": "vertical-stack"
                         },
                         {
-                            "cards": [
-                                {
-                                    "card": null,
-                                    "entities": [
-                                        {
-                                            "entity": "sensor.worldwide_coronavirus_current",
-                                            "icon": "mdi:medical-bag",
-                                            "name": "Current"
-                                        },
-                                        {
-                                            "entity": "sensor.worldwide_coronavirus_deaths",
-                                            "icon": "mdi:emoticon-dead",
-                                            "name": "Deaths"
-                                        },
-                                        {
-                                            "entity": "sensor.worldwide_coronavirus_recovered",
-                                            "icon": "mdi:doctor",
-                                            "name": "Recovered"
-                                        },
-                                        {
-                                            "entity": "sensor.worldwide_coronavirus_confirmed",
-                                            "icon": "mdi:account-multiple",
-                                            "name": "Confirmed"
-                                        }
-                                    ],
-                                    "show_icon": true,
-                                    "show_name": true,
-                                    "show_state": true,
-                                    "title": "Worldwide",
-                                    "type": "glance"
-                                },
-                                {
-                                    "card": null,
-                                    "entities": [
-                                        "sensor.worldwide_coronavirus_confirmed",
-                                        "sensor.worldwide_coronavirus_current",
-                                        "sensor.worldwide_coronavirus_deaths",
-                                        "sensor.worldwide_coronavirus_recovered"
-                                    ],
-                                    "type": "custom:mini-graph-card"
-                                }
-                            ],
-                            "type": "vertical-stack"
-                        },
-                        {
                             "entities": [
                                 {
                                     "entity": "sensor.quarantine_meter_tom",
@@ -1985,7 +1969,15 @@
                             "show_state": true,
                             "title": "Lockdown Meter, 7d (Anna)",
                             "type": "glance"
-                        },
+                        }
+                    ],
+                    "icon": "mdi:biohazard",
+                    "path": "coronavirus",
+                    "title": "Coronavirus"
+                },
+                {
+                    "badges": [],
+                    "cards": [
                         {
                             "entities": [
                                 "binary_sensor.motion_sensor",
@@ -2010,13 +2002,6 @@
                             "type": "glance"
                         }
                     ],
-                    "icon": "mdi:biohazard",
-                    "path": "coronavirus",
-                    "title": "Coronavirus"
-                },
-                {
-                    "badges": [],
-                    "cards": [],
                     "icon": "mdi:beta",
                     "path": "beta",
                     "title": "Beta"
