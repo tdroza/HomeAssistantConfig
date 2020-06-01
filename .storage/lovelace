@@ -1732,6 +1732,7 @@
                     "icon": "mdi:image-frame",
                     "panel": true,
                     "path": "kiosk",
+                    "theme": "Google Dark Theme",
                     "title": "Smart Mirror"
                 },
                 {
@@ -1990,12 +1991,35 @@
                                 "binary_sensor.motion_sensor",
                                 "sensor.temperature"
                             ],
+                            "show_name": false,
+                            "title": "Seb",
+                            "type": "glance"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "binary_sensor.reu_d1_motion"
+                                },
+                                {
+                                    "entity": "sensor.reu_d1_temperature"
+                                }
+                            ],
+                            "show_name": false,
+                            "show_state": true,
+                            "title": "Reu",
                             "type": "glance"
                         }
                     ],
                     "icon": "mdi:biohazard",
                     "path": "coronavirus",
                     "title": "Coronavirus"
+                },
+                {
+                    "badges": [],
+                    "cards": [],
+                    "icon": "mdi:beta",
+                    "path": "beta",
+                    "title": "Beta"
                 }
             ]
         }
