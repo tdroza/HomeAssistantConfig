@@ -64,6 +64,7 @@ google:
 sonoff:
   username: !secret ewelink_username
   password: !secret ewelink_password
+  grace_period: 600
   
 tuya: 
   username: !secret tuya_username
