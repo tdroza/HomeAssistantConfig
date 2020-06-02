@@ -1980,8 +1980,12 @@
                     "cards": [
                         {
                             "entities": [
-                                "binary_sensor.motion_sensor",
-                                "sensor.temperature"
+                                {
+                                    "entity": "binary_sensor.seb_d1_motion"
+                                },
+                                {
+                                    "entity": "sensor.seb_d1_temperature"
+                                }
                             ],
                             "show_name": false,
                             "title": "Seb",
