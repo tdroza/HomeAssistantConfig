@@ -603,10 +603,10 @@
   - entity_id: switch.kodi
     service: switch.turn_off
 - id: '1590597141876'
-  alias: Turn of Seb's light if no motion
+  alias: 'Lights: Turn off Seb''s light if no motion'
   description: ''
   trigger:
-  - entity_id: binary_sensor.motion_sensor
+  - entity_id: binary_sensor.seb_d1_motion
     for: 00:10:00
     from: 'on'
     platform: state
