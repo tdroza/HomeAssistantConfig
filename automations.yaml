@@ -402,6 +402,10 @@
       - '{{ states(''input_text.telegram_td'') }}'
       - '{{ states(''input_text.telegram_ad'') }}'
     service: telegram_bot.send_message
+  - data:
+      entity_id: media_player.living_room_display
+      message: The washing machine has finished.
+    service: tts.google_translate_say
 - id: '1581777529393'
   alias: 'Washer: Handle *washer_emptied* telegram message'
   description: ''
@@ -617,6 +621,8 @@
     domain: light
     entity_id: light.seb_s_colour
     type: is_on
+  - after: 07:30
+    condition: time
   action:
   - device_id: a5013daedfd54ea398815eb2bfaa9a66
     domain: light
@@ -624,4 +630,28 @@
     type: turn_off
   - data:
       message: Turned off Seb's light due to no motion
+    service: notify.telegram_td
+- id: '1591347836942'
+  alias: 'Lights: Turn off Reu''s light if no motion'
+  description: ''
+  trigger:
+  - entity_id: binary_sensor.reu_d1_motion
+    for: 00:10:00
+    from: 'on'
+    platform: state
+    to: 'off'
+  condition:
+  - condition: device
+    device_id: 619a3f0d60bb4d59acaad81904062bf8
+    domain: light
+    entity_id: light.reuben_ceiling
+    type: is_on
+  - after: 07:30
+    condition: time
+  action:
+  - data: {}
+    entity_id: light.reubens_bedroom
+    service: light.turn_off
+  - data:
+      message: Turned off Reu's light due to no motion
     service: notify.telegram_td
