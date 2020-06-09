@@ -1,5 +1,17 @@
 - platform: template
   sensors:
+    weather_condition:
+      value_template: '{{ states.weather.millview.state }}'
+    weather_temperature:
+      value_template: '{{ states.weather.millview.attributes.temperature }}'
+    weather_humidity:
+      value_template: '{{ states.weather.millview.attributes.humidity }}'
+    weather_windspeed:
+      value_template: '{{ states.weather.millview.attributes.wind_speed }}'
+    weather_windbearing:
+      value_template: '{{ states.weather.millview.attributes.wind_bearing }}'
+- platform: template
+  sensors:
     vacuum_state:
       value_template: 'Ditto: {{ states.vacuum.ditto.attributes.status }}'
     vacuum_last_run:

@@ -4,7 +4,7 @@ esphome:
   board: esp32dev
 
 wifi:
-  ssid: !secret wifi_ssid
+  ssid: !secret wifi_iot_ssid
   password: !secret wifi_password
   domain: ".lan"
 
@@ -28,17 +28,179 @@ spi:
   mosi_pin: 23
 
 font:
-  - file: 'fonts/calibri.ttf'
-    id: calibri
-    size: 10
+  - file: 'fonts/Roboto-Regular.ttf'
+    id: roboto_s
+    size: 16
+  - file: 'fonts/Roboto-Regular.ttf'
+    id: roboto_m
+    size: 20
+  - file: 'fonts/Roboto-Regular.ttf'
+    id: roboto_l
+    size: 28
+  - file: 'fonts/Roboto-Bold.ttf'
+    id: roboto_bold_s
+    size: 16
+  - file: 'fonts/HelvetiPixel.ttf'
+    id: helvetica
+    size: 20
 
+time:
+  - platform: homeassistant
+    id: esptime
+    
+
+binary_sensor:
+  - platform: homeassistant
+    id: garage_door
+    entity_id: binary_sensor.garage_door
+    internal: true    
+  - platform: gpio
+    pin: GPIO39
+    name: "ePaper Next Page"
+    on_press:
+      then:
+        - display.page.show_next: epaper
+        - component.update: epaper     
+sensor:
+  - platform: homeassistant
+    id: bed1_temp
+    entity_id: sensor.bed1_temperature
+    internal: true    
+  - platform: homeassistant
+    id: reu_temp
+    entity_id: sensor.reu_temperature
+    internal: true
+  - platform: homeassistant
+    id: seb_temp
+    entity_id: sensor.seb_temperature
+    internal: true
+  - platform: homeassistant
+    id: bath_temp
+    entity_id: sensor.bathroom_temperature
+    internal: true
+  - platform: homeassistant
+    id: ensuite_temp
+    entity_id: sensor.ensuite_temperature
+    internal: true
+  - platform: homeassistant
+    id: lounge_temp
+    entity_id: sensor.living_room_temp
+    internal: true
+  - platform: homeassistant
+    id: bed1_humidity
+    entity_id: sensor.bed1_humidity
+    internal: true
+  - platform: homeassistant
+    id: reu_humidity
+    entity_id: sensor.reu_humidity
+    internal: true
+  - platform: homeassistant
+    id: seb_humidity
+    entity_id: sensor.seb_humidity
+    internal: true
+  - platform: homeassistant
+    id: bath_humidity
+    entity_id: sensor.bathroom_humidity
+    internal: true
+  - platform: homeassistant
+    id: ensuite_humidity
+    entity_id: sensor.ensuite_humidity
+    internal: true
+  - platform: homeassistant
+    id: lounge_humidity
+    entity_id: sensor.living_room_humidity
+    internal: true
+  - platform: homeassistant
+    id: weather_condition
+    entity_id: sensor.weather_condition
+    internal: true
+  - platform: homeassistant
+    id: weather_temperature
+    entity_id: sensor.weather_temperature
+    internal: true
+  - platform: homeassistant
+    id: weather_humidity
+    entity_id: sensor.weather_humidity
+    internal: true
+  - platform: homeassistant
+    id: weather_windspeed
+    entity_id: sensor.weather_windspeed
+    internal: true
+    
+image:
+  - file: "images/tom.png"
+    id: tom
+    resize: 100x100
+  - file: "images/thermometer-lines.png"
+    id: thermometer
+    resize: 24x24    
+  - file: "images/water-percent.png"
+    id: humidity
+    resize: 24x24      
+  - file: "images/thermometer-lines_50_inverse.png"
+    id: thermometer_50_inverse
+    resize: 50x50
+  - file: "images/water-percent_50_inverse.png"
+    id: humidity_50_inverse
+    resize: 50x50
+  - file: "images/weather-windy_50_inverse.png"
+    id: wind_50_inverse
+    resize: 50x50
 display:
   - platform: waveshare_epaper
     cs_pin: 5
-    dc_pin: 19
+    dc_pin: 17
     busy_pin: 4
-    reset_pin: 12
-    model: 2.90in
+    reset_pin: 16
+    model: 2.13in-ttgo-b73
+    rotation: 90°
     full_update_every: 30
-    lambda: |-
-      it.print(0, 0, id(calibri), "Hello World!");
+    update_interval: 15s
+    id: epaper
+    pages:
+      - id: page_image
+        lambda: |-
+          it.image(75, 10, id(tom));
+          it.print(0, 0, id(roboto_l),"Hello, World!");
+      - id: page_temps
+        lambda: |-
+          it.printf(0, 5, id(roboto_m), TextAlign::TOP_LEFT , "Bed1: %.1f°", (id(bed1_temp).has_state()?id(bed1_temp).state:0.0));
+          it.printf(125, 5, id(roboto_m), TextAlign::TOP_LEFT , "Ensuite: %.1f°", id(ensuite_temp).has_state()?id(ensuite_temp).state:0.0);
+          it.printf(0, 30, id(roboto_m), TextAlign::TOP_LEFT , "Bed3: %.1f°", id(seb_temp).has_state()?id(seb_temp).state:0.0);
+          it.printf(125, 30, id(roboto_m), TextAlign::TOP_LEFT , "Bed4: %.1f°", id(reu_temp).has_state()?id(reu_temp).state:0.0);
+          it.printf(0, 55, id(roboto_m), TextAlign::TOP_LEFT , "Bath: %.1f°", id(bath_temp).has_state()?id(bath_temp).state:0.0);
+          it.printf(125, 55, id(roboto_m), TextAlign::TOP_LEFT , "Lounge: %.1f°", id(lounge_temp).has_state()?id(lounge_temp).state:0.0);
+          it.printf(0, 80, id(roboto_m), TextAlign::TOP_LEFT , "Garage: %s", id(garage_door).state?"Open":"Closed");
+          it.image(220, 80, id(thermometer));
+          
+          it.filled_rectangle(0, 110, 250, 122);
+          it.strftime(250, 130, id(roboto_bold_s), COLOR_OFF, TextAlign::BOTTOM_RIGHT , "%H:%M", id(esptime).now());
+      - id: page_humidity
+        lambda: |-
+          it.printf(0, 5, id(roboto_m), TextAlign::TOP_LEFT , "Bed1: %.1f%%", (id(bed1_humidity).has_state()?id(bed1_humidity).state:0.0));
+          it.printf(125, 5, id(roboto_m), TextAlign::TOP_LEFT , "Ensuite: %.1f%%", id(ensuite_humidity).has_state()?id(ensuite_humidity).state:0.0);
+          it.printf(0, 30, id(roboto_m), TextAlign::TOP_LEFT , "Bed3: %.1f%%", id(seb_humidity).has_state()?id(seb_humidity).state:0.0);
+          it.printf(125, 30, id(roboto_m), TextAlign::TOP_LEFT , "Bed4: %.1f%%", id(reu_humidity).has_state()?id(reu_humidity).state:0.0);
+          it.printf(0, 55, id(roboto_m), TextAlign::TOP_LEFT , "Bath: %.1f%%", id(bath_humidity).has_state()?id(bath_humidity).state:0.0);
+          it.printf(125, 55, id(roboto_m), TextAlign::TOP_LEFT , "Lounge: %.1f%%", id(lounge_humidity).has_state()?id(lounge_humidity).state:0.0);
+          it.printf(0, 80, id(roboto_m), TextAlign::TOP_LEFT , "Garage: %s", id(garage_door).state?"Open":"Closed");
+          it.image(220, 80, id(humidity));
+          
+          it.filled_rectangle(0, 110, 250, 122);
+          it.strftime(250, 130, id(roboto_bold_s), COLOR_OFF, TextAlign::BOTTOM_RIGHT , "%H:%M", id(esptime).now());
+      - id: page_weather
+        lambda: |-
+          it.printf(15, 20, id(roboto_l), TextAlign::TOP_LEFT , "%.1f", id(weather_temperature).state);
+          it.printf(105, 20, id(roboto_l), TextAlign::TOP_LEFT , "%.1f", id(weather_humidity).state);
+          it.printf(200, 20, id(roboto_l), TextAlign::TOP_LEFT , "%.1f", id(weather_windspeed).state);
+          
+          it.filled_rectangle(0, 60, 250, 122);
+          it.image(20, 70, id(thermometer_50_inverse));
+          it.image(100, 70, id(humidity_50_inverse));
+          it.image(180, 70, id(wind_50_inverse));
+
+# interval:
+#  - interval: 15s
+#    then:
+#      - display.page.show_next: epaper
+#      - component.update: epaper        
