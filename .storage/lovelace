@@ -424,7 +424,7 @@
                                 {
                                     "cards": [
                                         {
-                                            "entity": "cover.tradfri_blind",
+                                            "entity": "cover.large_blind",
                                             "type": "custom:slider-entity-row"
                                         },
                                         {
