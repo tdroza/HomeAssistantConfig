@@ -36,6 +36,7 @@ font:
     size: 20
   - file: 'fonts/Roboto-Regular.ttf'
     id: roboto_l
+    glyphs: '!/"%()+,-_.:°0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz'''
     size: 28
   - file: 'fonts/Roboto-Bold.ttf'
     id: roboto_bold_s
@@ -146,6 +147,7 @@ image:
   - file: "images/weather-windy_50_inverse.png"
     id: wind_50_inverse
     resize: 50x50
+    
 display:
   - platform: waveshare_epaper
     cs_pin: 5
@@ -157,50 +159,67 @@ display:
     full_update_every: 30
     update_interval: 15s
     id: epaper
+
     pages:
       - id: page_image
         lambda: |-
-          it.image(75, 10, id(tom));
-          it.print(0, 0, id(roboto_l),"Hello, World!");
+          it.image(5, 20, id(tom));
+          it.print(125, 66, id(roboto_l), TextAlign::CENTER, "Tom D'Roza");
       - id: page_temps
         lambda: |-
-          it.printf(0, 5, id(roboto_m), TextAlign::TOP_LEFT , "Bed1: %.1f°", (id(bed1_temp).has_state()?id(bed1_temp).state:0.0));
-          it.printf(125, 5, id(roboto_m), TextAlign::TOP_LEFT , "Ensuite: %.1f°", id(ensuite_temp).has_state()?id(ensuite_temp).state:0.0);
-          it.printf(0, 30, id(roboto_m), TextAlign::TOP_LEFT , "Bed3: %.1f°", id(seb_temp).has_state()?id(seb_temp).state:0.0);
-          it.printf(125, 30, id(roboto_m), TextAlign::TOP_LEFT , "Bed4: %.1f°", id(reu_temp).has_state()?id(reu_temp).state:0.0);
-          it.printf(0, 55, id(roboto_m), TextAlign::TOP_LEFT , "Bath: %.1f°", id(bath_temp).has_state()?id(bath_temp).state:0.0);
-          it.printf(125, 55, id(roboto_m), TextAlign::TOP_LEFT , "Lounge: %.1f°", id(lounge_temp).has_state()?id(lounge_temp).state:0.0);
-          it.printf(0, 80, id(roboto_m), TextAlign::TOP_LEFT , "Garage: %s", id(garage_door).state?"Open":"Closed");
+          it.printf(0, 5, id(roboto_m), TextAlign::TOP_LEFT, "Bed1:");
+          it.printf(115, 5, id(roboto_m), TextAlign::TOP_RIGHT, "%.1f°", (id(bed1_temp).has_state()?id(bed1_temp).state:0.0));
+          it.printf(125, 5, id(roboto_m), TextAlign::TOP_LEFT, "Ensuite:");
+          it.printf(249, 5, id(roboto_m), TextAlign::TOP_RIGHT, "%.1f°", id(ensuite_temp).has_state()?id(ensuite_temp).state:0.0);
+          it.printf(0, 30, id(roboto_m), TextAlign::TOP_LEFT, "Bed3:");
+          it.printf(115, 30, id(roboto_m), TextAlign::TOP_RIGHT, "%.1f°", id(seb_temp).has_state()?id(seb_temp).state:0.0);
+          it.printf(125, 30, id(roboto_m), TextAlign::TOP_LEFT, "Bed4:");
+          it.printf(249, 30, id(roboto_m), TextAlign::TOP_RIGHT, "%.1f°", id(reu_temp).has_state()?id(reu_temp).state:0.0);
+          it.printf(0, 55, id(roboto_m), TextAlign::TOP_LEFT, "Bath:");
+          it.printf(115, 55, id(roboto_m), TextAlign::TOP_RIGHT, "%.1f°", id(bath_temp).has_state()?id(bath_temp).state:0.0);
+          it.printf(125, 55, id(roboto_m), TextAlign::TOP_LEFT, "Lounge:");
+          it.printf(249, 55, id(roboto_m), TextAlign::TOP_RIGHT, "%.1f°", id(lounge_temp).has_state()?id(lounge_temp).state:0.0);
+          it.printf(0, 80, id(roboto_m), TextAlign::TOP_LEFT, "Garage: %s", id(garage_door).state?"Open":"Closed");
           it.image(220, 80, id(thermometer));
           
           it.filled_rectangle(0, 110, 250, 122);
           it.strftime(250, 130, id(roboto_bold_s), COLOR_OFF, TextAlign::BOTTOM_RIGHT , "%H:%M", id(esptime).now());
       - id: page_humidity
         lambda: |-
-          it.printf(0, 5, id(roboto_m), TextAlign::TOP_LEFT , "Bed1: %.1f%%", (id(bed1_humidity).has_state()?id(bed1_humidity).state:0.0));
-          it.printf(125, 5, id(roboto_m), TextAlign::TOP_LEFT , "Ensuite: %.1f%%", id(ensuite_humidity).has_state()?id(ensuite_humidity).state:0.0);
-          it.printf(0, 30, id(roboto_m), TextAlign::TOP_LEFT , "Bed3: %.1f%%", id(seb_humidity).has_state()?id(seb_humidity).state:0.0);
-          it.printf(125, 30, id(roboto_m), TextAlign::TOP_LEFT , "Bed4: %.1f%%", id(reu_humidity).has_state()?id(reu_humidity).state:0.0);
-          it.printf(0, 55, id(roboto_m), TextAlign::TOP_LEFT , "Bath: %.1f%%", id(bath_humidity).has_state()?id(bath_humidity).state:0.0);
-          it.printf(125, 55, id(roboto_m), TextAlign::TOP_LEFT , "Lounge: %.1f%%", id(lounge_humidity).has_state()?id(lounge_humidity).state:0.0);
-          it.printf(0, 80, id(roboto_m), TextAlign::TOP_LEFT , "Garage: %s", id(garage_door).state?"Open":"Closed");
+          it.printf(0, 5, id(roboto_m), TextAlign::TOP_LEFT , "Bed1:");
+          it.printf(115, 5, id(roboto_m), TextAlign::TOP_RIGHT, "%.1f%%", (id(bed1_humidity).has_state()?id(bed1_humidity).state:0.0));
+          it.printf(125, 5, id(roboto_m), TextAlign::TOP_LEFT, "Ensuite:");
+          it.printf(249, 5, id(roboto_m), TextAlign::TOP_RIGHT, "%.1f%%", id(ensuite_humidity).has_state()?id(ensuite_humidity).state:0.0);
+          it.printf(0, 30, id(roboto_m), TextAlign::TOP_LEFT, "Bed3:");
+          it.printf(115, 30, id(roboto_m), TextAlign::TOP_RIGHT, "%.1f%%", id(seb_humidity).has_state()?id(seb_humidity).state:0.0);
+          it.printf(125, 30, id(roboto_m), TextAlign::TOP_LEFT, "Bed4:");
+          it.printf(249, 30, id(roboto_m), TextAlign::TOP_RIGHT, "%.1f%%", id(reu_humidity).has_state()?id(reu_humidity).state:0.0);
+          it.printf(0, 55, id(roboto_m), TextAlign::TOP_LEFT, "Bath:");
+          it.printf(115, 55, id(roboto_m), TextAlign::TOP_RIGHT, "%.1f%%", id(bath_humidity).has_state()?id(bath_humidity).state:0.0);
+          it.printf(125, 55, id(roboto_m), TextAlign::TOP_LEFT, "Lounge:");
+          it.printf(249, 55, id(roboto_m), TextAlign::TOP_RIGHT, "%.1f%%", id(lounge_humidity).has_state()?id(lounge_humidity).state:0.0);
+          it.printf(0, 80, id(roboto_m), TextAlign::TOP_LEFT, "Garage: %s", id(garage_door).state?"Open":"Closed");
           it.image(220, 80, id(humidity));
           
           it.filled_rectangle(0, 110, 250, 122);
           it.strftime(250, 130, id(roboto_bold_s), COLOR_OFF, TextAlign::BOTTOM_RIGHT , "%H:%M", id(esptime).now());
       - id: page_weather
         lambda: |-
-          it.printf(15, 20, id(roboto_l), TextAlign::TOP_LEFT , "%.1f", id(weather_temperature).state);
-          it.printf(105, 20, id(roboto_l), TextAlign::TOP_LEFT , "%.1f", id(weather_humidity).state);
-          it.printf(200, 20, id(roboto_l), TextAlign::TOP_LEFT , "%.1f", id(weather_windspeed).state);
+          it.printf(45, 18, id(roboto_l), TextAlign::TOP_CENTER, "%.1f", id(weather_temperature).state);
+          it.printf(45, 62, id(roboto_s), TextAlign::BOTTOM_CENTER, "°C");
+          it.printf(125, 18, id(roboto_l), TextAlign::TOP_CENTER, "%.1f", id(weather_humidity).state);
+          it.printf(125, 62, id(roboto_s), TextAlign::BOTTOM_CENTER, "%%");
+          it.printf(205, 18, id(roboto_l), TextAlign::TOP_CENTER, "%.1f", id(weather_windspeed).state);
+          it.printf(205, 62, id(roboto_s), TextAlign::BOTTOM_CENTER, "kmh");
           
           it.filled_rectangle(0, 60, 250, 122);
           it.image(20, 70, id(thermometer_50_inverse));
           it.image(100, 70, id(humidity_50_inverse));
           it.image(180, 70, id(wind_50_inverse));
 
-# interval:
-#  - interval: 15s
-#    then:
-#      - display.page.show_next: epaper
-#      - component.update: epaper        
+interval:
+  - interval: 30s
+    then:
+      - display.page.show_next: epaper
+      - component.update: epaper        
+      - component.update: epaper  
