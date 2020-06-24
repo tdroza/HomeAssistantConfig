@@ -371,7 +371,7 @@
   - data_template:
       entity_id: media_player.living_room_display
       message: The washing machine finished {{ relative_time(states.binary_sensor.washer.last_changed)
-        }}ago, please hang out the washing
+        }} ago, please hang out the washing
     service: tts.google_translate_say
   - data_template:
       inline_keyboard:
@@ -655,3 +655,19 @@
   - data:
       message: Turned off Reu's light due to no motion
     service: notify.telegram_td
+- id: '1592899929119'
+  alias: 'Lights: Turn off the main bedroom lights at 8am'
+  description: ''
+  trigger:
+  - at: 08:00
+    platform: time
+  condition: []
+  action:
+  - device_id: 9a9d18e0bac44a38a143ed6f268f38a4
+    domain: light
+    entity_id: light.main_bedroom_bloom
+    type: turn_off
+  - device_id: 5f159654348248d4a706a85a40b381ba
+    domain: light
+    entity_id: light.main_bedroom_ceiling
+    type: turn_off
