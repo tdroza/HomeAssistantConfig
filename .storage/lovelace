@@ -198,6 +198,10 @@
                                     "entities": [
                                         "light.hallway",
                                         {
+                                            "entity": "light.kitchen_corner",
+                                            "name": "Kitchen corner Light"
+                                        },
+                                        {
                                             "entities": [
                                                 {
                                                     "entity": "light.living_room_1",
@@ -676,6 +680,11 @@
                                     "name": "Kitchen/Dining room",
                                     "template": "button-card-headers",
                                     "type": "custom:button-card"
+                                },
+                                {
+                                    "entity": "light.kitchen_corner",
+                                    "name": "Corner Light",
+                                    "type": "light"
                                 },
                                 {
                                     "elements": [
