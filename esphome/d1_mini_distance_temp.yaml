@@ -38,8 +38,8 @@ sensor:
     echo_pin: D2
     filters:
     - lambda: |-
-        if (x <= 0.10) {
-          return 10.0 - (100 * x);
+        if (x <= 0.107) {
+          return 10.7 - (100 * x);
         } else return {};
     unit_of_measurement: "cm"
     name: "Sourdough Height"
