@@ -119,3 +119,7 @@ sensor.white_humidity:
   device_class: humidity
 sensor.sourdough_temperature:
   device_class: temperature
+binary_sensor.washer:
+  device_class: plug
+binary_sensor.garage_door:
+  device_class: garage_door
