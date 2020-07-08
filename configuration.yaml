@@ -22,6 +22,7 @@ recorder: !include includes/recorder.yaml
 script: !include scripts.yaml
 sensor: !include includes/sensors.yaml
 zone: !include zones.yaml
+downloader: !include includes/downloader.yaml
 
 pi_hole:
   - host: 192.168.1.215
@@ -84,11 +85,4 @@ ifttt:
     tom: !secret tom_ifttt
     anna: !secret anna_ifttt
 
-google_assistant:
-  project_id: !secret google_assistant_project_id
-  service_account: !include includes/google_service_account.json
-  report_state: true
-  exposed_domains:
-    - sensor
-    - binary_sensor
-    - climate
+google_assistant: !include includes/google_assistant.yaml

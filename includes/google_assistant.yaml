@@ -1,0 +1,55 @@
+project_id: !secret google_assistant_project_id
+service_account: !include google_service_account.json
+report_state: true
+expose_by_default: false
+entity_config:
+    sensor.reu_temperature:
+      name: "Reuben temperature"
+      expose: true
+    sensor.reu_humidity:
+      name: "Reuben humidity"
+      expose: true
+    sensor.seb_temperature:
+      name: "Seb temperature"
+      expose: true
+    sensor.seb_humidity:
+      name: Seb humididty
+      expose: true
+    sensor.bed1_temperature:
+      name: "Main bedroom temperature"
+      expose: true
+    sensor.bed1_humidity:
+      name: "Main bedroom humidity"
+      expose: true
+    sensor.bathroom_temperature:
+      name: "Bathroom temperature"
+      room: "Bathroom"
+      expose: true
+    sensor.bathroom_humidity:
+      name: "Bathroom humidity"
+      room: "Bathroom"
+      expose: true
+    sensor.ensuite_temperature:
+      name: "Ensuite temperature"
+      room: "Ensuite"
+      expose: true
+    sensor.ensuite_humidity:
+      name: "Ensuite humidity"
+      room: "Ensuite"
+      expose: true
+    binary_sensor.washer:
+      name: "Washer"
+      room: "Utility"
+      expose: true
+    binary_sensor.garage_door:
+      name: "Garage door"
+      room: "Garage"
+      expose: true
+    light.kitchen_corner:
+      name: "Corner light"
+      room: "Kitchen"
+      expose: true
+      aliases:
+        - Kitchen lightstrip
+        - Coffee
+        - Coffee light
