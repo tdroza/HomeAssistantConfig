@@ -2,6 +2,42 @@ esphome:
   name: esp32_epaper
   platform: ESP32
   board: esp32dev
+  on_boot:
+    priority: -100.0
+    then: 
+      - if:
+          condition:
+            lambda: 'return id(next_page)==0;'
+          then:
+            - display.page.show: page_image
+          else:
+            - display.page.show: page_weather_one
+      - if:
+          condition:
+            lambda: 'return id(next_page)==1;'
+          then:
+            - display.page.show: page_temps
+      - if:
+          condition:
+            lambda: 'return id(next_page)==2;'
+          then:
+            - display.page.show: page_humidity
+      - if:
+          condition:
+            lambda: 'return id(next_page)==3;'
+          then:
+            - display.page.show: page_weather_one
+      - if:
+          condition:
+            lambda: 'return id(next_page)==4;'
+          then:
+            - display.page.show: page_weather_two
+            - lambda: 'id(next_page) = -1;'
+      
+      - lambda: 'id(next_page)++;'
+      - component.update: epaper 
+      - delay: 5s
+      - component.update: epaper  
 
 wifi:
   ssid: !secret wifi_iot_ssid
@@ -27,6 +63,12 @@ spi:
   clk_pin: 18
   mosi_pin: 23
 
+globals:
+  - id: next_page
+    restore_value: yes
+    initial_value: "0"
+    type: int
+    
 font:
   - file: 'fonts/Roboto-Regular.ttf'
     id: roboto_s
@@ -49,7 +91,12 @@ time:
   - platform: homeassistant
     id: esptime
     
-
+text_sensor:
+  - platform: homeassistant
+    id: weather_day0_condition
+    entity_id: sensor.weather_condition
+    internal: true
+    
 binary_sensor:
   - platform: homeassistant
     id: garage_door
@@ -57,10 +104,10 @@ binary_sensor:
     internal: true    
   - platform: gpio
     pin: GPIO39
-    name: "ePaper Next Page"
+    name: "ePaper Prev Page"
     on_press:
       then:
-        - display.page.show_next: epaper
+        - display.page.show_previous: epaper
         - component.update: epaper     
 sensor:
   - platform: homeassistant
@@ -112,19 +159,15 @@ sensor:
     entity_id: sensor.living_room_humidity
     internal: true
   - platform: homeassistant
-    id: weather_condition
-    entity_id: sensor.weather_condition
-    internal: true
-  - platform: homeassistant
-    id: weather_temperature
+    id: weather_day0_temperature
     entity_id: sensor.weather_temperature
     internal: true
   - platform: homeassistant
-    id: weather_humidity
+    id: weather_day0_humidity
     entity_id: sensor.weather_humidity
     internal: true
   - platform: homeassistant
-    id: weather_windspeed
+    id: weather_day0_windspeed
     entity_id: sensor.weather_windspeed
     internal: true
     
@@ -147,6 +190,38 @@ image:
   - file: "images/weather-windy_50_inverse.png"
     id: wind_50_inverse
     resize: 50x50
+
+  - file: "images/weather/weather-cloudy_100.png"
+    id: cloudy
+  - file: "images/weather/weather-exceptional_100.png"
+    id: exceptional
+  - file: "images/weather/weather-fog_100.png"
+    id: fog
+  - file: "images/weather/weather-hail_100.png"
+    id: hail
+  - file: "images/weather/weather-lightning_100.png"
+    id: lightning
+  - file: "images/weather/weather-lightning-rainy_100.png"
+    id: lightning_rainy
+  - file: "images/weather/weather-night_100.png"
+    id: clearnight
+  - file: "images/weather/weather-partly-cloudy_100.png"
+    id: partlycloudy
+  - file: "images/weather/weather-pouring_100.png"
+    id: pouring
+  - file: "images/weather/weather-rainy_100.png"
+    id: rainy
+  - file: "images/weather/weather-snowy_100.png"
+    id: snowy
+  - file: "images/weather/weather-snowy-rainy_100.png"
+    id: snowyrainy
+  - file: "images/weather/weather-sunny_100.png"
+    id: sunny
+  - file: "images/weather/weather-windy_100.png"
+    id: windy
+  - file: "images/weather/weather-windy-variant_100.png"
+    id: windyvariant
+
     
 display:
   - platform: waveshare_epaper
@@ -155,9 +230,9 @@ display:
     busy_pin: 4
     reset_pin: 16
     model: 2.13in-ttgo-b73
-    rotation: 90°
-    full_update_every: 30
-    update_interval: 15s
+    rotation: 270°
+    full_update_every: 1
+    update_interval: 3s
     id: epaper
 
     pages:
@@ -165,61 +240,89 @@ display:
         lambda: |-
           it.image(5, 20, id(tom));
           it.print(125, 66, id(roboto_l), TextAlign::CENTER, "Tom D'Roza");
+          
+          it.filled_rectangle(0, 105, 250, 122);
+          it.strftime(250, 125, id(roboto_bold_s), COLOR_OFF, TextAlign::BOTTOM_RIGHT , "Updated: %H:%M", id(esptime).now());
       - id: page_temps
         lambda: |-
-          it.printf(0, 5, id(roboto_m), TextAlign::TOP_LEFT, "Bed1:");
-          it.printf(115, 5, id(roboto_m), TextAlign::TOP_RIGHT, "%.1f°", (id(bed1_temp).has_state()?id(bed1_temp).state:0.0));
-          it.printf(125, 5, id(roboto_m), TextAlign::TOP_LEFT, "Ensuite:");
-          it.printf(249, 5, id(roboto_m), TextAlign::TOP_RIGHT, "%.1f°", id(ensuite_temp).has_state()?id(ensuite_temp).state:0.0);
-          it.printf(0, 30, id(roboto_m), TextAlign::TOP_LEFT, "Bed3:");
-          it.printf(115, 30, id(roboto_m), TextAlign::TOP_RIGHT, "%.1f°", id(seb_temp).has_state()?id(seb_temp).state:0.0);
-          it.printf(125, 30, id(roboto_m), TextAlign::TOP_LEFT, "Bed4:");
-          it.printf(249, 30, id(roboto_m), TextAlign::TOP_RIGHT, "%.1f°", id(reu_temp).has_state()?id(reu_temp).state:0.0);
-          it.printf(0, 55, id(roboto_m), TextAlign::TOP_LEFT, "Bath:");
-          it.printf(115, 55, id(roboto_m), TextAlign::TOP_RIGHT, "%.1f°", id(bath_temp).has_state()?id(bath_temp).state:0.0);
-          it.printf(125, 55, id(roboto_m), TextAlign::TOP_LEFT, "Lounge:");
-          it.printf(249, 55, id(roboto_m), TextAlign::TOP_RIGHT, "%.1f°", id(lounge_temp).has_state()?id(lounge_temp).state:0.0);
-          it.printf(0, 80, id(roboto_m), TextAlign::TOP_LEFT, "Garage: %s", id(garage_door).state?"Open":"Closed");
-          it.image(220, 80, id(thermometer));
+          it.printf(0, 0, id(roboto_m), TextAlign::TOP_LEFT, "Bed1:");
+          it.printf(115, 0, id(roboto_m), TextAlign::TOP_RIGHT, "%.1f°", (id(bed1_temp).has_state()?id(bed1_temp).state:0.0));
+          it.printf(125, 0, id(roboto_m), TextAlign::TOP_LEFT, "Ensuite:");
+          it.printf(249, 0, id(roboto_m), TextAlign::TOP_RIGHT, "%.1f°", id(ensuite_temp).has_state()?id(ensuite_temp).state:0.0);
+          it.printf(0, 25, id(roboto_m), TextAlign::TOP_LEFT, "Bed3:");
+          it.printf(115, 25, id(roboto_m), TextAlign::TOP_RIGHT, "%.1f°", id(seb_temp).has_state()?id(seb_temp).state:0.0);
+          it.printf(125, 25, id(roboto_m), TextAlign::TOP_LEFT, "Bed4:");
+          it.printf(249, 25, id(roboto_m), TextAlign::TOP_RIGHT, "%.1f°", id(reu_temp).has_state()?id(reu_temp).state:0.0);
+          it.printf(0, 50, id(roboto_m), TextAlign::TOP_LEFT, "Bath:");
+          it.printf(115, 50, id(roboto_m), TextAlign::TOP_RIGHT, "%.1f°", id(bath_temp).has_state()?id(bath_temp).state:0.0);
+          it.printf(125, 50, id(roboto_m), TextAlign::TOP_LEFT, "Lounge:");
+          it.printf(249, 50, id(roboto_m), TextAlign::TOP_RIGHT, "%.1f°", id(lounge_temp).has_state()?id(lounge_temp).state:0.0);
+          it.printf(0, 75, id(roboto_m), TextAlign::TOP_LEFT, "Garage: %s", id(garage_door).state?"Open":"Closed");
+          it.image(220, 75, id(thermometer));
           
-          it.filled_rectangle(0, 110, 250, 122);
-          it.strftime(250, 130, id(roboto_bold_s), COLOR_OFF, TextAlign::BOTTOM_RIGHT , "%H:%M", id(esptime).now());
+          it.filled_rectangle(0, 105, 250, 122);
+          it.strftime(250, 125, id(roboto_bold_s), COLOR_OFF, TextAlign::BOTTOM_RIGHT , "Updated: %H:%M", id(esptime).now());
       - id: page_humidity
         lambda: |-
-          it.printf(0, 5, id(roboto_m), TextAlign::TOP_LEFT , "Bed1:");
-          it.printf(115, 5, id(roboto_m), TextAlign::TOP_RIGHT, "%.1f%%", (id(bed1_humidity).has_state()?id(bed1_humidity).state:0.0));
-          it.printf(125, 5, id(roboto_m), TextAlign::TOP_LEFT, "Ensuite:");
-          it.printf(249, 5, id(roboto_m), TextAlign::TOP_RIGHT, "%.1f%%", id(ensuite_humidity).has_state()?id(ensuite_humidity).state:0.0);
-          it.printf(0, 30, id(roboto_m), TextAlign::TOP_LEFT, "Bed3:");
-          it.printf(115, 30, id(roboto_m), TextAlign::TOP_RIGHT, "%.1f%%", id(seb_humidity).has_state()?id(seb_humidity).state:0.0);
-          it.printf(125, 30, id(roboto_m), TextAlign::TOP_LEFT, "Bed4:");
-          it.printf(249, 30, id(roboto_m), TextAlign::TOP_RIGHT, "%.1f%%", id(reu_humidity).has_state()?id(reu_humidity).state:0.0);
-          it.printf(0, 55, id(roboto_m), TextAlign::TOP_LEFT, "Bath:");
-          it.printf(115, 55, id(roboto_m), TextAlign::TOP_RIGHT, "%.1f%%", id(bath_humidity).has_state()?id(bath_humidity).state:0.0);
-          it.printf(125, 55, id(roboto_m), TextAlign::TOP_LEFT, "Lounge:");
-          it.printf(249, 55, id(roboto_m), TextAlign::TOP_RIGHT, "%.1f%%", id(lounge_humidity).has_state()?id(lounge_humidity).state:0.0);
-          it.printf(0, 80, id(roboto_m), TextAlign::TOP_LEFT, "Garage: %s", id(garage_door).state?"Open":"Closed");
-          it.image(220, 80, id(humidity));
+          it.printf(0, 0, id(roboto_m), TextAlign::TOP_LEFT , "Bed1:");
+          it.printf(115, 0, id(roboto_m), TextAlign::TOP_RIGHT, "%.1f%%", (id(bed1_humidity).has_state()?id(bed1_humidity).state:0.0));
+          it.printf(125, 0, id(roboto_m), TextAlign::TOP_LEFT, "Ensuite:");
+          it.printf(249, 0, id(roboto_m), TextAlign::TOP_RIGHT, "%.1f%%", id(ensuite_humidity).has_state()?id(ensuite_humidity).state:0.0);
+          it.printf(0, 25, id(roboto_m), TextAlign::TOP_LEFT, "Bed3:");
+          it.printf(115, 25, id(roboto_m), TextAlign::TOP_RIGHT, "%.1f%%", id(seb_humidity).has_state()?id(seb_humidity).state:0.0);
+          it.printf(125, 25, id(roboto_m), TextAlign::TOP_LEFT, "Bed4:");
+          it.printf(249, 25, id(roboto_m), TextAlign::TOP_RIGHT, "%.1f%%", id(reu_humidity).has_state()?id(reu_humidity).state:0.0);
+          it.printf(0, 50, id(roboto_m), TextAlign::TOP_LEFT, "Bath:");
+          it.printf(115, 50, id(roboto_m), TextAlign::TOP_RIGHT, "%.1f%%", id(bath_humidity).has_state()?id(bath_humidity).state:0.0);
+          it.printf(125, 50, id(roboto_m), TextAlign::TOP_LEFT, "Lounge:");
+          it.printf(249, 50, id(roboto_m), TextAlign::TOP_RIGHT, "%.1f%%", id(lounge_humidity).has_state()?id(lounge_humidity).state:0.0);
+          it.printf(0, 75, id(roboto_m), TextAlign::TOP_LEFT, "Garage: %s", id(garage_door).state?"Open":"Closed");
+          it.image(220, 75, id(humidity));
           
-          it.filled_rectangle(0, 110, 250, 122);
-          it.strftime(250, 130, id(roboto_bold_s), COLOR_OFF, TextAlign::BOTTOM_RIGHT , "%H:%M", id(esptime).now());
-      - id: page_weather
+          it.filled_rectangle(0, 105, 250, 122);
+          it.strftime(250, 125, id(roboto_bold_s), COLOR_OFF, TextAlign::BOTTOM_RIGHT , "Updated: %H:%M", id(esptime).now());
+      - id: page_weather_one
         lambda: |-
-          it.printf(45, 18, id(roboto_l), TextAlign::TOP_CENTER, "%.1f", id(weather_temperature).state);
-          it.printf(45, 62, id(roboto_s), TextAlign::BOTTOM_CENTER, "°C");
-          it.printf(125, 18, id(roboto_l), TextAlign::TOP_CENTER, "%.1f", id(weather_humidity).state);
-          it.printf(125, 62, id(roboto_s), TextAlign::BOTTOM_CENTER, "%%");
-          it.printf(205, 18, id(roboto_l), TextAlign::TOP_CENTER, "%.1f", id(weather_windspeed).state);
-          it.printf(205, 62, id(roboto_s), TextAlign::BOTTOM_CENTER, "kmh");
+          it.printf(45, 10, id(roboto_l), TextAlign::TOP_CENTER, "%.1f", id(weather_day0_temperature).state);
+          it.printf(45, 54, id(roboto_s), TextAlign::BOTTOM_CENTER, "°C");
+          it.printf(125, 10, id(roboto_l), TextAlign::TOP_CENTER, "%.1f", id(weather_day0_humidity).state);
+          it.printf(125, 54, id(roboto_s), TextAlign::BOTTOM_CENTER, "%%");
+          it.printf(205, 10, id(roboto_l), TextAlign::TOP_CENTER, "%.1f", id(weather_day0_windspeed).state);
+          it.printf(205, 54, id(roboto_s), TextAlign::BOTTOM_CENTER, "kmh");
           
-          it.filled_rectangle(0, 60, 250, 122);
-          it.image(20, 70, id(thermometer_50_inverse));
-          it.image(100, 70, id(humidity_50_inverse));
-          it.image(180, 70, id(wind_50_inverse));
-
-interval:
-  - interval: 30s
-    then:
-      - display.page.show_next: epaper
-      - component.update: epaper        
-      - component.update: epaper  
+          it.filled_rectangle(0, 51, 250, 122);
+          it.image(20, 60, id(thermometer_50_inverse));
+          it.image(100, 60, id(humidity_50_inverse));
+          it.image(180, 60, id(wind_50_inverse));
+          it.strftime(250, 125, id(roboto_bold_s), COLOR_OFF, TextAlign::BOTTOM_RIGHT , "Updated: %H:%M", id(esptime).now());
+      - id: page_weather_two
+        lambda: |-
+          char* weather_state = strdup(id(weather_day0_condition).state.c_str());
+          weather_state[0] = toupper(weather_state[0]);
+          it.printf(100, 66, id(roboto_m), TextAlign::LEFT, "%s",  weather_state);
+          if (strcmp("cloudy", id(weather_day0_condition).state.c_str())==0) it.image(0, 12, id(cloudy));
+          if (strcmp("exceptional", id(weather_day0_condition).state.c_str())==0) it.image(05, 12, id(exceptional));
+          if (strcmp("fog", id(weather_day0_condition).state.c_str())==0) it.image(0, 12, id(fog));
+          if (strcmp("hail", id(weather_day0_condition).state.c_str())==0) it.image(0, 12, id(hail));
+          if (strcmp("lightning", id(weather_day0_condition).state.c_str())==0) it.image(0, 12, id(lightning));
+          if (strcmp("lightning_rainy", id(weather_day0_condition).state.c_str())==0) it.image(0, 12, id(lightning_rainy));
+          if (strcmp("clearnight", id(weather_day0_condition).state.c_str())==0) it.image(0, 12, id(clearnight));
+          if (strcmp("partlycloudy", id(weather_day0_condition).state.c_str())==0) it.image(0, 12, id(partlycloudy));
+          if (strcmp("pouring", id(weather_day0_condition).state.c_str())==0) it.image(0, 12, id(pouring));
+          if (strcmp("rainy", id(weather_day0_condition).state.c_str())==0) it.image(0, 12, id(rainy));
+          if (strcmp("snowy", id(weather_day0_condition).state.c_str())==0) it.image(0, 12, id(snowy));
+          if (strcmp("snowyrainy", id(weather_day0_condition).state.c_str())==0) it.image(0, 12, id(snowyrainy));
+          if (strcmp("sunny", id(weather_day0_condition).state.c_str())==0) it.image(0, 12, id(sunny));
+          if (strcmp("windy", id(weather_day0_condition).state.c_str())==0) it.image(0, 12, id(windy));
+          if (strcmp("windyvariant", id(weather_day0_condition).state.c_str())==0) it.image(0, 12, id(windyvariant));
+          it.strftime(250, 125, id(roboto_bold_s), COLOR_ON, TextAlign::BOTTOM_RIGHT , "Updated: %H:%M", id(esptime).now());
+          
+deep_sleep:
+  run_duration: 45s
+  sleep_duration: 15min
+  
+#interval:
+#  - interval: 30s
+#    then:
+#      - display.page.show_next: epaper
+#      - component.update: epaper        
