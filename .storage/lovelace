@@ -238,8 +238,40 @@
                                             },
                                             "type": "custom:fold-entity-row"
                                         },
-                                        "light.second_bedroom_light",
-                                        "light.seb_s_colour",
+                                        {
+                                            "entities": [
+                                                {
+                                                    "entity": "light.second_bedroom_light",
+                                                    "name": "Ceiling",
+                                                    "type": "custom:slider-entity-row"
+                                                },
+                                                {
+                                                    "entity": "light.desk",
+                                                    "type": "custom:slider-entity-row"
+                                                }
+                                            ],
+                                            "head": {
+                                                "entity": "light.second_bedroom_light",
+                                                "icon": "mdi:lightbulb-group-outline"
+                                            },
+                                            "type": "custom:fold-entity-row"
+                                        },
+                                        {
+                                            "entities": [
+                                                {
+                                                    "entity": "light.seb_s_colour",
+                                                    "type": "custom:slider-entity-row"
+                                                },
+                                                {
+                                                    "entity": "switch.sonoff_1000d4baef_1"
+                                                }
+                                            ],
+                                            "head": {
+                                                "entity": "group.room_seb",
+                                                "icon": "mdi:lightbulb-group-outline"
+                                            },
+                                            "type": "custom:fold-entity-row"
+                                        },
                                         {
                                             "entities": [
                                                 {
@@ -247,7 +279,10 @@
                                                     "name": "Ceiling",
                                                     "type": "custom:slider-entity-row"
                                                 },
-                                                "light.reuben"
+                                                {
+                                                    "entity": "light.reuben",
+                                                    "type": "custom:slider-entity-row"
+                                                }
                                             ],
                                             "head": {
                                                 "entity": "light.reubens_bedroom",

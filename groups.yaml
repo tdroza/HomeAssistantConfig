@@ -18,3 +18,16 @@ all_my_lights:
     - light.bloom
     - light.seb_s_colour
     - light.second_bedroom_light
+    
+room_seb:
+  name: 'Seb''s bedroom'
+  entities:
+    - light.seb_s_colour
+    - switch.sonoff_1000d4baef_1
+
+room_bed2:
+  name: 'Second bedroom'
+  entities:
+    - light.second_bedroom_light
+    - light.desk
+    
