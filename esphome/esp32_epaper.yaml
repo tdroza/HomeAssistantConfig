@@ -231,8 +231,8 @@ display:
     reset_pin: 16
     model: 2.13in-ttgo-b73
     rotation: 270°
-    full_update_every: 1
-    update_interval: 3s
+    full_update_every: 10
+    update_interval: 15s
     id: epaper
 
     pages:
@@ -299,7 +299,7 @@ display:
         lambda: |-
           char* weather_state = strdup(id(weather_day0_condition).state.c_str());
           weather_state[0] = toupper(weather_state[0]);
-          it.printf(100, 66, id(roboto_m), TextAlign::LEFT, "%s",  weather_state);
+          it.printf(100, 66, id(roboto_m), TextAlign::CENTER_LEFT, "%s",  weather_state);
           if (strcmp("cloudy", id(weather_day0_condition).state.c_str())==0) it.image(0, 12, id(cloudy));
           if (strcmp("exceptional", id(weather_day0_condition).state.c_str())==0) it.image(05, 12, id(exceptional));
           if (strcmp("fog", id(weather_day0_condition).state.c_str())==0) it.image(0, 12, id(fog));
@@ -316,13 +316,13 @@ display:
           if (strcmp("windy", id(weather_day0_condition).state.c_str())==0) it.image(0, 12, id(windy));
           if (strcmp("windyvariant", id(weather_day0_condition).state.c_str())==0) it.image(0, 12, id(windyvariant));
           it.strftime(250, 125, id(roboto_bold_s), COLOR_ON, TextAlign::BOTTOM_RIGHT , "Updated: %H:%M", id(esptime).now());
-          
+
 deep_sleep:
   run_duration: 45s
-  sleep_duration: 15min
+  sleep_duration: 5min
   
 #interval:
-#  - interval: 30s
+#  - interval: 60s
 #    then:
 #      - display.page.show_next: epaper
 #      - component.update: epaper        
