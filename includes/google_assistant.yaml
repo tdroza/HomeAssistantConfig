@@ -53,3 +53,7 @@ entity_config:
         - Kitchen lightstrip
         - Coffee
         - Coffee light
+    light.desk:
+      name: "Desk light"
+      room: "Second Bedroom"
+      expose: true
