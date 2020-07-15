@@ -25,6 +25,7 @@ esphome:
             lambda: 'return id(next_page)==3;'
           then:
             - display.page.show: page_weather
+            - lambda: 'id(next_page) = -1;'
       - lambda: 'id(next_page)++;'
       - component.update: epaper 
       - delay: 5s
