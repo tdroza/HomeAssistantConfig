@@ -10,8 +10,6 @@ esphome:
             lambda: 'return id(next_page)==0;'
           then:
             - display.page.show: page_image
-          else:
-            - display.page.show: page_weather_one
       - if:
           condition:
             lambda: 'return id(next_page)==1;'
@@ -26,14 +24,7 @@ esphome:
           condition:
             lambda: 'return id(next_page)==3;'
           then:
-            - display.page.show: page_weather_one
-      - if:
-          condition:
-            lambda: 'return id(next_page)==4;'
-          then:
-            - display.page.show: page_weather_two
-            - lambda: 'id(next_page) = -1;'
-      
+            - display.page.show: page_weather
       - lambda: 'id(next_page)++;'
       - component.update: epaper 
       - delay: 5s
@@ -72,7 +63,7 @@ globals:
 font:
   - file: 'fonts/Roboto-Regular.ttf'
     id: roboto_s
-    size: 16
+    size: 18
   - file: 'fonts/Roboto-Regular.ttf'
     id: roboto_m
     size: 20
@@ -81,11 +72,8 @@ font:
     glyphs: '!/"%()+,-_.:°0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz'''
     size: 28
   - file: 'fonts/Roboto-Bold.ttf'
-    id: roboto_bold_s
+    id: roboto_bold_xs
     size: 16
-  - file: 'fonts/HelvetiPixel.ttf'
-    id: helvetica
-    size: 20
 
 time:
   - platform: homeassistant
@@ -182,14 +170,14 @@ image:
     id: humidity
     resize: 24x24      
   - file: "images/thermometer-lines_50_inverse.png"
-    id: thermometer_50_inverse
-    resize: 50x50
+    id: thermometer_35_inverse
+    resize: 35x35  
   - file: "images/water-percent_50_inverse.png"
-    id: humidity_50_inverse
-    resize: 50x50
+    id: humidity_35_inverse
+    resize: 35x35  
   - file: "images/weather-windy_50_inverse.png"
-    id: wind_50_inverse
-    resize: 50x50
+    id: wind_35_inverse
+    resize: 35x35    
 
   - file: "images/weather/weather-cloudy_100.png"
     id: cloudy
@@ -242,7 +230,7 @@ display:
           it.print(125, 66, id(roboto_l), TextAlign::CENTER, "Tom D'Roza");
           
           it.filled_rectangle(0, 105, 250, 122);
-          it.strftime(250, 125, id(roboto_bold_s), COLOR_OFF, TextAlign::BOTTOM_RIGHT , "Updated: %H:%M", id(esptime).now());
+          it.strftime(250, 125, id(roboto_bold_xs), COLOR_OFF, TextAlign::BOTTOM_RIGHT , "Updated: %H:%M", id(esptime).now());
       - id: page_temps
         lambda: |-
           it.printf(0, 0, id(roboto_m), TextAlign::TOP_LEFT, "Bed1:");
@@ -261,7 +249,7 @@ display:
           it.image(220, 75, id(thermometer));
           
           it.filled_rectangle(0, 105, 250, 122);
-          it.strftime(250, 125, id(roboto_bold_s), COLOR_OFF, TextAlign::BOTTOM_RIGHT , "Updated: %H:%M", id(esptime).now());
+          it.strftime(250, 125, id(roboto_bold_xs), COLOR_OFF, TextAlign::BOTTOM_RIGHT , "Updated: %H:%M", id(esptime).now());
       - id: page_humidity
         lambda: |-
           it.printf(0, 0, id(roboto_m), TextAlign::TOP_LEFT , "Bed1:");
@@ -280,43 +268,43 @@ display:
           it.image(220, 75, id(humidity));
           
           it.filled_rectangle(0, 105, 250, 122);
-          it.strftime(250, 125, id(roboto_bold_s), COLOR_OFF, TextAlign::BOTTOM_RIGHT , "Updated: %H:%M", id(esptime).now());
-      - id: page_weather_one
+          it.strftime(250, 125, id(roboto_bold_xs), COLOR_OFF, TextAlign::BOTTOM_RIGHT , "Updated: %H:%M", id(esptime).now());
+
+      - id: page_weather
         lambda: |-
-          it.printf(45, 10, id(roboto_l), TextAlign::TOP_CENTER, "%.1f", id(weather_day0_temperature).state);
-          it.printf(45, 54, id(roboto_s), TextAlign::BOTTOM_CENTER, "°C");
-          it.printf(125, 10, id(roboto_l), TextAlign::TOP_CENTER, "%.1f", id(weather_day0_humidity).state);
-          it.printf(125, 54, id(roboto_s), TextAlign::BOTTOM_CENTER, "%%");
-          it.printf(205, 10, id(roboto_l), TextAlign::TOP_CENTER, "%.1f", id(weather_day0_windspeed).state);
-          it.printf(205, 54, id(roboto_s), TextAlign::BOTTOM_CENTER, "kmh");
-          
-          it.filled_rectangle(0, 51, 250, 122);
-          it.image(20, 60, id(thermometer_50_inverse));
-          it.image(100, 60, id(humidity_50_inverse));
-          it.image(180, 60, id(wind_50_inverse));
-          it.strftime(250, 125, id(roboto_bold_s), COLOR_OFF, TextAlign::BOTTOM_RIGHT , "Updated: %H:%M", id(esptime).now());
-      - id: page_weather_two
-        lambda: |-
+          it.filled_rectangle(0, 0, 125, 122);
+          it.image(0, 5, id(thermometer_35_inverse));
+          it.printf(36, 43, id(roboto_l), COLOR_OFF, TextAlign::BOTTOM_LEFT, "%.1f", id(weather_day0_temperature).has_state()?id(weather_day0_temperature).state:0.0);
+          it.printf(123, 40, id(roboto_s), COLOR_OFF, TextAlign::BOTTOM_RIGHT, "°C");
+          it.image(0, 41, id(humidity_35_inverse));
+          it.printf(36, 78, id(roboto_l), COLOR_OFF, TextAlign::BOTTOM_LEFT, "%.1f", id(weather_day0_humidity).has_state()?id(weather_day0_humidity).state:0.0);
+          it.printf(123, 75, id(roboto_s), COLOR_OFF, TextAlign::BOTTOM_RIGHT, "%%");
+          it.image(0, 76, id(wind_35_inverse));
+          it.printf(36, 113, id(roboto_l), COLOR_OFF, TextAlign::BOTTOM_LEFT, "%.1f", id(weather_day0_windspeed).has_state()?id(weather_day0_windspeed).state:0.0);
+          it.printf(123, 110, id(roboto_s), COLOR_OFF, TextAlign::BOTTOM_RIGHT, "kmh");
+        
+          if (strcmp("cloudy", id(weather_day0_condition).state.c_str())==0) it.image(137, 15, id(cloudy));
+          if (strcmp("exceptional", id(weather_day0_condition).state.c_str())==0) it.image(137, 15, id(exceptional));
+          if (strcmp("fog", id(weather_day0_condition).state.c_str())==0) it.image(137, 15, id(fog));
+          if (strcmp("hail", id(weather_day0_condition).state.c_str())==0) it.image(137, 15, id(hail));
+          if (strcmp("lightning", id(weather_day0_condition).state.c_str())==0) it.image(137, 15, id(lightning));
+          if (strcmp("lightning_rainy", id(weather_day0_condition).state.c_str())==0) it.image(137, 15, id(lightning_rainy));
+          if (strcmp("clearnight", id(weather_day0_condition).state.c_str())==0) it.image(137, 15, id(clearnight));
+          if (strcmp("partlycloudy", id(weather_day0_condition).state.c_str())==0) it.image(137, 15, id(partlycloudy));
+          if (strcmp("pouring", id(weather_day0_condition).state.c_str())==0) it.image(137, 15, id(pouring));
+          if (strcmp("rainy", id(weather_day0_condition).state.c_str())==0) it.image(137, 15, id(rainy));
+          if (strcmp("snowy", id(weather_day0_condition).state.c_str())==0) it.image(137, 15, id(snowy));
+          if (strcmp("snowyrainy", id(weather_day0_condition).state.c_str())==0) it.image(137, 15, id(snowyrainy));
+          if (strcmp("sunny", id(weather_day0_condition).state.c_str())==0) it.image(137, 15, id(sunny));
+          if (strcmp("windy", id(weather_day0_condition).state.c_str())==0) it.image(137, 15, id(windy));
+          if (strcmp("windyvariant", id(weather_day0_condition).state.c_str())==0) it.image(137, 15, id(windyvariant));
+                    
           char* weather_state = strdup(id(weather_day0_condition).state.c_str());
           weather_state[0] = toupper(weather_state[0]);
-          it.printf(100, 66, id(roboto_m), TextAlign::CENTER_LEFT, "%s",  weather_state);
-          if (strcmp("cloudy", id(weather_day0_condition).state.c_str())==0) it.image(0, 12, id(cloudy));
-          if (strcmp("exceptional", id(weather_day0_condition).state.c_str())==0) it.image(05, 12, id(exceptional));
-          if (strcmp("fog", id(weather_day0_condition).state.c_str())==0) it.image(0, 12, id(fog));
-          if (strcmp("hail", id(weather_day0_condition).state.c_str())==0) it.image(0, 12, id(hail));
-          if (strcmp("lightning", id(weather_day0_condition).state.c_str())==0) it.image(0, 12, id(lightning));
-          if (strcmp("lightning_rainy", id(weather_day0_condition).state.c_str())==0) it.image(0, 12, id(lightning_rainy));
-          if (strcmp("clearnight", id(weather_day0_condition).state.c_str())==0) it.image(0, 12, id(clearnight));
-          if (strcmp("partlycloudy", id(weather_day0_condition).state.c_str())==0) it.image(0, 12, id(partlycloudy));
-          if (strcmp("pouring", id(weather_day0_condition).state.c_str())==0) it.image(0, 12, id(pouring));
-          if (strcmp("rainy", id(weather_day0_condition).state.c_str())==0) it.image(0, 12, id(rainy));
-          if (strcmp("snowy", id(weather_day0_condition).state.c_str())==0) it.image(0, 12, id(snowy));
-          if (strcmp("snowyrainy", id(weather_day0_condition).state.c_str())==0) it.image(0, 12, id(snowyrainy));
-          if (strcmp("sunny", id(weather_day0_condition).state.c_str())==0) it.image(0, 12, id(sunny));
-          if (strcmp("windy", id(weather_day0_condition).state.c_str())==0) it.image(0, 12, id(windy));
-          if (strcmp("windyvariant", id(weather_day0_condition).state.c_str())==0) it.image(0, 12, id(windyvariant));
-          it.strftime(250, 125, id(roboto_bold_s), COLOR_ON, TextAlign::BOTTOM_RIGHT , "Updated: %H:%M", id(esptime).now());
-
+          it.printf(190, 5, id(roboto_m), TextAlign::TOP_CENTER, "%s",  weather_state);
+          
+          it.strftime(250, 125, id(roboto_bold_xs), COLOR_ON, TextAlign::BOTTOM_RIGHT , "Updated: %H:%M", id(esptime).now());
+          
 deep_sleep:
   run_duration: 45s
   sleep_duration: 5min
@@ -326,3 +314,4 @@ deep_sleep:
 #    then:
 #      - display.page.show_next: epaper
 #      - component.update: epaper        
+
