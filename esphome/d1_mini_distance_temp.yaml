@@ -33,7 +33,7 @@ sensor:
     name: "Sourdough Temperature"
 
   - platform: ultrasonic
-    update_interval: 300s
+    update_interval: 60s
     trigger_pin: D1
     echo_pin: D2
     filters:
@@ -41,5 +41,9 @@ sensor:
         if (x <= 0.107) {
           return 10.7 - (100 * x);
         } else return {};
+  
+    - sliding_window_moving_average:
+        window_size: 5
+        send_every: 5
     unit_of_measurement: "cm"
     name: "Sourdough Height"
