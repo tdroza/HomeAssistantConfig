@@ -275,13 +275,13 @@ display:
         lambda: |-
           it.filled_rectangle(0, 0, 125, 122);
           it.image(0, 5, id(thermometer_35_inverse));
-          it.printf(36, 43, id(roboto_l), COLOR_OFF, TextAlign::BOTTOM_LEFT, "%.1f", id(weather_day0_temperature).has_state()?id(weather_day0_temperature).state:0.0);
+          it.printf(34, 43, id(roboto_l), COLOR_OFF, TextAlign::BOTTOM_LEFT, "%.1f", id(weather_day0_temperature).has_state()?id(weather_day0_temperature).state:0.0);
           it.printf(123, 40, id(roboto_s), COLOR_OFF, TextAlign::BOTTOM_RIGHT, "°C");
           it.image(0, 41, id(humidity_35_inverse));
-          it.printf(36, 78, id(roboto_l), COLOR_OFF, TextAlign::BOTTOM_LEFT, "%.1f", id(weather_day0_humidity).has_state()?id(weather_day0_humidity).state:0.0);
+          it.printf(34, 78, id(roboto_l), COLOR_OFF, TextAlign::BOTTOM_LEFT, "%.1f", id(weather_day0_humidity).has_state()?id(weather_day0_humidity).state:0.0);
           it.printf(123, 75, id(roboto_s), COLOR_OFF, TextAlign::BOTTOM_RIGHT, "%%");
           it.image(0, 76, id(wind_35_inverse));
-          it.printf(36, 113, id(roboto_l), COLOR_OFF, TextAlign::BOTTOM_LEFT, "%.1f", id(weather_day0_windspeed).has_state()?id(weather_day0_windspeed).state:0.0);
+          it.printf(34, 113, id(roboto_l), COLOR_OFF, TextAlign::BOTTOM_LEFT, "%.1f", id(weather_day0_windspeed).has_state()?id(weather_day0_windspeed).state:0.0);
           it.printf(123, 110, id(roboto_s), COLOR_OFF, TextAlign::BOTTOM_RIGHT, "kmh");
         
           if (strcmp("cloudy", id(weather_day0_condition).state.c_str())==0) it.image(137, 15, id(cloudy));
@@ -302,7 +302,7 @@ display:
                     
           char* weather_state = strdup(id(weather_day0_condition).state.c_str());
           weather_state[0] = toupper(weather_state[0]);
-          it.printf(190, 5, id(roboto_m), TextAlign::TOP_CENTER, "%s",  weather_state);
+          it.printf(190, 1, id(roboto_m), TextAlign::TOP_CENTER, "%s",  weather_state);
           
           it.strftime(250, 125, id(roboto_bold_xs), COLOR_ON, TextAlign::BOTTOM_RIGHT , "Updated: %H:%M", id(esptime).now());
           
