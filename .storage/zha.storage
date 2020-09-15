@@ -2,19 +2,19 @@
     "data": {
         "devices": [
             {
-                "ieee": "00:12:4b:00:19:3b:18:68",
-                "last_seen": null,
-                "name": "Texas Instruments ZNP Coordinator"
-            },
-            {
                 "ieee": "00:15:8d:00:04:46:ef:c8",
-                "last_seen": 1591648597.8241234,
+                "last_seen": 1600065716.1962352,
                 "name": "LUMI lumi.sensor_magnet.aq2"
             },
             {
-                "ieee": "00:0d:6f:ff:fe:f3:5a:ed",
-                "last_seen": 1588947283.1078749,
-                "name": "\u0002KE TRADFRI open/close remote"
+                "ieee": "00:15:8d:00:04:78:e0:70",
+                "last_seen": 1600065468.9689305,
+                "name": "LUMI lumi.sensor_magnet.aq2"
+            },
+            {
+                "ieee": "00:15:8d:00:04:a0:1a:c7",
+                "last_seen": 1600065337.2601192,
+                "name": "LUMI lumi.sensor_magnet.aq2"
             }
         ]
     },
