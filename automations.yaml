@@ -671,3 +671,16 @@
     domain: light
     entity_id: light.main_bedroom_ceiling
     type: turn_off
+- id: '1600196508217'
+  alias: Daily camera photo
+  description: ''
+  trigger:
+  - at: '11:00:00'
+    platform: time
+  condition: []
+  action:
+  - data:
+      entity_id: camera.ip_webcam
+      filename: /config/www/cams/ipcam_{{ states('sensor.date') }}.jpg
+    service: camera.snapshot
+  mode: single

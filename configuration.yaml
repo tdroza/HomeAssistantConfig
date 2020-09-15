@@ -79,6 +79,31 @@ homeassistant:
   unit_system: metric
   whitelist_external_dirs:
     - /tmp
+    - /config/www/cams
+
+android_ip_webcam:
+  - host: 192.168.1.175
+    port: 8080
+    username: tdroza
+    password: !secret ipcam_password
+    sensors:
+      - battery_level
+      - battery_temp
+      - battery_voltage
+      - light
+      - motion
+      - sound
+    switches:
+      - exposure_lock
+      - ffc
+      - focus
+      - gps_active
+      - motion_detect
+      - night_vision
+      - overlay
+      - torch
+      - whitebalance_lock
+      - video_recording
 
 ifttt:
   key:
