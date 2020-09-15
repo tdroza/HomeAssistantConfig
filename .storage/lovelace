@@ -712,6 +712,30 @@
                         {
                             "cards": [
                                 {
+                                    "name": "Second Bedroom",
+                                    "template": "button-card-headers",
+                                    "type": "custom:button-card"
+                                },
+                                {
+                                    "cards": [
+                                        {
+                                            "entity": "light.second_bedroom_light",
+                                            "name": " ",
+                                            "type": "light"
+                                        },
+                                        {
+                                            "entity": "light.desk",
+                                            "type": "light"
+                                        }
+                                    ],
+                                    "type": "horizontal-stack"
+                                }
+                            ],
+                            "type": "vertical-stack"
+                        },
+                        {
+                            "cards": [
+                                {
                                     "name": "Kitchen/Dining room",
                                     "template": "button-card-headers",
                                     "type": "custom:button-card"
@@ -2048,6 +2072,24 @@
                             "show_state": true,
                             "title": "Reu",
                             "type": "glance"
+                        },
+                        {
+                            "entity": "binary_sensor.lumi_lumi_sensor_magnet_aq2_70e07804_on_off",
+                            "type": "entity"
+                        },
+                        {
+                            "entity": "binary_sensor.lumi_lumi_sensor_magnet_aq2_c71aa004_on_off",
+                            "type": "entity"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "light.living_room_2"
+                                }
+                            ],
+                            "hours_to_show": 120,
+                            "refresh_interval": 0,
+                            "type": "history-graph"
                         }
                     ],
                     "icon": "mdi:beta",
