@@ -19,13 +19,13 @@
   sensors:
     show_commute_work:
       friendly_name: Display card between 07:00 and 09:00.
-      entity_id: sensor.time
+      #entity_id: sensor.time
       value_template: >
          {{ 7 <= now().hour < 9 }}
 - platform: template
   sensors:
     show_commute_home:
       friendly_name: Display card between 16:00 and 18:00.
-      entity_id: sensor.time
+      #entity_id: sensor.time
       value_template: >
          {{ 16 <= now().hour < 18 }}           

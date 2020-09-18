@@ -1,23 +1,23 @@
 {
+    "version": 1,
+    "key": "zha.storage",
     "data": {
         "devices": [
             {
+                "name": "LUMI lumi.sensor_magnet.aq2",
                 "ieee": "00:15:8d:00:04:46:ef:c8",
-                "last_seen": 1600065716.1962352,
-                "name": "LUMI lumi.sensor_magnet.aq2"
+                "last_seen": 1600338184.8849454
             },
             {
+                "name": "LUMI lumi.sensor_magnet.aq2",
                 "ieee": "00:15:8d:00:04:78:e0:70",
-                "last_seen": 1600065468.9689305,
-                "name": "LUMI lumi.sensor_magnet.aq2"
+                "last_seen": 1600337750.6277757
             },
             {
+                "name": "LUMI lumi.sensor_magnet.aq2",
                 "ieee": "00:15:8d:00:04:a0:1a:c7",
-                "last_seen": 1600065337.2601192,
-                "name": "LUMI lumi.sensor_magnet.aq2"
+                "last_seen": 1600337693.9100575
             }
         ]
-    },
-    "key": "zha.storage",
-    "version": 1
+    }
 }

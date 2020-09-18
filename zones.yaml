@@ -19,7 +19,7 @@
 - name: Home
   latitude: 53.839690
   longitude: -1.778373
-  radius: 25
+  radius: 50
   icon: mdi:home
   
 - name: AD Work
