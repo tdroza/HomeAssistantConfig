@@ -105,6 +105,10 @@ android_ip_webcam:
       - whitebalance_lock
       - video_recording
 
+camera:
+  - platform: local_file
+    file_path: /config/www/cams/cam1.jpg
+    name: esp32cam_lastimage
 ifttt:
   key:
     tom: !secret tom_ifttt
