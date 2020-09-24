@@ -551,11 +551,11 @@
   alias: 'Garage: Open'
   description: ''
   trigger:
-  - device_id: 1278b53baee94a0092621cb7e29f04f5
-    domain: binary_sensor
-    entity_id: binary_sensor.garage_door
+  - type: opened
     platform: device
-    type: opened
+    device_id: 95b859a2f9f711eaa43c6ba5d5c98dd1
+    entity_id: binary_sensor.garage_door
+    domain: binary_sensor
   condition: []
   action:
   - data_template:
@@ -570,15 +570,16 @@
       entity_id: media_player.living_room_display
       message: The garage door was opened
     service: tts.google_translate_say
+  mode: single
 - id: '1588450370943'
   alias: 'Garage: Closed'
   description: ''
   trigger:
-  - device_id: 1278b53baee94a0092621cb7e29f04f5
-    domain: binary_sensor
-    entity_id: binary_sensor.garage_door
+  - type: not_opened
     platform: device
-    type: not_opened
+    device_id: 95b859a2f9f711eaa43c6ba5d5c98dd1
+    entity_id: binary_sensor.garage_door
+    domain: binary_sensor
   condition: []
   action:
   - data_template:
@@ -594,6 +595,7 @@
       entity_id: media_player.living_room_display
       message: The garage door was closed
     service: tts.google_translate_say
+  mode: single
 - id: '1589231983089'
   alias: 'Kodi: Turn off power after shutdown'
   description: ''
@@ -672,7 +674,7 @@
     entity_id: light.main_bedroom_ceiling
     type: turn_off
 - id: '1600196508217'
-  alias: Daily camera photo
+  alias: Daily camera photo - Nexus
   description: ''
   trigger:
   - at: '11:00:00'
@@ -684,3 +686,92 @@
       filename: /config/www/cams/ipcam_{{ states('sensor.date') }}.jpg
     service: camera.snapshot
   mode: single
+- id: '1600250519288'
+  alias: 'Daily camera: low battery notification'
+  description: ''
+  trigger:
+  - below: '25'
+    entity_id: sensor.ip_webcam_battery_level
+    for: 00:10:00
+    platform: numeric_state
+  condition: []
+  action:
+  - data_template:
+      message: 🔌 Timelapse camera battery level is {{ states('sensor.ip_webcam_battery_level')
+        }}. Please charge the battery.
+      target:
+      - '{{ states(''input_text.telegram_td'') }}'
+    service: telegram_bot.send_message
+  mode: single
+- id: '1600335652412'
+  alias: ESP32 Cam timelapse
+  description: ''
+  trigger:
+  - entity_id: switch.esp32cam_status
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition:
+  - after: sunrise
+    before: sunset
+    condition: sun
+  action:
+  - data:
+      value: '{{ states(''sensor.date'') }}_{{ states(''sensor.time'') }}'
+    entity_id: input_text.image_timestamp
+    service: input_text.set_value
+  - data:
+      entity_id: camera.esp32cam_one
+      filename: /config/www/cams/esp32cam_{{ states('input_text.image_timestamp')
+        }}.jpg
+    entity_id: camera.esp32cam_one
+    service: camera.snapshot
+  - delay: 00:00:02
+  - data:
+      entity_id: camera.esp32cam_lastimage
+      file_path: /config/www/cams/esp32cam_{{ states('input_text.image_timestamp')
+        }}.jpg
+    service: local_file.update_file_path
+  mode: single
+- id: handle_tag_scan
+  alias: 'NFC: Media Player'
+  mode: single
+  variables:
+    media_players:
+      89cc5e46faabf3c0: media_player.bedroom_2_speaker
+      c5757012c81cab45: media_player.bedroom_2_speaker
+      8962aa07fab811eabbaa4f7d3fc96ef8: media_player.bedroom_2_speaker
+    tags:
+      04-2F-8B-FA-90-49-81:
+        media_content_id: https://firebasestorage.googleapis.com/v0/b/storytime-7c623.appspot.com/o/stories%2FqBdQcfPIY4UJfmVC4mqj%2Frecordings%2FBZFoJspmw9K9IwlQMz8J%2Frecordings%2Faudio.mp3?alt=media&token=f46db5de-43c6-4283-9e61-1397aa1ac46d
+        media_content_type: music        
+      0e179e79-1604-4fc8-bb2c-4b28a59f9ea1:
+        media_content_id: https://firebasestorage.googleapis.com/v0/b/storytime-7c623.appspot.com/o/stories%2FqBdQcfPIY4UJfmVC4mqj%2Frecordings%2FBZFoJspmw9K9IwlQMz8J%2Frecordings%2Faudio.mp3?alt=media&token=f46db5de-43c6-4283-9e61-1397aa1ac46d
+        media_content_type: music
+      04-B0-A4-EA-41-2B-80:
+        media_content_id: https://firebasestorage.googleapis.com/v0/b/storytime-7c623.appspot.com/o/stories%2F6WI5vrqc6snoccsxsUV2%2Frecordings%2FTdQPRZxJpMG8w6xA3asa%2Frecordings%2Faudio.mp3?alt=media&token=ee3e9093-f4b5-44c6-8571-f362cc2a884c
+        media_content_type: music
+      b8777c03-86f1-48cd-a844-d14bb6d0a59e:
+        media_content_id: https://firebasestorage.googleapis.com/v0/b/storytime-7c623.appspot.com/o/stories%2F6WI5vrqc6snoccsxsUV2%2Frecordings%2FTdQPRZxJpMG8w6xA3asa%2Frecordings%2Faudio.mp3?alt=media&token=ee3e9093-f4b5-44c6-8571-f362cc2a884c
+        media_content_type: music
+      B9-17-08-8E:
+        media_content_id: https://chtbl.com/track/43774/traffic.megaphone.fm/SONY2917056284.mp3
+        media_content_type: music
+  trigger:
+    platform: event
+    event_type: tag_scanned
+  condition:
+  - '{{ trigger.event.data.tag_id in tags }}'
+  - '{{ trigger.event.data.device_id in media_players }}'
+  action:
+  - variables:
+      media_player_entity_id: '{{ media_players[trigger.event.data.device_id] }}'
+      media_content_id: '{{ tags[trigger.event.data.tag_id].media_content_id }}'
+      media_content_type: '{{ tags[trigger.event.data.tag_id].media_content_type }}'
+  - service: media_player.play_media
+    data:
+      entity_id: '{{ media_player_entity_id }}'
+      media_content_id: '{{ media_content_id }}'
+      media_content_type: '{{ media_content_type }}'
+  - delay: 5
+   
