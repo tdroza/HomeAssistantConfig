@@ -1,4 +1,6 @@
 {
+    "version": 1,
+    "key": "lovelace",
     "data": {
         "config": {
             "button_card_templates": {
@@ -1001,23 +1003,6 @@
                             "type": "vertical-stack"
                         },
                         {
-                            "aspect_ratio": "0%",
-                            "camera_image": "camera.esp32cam_one",
-                            "entities": [
-                                {
-                                    "entity": "camera.esp32cam_one"
-                                },
-                                {
-                                    "entity": "light.esp32cam_one_flash"
-                                }
-                            ],
-                            "image": "https://www.home-assistant.io/images/merchandise/shirt-frontpage.png",
-                            "tap_action": {
-                                "action": "more-info"
-                            },
-                            "type": "picture-glance"
-                        },
-                        {
                             "cards": [
                                 {
                                     "name": "Phones",
@@ -1485,6 +1470,14 @@
                     "badges": [],
                     "cards": [
                         {
+                            "entity": "media_player.bedroom_speaker",
+                            "type": "media-control"
+                        },
+                        {
+                            "type": "media-control",
+                            "entity": "media_player.bedroom_2_speaker"
+                        },
+                        {
                             "entity": "media_player.hallway_home",
                             "type": "media-control"
                         },
@@ -1497,7 +1490,7 @@
                             "type": "media-control"
                         },
                         {
-                            "entity": "media_player.living_room",
+                            "entity": "media_player.seb_s_home",
                             "type": "media-control"
                         },
                         {
@@ -1505,19 +1498,7 @@
                             "type": "media-control"
                         },
                         {
-                            "entity": "media_player.seb_s_home",
-                            "type": "media-control"
-                        },
-                        {
-                            "entity": "media_player.bedroom_speaker",
-                            "type": "media-control"
-                        },
-                        {
-                            "entity": "media_player.whole_house",
-                            "type": "media-control"
-                        },
-                        {
-                            "entity": "media_player.everywhere_except_lounge",
+                            "entity": "media_player.living_room",
                             "type": "media-control"
                         },
                         {
@@ -1525,11 +1506,23 @@
                             "type": "media-control"
                         },
                         {
-                            "entity": "media_player.living_room_amp",
+                            "type": "media-control",
+                            "entity": "media_player.reuben_s_room_speaker"
+                        },
+                        {
+                            "entity": "media_player.everywhere_except_lounge",
                             "type": "media-control"
                         },
                         {
                             "entity": "media_player.living_room_tv",
+                            "type": "media-control"
+                        },
+                        {
+                            "entity": "media_player.living_room_amp",
+                            "type": "media-control"
+                        },
+                        {
+                            "entity": "media_player.whole_house",
                             "type": "media-control"
                         }
                     ],
@@ -2095,10 +2088,68 @@
                     "icon": "mdi:beta",
                     "path": "beta",
                     "title": "Beta"
+                },
+                {
+                    "badges": [],
+                    "cards": [
+                        {
+                            "aspect_ratio": "0%",
+                            "camera_image": "camera.ip_webcam",
+                            "entities": [
+                                {
+                                    "entity": "camera.ip_webcam"
+                                },
+                                {
+                                    "entity": "sensor.ip_webcam_battery_level"
+                                },
+                                {
+                                    "entity": "switch.ip_webcam_front_facing_camera"
+                                },
+                                {
+                                    "entity": "sensor.ip_webcam_battery_voltage"
+                                }
+                            ],
+                            "image": "https://demo.home-assistant.io/stub_config/kitchen.png",
+                            "title": "Green Lane",
+                            "type": "picture-glance"
+                        },
+                        {
+                            "aspect_ratio": "0%",
+                            "camera_image": "camera.esp32cam_lastimage",
+                            "entities": [
+                                {
+                                    "entity": "camera.esp32cam_one"
+                                },
+                                {
+                                    "entity": "input_text.image_timestamp"
+                                }
+                            ],
+                            "entity": "input_text.image_timestamp",
+                            "image": "c",
+                            "title": "ESP32Cam Last image",
+                            "type": "picture-glance"
+                        }
+                    ],
+                    "icon": "mdi:cctv",
+                    "path": "webcam",
+                    "title": "Webcam"
+                },
+                {
+                    "title": "NFC",
+                    "path": "nfc",
+                    "icon": "mdi:nfc",
+                    "badges": [],
+                    "cards": [
+                        {
+                            "type": "entities",
+                            "entities": [],
+                            "title": "Tag Reader Reu",
+                            "show_header_toggle": false,
+                            "state_color": true
+                        }
+                    ]
                 }
             ]
         }
-    },
-    "key": "lovelace",
-    "version": 1
+    }
 }
