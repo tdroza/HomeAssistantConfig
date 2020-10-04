@@ -370,7 +370,7 @@
   action:
   - data_template:
       entity_id: media_player.living_room_display
-      message: The washing machine finished {{ relative_time(states.binary_sensor.washer.last_changed)
+      message: The washing machine finished {{relative_time(states.binary_sensor.washer.last_changed)
         }} ago, please hang out the washing
     service: tts.google_translate_say
   - data_template:
@@ -382,6 +382,7 @@
       - '{{ states(''input_text.telegram_td'') }}'
       - '{{ states(''input_text.telegram_ad'') }}'
     service: telegram_bot.send_message
+  mode: single
 - id: '1581777155699'
   alias: 'Washer: Machine finished'
   description: ''
@@ -406,6 +407,7 @@
       entity_id: media_player.living_room_display
       message: The washing machine has finished.
     service: tts.google_translate_say
+  mode: single
 - id: '1581777529393'
   alias: 'Washer: Handle *washer_emptied* telegram message'
   description: ''
@@ -454,8 +456,8 @@
         \ {% endif %} \nProgress: {{ states('sensor.printer_job_percentage') }}%\n"
     service: notify.telegram_td
 - id: '1582836882523'
-  alias: Blanket - turn off TD after 10m
-  description: Turn off Toms blanket 10m after it is turned on
+  alias: Blanket - turn off TD after 15m
+  description: Turn off Toms blanket 15m after it is turned on
   trigger:
   - entity_id: switch.blanket_tom
     for: 00:15:00
@@ -467,6 +469,7 @@
   - data: {}
     entity_id: switch.blanket_tom
     service: switch.turn_off
+  mode: single
 - id: '1583963701174'
   alias: Telegram - cam1
   description: ''
@@ -741,10 +744,14 @@
       89cc5e46faabf3c0: media_player.bedroom_2_speaker
       c5757012c81cab45: media_player.bedroom_2_speaker
       8962aa07fab811eabbaa4f7d3fc96ef8: media_player.bedroom_2_speaker
+      52db5770030511eb9ca2a50c8617140c: media_player.bedroom_2_speaker
+      21fd883f035711ebbba9252d8c7373db: media_player.bedroom_2_speaker
+      1fe6e09e6e8b47f2999d61c76e413a8b: media_player.living_room_display
+      035c659903d911ebb6040b6f864e36ee: media_player.kitchen_chromecast
     tags:
       04-2F-8B-FA-90-49-81:
         media_content_id: https://firebasestorage.googleapis.com/v0/b/storytime-7c623.appspot.com/o/stories%2FqBdQcfPIY4UJfmVC4mqj%2Frecordings%2FBZFoJspmw9K9IwlQMz8J%2Frecordings%2Faudio.mp3?alt=media&token=f46db5de-43c6-4283-9e61-1397aa1ac46d
-        media_content_type: music        
+        media_content_type: music
       0e179e79-1604-4fc8-bb2c-4b28a59f9ea1:
         media_content_id: https://firebasestorage.googleapis.com/v0/b/storytime-7c623.appspot.com/o/stories%2FqBdQcfPIY4UJfmVC4mqj%2Frecordings%2FBZFoJspmw9K9IwlQMz8J%2Frecordings%2Faudio.mp3?alt=media&token=f46db5de-43c6-4283-9e61-1397aa1ac46d
         media_content_type: music
@@ -756,6 +763,9 @@
         media_content_type: music
       B9-17-08-8E:
         media_content_id: https://chtbl.com/track/43774/traffic.megaphone.fm/SONY2917056284.mp3
+        media_content_type: music
+      87-61-95-5F:
+        media_content_id: https://www.dropbox.com/s/uowksapxv8nb8se/08%20-%20Come%20What%20May.mp3?dl=1
         media_content_type: music
   trigger:
     platform: event
@@ -774,4 +784,3 @@
       media_content_id: '{{ media_content_id }}'
       media_content_type: '{{ media_content_type }}'
   - delay: 5
-   
