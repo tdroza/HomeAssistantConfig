@@ -2128,6 +2128,17 @@
                             "image": "c",
                             "title": "ESP32Cam Last image",
                             "type": "picture-glance"
+                        },
+                        {
+                            "type": "entities",
+                            "entities": [
+                                {
+                                    "type": "cast",
+                                    "name": "Cams",
+                                    "view": "webcam"
+                                }
+                            ],
+                            "title": "Cast"
                         }
                     ],
                     "icon": "mdi:cctv",
@@ -2142,8 +2153,18 @@
                     "cards": [
                         {
                             "type": "entities",
-                            "entities": [],
-                            "title": "Tag Reader Reu",
+                            "entities": [
+                                {
+                                    "entity": "light.tagreader_led"
+                                },
+                                {
+                                    "entity": "switch.tagreader_buzzer_enabled"
+                                },
+                                {
+                                    "entity": "switch.tagreader_led_enabled"
+                                }
+                            ],
+                            "title": "Tag Reader",
                             "show_header_toggle": false,
                             "state_color": true
                         }
