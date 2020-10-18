@@ -71,9 +71,7 @@ tuya:
 
 homeassistant:
   customize: !include customize.yaml
-  name: Home
-  unit_system: metric
-  whitelist_external_dirs:
+  allowlist_external_dirs:
     - /tmp
     - /config/www/cams
 
@@ -112,3 +110,8 @@ ifttt:
     anna: !secret anna_ifttt
 
 google_assistant: !include includes/google_assistant.yaml
+
+zoom: 
+    client_id: QUqJ2gcaSqaUAQTuo5xQaw
+    client_secret: hu68a0bdTFx6DYgMF3UBpTHpiCdxApq8
+    verification_token: KRe4n2QvTZGn7HmaNVVeEQ
