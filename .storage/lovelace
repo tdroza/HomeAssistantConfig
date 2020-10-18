@@ -2155,6 +2155,40 @@
                             "type": "entities",
                             "entities": [
                                 {
+                                    "entity": "light.tagreader_hwspi_led"
+                                },
+                                {
+                                    "entity": "switch.tagreader_hwspi_buzzer_enabled"
+                                },
+                                {
+                                    "entity": "switch.tagreader_hwspi_led_enabled"
+                                }
+                            ],
+                            "title": "Tag Reader SPI",
+                            "show_header_toggle": false,
+                            "state_color": true
+                        },
+                        {
+                            "type": "entities",
+                            "entities": [
+                                {
+                                    "entity": "light.tagreader_case_led"
+                                },
+                                {
+                                    "entity": "switch.tagreader_case_buzzer_enabled"
+                                },
+                                {
+                                    "entity": "switch.tagreader_case_led_enabled"
+                                }
+                            ],
+                            "title": "Tag Reader",
+                            "show_header_toggle": false,
+                            "state_color": true
+                        },
+                        {
+                            "type": "entities",
+                            "entities": [
+                                {
                                     "entity": "light.tagreader_led"
                                 },
                                 {
@@ -2164,7 +2198,7 @@
                                     "entity": "switch.tagreader_led_enabled"
                                 }
                             ],
-                            "title": "Tag Reader",
+                            "title": "Tag Reader I2C",
                             "show_header_toggle": false,
                             "state_color": true
                         }
