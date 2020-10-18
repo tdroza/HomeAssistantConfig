@@ -371,18 +371,19 @@
   action:
   - data:
       entity_id: media_player.living_room_display
-      message: The washing machine finished {{relative_time(states.binary_sensor.washer.last_changed)
-        }} ago, please hang out the washing
+      message: The washing machine finished {{ relative_time(states.binary_sensor.washer.last_changed) }} ago, please hang out the washing
     service: tts.google_translate_say
   - data:
-      inline_keyboard:
-      - Washer Emptied:/washer_emptied
+      title: Washing Machine
       message: 🧺 The washing machine finished {{ relative_time(states.binary_sensor.washer.last_changed)
         }} ago, please hang out the washing
-      target:
-      - '{{ states(''input_text.telegram_td'') }}'
-      - '{{ states(''input_text.telegram_ad'') }}'
-    service: telegram_bot.send_message
+      data:
+        actions:
+        - action: WASHER_EMPTIED
+          title: Washer emptied
+        group: Washing machine
+        channel: WashingMachine
+    service: notify.tom_and_anna
   mode: single
 - id: '1581777155699'
   alias: 'Washer: Machine finished'
@@ -397,20 +398,23 @@
   - entity_id: automation.washer_notify_done
     service: automation.turn_on
   - data:
-      inline_keyboard:
-      - Washer Emptied:/washer_emptied
-      message: 🧺 The washing machine has finished, please hang out the washing
-      target:
-      - '{{ states(''input_text.telegram_td'') }}'
-      - '{{ states(''input_text.telegram_ad'') }}'
-    service: telegram_bot.send_message
-  - data:
       entity_id: media_player.living_room_display
       message: The washing machine has finished.
     service: tts.google_translate_say
+  - service: notify.tom_and_anna
+    data:
+      title: Washing Machine
+      message: 🧺 The washing machine has finished, please hang out the washing
+      data:
+        actions:
+        - action: WASHER_EMPTIED
+          title: Washer emptied
+        group: Washing machine
+        channel: WashingMachine
+        vibrationPattern: 10, 100, 500, 100, 500, 500
   mode: single
 - id: '1581777529393'
-  alias: 'Washer: Handle *washer_emptied* telegram message'
+  alias: 'Washer: Handle *washer_emptied* notification response'
   description: ''
   trigger:
   - event_data:
@@ -421,6 +425,10 @@
       command: /washer_emptied
     event_type: telegram_command
     platform: event
+  - platform: event
+    event_type: mobile_app_notification_action
+    event_data:
+      action: WASHER_EMPTIED
   condition: []
   action:
   - entity_id: automation.washer_notify_done
@@ -548,16 +556,15 @@
       entity_id:
       - media_player.living_room_display
       - media_player.hallway_home
-      message: The garage door was opened {{ relative_time(states.binary_sensor.garage_door.last_changed)
-        }} ago
+      message: The garage door was opened {{ relative_time(states.binary_sensor.garage_door.last_changed) }} ago.
     service: tts.google_translate_say
   - data:
-      message: The garage door was opened {{ relative_time(states.binary_sensor.garage_door.last_changed)
-        }} ago
-      target:
-      - '{{ states(''input_text.telegram_td'') }}'
-      - '{{ states(''input_text.telegram_ad'') }}'
-    service: telegram_bot.send_message
+      title: Garage door
+      message: The garage door was opened {{ relative_time(states.binary_sensor.garage_door.last_changed) }} ago
+      data:
+        group: Garage
+        channel: Garage
+    service: notify.tom_and_anna
   mode: single
 - id: '1588450174191'
   alias: 'Garage: Open'
@@ -571,10 +578,13 @@
   condition: []
   action:
   - data:
+      title: Garage door
       message: The garage door was opened
-      target:
-      - '{{ states(''input_text.telegram_td'') }}'
-    service: telegram_bot.send_message
+      data:
+        group: Garage
+        channel: Garage
+        vibrationPattern: 10, 100, 500, 100, 500, 500
+    service: notify.mobile_app_in2013
   - data: {}
     entity_id: automation.garage_notification_repeat
     service: automation.turn_on
@@ -597,11 +607,13 @@
   condition: []
   action:
   - data:
+      title: Garage door
       message: The garage door was closed
-      target:
-      - '{{ states(''input_text.telegram_td'') }}'
-      - '{{ states(''input_text.telegram_ad'') }}'
-    service: telegram_bot.send_message
+      data:
+        group: Garage
+        channel: Garage
+        vibrationPattern: 10, 100, 500, 100, 500, 500
+    service: notify.tom_and_anna
   - data: {}
     entity_id: automation.garage_notification_repeat
     service: automation.turn_off

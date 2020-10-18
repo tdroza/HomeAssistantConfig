@@ -4,3 +4,8 @@
 - name: telegram_ad
   platform: telegram
   chat_id: !secret telegram_bot_chat_id_ad
+- name: tom_and_anna
+  platform: group
+  services:
+    - service: mobile_app_moto_g_5g_plus
+    - service: mobile_app_in2013
