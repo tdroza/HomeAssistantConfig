@@ -62,6 +62,12 @@ globals:
     type: int
     
 font:
+  - file: 'fonts/consola.ttf'
+    id: consola_s
+    size: 18
+  - file: 'fonts/consola.ttf'
+    id: consola_m
+    size: 20
   - file: 'fonts/Roboto-Regular.ttf'
     id: roboto_s
     size: 18
@@ -236,16 +242,16 @@ display:
         lambda: |-
           it.printf(0, 0, id(roboto_m), TextAlign::TOP_LEFT, "Bed1:");
           it.printf(115, 0, id(roboto_m), TextAlign::TOP_RIGHT, "%.1f°", (id(bed1_temp).has_state()?id(bed1_temp).state:0.0));
-          it.printf(125, 0, id(roboto_m), TextAlign::TOP_LEFT, "Ensuite:");
-          it.printf(249, 0, id(roboto_m), TextAlign::TOP_RIGHT, "%.1f°", id(ensuite_temp).has_state()?id(ensuite_temp).state:0.0);
+          it.printf(125, 0, id(consola_m), TextAlign::TOP_LEFT, "Ensuite:");
+          it.printf(249, 0, id(consola_m), TextAlign::TOP_RIGHT, "%.1f°", id(ensuite_temp).has_state()?id(ensuite_temp).state:0.0);
           it.printf(0, 25, id(roboto_m), TextAlign::TOP_LEFT, "Bed3:");
           it.printf(115, 25, id(roboto_m), TextAlign::TOP_RIGHT, "%.1f°", id(seb_temp).has_state()?id(seb_temp).state:0.0);
-          it.printf(125, 25, id(roboto_m), TextAlign::TOP_LEFT, "Bed4:");
-          it.printf(249, 25, id(roboto_m), TextAlign::TOP_RIGHT, "%.1f°", id(reu_temp).has_state()?id(reu_temp).state:0.0);
+          it.printf(125, 25, id(consola_m), TextAlign::TOP_LEFT, "Bed4:");
+          it.printf(249, 25, id(consola_m), TextAlign::TOP_RIGHT, "%.1f°", id(reu_temp).has_state()?id(reu_temp).state:0.0);
           it.printf(0, 50, id(roboto_m), TextAlign::TOP_LEFT, "Bath:");
           it.printf(115, 50, id(roboto_m), TextAlign::TOP_RIGHT, "%.1f°", id(bath_temp).has_state()?id(bath_temp).state:0.0);
-          it.printf(125, 50, id(roboto_m), TextAlign::TOP_LEFT, "Lounge:");
-          it.printf(249, 50, id(roboto_m), TextAlign::TOP_RIGHT, "%.1f°", id(lounge_temp).has_state()?id(lounge_temp).state:0.0);
+          it.printf(125, 50, id(consola_m), TextAlign::TOP_LEFT, "Lounge:");
+          it.printf(249, 50, id(consola_m), TextAlign::TOP_RIGHT, "%.1f°", id(lounge_temp).has_state()?id(lounge_temp).state:0.0);
           it.printf(0, 75, id(roboto_m), TextAlign::TOP_LEFT, "Garage: %s", id(garage_door).state?"Open":"Closed");
           it.image(220, 75, id(thermometer));
           
@@ -276,13 +282,13 @@ display:
           it.filled_rectangle(0, 0, 125, 122);
           it.image(0, 5, id(thermometer_35_inverse));
           it.printf(34, 43, id(roboto_l), COLOR_OFF, TextAlign::BOTTOM_LEFT, "%.1f", id(weather_day0_temperature).has_state()?id(weather_day0_temperature).state:0.0);
-          it.printf(123, 40, id(roboto_s), COLOR_OFF, TextAlign::BOTTOM_RIGHT, "°C");
+          it.printf(123, 40, id(consola_s), COLOR_OFF, TextAlign::BOTTOM_RIGHT, "°C");
           it.image(0, 41, id(humidity_35_inverse));
           it.printf(34, 78, id(roboto_l), COLOR_OFF, TextAlign::BOTTOM_LEFT, "%.1f", id(weather_day0_humidity).has_state()?id(weather_day0_humidity).state:0.0);
-          it.printf(123, 75, id(roboto_s), COLOR_OFF, TextAlign::BOTTOM_RIGHT, "%%");
+          it.printf(123, 75, id(consola_s), COLOR_OFF, TextAlign::BOTTOM_RIGHT, "%%");
           it.image(0, 76, id(wind_35_inverse));
           it.printf(34, 113, id(roboto_l), COLOR_OFF, TextAlign::BOTTOM_LEFT, "%.1f", id(weather_day0_windspeed).has_state()?id(weather_day0_windspeed).state:0.0);
-          it.printf(123, 110, id(roboto_s), COLOR_OFF, TextAlign::BOTTOM_RIGHT, "kmh");
+          it.printf(123, 110, id(consola_s), COLOR_OFF, TextAlign::BOTTOM_RIGHT, "kmh");
         
           if (strcmp("cloudy", id(weather_day0_condition).state.c_str())==0) it.image(137, 15, id(cloudy));
           if (strcmp("exceptional", id(weather_day0_condition).state.c_str())==0) it.image(137, 15, id(exceptional));

@@ -1,23 +1,28 @@
 {
+    "version": 1,
+    "key": "zha.storage",
     "data": {
         "devices": [
             {
+                "name": "LUMI lumi.sensor_magnet.aq2",
                 "ieee": "00:15:8d:00:04:46:ef:c8",
-                "last_seen": 1600065716.1962352,
-                "name": "LUMI lumi.sensor_magnet.aq2"
+                "last_seen": 1603025089.5161703
             },
             {
+                "name": "LUMI lumi.sensor_magnet.aq2",
                 "ieee": "00:15:8d:00:04:78:e0:70",
-                "last_seen": 1600065468.9689305,
-                "name": "LUMI lumi.sensor_magnet.aq2"
+                "last_seen": 1603024001.4517958
             },
             {
+                "name": "LUMI lumi.sensor_magnet.aq2",
                 "ieee": "00:15:8d:00:04:a0:1a:c7",
-                "last_seen": 1600065337.2601192,
-                "name": "LUMI lumi.sensor_magnet.aq2"
+                "last_seen": 1603025439.7518256
+            },
+            {
+                "name": "Texas Instruments ZNP Coordinator",
+                "ieee": "00:12:4b:00:19:3b:18:68",
+                "last_seen": 1603022042.6889095
             }
         ]
-    },
-    "key": "zha.storage",
-    "version": 1
+    }
 }
