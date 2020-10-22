@@ -20,7 +20,7 @@
                                 "letter-spacing": "10px"
                             },
                             {
-                                "background-color": "#e5e5e5"
+                                "background-color": "var(--card-background-color);"
                             }
                         ]
                     }
