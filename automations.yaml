@@ -371,7 +371,8 @@
   action:
   - data:
       entity_id: media_player.living_room_display
-      message: The washing machine finished {{ relative_time(states.binary_sensor.washer.last_changed) }} ago, please hang out the washing
+      message: The washing machine finished {{ relative_time(states.binary_sensor.washer.last_changed)
+        }} ago, please hang out the washing
     service: tts.google_translate_say
   - data:
       title: Washing Machine
@@ -556,11 +557,13 @@
       entity_id:
       - media_player.living_room_display
       - media_player.hallway_home
-      message: The garage door was opened {{ relative_time(states.binary_sensor.garage_door.last_changed) }} ago.
+      message: The garage door was opened {{ relative_time(states.binary_sensor.garage_door.last_changed)
+        }} ago.
     service: tts.google_translate_say
   - data:
       title: Garage door
-      message: The garage door was opened {{ relative_time(states.binary_sensor.garage_door.last_changed) }} ago
+      message: The garage door was opened {{ relative_time(states.binary_sensor.garage_door.last_changed)
+        }} ago
       data:
         group: Garage
         channel: Garage
@@ -851,4 +854,36 @@
         entity_id: media_player.bedroom_2_speaker
   - delay:
       seconds: 10
+  mode: single
+- id: '1603313648727'
+  alias: Bedtime - phone charging
+  description: Turn off light, turn on lamp, when phone starts charging
+  trigger:
+  - type: plugged_in
+    platform: device
+    device_id: cf4ceb29a2e7464abe92c738f5983356
+    entity_id: binary_sensor.in2013_is_charging
+    domain: binary_sensor
+  - type: plugged_in
+    platform: device
+    device_id: 5fe5c0fe0b3111eb8c0681a6c5c84147
+    entity_id: binary_sensor.moto_g_5g_plus_is_charging
+    domain: binary_sensor
+  condition:
+  - condition: time
+    after: '21:30'
+  - condition: device
+    type: is_on
+    device_id: 5f159654348248d4a706a85a40b381ba
+    entity_id: light.main_bedroom_ceiling
+    domain: light
+  action:
+  - type: turn_on
+    device_id: 9a9d18e0bac44a38a143ed6f268f38a4
+    entity_id: light.main_bedroom_bloom
+    domain: light
+  - type: turn_off
+    device_id: 5f159654348248d4a706a85a40b381ba
+    entity_id: light.main_bedroom_ceiling
+    domain: light
   mode: single
