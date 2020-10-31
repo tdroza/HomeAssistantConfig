@@ -641,55 +641,64 @@
   - entity_id: switch.kodi
     service: switch.turn_off
   mode: single
-- id: '1590597141876'
-  alias: 'Lights: Turn off Seb''s light if no motion'
+- id: '1604160427345'
+  alias: 'Lights: Turn on boys'' light when motion'
   description: ''
+  variables:
+    light_map:
+      binary_sensor.seb_d1_motion: light.seb_s_colour
+      binary_sensor.reu_d1_motion: light.reuben_ceiling
+  trigger:
+  - type: motion
+    platform: device
+    device_id: b5a3bd7d5d4541f7962db7fbdce9a670
+    entity_id: binary_sensor.seb_d1_motion
+    domain: binary_sensor
+  - type: motion
+    platform: device
+    device_id: e8cd43fe0f2842bca71d1ee8b5adc5da
+    entity_id: binary_sensor.reu_d1_motion
+    domain: binary_sensor
+  condition:
+  - condition: time
+    after: 07:00
+    before: '19:30'
+  action:
+  - service: light.turn_on
+    data:
+      entity_id: '{{ light_map[trigger.entity_id] }}'      
+  mode: single
+  
+- id: '1590597141876'
+  alias: 'Lights: Turn off boys'' light when no motion'
+  description: ''
+  variables:
+    light_map:
+      binary_sensor.seb_d1_motion: light.seb_s_colour
+      binary_sensor.reu_d1_motion: light.reuben_ceiling
   trigger:
   - entity_id: binary_sensor.seb_d1_motion
     for: 00:10:00
     from: 'on'
     platform: state
     to: 'off'
-  condition:
-  - condition: device
-    device_id: a5013daedfd54ea398815eb2bfaa9a66
-    domain: light
-    entity_id: light.seb_s_colour
-    type: is_on
-  - after: 07:30
-    condition: time
-  action:
-  - device_id: a5013daedfd54ea398815eb2bfaa9a66
-    domain: light
-    entity_id: light.seb_s_colour
-    type: turn_off
-  - data:
-      message: Turned off Seb's light due to no motion
-    service: notify.telegram_td
-- id: '1591347836942'
-  alias: 'Lights: Turn off Reu''s light if no motion'
-  description: ''
-  trigger:
   - entity_id: binary_sensor.reu_d1_motion
     for: 00:10:00
     from: 'on'
     platform: state
     to: 'off'
   condition:
-  - condition: device
-    device_id: 619a3f0d60bb4d59acaad81904062bf8
-    domain: light
-    entity_id: light.reuben_ceiling
-    type: is_on
   - after: 07:30
     condition: time
+    before: '19:30'
   action:
-  - data: {}
-    entity_id: light.reubens_bedroom
-    service: light.turn_off
+  - service: light.turn_off
+    data:
+      entity_id: '{{ light_map[trigger.entity_id] }}'
   - data:
-      message: Turned off Reu's light due to no motion
+      message: Turned off _{{ state_attr(light_map[trigger.entity_id], 'friendly_name') }}_ light due to no motion
     service: notify.telegram_td
+  mode: single
 - id: '1592899929119'
   alias: 'Lights: Turn off the main bedroom lights at 8am'
   description: ''
@@ -754,7 +763,7 @@
   mode: single
   variables:
     media_players:
-      e4fe6e4208d711eb87685b946672c241: media_player.kitchen_chromecast
+      e4fe6e4208d711eb87685b946672c241: media_player.reuben_s_room_speaker
       c3bd660708d811ebac3afd455d849421: media_player.reuben_s_room_speaker
     tags:
       04-2F-8B-FA-90-49-81:
@@ -872,11 +881,6 @@
   condition:
   - condition: time
     after: '21:30'
-  - condition: device
-    type: is_on
-    device_id: 5f159654348248d4a706a85a40b381ba
-    entity_id: light.main_bedroom_ceiling
-    domain: light
   action:
   - type: turn_on
     device_id: 9a9d18e0bac44a38a143ed6f268f38a4
@@ -886,4 +890,83 @@
     device_id: 5f159654348248d4a706a85a40b381ba
     entity_id: light.main_bedroom_ceiling
     domain: light
+  mode: single
+- id: '1603396218827'
+  alias: Tom's phone - smart charging
+  description: ''
+  trigger:
+  - type: battery_level
+    platform: device
+    device_id: cf4ceb29a2e7464abe92c738f5983356
+    entity_id: sensor.in2013_battery_level
+    domain: sensor
+    above: 80
+  condition:
+  - condition: time
+    after: '22:00'
+  - condition: device
+    type: is_on
+    device_id: a45d69a5149f11eb984059712ae33449
+    entity_id: switch.toms_phone_charger
+    domain: switch
+  action:
+  - type: turn_off
+    device_id: a45d69a5149f11eb984059712ae33449
+    entity_id: switch.toms_phone_charger
+    domain: switch
+  mode: single
+- id: '1603396316886'
+  alias: Tom's phone - turn on charger
+  description: ''
+  trigger:
+  - platform: time
+    at: '22:00'
+  - platform: time
+    at: 06:00
+  condition:
+  - condition: device
+    type: is_off
+    device_id: a45d69a5149f11eb984059712ae33449
+    entity_id: switch.toms_phone_charger
+    domain: switch
+  action:
+  - type: turn_on
+    device_id: a45d69a5149f11eb984059712ae33449
+    entity_id: switch.toms_phone_charger
+    domain: switch
+  mode: single
+- id: '1603396482626'
+  alias: Tom's phone - turn off charger
+  description: ''
+  trigger:
+  - platform: time
+    at: 07:30
+  condition:
+  - type: is_not_plugged_in
+    condition: device
+    device_id: cf4ceb29a2e7464abe92c738f5983356
+    entity_id: binary_sensor.in2013_is_charging
+    domain: binary_sensor
+  action:
+  - type: turn_off
+    device_id: a45d69a5149f11eb984059712ae33449
+    entity_id: switch.toms_phone_charger
+    domain: switch
+  mode: single
+- id: '1603808684460'
+  alias: Close the door
+  description: ''
+  trigger:
+  - type: opened
+    platform: device
+    device_id: 95b939ecf9f711eaa1fdcd4b4a1dccc0
+    entity_id: binary_sensor.living_room_door
+    domain: binary_sensor
+  condition: []
+  action:
+  - service: media_player.play_media
+    data:
+      media_content_id: https://www.dropbox.com/s/wlhcirxknyrqvp5/Close.wav?dl=1
+      media_content_type: music
+    entity_id: media_player.living_room_display
   mode: single
