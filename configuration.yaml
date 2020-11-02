@@ -75,6 +75,8 @@ homeassistant:
     - /tmp
     - /config/www/cams
 
+stream:
+
 android_ip_webcam:
   - host: 192.168.1.175
     port: 8080
@@ -103,7 +105,15 @@ camera:
   - platform: local_file
     file_path: /config/www/cams/cam1.jpg
     name: esp32cam_lastimage
-    
+  - platform: generic
+    name: OfficeCam
+    still_image_url: https://192.168.1.187/cgi-bin/currentpic.cgi
+    stream_source: rtsp://192.168.1.187:8554/unicast 
+    verify_ssl: false
+    username: root
+    password: !secret ipcam_password
+    authentication: basic
+
 ifttt:
   key:
     tom: !secret tom_ifttt
@@ -115,3 +125,4 @@ zoom:
     client_id: QUqJ2gcaSqaUAQTuo5xQaw
     client_secret: hu68a0bdTFx6DYgMF3UBpTHpiCdxApq8
     verification_token: KRe4n2QvTZGn7HmaNVVeEQ
+    
