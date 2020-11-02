@@ -666,9 +666,8 @@
   action:
   - service: light.turn_on
     data:
-      entity_id: '{{ light_map[trigger.entity_id] }}'      
+      entity_id: '{{ light_map[trigger.entity_id] }}'
   mode: single
-  
 - id: '1590597141876'
   alias: 'Lights: Turn off boys'' light when no motion'
   description: ''
@@ -696,7 +695,8 @@
     data:
       entity_id: '{{ light_map[trigger.entity_id] }}'
   - data:
-      message: Turned off _{{ state_attr(light_map[trigger.entity_id], 'friendly_name') }}_ light due to no motion
+      message: Turned off _{{ state_attr(light_map[trigger.entity_id], 'friendly_name')
+        }}_ light due to no motion
     service: notify.telegram_td
   mode: single
 - id: '1592899929119'
@@ -765,6 +765,7 @@
     media_players:
       e4fe6e4208d711eb87685b946672c241: media_player.reuben_s_room_speaker
       c3bd660708d811ebac3afd455d849421: media_player.reuben_s_room_speaker
+      43ddd1e400d41d9d547f7bc24a95f86d: media_player.reuben_s_room_speaker
     tags:
       04-2F-8B-FA-90-49-81:
         media_content_id: https://firebasestorage.googleapis.com/v0/b/storytime-7c623.appspot.com/o/stories%2FqBdQcfPIY4UJfmVC4mqj%2Frecordings%2FBZFoJspmw9K9IwlQMz8J%2Frecordings%2Faudio.mp3?alt=media&token=f46db5de-43c6-4283-9e61-1397aa1ac46d
@@ -787,27 +788,34 @@
       04-0F-81-FA-90-49-81:
         media_content_id: https://firebasestorage.googleapis.com/v0/b/storytime-7c623.appspot.com/o/stories%2FGH4ZnxM7M8oxbVZEmV4T%2Frecordings%2FOZljR1hXy7orkCBrha9f%2Frecordings%2Faudio.mp3?alt=media&token=9d6f367f-4521-4e0b-9b7d-66500f2ef836
         media_content_type: music
-      04-1B-81-FA-90-49-81:
+      264fe312-b244-4631-8cc0-21e03a34c84c:
         media_content_id: https://firebasestorage.googleapis.com/v0/b/storytime-7c623.appspot.com/o/stories%2FZTe10kJMfXgNaiSCsStC%2Frecordings%2FKksLQS6LUXWLrBbtDusZ%2Frecordings%2Faudio.mp3?alt=media&token=46232d75-e430-4b11-a532-4185a96a34dd
         media_content_type: music
-      04-27-81-FA-90-49-81:
+        title: 'What the Ladybird Heard'
+      ce39e080-b2a6-41df-8118-bb13852196c3:
         media_content_id: https://firebasestorage.googleapis.com/v0/b/storytime-7c623.appspot.com/o/stories%2F0CSxJ7wAn8p7s6adeqAx%2Frecordings%2F82kgp14YF6iJtU77IaSd%2Frecordings%2Faudio.mp3?alt=media&token=68bdd707-2f64-47a6-9887-8b86dd6b73d4
         media_content_type: music
-      04-21-81-FA-90-49-81:
+        title: 'Tiddler'
+      a121ba28-4832-49c9-a1ad-7306fae8c27c:
         media_content_id: https://firebasestorage.googleapis.com/v0/b/storytime-7c623.appspot.com/o/stories%2FvGG2EXQ9sp2HOS9f74UB%2Frecordings%2FfKgkUvjMMQZYIM5XT2Wd%2Frecordings%2Faudio.mp3?alt=media&token=096ef499-c35d-44fa-a9eb-2c9ca5cb9ec0
         media_content_type: music
-      04-7E-6E-62-90-6B-80:
+        title: 'Lady of Shallot'
+      ef01de9a-495d-4c06-b0df-884b58f1da27:
         media_content_id: https://firebasestorage.googleapis.com/v0/b/storytime-7c623.appspot.com/o/stories%2FEfVUE7f9cD3ggPOJG3WG%2Frecordings%2F5YLWhtixOsEX4ju064js%2Frecordings%2Faudio.mp3?alt=media&token=60cd78ce-af61-4982-86b7-604a6ddf7985
         media_content_type: music
-      04-15-81-FA-90-49-81:
+        title: 'Zog and the Flying Doctors'
+      0f879ebc-f9be-48b9-baf3-2f9511f0b6c3:
         media_content_id: https://firebasestorage.googleapis.com/v0/b/storytime-7c623.appspot.com/o/stories%2FQkcZLdHAK2DgO8L8FDgG%2Frecordings%2FDGc9pUmUPbzHwhAvImCc%2Frecordings%2Faudio.mp3?alt=media&token=2e7a5558-c610-44d8-b03f-534e0b1f2a24
         media_content_type: music
-      04-82-6E-62-90-6B-80:
+        title: 'Monkey Puzzle'
+      7a45dacb-6a7b-450d-a445-1bc180e3b7d2:
         media_content_id: https://firebasestorage.googleapis.com/v0/b/storytime-7c623.appspot.com/o/stories%2F6aOQWFLcP8N40QSpBiVL%2Frecordings%2Frxu1QkpPKd9wYwX2094m%2Frecordings%2Faudio.mp3?alt=media&token=964f2092-cd0d-4f29-a0f9-cbd1cc3670a3
         media_content_type: music
-      04-64-7F-62-EC-6B-81:
+        title: 'The Snail and the Whale'
+      937e676e-9590-4ae2-87ed-e484525deffa:
         media_content_id: https://firebasestorage.googleapis.com/v0/b/storytime-7c623.appspot.com/o/stories%2FWAmgOrvRTRaoApufBwFJ%2Frecordings%2F8OwDv4WuCySO2j6tBAkd%2Frecordings%2Faudio.mp3?alt=media&token=b34ac6ea-9052-4a30-9f86-788f7a39e438
         media_content_type: music
+        title: 'Peace at last'
       04-68-7F-62-EC-6B-81:
         media_content_id: https://firebasestorage.googleapis.com/v0/b/storytime-7c623.appspot.com/o/stories%2FtfRd0ncTBChvgHQM0jjk%2Frecordings%2Fa7VgLNATEVtB6P3avoE3%2Frecordings%2Faudio.mp3?alt=media&token=5cdd84c4-2930-4bec-bfd2-e48cc8d579a6
         media_content_type: music
@@ -872,11 +880,6 @@
     platform: device
     device_id: cf4ceb29a2e7464abe92c738f5983356
     entity_id: binary_sensor.in2013_is_charging
-    domain: binary_sensor
-  - type: plugged_in
-    platform: device
-    device_id: 5fe5c0fe0b3111eb8c0681a6c5c84147
-    entity_id: binary_sensor.moto_g_5g_plus_is_charging
     domain: binary_sensor
   condition:
   - condition: time
