@@ -2125,6 +2125,18 @@
                             "type": "picture-glance"
                         },
                         {
+                            "type": "picture-glance",
+                            "camera_image": "camera.officecam",
+                            "title": "OfficeCam",
+                            "aspect_ratio": "0%",
+                            "entities": [
+                                {
+                                    "entity": "camera.officecam"
+                                }
+                            ],
+                            "image": "https://demo.home-assistant.io/stub_config/kitchen.png"
+                        },
+                        {
                             "aspect_ratio": "0%",
                             "camera_image": "camera.esp32cam_lastimage",
                             "entities": [
@@ -2150,18 +2162,6 @@
                                 }
                             ],
                             "title": "Cast"
-                        },
-                        {
-                            "type": "picture-glance",
-                            "camera_image": "camera.officecam",
-                            "title": "OfficeCam",
-                            "aspect_ratio": "0%",
-                            "entities": [
-                                {
-                                    "entity": "camera.officecam"
-                                }
-                            ],
-                            "image": "https://demo.home-assistant.io/stub_config/kitchen.png"
                         }
                     ],
                     "icon": "mdi:cctv",
