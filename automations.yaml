@@ -981,25 +981,26 @@
     tag_id: d9354ba8-ca01-4715-9654-c80546db17a8
   condition: []
   action:
+  - variables:
+      number_of_podcasts: '{{states.sensor.podcast_marvellous_musical.attributes.entries  | length }}'
+      podcast_player: media_player.seb_s_home
   - choose:
     - conditions:
       - condition: template
-        value_template: '{{ states.counter.marvellous_musical.state | int >= states.sensor.podcast_marvellous_musical.attributes.entries
-          | length | int }} '
+        value_template: '{{ states.counter.marvellous_musical.state | int >= number_of_podcasts | int }} '
       sequence:
       - service: counter.configure
         data:
-          value: '{{ states.sensor.podcast_marvellous_musical.attributes.entries |
-            length - 1| int }}'
+          value: '{{ number_of_podcasts - 1 }}'
         entity_id: counter.marvellous_musical
     default: []
   - service: tts.google_translate_say
     data:
-      entity_id: media_player.seb_s_home
+      entity_id: '{{ podcast_player }}'
       message: '{{ states.sensor.podcast_marvellous_musical.attributes.entries[states.counter.marvellous_musical.state
         | int].title }}'
   - delay: 00:00:02
-  - wait_template: '{{ states.media_player.seb_s_home.state==''idle'' }}'
+  - wait_template: '{{ states(podcast_player) == ''idle'' }}'
     continue_on_timeout: true
     timeout: '10'
   - service: media_player.play_media
@@ -1007,28 +1008,20 @@
       media_content_id: '{{ (state_attr(''sensor.podcast_marvellous_musical'',''entries'')[states.counter.marvellous_musical.state
         | int].links | selectattr(''rel'',''eq'',''enclosure'') | list)[0].href }}'
       media_content_type: music
-    entity_id: media_player.seb_s_home
-  - service: counter.decrement
-    entity_id: counter.marvellous_musical
-  mode: restart
-- id: '1604414221372'
-  alias: test
-  description: ''
-  trigger:
-  - platform: state
-    entity_id: counter.marvellous_musical
-  condition: []
-  action:
+      entity_id: '{{ podcast_player }}'
   - choose:
+    # IF count == 0 then set to number of podcasts minus 1
     - conditions:
-      - condition: state
-        entity_id: counter.marvellous_musical
-        state: '-1'
+        - condition: template
+          value_template: '{{ states.counter.marvellous_musical.state | int == 0 }} '
       sequence:
-      - service: counter.configure
-        data:
-          value: '{{ states.sensor.podcast_marvellous_musical.attributes.entries |
-            length | int }}'
-        entity_id: counter.marvellous_musical
-    default: []
-  mode: single
+        - service: counter.configure
+          data:
+            value: '{{ number_of_podcasts | int - 1 }}'
+          entity_id: counter.marvellous_musical
+    # ELSE counter > 0 THEN decrement counter
+    default:
+    - service: counter.decrement
+      entity_id: counter.marvellous_musical
+  mode: restart
+
