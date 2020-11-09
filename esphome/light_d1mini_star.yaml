@@ -37,7 +37,7 @@ light:
           intensity: 15%
       - lambda:
           name: Breathe
-          update_interval: 3s
+          update_interval: 3.5s
           lambda: |-
             static bool state = false;
             auto call = id(star).turn_on();
@@ -46,7 +46,7 @@ light:
             } else {
               call.set_brightness(1.0);
             }
-            call.set_transition_length(2500);
+            call.set_transition_length(3000);
             call.perform();
 
             state = !state;
