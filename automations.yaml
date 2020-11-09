@@ -982,12 +982,14 @@
   condition: []
   action:
   - variables:
-      number_of_podcasts: '{{states.sensor.podcast_marvellous_musical.attributes.entries  | length }}'
+      number_of_podcasts: '{{states.sensor.podcast_marvellous_musical.attributes.entries  |
+        length }}'
       podcast_player: media_player.seb_s_home
   - choose:
     - conditions:
       - condition: template
-        value_template: '{{ states.counter.marvellous_musical.state | int >= number_of_podcasts | int }} '
+        value_template: '{{ states.counter.marvellous_musical.state | int >= number_of_podcasts
+          | int }} '
       sequence:
       - service: counter.configure
         data:
@@ -1010,18 +1012,37 @@
       media_content_type: music
       entity_id: '{{ podcast_player }}'
   - choose:
-    # IF count == 0 then set to number of podcasts minus 1
     - conditions:
-        - condition: template
-          value_template: '{{ states.counter.marvellous_musical.state | int == 0 }} '
+      - condition: template
+        value_template: '{{ states.counter.marvellous_musical.state | int == 0 }} '
       sequence:
-        - service: counter.configure
-          data:
-            value: '{{ number_of_podcasts | int - 1 }}'
-          entity_id: counter.marvellous_musical
-    # ELSE counter > 0 THEN decrement counter
+      - service: counter.configure
+        data:
+          value: '{{ number_of_podcasts | int - 1 }}'
+        entity_id: counter.marvellous_musical
     default:
     - service: counter.decrement
       entity_id: counter.marvellous_musical
   mode: restart
-
+- id: '1604656539815'
+  alias: Turn on living room lights when door opened
+  description: ''
+  trigger:
+  - type: opened
+    platform: device
+    device_id: 95b939ecf9f711eaa1fdcd4b4a1dccc0
+    entity_id: binary_sensor.living_room_door
+    domain: binary_sensor
+  condition:
+  - condition: sun
+    after: sunset
+  - condition: time
+    before: '22:00'
+  - condition: state
+    entity_id: light.living_room
+    state: 'off'
+  action:
+  - service: light.turn_on
+    data: {}
+    entity_id: light.living_room
+  mode: single
