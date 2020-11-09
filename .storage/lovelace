@@ -26,30 +26,6 @@
                     }
                 }
             },
-            "custom_header": {
-                "chevrons": false,
-                "exceptions": [
-                    {
-                        "conditions": {
-                            "user": "Mirror"
-                        },
-                        "config": {
-                            "default_tab": "5",
-                            "hide_tabs": []
-                        }
-                    },
-                    {
-                        "conditions": {
-                            "user": "Anna"
-                        },
-                        "config": {
-                            "hide_tabs": "3,4,6"
-                        }
-                    }
-                ],
-                "hidden_tab_redirect": false,
-                "shadow": false
-            },
             "swipe_nav": {
                 "animate": "swipe",
                 "wrap": true
@@ -1050,21 +1026,21 @@
                                             "name": "Location"
                                         },
                                         {
-                                            "entity": "sensor.moto_g_5_plus_wifi_connection",
+                                            "entity": "sensor.moto_g_5g_plus_wifi_connection",
                                             "name": "Wifi"
                                         },
                                         {
-                                            "entity": "sensor.moto_g_5_plus_wifi_connection",
+                                            "entity": "sensor.moto_g_5g_plus_wifi_connection",
                                             "icon": true,
                                             "name": false
                                         },
                                         {
-                                            "entity": "sensor.moto_g_5_plus_battery_level",
+                                            "entity": "sensor.moto_g_5g_plus_battery_level",
                                             "icon": true,
                                             "name": false
                                         }
                                     ],
-                                    "entity": "device_tracker.moto_g_5_plus",
+                                    "entity": "device_tracker.moto_g_5g_plus",
                                     "icon": "mdi:human-female",
                                     "name": "Anna",
                                     "secondary_info": "last-changed",
@@ -2094,6 +2070,10 @@
                             "hours_to_show": 120,
                             "refresh_interval": 0,
                             "type": "history-graph"
+                        },
+                        {
+                            "type": "light",
+                            "entity": "light.christmas_star"
                         }
                     ],
                     "icon": "mdi:beta",
