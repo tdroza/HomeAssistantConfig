@@ -624,70 +624,56 @@
                                     "type": "horizontal-stack"
                                 },
                                 {
-                                    "entity": "light.reuben_ceiling",
-                                    "hold_action": {
-                                        "action": "more-info"
-                                    },
-                                    "icon": "mdi:weather-night",
-                                    "name": "Night Light (15m)",
-                                    "show_icon": true,
-                                    "show_name": true,
-                                    "tap_action": {
-                                        "action": "call-service",
-                                        "service": "light.turn_off",
-                                        "service_data": {
-                                            "entity_id": "light.reuben_ceiling",
-                                            "transition": 900
-                                        }
-                                    },
-                                    "type": "button"
-                                },
-                                {
-                                    "card": null,
-                                    "color_thresholds": [
+                                    "cards": [
                                         {
-                                            "color": "var(--temp-twenty)",
-                                            "value": 20
+                                            "card": null,
+                                            "color_thresholds": [
+                                                {
+                                                    "color": "var(--temp-twenty)",
+                                                    "value": 20
+                                                },
+                                                {
+                                                    "color": "var(--temp-nineteen)",
+                                                    "value": 19
+                                                },
+                                                {
+                                                    "color": "var(--temp-eighteen)",
+                                                    "value": 18
+                                                },
+                                                {
+                                                    "color": "var(--temp-seventeen)",
+                                                    "value": 17
+                                                },
+                                                {
+                                                    "color": "var(--temp-sixteen)",
+                                                    "value": 16
+                                                }
+                                            ],
+                                            "entities": [
+                                                {
+                                                    "entity": "sensor.reu_d1_temperature",
+                                                    "index": 0,
+                                                    "name": "Temp"
+                                                }
+                                            ],
+                                            "name": "Reuben's Room",
+                                            "points_per_hour": 1,
+                                            "show": {
+                                                "icon": false,
+                                                "labels": true,
+                                                "name": false
+                                            },
+                                            "type": "custom:mini-graph-card"
                                         },
                                         {
-                                            "color": "var(--temp-nineteen)",
-                                            "value": 19
-                                        },
-                                        {
-                                            "color": "var(--temp-eighteen)",
-                                            "value": 18
-                                        },
-                                        {
-                                            "color": "var(--temp-seventeen)",
-                                            "value": 17
-                                        },
-                                        {
-                                            "color": "var(--temp-sixteen)",
-                                            "value": 16
-                                        }
-                                    ],
-                                    "entities": [
-                                        {
-                                            "entity": "sensor.reu_temperature",
-                                            "index": 0,
-                                            "name": "Temp"
-                                        },
-                                        {
-                                            "color": "var(--humidity)",
-                                            "entity": "sensor.reu_humidity",
-                                            "index": 1,
-                                            "name": "Humidity",
-                                            "y_axis": "secondary"
+                                            "entity": "binary_sensor.reu_d1_motion",
+                                            "aspect_ratio": "1/0.7",
+                                            "icon": "mdi:motion-sensor",
+                                            "show_name": false,
+                                            "type": "custom:button-card"
                                         }
                                     ],
-                                    "name": "Living room",
-                                    "points_per_hour": 1,
-                                    "show": {
-                                        "icon": false,
-                                        "labels": true,
-                                        "name": false
-                                    },
-                                    "type": "custom:mini-graph-card"
+                                    "type": "horizontal-stack"
                                 }
                             ],
                             "type": "vertical-stack"
@@ -2074,6 +2060,10 @@
                         {
                             "type": "light",
                             "entity": "light.christmas_star"
+                        },
+                        {
+                            "type": "light",
+                            "entity": "light.reuben"
                         }
                     ],
                     "icon": "mdi:beta",
@@ -2199,6 +2189,9 @@
                                 },
                                 {
                                     "entity": "switch.tagreader_led_enabled"
+                                },
+                                {
+                                    "entity": "binary_sensor.tagreader_status"
                                 }
                             ],
                             "title": "Tag Reader I2C",
