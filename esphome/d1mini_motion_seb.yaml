@@ -1,5 +1,5 @@
 esphome:
-  name: d1mini_motion_seb
+  name: "${device_name}"
   platform: ESP8266
   board: d1_mini
 
@@ -11,9 +11,13 @@ wifi:
 
   # Enable fallback hotspot (captive portal) in case wifi connection fails
   ap:
-    ssid: "D1Mini Temp Pir Hotspot"
+    ssid: "${device_name}"
     password: !secret wifi_password
 
+substitutions:
+  device_name: "d1mini_motion_seb"
+  friendly_name: "Seb D1"
+  
 captive_portal:
 
 # Enable logging
@@ -31,11 +35,13 @@ dallas:
 sensor:
   - platform: dallas
     address: 0x760119500218FF28
-    name: "Seb D1 Temperature"
+    name: "${friendly_name} Temperature"
 
 
 binary_sensor:
   - platform: gpio
     pin: D1
-    name: "Seb D1 Motion"
+    name: "${friendly_name} Motion"
     device_class: motion
+  - platform: status
+    name: "${friendly_name}  Status"
