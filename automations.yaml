@@ -690,6 +690,7 @@
   - after: 07:30
     condition: time
     before: '19:30'
+  - '{{ states(light_map[trigger.entity_id]) | string == ''on''}}'
   action:
   - service: light.turn_off
     data:
