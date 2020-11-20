@@ -158,7 +158,7 @@
                                                     "type": "custom:slider-entity-row"
                                                 },
                                                 {
-                                                    "entity": "light.reuben",
+                                                    "entity": "light.rname",
                                                     "type": "custom:slider-entity-row"
                                                 }
                                             ],
@@ -659,9 +659,9 @@
                                             "name": "Reuben's Room",
                                             "points_per_hour": 1,
                                             "show": {
-                                                "icon": false,
+                                                "icon": true,
                                                 "labels": true,
-                                                "name": false
+                                                "name": true
                                             },
                                             "type": "custom:mini-graph-card"
                                         },
@@ -2060,10 +2060,6 @@
                         {
                             "type": "light",
                             "entity": "light.christmas_star"
-                        },
-                        {
-                            "type": "light",
-                            "entity": "light.reuben"
                         }
                     ],
                     "icon": "mdi:beta",

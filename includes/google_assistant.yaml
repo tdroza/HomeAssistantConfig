@@ -57,3 +57,8 @@ entity_config:
       name: "Desk light"
       room: "Second Bedroom"
       expose: true
+    light.rname:
+      name: "Reubens Name"
+      aliases:
+        - Reubens Sign
+      expose: true
