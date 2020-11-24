@@ -3,7 +3,7 @@
     washer:
       friendly_name: "Washing machine"
       value_template: >-
-        {{ states('sensor.sonoff_10003a0e20_power')|float > 5 }}
+        {{ states('sensor.sonoff_10003a0e20_power')|float > 25 }}
       icon_template: >
         {% if is_state("binary_sensor.washer", "on") %}
           mdi:washing-machine
@@ -13,7 +13,7 @@
       delay_on: 
         minutes: 5
       delay_off:
-        seconds: 30
+        seconds: 60
             
 - platform: template
   sensors:
