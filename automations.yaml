@@ -1071,3 +1071,16 @@
     data: {}
     entity_id: light.living_room
   mode: single
+- id: '1605894548414'
+  alias: Tag Reuben's Name is scanned
+  description: ''
+  trigger:
+  - platform: tag
+    tag_id: D0-50-B3-32
+  condition: []
+  action:
+  - type: toggle
+    device_id: e04b748fc61f7ca1d9a4a202ddcefe7a
+    entity_id: light.rname
+    domain: light
+  mode: single

@@ -616,7 +616,7 @@
                                             "type": "light"
                                         },
                                         {
-                                            "entity": "light.reuben",
+                                            "entity": "light.rname",
                                             "name": " ",
                                             "type": "light"
                                         }
