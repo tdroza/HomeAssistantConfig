@@ -37,7 +37,6 @@ sensor:
     address: 0x760119500218FF28
     name: "${friendly_name} Temperature"
 
-
 binary_sensor:
   - platform: gpio
     pin: D1
