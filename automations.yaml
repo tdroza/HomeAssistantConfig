@@ -306,12 +306,16 @@
     from: paused
     platform: state
     to: idle
-  condition: []
+  condition:
+  - condition: state
+    entity_id: light.living_room
+    state: 'on'
   action:
   - data:
       brightness: 200
     entity_id: light.living_room_1, light.living_room_2
     service: light.turn_on
+  mode: single
 - id: '1581026602537'
   alias: 'Dehumidifier: Turn on'
   description: Turn on when humidity above 80
@@ -990,7 +994,10 @@
     device_id: 95b939ecf9f711eaa1fdcd4b4a1dccc0
     entity_id: binary_sensor.living_room_door
     domain: binary_sensor
-  condition: []
+  condition:
+  - condition: state
+    entity_id: input_boolean.guest_mode
+    state: 'off'
   action:
   - service: media_player.play_media
     data:
