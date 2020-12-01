@@ -658,10 +658,11 @@
                                             ],
                                             "name": "Reuben's Room",
                                             "points_per_hour": 1,
+                                            "align_icon": "state",
                                             "show": {
                                                 "icon": true,
                                                 "labels": true,
-                                                "name": true
+                                                "name": false
                                             },
                                             "type": "custom:mini-graph-card"
                                         },
@@ -681,7 +682,7 @@
                         {
                             "cards": [
                                 {
-                                    "name": "Second Bedroom",
+                                    "name": "Office",
                                     "template": "button-card-headers",
                                     "type": "custom:button-card"
                                 },
@@ -698,6 +699,46 @@
                                         }
                                     ],
                                     "type": "horizontal-stack"
+                                },
+                                {
+                                    "card": null,
+                                    "color_thresholds": [
+                                        {
+                                            "color": "var(--temp-twenty)",
+                                            "value": 20
+                                        },
+                                        {
+                                            "color": "var(--temp-nineteen)",
+                                            "value": 19
+                                        },
+                                        {
+                                            "color": "var(--temp-eighteen)",
+                                            "value": 18
+                                        },
+                                        {
+                                            "color": "var(--temp-seventeen)",
+                                            "value": 17
+                                        },
+                                        {
+                                            "color": "var(--temp-sixteen)",
+                                            "value": 16
+                                        }
+                                    ],
+                                    "entities": [
+                                        {
+                                            "entity": "sensor.bed2_temperature",
+                                            "index": 0,
+                                            "name": "Office temperature"
+                                        }
+                                    ],
+                                    "points_per_hour": 1,
+                                    "align_icon": "state",
+                                    "show": {
+                                        "icon": true,
+                                        "labels": true,
+                                        "name": false
+                                    },
+                                    "type": "custom:mini-graph-card"
                                 }
                             ],
                             "type": "vertical-stack"
@@ -1577,7 +1618,7 @@
                                             "type": "entity-button"
                                         },
                                         {
-                                            "entity": "switch.christmas_star",
+                                            "entity": "light.christmas_star",
                                             "type": "entity-button"
                                         }
                                     ],
