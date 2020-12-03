@@ -1884,25 +1884,6 @@
                         {
                             "entities": [
                                 {
-                                    "entity": "sensor.speedtest_download",
-                                    "name": "Download"
-                                },
-                                {
-                                    "entity": "sensor.speedtest_upload",
-                                    "name": "Upload"
-                                },
-                                {
-                                    "entity": "sensor.speedtest_ping",
-                                    "name": "Ping"
-                                }
-                            ],
-                            "show_header_toggle": false,
-                            "title": "Network",
-                            "type": "glance"
-                        },
-                        {
-                            "entities": [
-                                {
                                     "entity": "sensor.pi_hole_ads_blocked_today"
                                 }
                             ],
@@ -1930,6 +1911,95 @@
                             "refresh_interval": 0,
                             "title": "Network",
                             "type": "history-graph"
+                        },
+                        {
+                            "type": "custom:mini-graph-card",
+                            "entities": [
+                                {
+                                    "entity": "sensor.bt_home_hub_6_0a_b_received"
+                                }
+                            ],
+                            "show": {
+                                "graph": "bar"
+                            }
+                        },
+                        {
+                            "type": "custom:mini-graph-card",
+                            "color_thresholds": [
+                                {
+                                    "color": "var(--temp-twenty)",
+                                    "value": 5
+                                },
+                                {
+                                    "color": "var(--temp-nineteen)",
+                                    "value": 4
+                                },
+                                {
+                                    "color": "var(--temp-eighteen)",
+                                    "value": 3
+                                },
+                                {
+                                    "color": "var(--temp-seventeen)",
+                                    "value": 2
+                                },
+                                {
+                                    "color": "var(--temp-sixteen)",
+                                    "value": 1
+                                }
+                            ],
+                            "entities": [
+                                {
+                                    "entity": "sensor.broadband_mb_received"
+                                }
+                            ],
+                            "points_per_hour": 1,
+                            "unit": "GB",
+                            "icon": "mdi:download",
+                            "name": "Data Received",
+                            "show": {
+                                "graph": "bar"
+                            }
+                        },
+                        {
+                            "type": "grid",
+                            "cards": [
+                                {
+                                    "type": "gauge",
+                                    "entity": "sensor.speedtest_download",
+                                    "min": 0,
+                                    "max": 72,
+                                    "severity": {
+                                        "green": 50,
+                                        "yellow": 30,
+                                        "red": 0
+                                    },
+                                    "name": "Download"
+                                },
+                                {
+                                    "type": "gauge",
+                                    "entity": "sensor.speedtest_upload",
+                                    "min": 0,
+                                    "max": 20,
+                                    "severity": {
+                                        "green": 15,
+                                        "yellow": 10,
+                                        "red": 5
+                                    },
+                                    "name": "Upload"
+                                },
+                                {
+                                    "type": "gauge",
+                                    "entity": "sensor.speedtest_ping",
+                                    "min": 0,
+                                    "max": 100,
+                                    "severity": {
+                                        "green": 15,
+                                        "yellow": 20,
+                                        "red": 25
+                                    },
+                                    "name": "Ping"
+                                }
+                            ]
                         }
                     ],
                     "icon": "mdi:network",
