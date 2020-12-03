@@ -1,5 +1,7 @@
 - platform: template
   sensors:
+    broadband_mb_received: 
+      value_template: '{{ states(''sensor.bt_home_hub_6_0a_b_received'') | filesizeformat() }}'
     weather_condition:
       value_template: '{{ states.weather.millview.state }}'
     weather_temperature:
