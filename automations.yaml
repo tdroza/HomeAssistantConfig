@@ -374,7 +374,9 @@
   condition: []
   action:
   - data:
-      entity_id: media_player.living_room_display
+      entity_id:
+      - media_player.living_room_display
+      - media_player.hallway_home
       message: The washing machine finished {{ relative_time(states.binary_sensor.washer.last_changed)
         }} ago, please hang out the washing
     service: tts.google_translate_say
@@ -403,7 +405,10 @@
   - entity_id: automation.washer_notify_done
     service: automation.turn_on
   - data:
-      entity_id: media_player.living_room_display
+      entity_id:
+      - media_player.living_room_display
+      - media_player.bedroom_2_speaker
+      - media_player.hallway_home
       message: The washing machine has finished.
     service: tts.google_translate_say
   - service: notify.tom_and_anna
@@ -613,14 +618,14 @@
     domain: binary_sensor
   condition: []
   action:
-  - data:
+  - service: notify.tom_and_anna
+    data:
       title: Garage door
       message: The garage door was closed
       data:
         group: Garage
         channel: Garage
         vibrationPattern: 10, 100, 500, 100, 500, 500
-    service: notify.tom_and_anna
   - data: {}
     entity_id: automation.garage_notification_repeat
     service: automation.turn_off
