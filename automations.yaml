@@ -94,7 +94,10 @@
   trigger:
   - minutes: /15
     platform: time_pattern
-  condition: []
+  condition:
+  - condition: state
+    entity_id: input_boolean.do_not_disturb
+    state: 'off'
   action:
   - service: telegram_bot.send_message
     data:
@@ -106,6 +109,7 @@
       message: Nobody is home but lights have been left on . I'll remind you every
         15 minutes.
   initial_state: false
+  mode: single
 - id: '1576772552665'
   alias: 'Lights on: disable repeat notification'
   description: ''
@@ -119,18 +123,20 @@
     platform: state
     to: 'off'
   condition:
-  - condition: and
-    conditions:
-    - condition: state
-      entity_id: automation.lights_on_repeat_notification
-      state: 'on'
-    - condition: state
-      entity_id: group.all_my_lights
-      state: 'off'
+  - condition: state
+    entity_id: automation.lights_on_repeat_notification
+    state: 'on'
+  - condition: state
+    entity_id: group.all_my_lights
+    state: 'off'
+  - condition: state
+    entity_id: input_boolean.do_not_disturb
+    state: 'off'
   action:
   - data:
       entity_id: automation.lights_on_repeat_notification
     service: automation.turn_off
+  mode: single
 - id: '1576773012546'
   alias: Presence - Somebody arrived home
   description: ''
@@ -352,11 +358,12 @@
     platform: state
     to: 'off'
   condition:
-  - condition: and
-    conditions:
-    - above: '95'
-      condition: numeric_state
-      entity_id: sensor.printer_job_percentage
+  - condition: numeric_state
+    entity_id: sensor.printer_job_percentage
+    above: '95'
+  - condition: state
+    entity_id: input_boolean.do_not_disturb
+    state: 'off'
   action:
   - data:
       message: The 3D Printer has finished
@@ -365,13 +372,17 @@
       entity_id: media_player.living_room_display
       message: The printer has finished
     service: tts.google_translate_say
+  mode: single
 - id: '1581776307274'
   alias: 'Washer: Notify done (repeat)'
   description: ''
   trigger:
   - minutes: /15
     platform: time_pattern
-  condition: []
+  condition:
+  - condition: state
+    entity_id: input_boolean.do_not_disturb
+    state: 'off'
   action:
   - data:
       entity_id:
@@ -561,6 +572,9 @@
   - condition: template
     value_template: '{{ as_timestamp(now()) - as_timestamp(states.binary_sensor.garage_door.last_changed)
       > 10*60 }}'
+  - condition: state
+    entity_id: input_boolean.do_not_disturb
+    state: 'off'
   action:
   - data:
       entity_id:
