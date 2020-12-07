@@ -1151,7 +1151,9 @@
                         {
                             "type": "entities",
                             "entities": [
-                                "input_boolean.guest_mode"
+                                {
+                                    "entity": "input_boolean.do_not_disturb"
+                                }
                             ]
                         }
                     ],
