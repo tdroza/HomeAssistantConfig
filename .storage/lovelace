@@ -186,12 +186,12 @@
                                     "cards": [
                                         {
                                             "entity": "light.main_bedroom_ceiling",
-                                            "name": "Ceiling",
+                                            "name": " ",
                                             "type": "light"
                                         },
                                         {
                                             "entity": "light.main_bedroom_bloom",
-                                            "name": "Bloom",
+                                            "name": " ",
                                             "type": "light"
                                         }
                                     ],
@@ -539,8 +539,8 @@
                                     "cards": [
                                         {
                                             "entity": "light.seb_s_colour",
-                                            "name": " ",
-                                            "type": "light"
+                                            "type": "light",
+                                            "name": " "
                                         },
                                         {
                                             "aspect_ratio": "1/1.5",
@@ -690,12 +690,13 @@
                                     "cards": [
                                         {
                                             "entity": "light.second_bedroom_light",
-                                            "name": " ",
-                                            "type": "light"
+                                            "type": "light",
+                                            "name": " "
                                         },
                                         {
                                             "entity": "light.desk",
-                                            "type": "light"
+                                            "type": "light",
+                                            "name": " "
                                         }
                                     ],
                                     "type": "horizontal-stack"
@@ -752,8 +753,8 @@
                                 },
                                 {
                                     "entity": "light.kitchen_corner",
-                                    "name": "Corner Light",
-                                    "type": "light"
+                                    "type": "light",
+                                    "name": " "
                                 },
                                 {
                                     "elements": [
@@ -1021,7 +1022,6 @@
                                     "entities": [
                                         {
                                             "entity": "person.tom",
-                                            "icon": true,
                                             "name": "Location"
                                         },
                                         {
@@ -1041,6 +1041,7 @@
                                     ],
                                     "entity": "device_tracker.in2013",
                                     "icon": "mdi:human-male",
+                                    "image": "/local/tom.jpg",
                                     "name": "Tom",
                                     "secondary_info": "last-changed",
                                     "show_state": false,
@@ -1069,6 +1070,7 @@
                                     ],
                                     "entity": "device_tracker.moto_g_5g_plus",
                                     "icon": "mdi:human-female",
+                                    "image": "/local/anna.jpg",
                                     "name": "Anna",
                                     "secondary_info": "last-changed",
                                     "show_state": false,
