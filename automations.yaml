@@ -21,7 +21,7 @@
   action:
   - data:
       entity_id: '{{ trigger.event.data.entity_id }}'
-    service_template: '{{ trigger.event.data.service }}'
+    service: 'trigger.event.data.service' 
 - id: '1576537003318'
   alias: ifttt_webhook_params
   trigger:
@@ -30,7 +30,7 @@
       action: call_service_with_params
     event_type: ifttt_webhook_received
   action:
-  - service_template: '{{ trigger.event.data.service }}'
+  - service: '{{ trigger.event.data.service }}'
     data:
       brightness: '{{ trigger.event.data.brightness }}'
       effect: '{{ trigger.event.data.effect }}'
@@ -45,7 +45,7 @@
     event_type: ifttt_webhook_received
   condition: []
   action:
-  - service_template: '{{ trigger.event.data.service }}'
+  - service: '{{ trigger.event.data.service }}'
     data:
       method: '{{ trigger.event.data.method }}'
 - id: '1576675828079'
@@ -273,7 +273,7 @@
   - hours: '07'
     minutes: /2
     platform: time_pattern
-  - hours: 08
+  - hours: '08'
     minutes: /15
     platform: time_pattern
   condition: []
@@ -326,7 +326,7 @@
   alias: 'Dehumidifier: Turn on'
   description: Turn on when humidity above 80
   trigger:
-  - above: '80'
+  - above: 80
     entity_id: sensor.ensuite_humidity
     platform: numeric_state
   condition: []
@@ -338,7 +338,7 @@
   alias: 'Dehumidifier: Turn off'
   description: Turn off when humidity below 70 for 5 minutes
   trigger:
-  - below: '70'
+  - below: 70
     entity_id: sensor.ensuite_humidity
     for: 00:05:00
     platform: numeric_state
@@ -531,7 +531,7 @@
   alias: Telegram - Daily Beautiful News
   description: Every day send the daily Beautiful News image from https://informationisbeautiful.net/beautifulnews/
   trigger:
-  - at: '14:00'
+  - at: '14:00:00'
     platform: time
   condition: []
   action:
@@ -727,7 +727,7 @@
   alias: 'Lights: Turn off the main bedroom lights at 8am'
   description: ''
   trigger:
-  - at: 08:00
+  - at: '08:00:00'
     platform: time
   condition: []
   action:
@@ -971,9 +971,9 @@
   description: ''
   trigger:
   - platform: time
-    at: '22:00'
+    at: '22:00:00'
   - platform: time
-    at: 06:00
+    at: '06:00:00'
   condition:
   - condition: device
     type: is_off
@@ -991,7 +991,7 @@
   description: ''
   trigger:
   - platform: time
-    at: 07:30
+    at: '07:30:00'
   condition:
   - type: is_not_plugged_in
     condition: device
