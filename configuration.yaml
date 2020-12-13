@@ -9,6 +9,7 @@ frontend:
 # Text to speech
 tts:
   - platform: google_translate
+    service_name: google_translate_say
 
 automation: !include automations.yaml
 automation old: !include_dir_merge_list automations
