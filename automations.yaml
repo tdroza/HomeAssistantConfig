@@ -21,7 +21,7 @@
   action:
   - data:
       entity_id: '{{ trigger.event.data.entity_id }}'
-    service: 'trigger.event.data.service' 
+    service: '{{ trigger.event.data.service }}' 
 - id: '1576537003318'
   alias: ifttt_webhook_params
   trigger:
