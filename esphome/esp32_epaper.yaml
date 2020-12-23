@@ -254,7 +254,7 @@ display:
           it.printf(125, 50, id(roboto_m), TextAlign::TOP_LEFT, "Bed4:");
           it.printf(249, 50, id(roboto_m), TextAlign::TOP_RIGHT, "%.1f°", id(reu_temp).has_state()?id(reu_temp).state:0.0);
           it.printf(0, 75, id(roboto_m), TextAlign::TOP_LEFT, "Lounge:");
-          it.printf(125, 75, id(roboto_m), TextAlign::TOP_RIGHT, "%.1f°", id(lounge_temp).has_state()?id(lounge_temp).state:0.0);
+          it.printf(115, 75, id(roboto_m), TextAlign::TOP_RIGHT, "%.1f°", id(lounge_temp).has_state()?id(lounge_temp).state:0.0);
           it.image(220, 75, id(thermometer));
           
           it.filled_rectangle(0, 105, 250, 122);
