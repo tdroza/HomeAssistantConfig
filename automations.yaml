@@ -2,15 +2,16 @@
   alias: Close the blinds as dusk
   description: ''
   trigger:
-  - event: sunset
-    offset: +00:30:00
-    platform: sun
+  - platform: numeric_state
+    entity_id: sun.sun
+    below: '0.5'
   condition: []
   action:
   - alias: ''
     data:
       entity_id: all
     service: cover.close_cover
+  mode: single
 - id: '1575923914112'
   alias: ifttt_webhook
   trigger:
@@ -21,7 +22,7 @@
   action:
   - data:
       entity_id: '{{ trigger.event.data.entity_id }}'
-    service: '{{ trigger.event.data.service }}' 
+    service: '{{ trigger.event.data.service }}'
 - id: '1576537003318'
   alias: ifttt_webhook_params
   trigger:
@@ -273,7 +274,7 @@
   - hours: '07'
     minutes: /2
     platform: time_pattern
-  - hours: '08'
+  - hours: 08
     minutes: /15
     platform: time_pattern
   condition: []
@@ -667,10 +668,6 @@
 - id: '1604160427345'
   alias: 'Lights: Turn on boys'' light when motion'
   description: ''
-  variables:
-    light_map:
-      binary_sensor.seb_d1_motion: light.seb_s_colour
-      binary_sensor.reu_d1_motion: light.reuben_ceiling
   trigger:
   - type: motion
     platform: device
@@ -684,12 +681,16 @@
     domain: binary_sensor
   condition:
   - condition: time
-    after: 07:00
+    after: 07:30
     before: '19:30'
   action:
   - service: light.turn_on
     data:
       entity_id: '{{ light_map[trigger.entity_id] }}'
+  variables:
+    light_map:
+      binary_sensor.seb_d1_motion: light.seb_s_colour
+      binary_sensor.reu_d1_motion: light.reuben_ceiling
   mode: single
 - id: '1590597141876'
   alias: 'Lights: Turn off boys'' light when no motion'
@@ -727,7 +728,7 @@
   alias: 'Lights: Turn off the main bedroom lights at 8am'
   description: ''
   trigger:
-  - at: '08:00:00'
+  - at: 08:00:00
     platform: time
   condition: []
   action:
@@ -973,7 +974,7 @@
   - platform: time
     at: '22:00:00'
   - platform: time
-    at: '06:00:00'
+    at: 06:00:00
   condition:
   - condition: device
     type: is_off
@@ -991,7 +992,7 @@
   description: ''
   trigger:
   - platform: time
-    at: '07:30:00'
+    at: 07:30:00
   condition:
   - type: is_not_plugged_in
     condition: device
@@ -1015,8 +1016,8 @@
     domain: binary_sensor
   condition:
   - condition: state
-    entity_id: input_boolean.guest_mode
     state: 'off'
+    entity_id: input_boolean.do_not_disturb
   action:
   - service: media_player.play_media
     data:
