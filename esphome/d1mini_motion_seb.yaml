@@ -36,7 +36,14 @@ sensor:
   - platform: dallas
     address: 0x760119500218FF28
     name: "${friendly_name} Temperature"
-
+    filters:
+      - calibrate_linear:
+          # Map 0.0 (from sensor) to 0.0 (true value)
+          - 23.5 -> 18.0
+          - 26.1 -> 19.9
+          - 24.2 -> 18.7
+          - 26.3 -> 20.7
+          
 binary_sensor:
   - platform: gpio
     pin: D1
