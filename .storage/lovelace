@@ -736,13 +736,20 @@
                                                 {
                                                     "entity": "sensor.bed2_temperature",
                                                     "index": 0,
-                                                    "name": "Office temperature"
+                                                    "name": "Temp"
+                                                },
+                                                {
+                                                    "color": "var(--humidity)",
+                                                    "entity": "sensor.bed2_humidity",
+                                                    "index": 1,
+                                                    "name": "Humidity",
+                                                    "y_axis": "secondary"
                                                 }
                                             ],
+                                            "name": "Living room",
                                             "points_per_hour": 1,
-                                            "align_icon": "state",
                                             "show": {
-                                                "icon": true,
+                                                "icon": false,
                                                 "labels": true,
                                                 "name": false
                                             },
