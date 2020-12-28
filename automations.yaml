@@ -4,7 +4,8 @@
   trigger:
   - platform: numeric_state
     entity_id: sun.sun
-    below: '0.5'
+    below: '-2'
+    attribute: elevation
   condition: []
   action:
   - alias: ''
@@ -1007,13 +1008,17 @@
   mode: single
 - id: '1603808684460'
   alias: Close the door
-  description: ''
+  description: Play a notification if door opened and not closed within 3 seconds
   trigger:
   - type: opened
     platform: device
     device_id: 95b939ecf9f711eaa1fdcd4b4a1dccc0
     entity_id: binary_sensor.living_room_door
     domain: binary_sensor
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 3
   condition:
   - condition: state
     state: 'off'
@@ -1021,7 +1026,7 @@
   action:
   - service: media_player.play_media
     data:
-      media_content_id: https://www.dropbox.com/s/wlhcirxknyrqvp5/Close.wav?dl=1
+      media_content_id: https://www.dropbox.com/s/mov0prp7j7ir437/Close.wav?dl=1
       media_content_type: music
     entity_id: media_player.living_room_display
   mode: single
@@ -1111,3 +1116,16 @@
     entity_id: light.rname
     domain: light
   mode: single
+- id: '1608917499387'
+  alias: Low battery level detection & notification for all battery sensors
+  description: ''
+  use_blueprint:
+    path: sbyx/low-battery-level-detection-notification-for-all-battery-sensors.yaml
+    input:
+      day: '0'
+      threshold: 15
+      exclude0: sensor.moto_g_5_plus_battery_state
+      actions:
+      - service: notify.mobile_app_in2013
+        data:
+          message: Low battery alert for {{sensors}}
