@@ -123,3 +123,9 @@ binary_sensor.washer:
   device_class: plug
 binary_sensor.garage_door:
   device_class: garage_door
+binary_sensor.living_room_door:
+  device_class: door
+binary_sensor.bed1_status:
+  device_class: connectivity
+binary_sensor.bed1_door:
+  device_class: door

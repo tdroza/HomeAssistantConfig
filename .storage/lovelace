@@ -365,13 +365,29 @@
                                         {
                                             "entity": "light.living_room_2",
                                             "type": "light"
-                                        },
-                                        {
-                                            "entity": "light.lightstrip",
-                                            "type": "light"
                                         }
                                     ],
                                     "type": "horizontal-stack"
+                                },
+                                {
+                                    "type": "horizontal-stack",
+                                    "cards": [
+                                        {
+                                            "type": "button",
+                                            "tap_action": {
+                                                "action": "toggle"
+                                            },
+                                            "entity": "light.lightstrip"
+                                        },
+                                        {
+                                            "type": "button",
+                                            "tap_action": {
+                                                "action": "toggle"
+                                            },
+                                            "entity": "binary_sensor.living_room_door",
+                                            "show_name": false
+                                        }
+                                    ]
                                 },
                                 {
                                     "card": null,
@@ -2172,8 +2188,9 @@
                             "type": "glance"
                         },
                         {
-                            "entity": "binary_sensor.lumi_lumi_sensor_magnet_aq2_70e07804_on_off",
-                            "type": "entity"
+                            "entity": "binary_sensor.bed1_door",
+                            "type": "entity",
+                            "name": "Door"
                         },
                         {
                             "type": "entity",
