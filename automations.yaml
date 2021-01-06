@@ -872,6 +872,14 @@
         media_content_id: https://firebasestorage.googleapis.com/v0/b/storytime-7c623.appspot.com/o/stories%2FiZ9ToRDmRaD9LjLDXNPf%2Frecordings%2F2CjY7QGcCibMzgbcSJP3%2Frecordings%2Faudio.mp3?alt=media&token=73b881c5-6ca7-4881-82f5-eec3169e2f3a
         media_content_type: music
         title: Snow Bears
+      04-6C-6E-AA-ED-6C-80:
+        media_content_id: https://firebasestorage.googleapis.com/v0/b/storytime-7c623.appspot.com/o/stories%2FqIPowPEK0tCVemQmpfwH%2Frecordings%2F3rwPo84uEi87pVZvA2cM%2Frecordings%2Faudio.mp3?alt=media&token=99739671-2b12-494a-bdf1-552678328217
+        media_content_type: music
+        title: Room on the broom
+      04-83-6F-AA-ED-6C-80:
+        media_content_id: https://firebasestorage.googleapis.com/v0/b/storytime-7c623.appspot.com/o/stories%2F1kMvM6x73qpu5kTE1DBh%2Frecordings%2FIo2EfTtgUOuNZrFu8dXg%2Frecordings%2Faudio.mp3?alt=media&token=45db828b-657b-4f81-a586-bbc4b4dd85ec
+        media_content_type: music
+        title: Bringing down the moon
   trigger:
     platform: event
     event_type: tag_scanned
@@ -1018,7 +1026,7 @@
     for:
       hours: 0
       minutes: 0
-      seconds: 3
+      seconds: 5
   condition:
   - condition: state
     state: 'off'
@@ -1109,6 +1117,8 @@
   trigger:
   - platform: tag
     tag_id: D0-50-B3-32
+  - platform: tag
+    tag_id: 04-70-6E-AA-ED-6C-80
   condition: []
   action:
   - type: toggle
@@ -1129,3 +1139,18 @@
       - service: notify.mobile_app_in2013
         data:
           message: Low battery alert for {{sensors}}
+- id: '1609885331052'
+  alias: Turn off boys' light at bedtime
+  description: ''
+  trigger:
+  - platform: time
+    at: '20:30'
+  condition: []
+  action:
+  - service: light.turn_off
+    data:
+      entity_id:
+      - light.seb_s_colour
+      - light.reuben_ceiling
+      - light.rname
+  mode: single
