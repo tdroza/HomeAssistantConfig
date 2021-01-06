@@ -62,3 +62,20 @@ entity_config:
       aliases:
         - Reubens Sign
       expose: true
+    light.window1:
+      name: "Window 1"
+      expose: true
+    light.sebs_lamp:
+      name: "Sebs lamp"
+      aliases:
+        - Sebs lightstick
+      expose: true
+    light.xmas:
+      name: "Christmas Tree Lights"
+      aliases:
+        - Xmas
+        - Christmas
+        - Christmas tree
+        - Tree
+      expose: true
+
