@@ -141,6 +141,9 @@
                                                     "type": "custom:slider-entity-row"
                                                 },
                                                 {
+                                                    "entity": "light.sebs_lamp"
+                                                },
+                                                {
                                                     "entity": "switch.sonoff_1000d4baef_1"
                                                 }
                                             ],
