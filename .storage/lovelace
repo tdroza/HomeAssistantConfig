@@ -568,51 +568,63 @@
                                     "type": "horizontal-stack"
                                 },
                                 {
-                                    "card": null,
-                                    "color_thresholds": [
+                                    "type": "horizontal-stack",
+                                    "cards": [
                                         {
-                                            "color": "var(--temp-twenty)",
-                                            "value": 20
+                                            "type": "button",
+                                            "tap_action": {
+                                                "action": "toggle"
+                                            },
+                                            "entity": "light.sebs_lamp"
                                         },
                                         {
-                                            "color": "var(--temp-nineteen)",
-                                            "value": 19
-                                        },
-                                        {
-                                            "color": "var(--temp-eighteen)",
-                                            "value": 18
-                                        },
-                                        {
-                                            "color": "var(--temp-seventeen)",
-                                            "value": 17
-                                        },
-                                        {
-                                            "color": "var(--temp-sixteen)",
-                                            "value": 16
+                                            "card": null,
+                                            "color_thresholds": [
+                                                {
+                                                    "color": "var(--temp-twenty)",
+                                                    "value": 20
+                                                },
+                                                {
+                                                    "color": "var(--temp-nineteen)",
+                                                    "value": 19
+                                                },
+                                                {
+                                                    "color": "var(--temp-eighteen)",
+                                                    "value": 18
+                                                },
+                                                {
+                                                    "color": "var(--temp-seventeen)",
+                                                    "value": 17
+                                                },
+                                                {
+                                                    "color": "var(--temp-sixteen)",
+                                                    "value": 16
+                                                }
+                                            ],
+                                            "entities": [
+                                                {
+                                                    "entity": "sensor.seb_temperature",
+                                                    "index": 0,
+                                                    "name": "Temp"
+                                                },
+                                                {
+                                                    "color": "var(--humidity)",
+                                                    "entity": "sensor.seb_humidity",
+                                                    "index": 1,
+                                                    "name": "Humidity",
+                                                    "y_axis": "secondary"
+                                                }
+                                            ],
+                                            "name": "Living room",
+                                            "points_per_hour": 1,
+                                            "show": {
+                                                "icon": false,
+                                                "labels": true,
+                                                "name": false
+                                            },
+                                            "type": "custom:mini-graph-card"
                                         }
-                                    ],
-                                    "entities": [
-                                        {
-                                            "entity": "sensor.seb_temperature",
-                                            "index": 0,
-                                            "name": "Temp"
-                                        },
-                                        {
-                                            "color": "var(--humidity)",
-                                            "entity": "sensor.seb_humidity",
-                                            "index": 1,
-                                            "name": "Humidity",
-                                            "y_axis": "secondary"
-                                        }
-                                    ],
-                                    "name": "Living room",
-                                    "points_per_hour": 1,
-                                    "show": {
-                                        "icon": false,
-                                        "labels": true,
-                                        "name": false
-                                    },
-                                    "type": "custom:mini-graph-card"
+                                    ]
                                 }
                             ],
                             "type": "vertical-stack"
@@ -719,11 +731,6 @@
                                 },
                                 {
                                     "cards": [
-                                        {
-                                            "type": "light",
-                                            "entity": "light.christmas_star",
-                                            "icon": "mdi:star-outline"
-                                        },
                                         {
                                             "card": null,
                                             "color_thresholds": [
