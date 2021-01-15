@@ -1002,6 +1002,8 @@
   trigger:
   - platform: time
     at: 07:30:00
+  - platform: time
+    at: 08:30
   condition:
   - type: is_not_plugged_in
     condition: device
