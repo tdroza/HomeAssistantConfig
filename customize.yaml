@@ -129,3 +129,5 @@ binary_sensor.bed1_status:
   device_class: connectivity
 binary_sensor.bed1_door:
   device_class: door
+binary_sensor.main_bedroom_door:
+  device_class: door
