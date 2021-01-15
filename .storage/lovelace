@@ -161,8 +161,7 @@
                                                     "type": "custom:slider-entity-row"
                                                 },
                                                 {
-                                                    "entity": "light.rname",
-                                                    "type": "custom:slider-entity-row"
+                                                    "entity": "light.rname"
                                                 }
                                             ],
                                             "head": {
@@ -236,51 +235,63 @@
                                     "type": "horizontal-stack"
                                 },
                                 {
-                                    "card": null,
-                                    "color_thresholds": [
+                                    "type": "horizontal-stack",
+                                    "cards": [
                                         {
-                                            "color": "var(--temp-twenty)",
-                                            "value": 20
+                                            "type": "button",
+                                            "tap_action": {
+                                                "action": "toggle"
+                                            },
+                                            "entity": "binary_sensor.main_bedroom_door"
                                         },
                                         {
-                                            "color": "var(--temp-nineteen)",
-                                            "value": 19
-                                        },
-                                        {
-                                            "color": "var(--temp-eighteen)",
-                                            "value": 18
-                                        },
-                                        {
-                                            "color": "var(--temp-seventeen)",
-                                            "value": 17
-                                        },
-                                        {
-                                            "color": "var(--temp-sixteen)",
-                                            "value": 16
+                                            "card": null,
+                                            "color_thresholds": [
+                                                {
+                                                    "color": "var(--temp-twenty)",
+                                                    "value": 20
+                                                },
+                                                {
+                                                    "color": "var(--temp-nineteen)",
+                                                    "value": 19
+                                                },
+                                                {
+                                                    "color": "var(--temp-eighteen)",
+                                                    "value": 18
+                                                },
+                                                {
+                                                    "color": "var(--temp-seventeen)",
+                                                    "value": 17
+                                                },
+                                                {
+                                                    "color": "var(--temp-sixteen)",
+                                                    "value": 16
+                                                }
+                                            ],
+                                            "entities": [
+                                                {
+                                                    "entity": "sensor.bed1_temperature",
+                                                    "index": 0,
+                                                    "name": "Temp"
+                                                },
+                                                {
+                                                    "color": "var(--humidity)",
+                                                    "entity": "sensor.bed1_humidity",
+                                                    "index": 1,
+                                                    "name": "Humidity",
+                                                    "y_axis": "secondary"
+                                                }
+                                            ],
+                                            "name": "Living room",
+                                            "points_per_hour": 1,
+                                            "show": {
+                                                "icon": false,
+                                                "labels": true,
+                                                "name": false
+                                            },
+                                            "type": "custom:mini-graph-card"
                                         }
-                                    ],
-                                    "entities": [
-                                        {
-                                            "entity": "sensor.bed1_temperature",
-                                            "index": 0,
-                                            "name": "Temp"
-                                        },
-                                        {
-                                            "color": "var(--humidity)",
-                                            "entity": "sensor.bed1_humidity",
-                                            "index": 1,
-                                            "name": "Humidity",
-                                            "y_axis": "secondary"
-                                        }
-                                    ],
-                                    "name": "Living room",
-                                    "points_per_hour": 1,
-                                    "show": {
-                                        "icon": false,
-                                        "labels": true,
-                                        "name": false
-                                    },
-                                    "type": "custom:mini-graph-card"
+                                    ]
                                 }
                             ],
                             "type": "vertical-stack"
@@ -301,7 +312,7 @@
                                         },
                                         {
                                             "aspect_ratio": "1/1.25",
-                                            "entity": "binary_sensor.hallway_motion_sensor_motion",
+                                            "entity": "binary_sensor.hue_motion_sensor_motion",
                                             "icon": "mdi:motion-sensor",
                                             "show_name": false,
                                             "type": "custom:button-card"
@@ -2198,9 +2209,8 @@
                             "type": "glance"
                         },
                         {
-                            "entity": "binary_sensor.bed1_door",
-                            "type": "entity",
-                            "name": "Door"
+                            "entity": "binary_sensor.main_bedroom_door",
+                            "type": "entity"
                         },
                         {
                             "type": "entity",
