@@ -102,11 +102,13 @@
                                                 {
                                                     "entity": "light.main_bedroom_ceiling",
                                                     "name": "Ceiling",
+                                                    "toggle": true,
                                                     "type": "custom:slider-entity-row"
                                                 },
                                                 {
                                                     "entity": "light.main_bedroom_bloom",
                                                     "name": "Bloom",
+                                                    "toggle": true,
                                                     "type": "custom:slider-entity-row"
                                                 }
                                             ],
@@ -125,6 +127,7 @@
                                                 },
                                                 {
                                                     "entity": "light.desk",
+                                                    "toggle": true,
                                                     "type": "custom:slider-entity-row"
                                                 }
                                             ],
@@ -141,7 +144,9 @@
                                                     "type": "custom:slider-entity-row"
                                                 },
                                                 {
-                                                    "entity": "light.sebs_lamp"
+                                                    "entity": "light.sebs_lamp",
+                                                    "toggle": true,
+                                                    "type": "custom:slider-entity-row"
                                                 },
                                                 {
                                                     "entity": "switch.sonoff_1000d4baef_1"
@@ -161,7 +166,9 @@
                                                     "type": "custom:slider-entity-row"
                                                 },
                                                 {
-                                                    "entity": "light.rname"
+                                                    "entity": "light.rname",
+                                                    "toggle": true,
+                                                    "type": "custom:slider-entity-row"
                                                 }
                                             ],
                                             "head": {
