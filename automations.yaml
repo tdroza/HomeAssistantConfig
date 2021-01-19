@@ -1156,3 +1156,28 @@
       - light.reuben_ceiling
       - light.rname
   mode: single
+- id: '1610792212800'
+  alias: Turn off house button
+  description: ''
+  trigger:
+  - device_id: 2a892df040e90ca799578d576ddcc6ae
+    domain: zha
+    platform: device
+    type: remote_button_double_press
+    subtype: remote_button_double_press
+  - device_id: a98335e1b775a3c92d83494f43ab2647
+    domain: zha
+    platform: device
+    type: remote_button_double_press
+    subtype: remote_button_double_press
+  - device_id: 9f50d49473ecd72dad9e827acb4e6f60
+    domain: zha
+    platform: device
+    type: device_shaken
+    subtype: turn_on
+  condition: []
+  action:
+  - service: light.turn_off
+    data: {}
+    entity_id: all
+  mode: single
