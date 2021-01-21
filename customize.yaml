@@ -131,3 +131,7 @@ binary_sensor.bed1_door:
   device_class: door
 binary_sensor.main_bedroom_door:
   device_class: door
+cover.large_blind:
+  device_class: blind
+cover.small_blind:
+  device_class: blind
