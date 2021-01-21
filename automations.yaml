@@ -382,6 +382,9 @@
   - minutes: /15
     platform: time_pattern
   condition:
+  - condition: template
+    value_template: '{{ as_timestamp(now()) - as_timestamp(states.binary_sensor.washer.last_changed)
+      > 10*60 }}'
   - condition: state
     entity_id: input_boolean.do_not_disturb
     state: 'off'

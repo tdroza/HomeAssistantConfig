@@ -13,7 +13,7 @@
       delay_on: 
         minutes: 5
       delay_off:
-        seconds: 60
+        seconds: 90
             
 - platform: template
   sensors:
