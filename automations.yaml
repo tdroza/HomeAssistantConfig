@@ -883,6 +883,18 @@
         media_content_id: https://firebasestorage.googleapis.com/v0/b/storytime-7c623.appspot.com/o/stories%2F1kMvM6x73qpu5kTE1DBh%2Frecordings%2FIo2EfTtgUOuNZrFu8dXg%2Frecordings%2Faudio.mp3?alt=media&token=45db828b-657b-4f81-a586-bbc4b4dd85ec
         media_content_type: music
         title: Bringing down the moon
+      04-7F-6F-AA-ED-6C-80:
+        media_content_id: https://firebasestorage.googleapis.com/v0/b/storytime-7c623.appspot.com/o/stories%2F9FurTGgHRm9ycvFjix6X%2Frecordings%2FIBfJxanebnWT8CZPRYTI%2Frecordings%2Faudio.mp3?alt=media&token=2af233f9-0bc9-46c1-af63-99017560556c
+        media_content_type: music
+        title: The Gruffalo
+      04-77-6F-AA-ED-6C-80:
+        media_content_id: https://firebasestorage.googleapis.com/v0/b/storytime-7c623.appspot.com/o/stories%2FXSe2PPsM5cZ1RGDyQQDg%2Frecordings%2Fb0oXZw8itwmUIw11vmRZ%2Frecordings%2Faudio.mp3?alt=media&token=9f0eb901-8a09-491a-ba2b-4b8a05587d1f
+        media_content_type: music
+        title: Alien Tea on Planet Zum-Zee
+      04-73-6F-AA-ED-6C-80:
+        media_content_id: https://firebasestorage.googleapis.com/v0/b/storytime-7c623.appspot.com/o/stories%2FJmpqpkXqfCBjrTm5S67I%2Frecordings%2FbuNFPC9gGbIIkZQokx1g%2Frecordings%2Faudio.mp3?alt=media&token=3215cdfe-9add-464d-8f92-e69b7737bedc
+        media_content_type: music
+        title: Dinky Donkey
   trigger:
     platform: event
     event_type: tag_scanned
