@@ -1171,28 +1171,59 @@
       - light.reuben_ceiling
       - light.rname
   mode: single
-- id: '1610792212800'
-  alias: Turn off house button
+- id: '1611402292310'
+  alias: 'Lights: turn on main bedroom light for 5 minutes when for opens'
   description: ''
   trigger:
-  - device_id: 2a892df040e90ca799578d576ddcc6ae
+  - type: opened
+    platform: device
+    device_id: 95b8d0def9f711eaa7bd15994734a55a
+    entity_id: binary_sensor.main_bedroom_door
+    domain: binary_sensor
+  condition:
+  - condition: sun
+    after: sunset
+  - condition: time
+    before: '22:30'
+  action:
+  - type: turn_on
+    device_id: dd0fc2584dec5826995ff2cd2247533c
+    entity_id: light.main_bedroom_ceiling
+    domain: light
+    brightness_pct: 30
+  - delay: 00:05:00
+  - type: turn_off
+    device_id: dd0fc2584dec5826995ff2cd2247533c
+    entity_id: light.main_bedroom_ceiling
+    domain: light
+  mode: restart
+- id: '1611525664637'
+  alias: 'Lights: turn off house button'
+  description: ''
+  trigger:
+  - device_id: 0f3089187d04d66ad82ae402722e0942
     domain: zha
     platform: device
     type: remote_button_double_press
     subtype: remote_button_double_press
-  - device_id: a98335e1b775a3c92d83494f43ab2647
-    domain: zha
-    platform: device
-    type: remote_button_double_press
-    subtype: remote_button_double_press
-  - device_id: 9f50d49473ecd72dad9e827acb4e6f60
-    domain: zha
-    platform: device
-    type: device_shaken
-    subtype: turn_on
   condition: []
   action:
   - service: light.turn_off
-    data: {}
-    entity_id: all
+    data:
+      entity_id: all
   mode: single
+- id: '1611774100909'
+  alias: 'Lights: Toggle Reuben''s light with Zigbee button'
+  description: ''
+  use_blueprint:
+    path: SeanM/zha-aqara-wireless-mini-switch.yaml
+    input:
+      aqara_mini_switch: 2a892df040e90ca799578d576ddcc6ae
+      button_single_press:
+      - service: light.toggle
+        data: {}
+        entity_id: light.reuben_ceiling
+      button_double_press:
+      - service: light.toggle
+        data: {}
+        entity_id: light.rname
