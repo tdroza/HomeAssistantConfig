@@ -312,7 +312,8 @@
                                             "entities": [
                                                 {
                                                     "entity": "light.reuben_ceiling",
-                                                    "name": "Ceiling"
+                                                    "name": "Ceiling",
+                                                    "type": "custom:slider-entity-row"
                                                 },
                                                 {
                                                     "type": "custom:rgb-light-card",
@@ -2413,6 +2414,14 @@
                             "hours_to_show": 120,
                             "refresh_interval": 0,
                             "type": "history-graph"
+                        },
+                        {
+                            "type": "glance",
+                            "entities": [
+                                {
+                                    "entity": "counter.coffee"
+                                }
+                            ]
                         }
                     ],
                     "icon": "mdi:beta",
