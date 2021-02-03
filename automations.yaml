@@ -1227,3 +1227,62 @@
       - service: light.toggle
         data: {}
         entity_id: light.rname
+- id: '1612196415495'
+  alias: 'Coffee: Increment counter when round button pressed'
+  description: ''
+  trigger:
+  - device_id: a98335e1b775a3c92d83494f43ab2647
+    domain: zha
+    platform: device
+    type: remote_button_short_press
+    subtype: remote_button_short_press
+  condition: []
+  action:
+  - service: counter.increment
+    data: {}
+    entity_id: counter.coffee
+  mode: single
+- id: '1612197050807'
+  alias: 'Coffee: Alert when count hits 13'
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: counter.coffee
+    above: '12'
+  condition: []
+  action:
+  - service: notify.mobile_app_in2013
+    data:
+      message: There's only enough beans left for a couple more coffees. Order more
+        beans!
+  mode: single
+- id: '1612197612660'
+  alias: 'Coffee: Reset counter on button longpress'
+  description: ''
+  trigger:
+  - device_id: a98335e1b775a3c92d83494f43ab2647
+    domain: zha
+    platform: device
+    type: remote_button_triple_press
+    subtype: remote_button_triple_press
+  condition: []
+  action:
+  - service: counter.reset
+    data: {}
+    entity_id: counter.coffee
+  mode: single
+- id: '1612282156197'
+  alias: 'Coffee: Decrement coffee counter on button double-press'
+  description: ''
+  trigger:
+  - device_id: a98335e1b775a3c92d83494f43ab2647
+    domain: zha
+    platform: device
+    type: remote_button_double_press
+    subtype: remote_button_double_press
+  condition: []
+  action:
+  - service: counter.decrement
+    data: {}
+    entity_id: counter.coffee
+  mode: single
