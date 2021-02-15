@@ -796,6 +796,10 @@
       c3bd660708d811ebac3afd455d849421: media_player.reuben_s_room_speaker
       43ddd1e400d41d9d547f7bc24a95f86d: media_player.reuben_s_room_speaker
     tags:
+      04-5C-6E-AA-ED-6C-80:
+        media_content_id: https://firebasestorage.googleapis.com/v0/b/storytime-7c623.appspot.com/o/stories%2F4Z0FQvDMnNyIOtJeBa93%2Frecordings%2FHzFp8GQRWwFEbkB4hSLw%2Frecordings%2Faudio.mp3?alt=media&token=b107fb98-e8af-4d60-908c-3be902cc76f6
+        media_content_type: music
+        title: Star Wars
       04-2F-8B-FA-90-49-81:
         media_content_id: https://firebasestorage.googleapis.com/v0/b/storytime-7c623.appspot.com/o/stories%2FqBdQcfPIY4UJfmVC4mqj%2Frecordings%2FBZFoJspmw9K9IwlQMz8J%2Frecordings%2Faudio.mp3?alt=media&token=f46db5de-43c6-4283-9e61-1397aa1ac46d
         media_content_type: music
@@ -1206,6 +1210,11 @@
     platform: device
     type: remote_button_double_press
     subtype: remote_button_double_press
+  - device_id: a98335e1b775a3c92d83494f43ab2647
+    domain: zha
+    platform: device
+    type: remote_button_double_press
+    subtype: remote_button_double_press
   condition: []
   action:
   - service: light.turn_off
@@ -1227,62 +1236,50 @@
       - service: light.toggle
         data: {}
         entity_id: light.rname
-- id: '1612196415495'
-  alias: 'Coffee: Increment counter when round button pressed'
+- id: '1613133024887'
+  alias: Fact Bomb!
   description: ''
   trigger:
-  - device_id: a98335e1b775a3c92d83494f43ab2647
+  - device_id: 0f3089187d04d66ad82ae402722e0942
     domain: zha
     platform: device
     type: remote_button_short_press
     subtype: remote_button_short_press
-  condition: []
+  condition:
+  - condition: state
+    entity_id: input_boolean.do_not_disturb
+    state: 'off'
   action:
-  - service: counter.increment
-    data: {}
-    entity_id: counter.coffee
-  mode: single
-- id: '1612197050807'
-  alias: 'Coffee: Alert when count hits 13'
-  description: ''
-  trigger:
-  - platform: numeric_state
-    entity_id: counter.coffee
-    above: '12'
-  condition: []
-  action:
-  - service: notify.mobile_app_in2013
+  - service: media_player.play_media
     data:
-      message: There's only enough beans left for a couple more coffees. Order more
-        beans!
+      media_content_id: https://tdroza.duckdns.org/local/bomb.mp3
+      media_content_type: music
+    entity_id: media_player.living_room_display
   mode: single
-- id: '1612197612660'
-  alias: 'Coffee: Reset counter on button longpress'
+- id: '1613401682862'
+  alias: Aqara Magic Cube actions
   description: ''
-  trigger:
-  - device_id: a98335e1b775a3c92d83494f43ab2647
-    domain: zha
-    platform: device
-    type: remote_button_triple_press
-    subtype: remote_button_triple_press
-  condition: []
-  action:
-  - service: counter.reset
-    data: {}
-    entity_id: counter.coffee
-  mode: single
-- id: '1612282156197'
-  alias: 'Coffee: Decrement coffee counter on button double-press'
-  description: ''
-  trigger:
-  - device_id: a98335e1b775a3c92d83494f43ab2647
-    domain: zha
-    platform: device
-    type: remote_button_double_press
-    subtype: remote_button_double_press
-  condition: []
-  action:
-  - service: counter.decrement
-    data: {}
-    entity_id: counter.coffee
-  mode: single
+  use_blueprint:
+    path: Mikkelmoeller/aqara-magic-cube-zha-51-actions.yaml
+    input:
+      remote: 9f50d49473ecd72dad9e827acb4e6f60
+      rotate_right:
+      - service: input_select.select_next
+        data: {}
+        entity_id: input_select.wled_effects
+      - service: light.turn_on
+        data:
+          effect: '{{ states(''input_select.wled_effects'') }}'
+        entity_id: light.desk
+      rotate_left:
+      - service: input_select.select_previous
+        data: {}
+        entity_id: input_select.wled_effects
+      - service: light.turn_on
+        data:
+          effect: '{{ states(''input_select.wled_effects'') }}'
+      flip_180: true
+      cube_flip_180:
+      - service: light.toggle
+        data: {}
+        entity_id: light.desk

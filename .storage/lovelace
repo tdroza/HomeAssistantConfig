@@ -232,7 +232,7 @@
                                                 }
                                             ],
                                             "head": {
-                                                "entity": "light.second_bedroom_light",
+                                                "entity": "light.second_bedroom_lights",
                                                 "icon": "mdi:lightbulb-group-outline"
                                             },
                                             "type": "custom:fold-entity-row"
@@ -303,7 +303,7 @@
                                                 }
                                             ],
                                             "head": {
-                                                "entity": "group.room_seb",
+                                                "entity": "light.sebs_bedroom_lights",
                                                 "icon": "mdi:lightbulb-group-outline"
                                             },
                                             "type": "custom:fold-entity-row"
@@ -354,7 +354,7 @@
                                                 }
                                             ],
                                             "head": {
-                                                "entity": "light.reubens_bedroom",
+                                                "entity": "light.reubens_bedroom_lights",
                                                 "icon": "mdi:lightbulb-group-outline"
                                             },
                                             "type": "custom:fold-entity-row"

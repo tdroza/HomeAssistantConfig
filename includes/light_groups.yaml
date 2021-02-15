@@ -1,16 +1,26 @@
 - platform: group
-  name: Living Room
+  name: Living Room Lights
   entities:
   - light.living_room_1
   - light.living_room_2
   - light.lightstrip
 - platform: group
-  name: Main bedroom
+  name: Main Bedroom Lights
   entities:
   - light.main_bedroom_ceiling
   - light.main_bedroom_bloom
 - platform: group
-  name: Reubens bedroom
+  name: Reubens Bedroom Lights
   entities:
-  - light.reuben
+  - light.rname
   - light.reuben_ceiling
+- platform: group
+  name: Sebs Bedroom Lights
+  entities:
+  - light.seb_s_colour
+  - light.sebs_lamp
+- platform: group
+  name: Second Bedroom Lights
+  entities:
+    - light.second_bedroom
+    - light.desk
