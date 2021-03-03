@@ -74,290 +74,322 @@
                                 },
                                 {
                                     "entities": [
-                                        "light.hallway",
                                         {
-                                            "entity": "light.kitchen_corner",
-                                            "name": "Kitchen corner Light"
-                                        },
-                                        {
-                                            "entities": [
-                                                {
-                                                    "entity": "light.living_room_1",
-                                                    "type": "custom:slider-entity-row"
-                                                },
-                                                {
-                                                    "entity": "light.living_room_2",
-                                                    "type": "custom:slider-entity-row"
-                                                },
-                                                "light.lightstrip"
-                                            ],
+                                            "type": "custom:fold-entity-row",
                                             "head": {
-                                                "entity": "light.living_room",
-                                                "icon": "mdi:lightbulb-group-outline"
+                                                "type": "section",
+                                                "label": "Downstairs"
                                             },
-                                            "type": "custom:fold-entity-row"
-                                        },
-                                        {
+                                            "open": true,
                                             "entities": [
+                                                "light.hallway",
                                                 {
-                                                    "entity": "light.main_bedroom_ceiling",
-                                                    "name": "Ceiling",
-                                                    "toggle": true,
-                                                    "type": "custom:slider-entity-row"
+                                                    "entity": "light.kitchen_corner",
+                                                    "name": "Kitchen corner Light"
                                                 },
                                                 {
-                                                    "type": "custom:rgb-light-card",
-                                                    "entity": "light.main_bedroom_ceiling",
-                                                    "hide_when_off": true,
-                                                    "justify": "center",
-                                                    "colors": [
+                                                    "entities": [
                                                         {
-                                                            "rgb_color": [
-                                                                255,
-                                                                0,
-                                                                0
+                                                            "entity": "light.living_room_1",
+                                                            "type": "custom:slider-entity-row"
+                                                        },
+                                                        {
+                                                            "entity": "light.living_room_2",
+                                                            "type": "custom:slider-entity-row"
+                                                        },
+                                                        "light.lightstrip"
+                                                    ],
+                                                    "head": {
+                                                        "entity": "light.living_room",
+                                                        "icon": "mdi:lightbulb-group-outline"
+                                                    },
+                                                    "type": "custom:fold-entity-row"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "custom:fold-entity-row",
+                                            "head": {
+                                                "type": "section",
+                                                "label": "Upstairs"
+                                            },
+                                            "open": true,
+                                            "entities": [
+                                                {
+                                                    "type": "custom:fold-entity-row",
+                                                    "head": {
+                                                        "entity": "light.main_bedroom",
+                                                        "icon": "mdi:lightbulb-group-outline"
+                                                    },
+                                                    "entities": [
+                                                        {
+                                                            "entity": "light.main_bedroom_ceiling",
+                                                            "name": "Ceiling",
+                                                            "toggle": true,
+                                                            "type": "custom:slider-entity-row"
+                                                        },
+                                                        {
+                                                            "type": "custom:rgb-light-card",
+                                                            "entity": "light.main_bedroom_ceiling",
+                                                            "hide_when_off": true,
+                                                            "justify": "center",
+                                                            "colors": [
+                                                                {
+                                                                    "rgb_color": [
+                                                                        255,
+                                                                        0,
+                                                                        0
+                                                                    ]
+                                                                },
+                                                                {
+                                                                    "rgb_color": [
+                                                                        255,
+                                                                        165,
+                                                                        0
+                                                                    ]
+                                                                },
+                                                                {
+                                                                    "rgb_color": [
+                                                                        255,
+                                                                        255,
+                                                                        0
+                                                                    ]
+                                                                },
+                                                                {
+                                                                    "rgb_color": [
+                                                                        0,
+                                                                        255,
+                                                                        0
+                                                                    ]
+                                                                },
+                                                                {
+                                                                    "rgb_color": [
+                                                                        0,
+                                                                        0,
+                                                                        255
+                                                                    ]
+                                                                },
+                                                                {
+                                                                    "rgb_color": [
+                                                                        255,
+                                                                        0,
+                                                                        255
+                                                                    ]
+                                                                }
                                                             ]
                                                         },
                                                         {
-                                                            "rgb_color": [
-                                                                255,
-                                                                165,
-                                                                0
-                                                            ]
+                                                            "entity": "light.main_bedroom_bloom",
+                                                            "name": "Bloom",
+                                                            "toggle": true,
+                                                            "type": "custom:slider-entity-row"
                                                         },
                                                         {
-                                                            "rgb_color": [
-                                                                255,
-                                                                255,
-                                                                0
-                                                            ]
-                                                        },
-                                                        {
-                                                            "rgb_color": [
-                                                                0,
-                                                                255,
-                                                                0
-                                                            ]
-                                                        },
-                                                        {
-                                                            "rgb_color": [
-                                                                0,
-                                                                0,
-                                                                255
-                                                            ]
-                                                        },
-                                                        {
-                                                            "rgb_color": [
-                                                                255,
-                                                                0,
-                                                                255
+                                                            "type": "custom:rgb-light-card",
+                                                            "entity": "light.main_bedroom_bloom",
+                                                            "hide_when_off": true,
+                                                            "justify": "center",
+                                                            "colors": [
+                                                                {
+                                                                    "rgb_color": [
+                                                                        255,
+                                                                        0,
+                                                                        0
+                                                                    ]
+                                                                },
+                                                                {
+                                                                    "rgb_color": [
+                                                                        255,
+                                                                        165,
+                                                                        0
+                                                                    ]
+                                                                },
+                                                                {
+                                                                    "rgb_color": [
+                                                                        255,
+                                                                        255,
+                                                                        0
+                                                                    ]
+                                                                },
+                                                                {
+                                                                    "rgb_color": [
+                                                                        0,
+                                                                        255,
+                                                                        0
+                                                                    ]
+                                                                },
+                                                                {
+                                                                    "rgb_color": [
+                                                                        0,
+                                                                        0,
+                                                                        255
+                                                                    ]
+                                                                },
+                                                                {
+                                                                    "rgb_color": [
+                                                                        255,
+                                                                        0,
+                                                                        255
+                                                                    ]
+                                                                }
                                                             ]
                                                         }
                                                     ]
                                                 },
                                                 {
-                                                    "entity": "light.main_bedroom_bloom",
-                                                    "name": "Bloom",
-                                                    "toggle": true,
-                                                    "type": "custom:slider-entity-row"
-                                                },
-                                                {
-                                                    "type": "custom:rgb-light-card",
-                                                    "entity": "light.main_bedroom_bloom",
-                                                    "hide_when_off": true,
-                                                    "justify": "center",
-                                                    "colors": [
+                                                    "type": "custom:fold-entity-row",
+                                                    "head": {
+                                                        "entity": "light.second_bedroom_lights",
+                                                        "name": "Office",
+                                                        "icon": "mdi:lightbulb-group-outline"
+                                                    },
+                                                    "entities": [
                                                         {
-                                                            "rgb_color": [
-                                                                255,
-                                                                0,
-                                                                0
-                                                            ]
+                                                            "entity": "light.second_bedroom_light",
+                                                            "name": "Ceiling",
+                                                            "type": "custom:slider-entity-row"
                                                         },
                                                         {
-                                                            "rgb_color": [
-                                                                255,
-                                                                165,
-                                                                0
-                                                            ]
-                                                        },
-                                                        {
-                                                            "rgb_color": [
-                                                                255,
-                                                                255,
-                                                                0
-                                                            ]
-                                                        },
-                                                        {
-                                                            "rgb_color": [
-                                                                0,
-                                                                255,
-                                                                0
-                                                            ]
-                                                        },
-                                                        {
-                                                            "rgb_color": [
-                                                                0,
-                                                                0,
-                                                                255
-                                                            ]
-                                                        },
-                                                        {
-                                                            "rgb_color": [
-                                                                255,
-                                                                0,
-                                                                255
-                                                            ]
-                                                        }
-                                                    ]
-                                                }
-                                            ],
-                                            "head": {
-                                                "entity": "light.main_bedroom",
-                                                "icon": "mdi:lightbulb-group-outline"
-                                            },
-                                            "type": "custom:fold-entity-row"
-                                        },
-                                        {
-                                            "entities": [
-                                                {
-                                                    "entity": "light.second_bedroom_light",
-                                                    "name": "Ceiling",
-                                                    "type": "custom:slider-entity-row"
-                                                },
-                                                {
-                                                    "entity": "light.desk",
-                                                    "toggle": true,
-                                                    "type": "custom:slider-entity-row"
-                                                }
-                                            ],
-                                            "head": {
-                                                "entity": "light.second_bedroom_lights",
-                                                "icon": "mdi:lightbulb-group-outline"
-                                            },
-                                            "type": "custom:fold-entity-row"
-                                        },
-                                        {
-                                            "entities": [
-                                                {
-                                                    "entity": "light.seb_s_colour",
-                                                    "type": "custom:slider-entity-row"
-                                                },
-                                                {
-                                                    "type": "custom:rgb-light-card",
-                                                    "entity": "light.seb_s_colour",
-                                                    "hide_when_off": true,
-                                                    "justify": "center",
-                                                    "colors": [
-                                                        {
-                                                            "rgb_color": [
-                                                                255,
-                                                                0,
-                                                                0
-                                                            ]
-                                                        },
-                                                        {
-                                                            "rgb_color": [
-                                                                255,
-                                                                165,
-                                                                0
-                                                            ]
-                                                        },
-                                                        {
-                                                            "rgb_color": [
-                                                                255,
-                                                                255,
-                                                                0
-                                                            ]
-                                                        },
-                                                        {
-                                                            "rgb_color": [
-                                                                0,
-                                                                255,
-                                                                0
-                                                            ]
-                                                        },
-                                                        {
-                                                            "rgb_color": [
-                                                                0,
-                                                                0,
-                                                                255
-                                                            ]
-                                                        },
-                                                        {
-                                                            "rgb_color": [
-                                                                255,
-                                                                0,
-                                                                255
-                                                            ]
+                                                            "entity": "light.desk",
+                                                            "toggle": true,
+                                                            "type": "custom:slider-entity-row"
                                                         }
                                                     ]
                                                 },
                                                 {
-                                                    "entity": "light.sebs_lamp",
-                                                    "toggle": true,
-                                                    "type": "custom:slider-entity-row"
-                                                },
-                                                {
-                                                    "entity": "switch.sonoff_1000d4baef_1"
-                                                }
-                                            ],
-                                            "head": {
-                                                "entity": "light.sebs_bedroom_lights",
-                                                "icon": "mdi:lightbulb-group-outline"
-                                            },
-                                            "type": "custom:fold-entity-row"
-                                        },
-                                        {
-                                            "entities": [
-                                                {
-                                                    "entity": "light.reuben_ceiling",
-                                                    "name": "Ceiling",
-                                                    "type": "custom:slider-entity-row"
-                                                },
-                                                {
-                                                    "type": "custom:rgb-light-card",
-                                                    "entity": "light.reuben_ceiling",
-                                                    "hide_when_off": true,
-                                                    "justify": "center",
-                                                    "colors": [
+                                                    "type": "custom:fold-entity-row",
+                                                    "head": {
+                                                        "entity": "light.sebs_bedroom_lights",
+                                                        "name": "Seb's bedroom",
+                                                        "icon": "mdi:lightbulb-group-outline"
+                                                    },
+                                                    "entities": [
                                                         {
-                                                            "color_temp": 200,
-                                                            "icon_color": "linear-gradient(15deg,rgba(255,255,255,1) 20%, rgba(193,193,193,1) 100%)"
+                                                            "entity": "light.seb_s_colour",
+                                                            "type": "custom:slider-entity-row"
                                                         },
                                                         {
-                                                            "color_temp": 242,
-                                                            "icon_color": "linear-gradient(15deg, rgba(255,231,185,1) 0%, rgba(196,220,229,1) 100%)"
+                                                            "type": "custom:rgb-light-card",
+                                                            "entity": "light.seb_s_colour",
+                                                            "hide_when_off": true,
+                                                            "justify": "center",
+                                                            "colors": [
+                                                                {
+                                                                    "rgb_color": [
+                                                                        255,
+                                                                        0,
+                                                                        0
+                                                                    ]
+                                                                },
+                                                                {
+                                                                    "rgb_color": [
+                                                                        255,
+                                                                        165,
+                                                                        0
+                                                                    ]
+                                                                },
+                                                                {
+                                                                    "rgb_color": [
+                                                                        255,
+                                                                        255,
+                                                                        0
+                                                                    ]
+                                                                },
+                                                                {
+                                                                    "rgb_color": [
+                                                                        0,
+                                                                        255,
+                                                                        0
+                                                                    ]
+                                                                },
+                                                                {
+                                                                    "rgb_color": [
+                                                                        0,
+                                                                        0,
+                                                                        255
+                                                                    ]
+                                                                },
+                                                                {
+                                                                    "rgb_color": [
+                                                                        255,
+                                                                        0,
+                                                                        255
+                                                                    ]
+                                                                }
+                                                            ]
                                                         },
                                                         {
-                                                            "color_temp": 284,
-                                                            "icon_color": "linear-gradient(15deg, rgba(254,199,110,1) 0%, rgba(233,233,233,1) 100%)"
+                                                            "entity": "light.sebs_lamp",
+                                                            "toggle": true,
+                                                            "type": "custom:slider-entity-row"
                                                         },
                                                         {
-                                                            "color_temp": 326,
-                                                            "icon_color": "linear-gradient(15deg, rgba(255,220,167,1) 0%, rgba(255,183,116,1) 100%)"
-                                                        },
-                                                        {
-                                                            "color_temp": 357,
-                                                            "icon_color": "linear-gradient(15deg, rgba(255,205,126,1) 0%, rgba(252,156,49,1) 100%)"
-                                                        },
-                                                        {
-                                                            "color_temp": 370,
-                                                            "icon_color": "linear-gradient(15deg, rgba(255,190,92,1) 0%, rgba(255,123,0,1) 100%)"
+                                                            "entity": "switch.sonoff_1000d4baef_1"
                                                         }
                                                     ]
                                                 },
                                                 {
-                                                    "entity": "light.rname",
-                                                    "toggle": true,
-                                                    "type": "custom:slider-entity-row"
+                                                    "type": "custom:fold-entity-row",
+                                                    "head": {
+                                                        "entity": "light.reubens_bedroom_lights",
+                                                        "name": "Reuben's bedroom",
+                                                        "icon": "mdi:lightbulb-group-outline"
+                                                    },
+                                                    "entities": [
+                                                        {
+                                                            "entity": "light.reuben_ceiling",
+                                                            "name": "Ceiling",
+                                                            "type": "custom:slider-entity-row"
+                                                        },
+                                                        {
+                                                            "type": "custom:rgb-light-card",
+                                                            "entity": "light.reuben_ceiling",
+                                                            "hide_when_off": true,
+                                                            "justify": "center",
+                                                            "colors": [
+                                                                {
+                                                                    "color_temp": 200,
+                                                                    "icon_color": "linear-gradient(15deg,rgba(255,255,255,1) 20%, rgba(193,193,193,1) 100%)"
+                                                                },
+                                                                {
+                                                                    "color_temp": 242,
+                                                                    "icon_color": "linear-gradient(15deg, rgba(255,231,185,1) 0%, rgba(196,220,229,1) 100%)"
+                                                                },
+                                                                {
+                                                                    "color_temp": 284,
+                                                                    "icon_color": "linear-gradient(15deg, rgba(254,199,110,1) 0%, rgba(233,233,233,1) 100%)"
+                                                                },
+                                                                {
+                                                                    "color_temp": 326,
+                                                                    "icon_color": "linear-gradient(15deg, rgba(255,220,167,1) 0%, rgba(255,183,116,1) 100%)"
+                                                                },
+                                                                {
+                                                                    "color_temp": 357,
+                                                                    "icon_color": "linear-gradient(15deg, rgba(255,205,126,1) 0%, rgba(252,156,49,1) 100%)"
+                                                                },
+                                                                {
+                                                                    "color_temp": 370,
+                                                                    "icon_color": "linear-gradient(15deg, rgba(255,190,92,1) 0%, rgba(255,123,0,1) 100%)"
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "entity": "light.rname",
+                                                            "toggle": true,
+                                                            "type": "custom:slider-entity-row"
+                                                        }
+                                                    ]
                                                 }
-                                            ],
-                                            "head": {
-                                                "entity": "light.reubens_bedroom_lights",
-                                                "icon": "mdi:lightbulb-group-outline"
-                                            },
-                                            "type": "custom:fold-entity-row"
+                                            ]
+                                        },
+                                        {
+                                            "type": "buttons",
+                                            "entities": [
+                                                {
+                                                    "entity": "group.all_my_lights",
+                                                    "name": "All Lights"
+                                                }
+                                            ]
                                         }
                                     ],
                                     "show_header_toggle": false,
@@ -2416,12 +2448,22 @@
                             "type": "history-graph"
                         },
                         {
-                            "type": "glance",
-                            "entities": [
-                                {
-                                    "entity": "counter.coffee"
-                                }
-                            ]
+                            "type": "custom:auto-entities",
+                            "card": {
+                                "type": "entities",
+                                "title": "Low Battery Warning"
+                            },
+                            "filter": {
+                                "include": [
+                                    {
+                                        "domain": "sensor",
+                                        "attributes": {
+                                            "device_class": "battery"
+                                        },
+                                        "state": "< 25"
+                                    }
+                                ]
+                            }
                         }
                     ],
                     "icon": "mdi:beta",
