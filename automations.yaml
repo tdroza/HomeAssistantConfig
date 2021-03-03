@@ -693,7 +693,9 @@
       entity_id: '{{ light_map[trigger.entity_id] }}'
   variables:
     light_map:
-      binary_sensor.seb_d1_motion: light.seb_s_colour
+      binary_sensor.seb_d1_motion: 
+        - light.seb_s_colour
+        - light.sebs_lamp
       binary_sensor.reu_d1_motion: light.reuben_ceiling
   mode: single
 - id: '1590597141876'
@@ -701,7 +703,9 @@
   description: ''
   variables:
     light_map:
-      binary_sensor.seb_d1_motion: light.seb_s_colour
+      binary_sensor.seb_d1_motion: 
+        - light.seb_s_colour
+        - light.sebs_lamp
       binary_sensor.reu_d1_motion: light.reuben_ceiling
   trigger:
   - entity_id: binary_sensor.seb_d1_motion
