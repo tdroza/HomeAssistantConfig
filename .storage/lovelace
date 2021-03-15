@@ -259,7 +259,7 @@
                                                 {
                                                     "type": "custom:fold-entity-row",
                                                     "head": {
-                                                        "entity": "light.sebs_bedroom_lights",
+                                                        "entity": "group.room_seb",
                                                         "name": "Seb's bedroom",
                                                         "icon": "mdi:lightbulb-group-outline"
                                                     },
@@ -2464,6 +2464,14 @@
                                     }
                                 ]
                             }
+                        },
+                        {
+                            "type": "entities",
+                            "entities": [
+                                {
+                                    "entity": "input_boolean.prevent_deep_sleep"
+                                }
+                            ]
                         }
                     ],
                     "icon": "mdi:beta",
