@@ -27,9 +27,13 @@ esphome:
             - display.page.show: page_weather
             - lambda: 'id(next_page) = -1;'
       - lambda: 'id(next_page)++;'
-      - component.update: epaper 
       - delay: 5s
-      - component.update: epaper  
+      - if:
+          condition:
+            binary_sensor.is_on: prevent_deep_sleep
+          then:
+            - logger.log: "Deep sleep: Disabled"
+            - deep_sleep.prevent: deep_sleep_1
 
 wifi:
   ssid: !secret wifi_iot_ssid
@@ -74,6 +78,7 @@ font:
     size: 28
   - file: 'fonts/Roboto-Bold.ttf'
     id: roboto_bold_xs
+    glyphs: 'Update :0123456789'
     size: 16
   - file: 'fonts/materialdesignicons-webfont.ttf'
     id: weather_font
@@ -132,7 +137,25 @@ binary_sensor:
     on_press:
       then:
         - display.page.show_previous: epaper
-        - component.update: epaper     
+        - component.update: epaper  
+  - platform: homeassistant
+    id: prevent_deep_sleep
+    name: Prevent Deep Sleep
+    internal: true
+    entity_id: input_boolean.prevent_deep_sleep
+    on_state:
+      - if:
+          condition:
+            binary_sensor.is_on: prevent_deep_sleep
+          then:
+            - logger.log: "Deep sleep: Disabled from sensor toggle."
+            - deep_sleep.prevent: deep_sleep_1
+      - if:
+          condition:
+            binary_sensor.is_off: prevent_deep_sleep
+          then:
+            - deep_sleep.enter: deep_sleep_1
+            
 sensor:
   - platform: homeassistant
     id: bed1_temp
@@ -305,8 +328,9 @@ display:
           it.strftime(250, 125, id(roboto_bold_xs), COLOR_ON, TextAlign::BOTTOM_RIGHT , "Updated: %H:%M", id(esptime).now());
           
 deep_sleep:
-  run_duration: 45s
+  run_duration: 1min
   sleep_duration: 5min
+  id: deep_sleep_1
   
 #interval:
 #  - interval: 60s
