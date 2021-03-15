@@ -693,20 +693,14 @@
       entity_id: '{{ light_map[trigger.entity_id] }}'
   variables:
     light_map:
-      binary_sensor.seb_d1_motion: 
-        - light.seb_s_colour
-        - light.sebs_lamp
+      binary_sensor.seb_d1_motion:
+      - light.seb_s_colour
+      - light.sebs_lamp
       binary_sensor.reu_d1_motion: light.reuben_ceiling
   mode: single
 - id: '1590597141876'
   alias: 'Lights: Turn off boys'' light when no motion'
   description: ''
-  variables:
-    light_map:
-      binary_sensor.seb_d1_motion: 
-        - light.seb_s_colour
-        - light.sebs_lamp
-      binary_sensor.reu_d1_motion: light.reuben_ceiling
   trigger:
   - entity_id: binary_sensor.seb_d1_motion
     for: 00:10:00
@@ -722,15 +716,16 @@
   - after: 07:30
     condition: time
     before: '19:30'
-  - '{{ states(light_map[trigger.entity_id]) | string == ''on''}}'
   action:
   - service: light.turn_off
     data:
       entity_id: '{{ light_map[trigger.entity_id] }}'
-  - data:
-      message: Turned off _{{ state_attr(light_map[trigger.entity_id], 'friendly_name')
-        }}_ light due to no motion
-    service: notify.telegram_td
+  variables:
+    light_map:
+      binary_sensor.seb_d1_motion:
+      - light.seb_s_colour
+      - light.sebs_lamp
+      binary_sensor.reu_d1_motion: light.reuben_ceiling
   mode: single
 - id: '1592899929119'
   alias: 'Lights: Turn off the main bedroom lights at 8am'
@@ -800,6 +795,10 @@
       c3bd660708d811ebac3afd455d849421: media_player.reuben_s_room_speaker
       43ddd1e400d41d9d547f7bc24a95f86d: media_player.reuben_s_room_speaker
     tags:
+      04-CB-A6-D2-78-6B-80:
+        media_content_id: https://tdroza.duckdns.org/local/bomb.mp3
+        media_content_type: music
+        title: Fact Bomb!
       04-5C-6E-AA-ED-6C-80:
         media_content_id: https://firebasestorage.googleapis.com/v0/b/storytime-7c623.appspot.com/o/stories%2F4Z0FQvDMnNyIOtJeBa93%2Frecordings%2FHzFp8GQRWwFEbkB4hSLw%2Frecordings%2Faudio.mp3?alt=media&token=b107fb98-e8af-4d60-908c-3be902cc76f6
         media_content_type: music
@@ -1144,6 +1143,8 @@
     tag_id: D0-50-B3-32
   - platform: tag
     tag_id: 04-70-6E-AA-ED-6C-80
+  - platform: tag
+    tag_id: 04-B5-04-3A-25-6D-84
   condition: []
   action:
   - type: toggle
@@ -1220,10 +1221,14 @@
     platform: device
     type: remote_button_double_press
     subtype: remote_button_double_press
+  - platform: tag
+    tag_id: 57749803-d2b7-415d-a6fa-78f44205d0cc
   condition: []
   action:
   - service: light.turn_off
     data:
+      transition: 1
+    target:
       entity_id: all
   mode: single
 - id: '1611774100909'
@@ -1287,4 +1292,11 @@
       cube_flip_180:
       - service: light.toggle
         data: {}
-        entity_id: light.desk
+        target:
+          entity_id: light.desk
+      cube_shake:
+      - service: light.turn_off
+        data:
+          transition: 1
+        target:
+          entity_id: all
