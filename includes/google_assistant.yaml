@@ -78,4 +78,6 @@ entity_config:
         - Christmas tree
         - Tree
       expose: true
+    input_boolean.do_not_disturb:
+      expose: true
 
