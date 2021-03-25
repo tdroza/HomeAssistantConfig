@@ -50,3 +50,27 @@ sensor:
       name: "Ensuite Humidity"
     battery_level:
       name: "Ensuite Battery"
+  - platform: xiaomi_hhccjcy01
+    mac_address: C4:7C:8D:66:1D:E5
+    temperature:
+      name: "Basil Temperature"
+    moisture:
+      name: "Basil Moisture"
+    illuminance:
+      name: "Basil Illuminance"
+    conductivity:
+      name: "Basil Soil Conductivity"
+    battery_level:
+      name: "Basil Battery Level"
+  - platform: xiaomi_hhccjcy01
+    mac_address: C4:7C:8D:66:20:EA
+    temperature:
+      name: "Rose Temperature"
+    moisture:
+      name: "Rose Moisture"
+    illuminance:
+      name: "Rose Illuminance"
+    conductivity:
+      name: "Rose Soil Conductivity"
+    battery_level:
+      name: "Rose Battery Level"

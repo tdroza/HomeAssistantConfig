@@ -25,6 +25,7 @@ sensor: !include includes/sensors.yaml
 zone: !include zones.yaml
 downloader: !include includes/downloader.yaml
 neato: !include includes/neato.yaml
+plant: !include includes/plant.yaml
 
 pi_hole:
   - host: 192.168.1.215
