@@ -999,23 +999,22 @@
     domain: switch
   mode: single
 - id: '1603396316886'
-  alias: Tom's phone - turn on charger
+  alias: Tom's & Anna's phone - turn on charger AM and PM
   description: ''
   trigger:
   - platform: time
     at: '22:00:00'
   - platform: time
     at: 06:00:00
-  condition:
-  - condition: device
-    type: is_off
-    device_id: a45d69a5149f11eb984059712ae33449
-    entity_id: switch.toms_phone_charger
-    domain: switch
+  condition: []
   action:
   - type: turn_on
     device_id: a45d69a5149f11eb984059712ae33449
     entity_id: switch.toms_phone_charger
+    domain: switch
+  - type: turn_on
+    device_id: c8e33d4fc2394e1995f48293761339f9
+    entity_id: switch.annas_phone_charger
     domain: switch
   mode: single
 - id: '1603396482626'
@@ -1023,15 +1022,24 @@
   description: ''
   trigger:
   - platform: time
-    at: 07:30:00
-  - platform: time
     at: 08:30
-  condition:
-  - type: is_not_plugged_in
-    condition: device
+  - type: not_plugged_in
+    platform: device
     device_id: cf4ceb29a2e7464abe92c738f5983356
     entity_id: binary_sensor.in2013_is_charging
     domain: binary_sensor
+  - type: battery_level
+    platform: device
+    device_id: cf4ceb29a2e7464abe92c738f5983356
+    entity_id: sensor.in2013_battery_level
+    domain: sensor
+    above: 99
+  condition:
+  - condition: device
+    type: is_on
+    device_id: a45d69a5149f11eb984059712ae33449
+    entity_id: switch.toms_phone_charger
+    domain: switch
   action:
   - type: turn_off
     device_id: a45d69a5149f11eb984059712ae33449
@@ -1300,3 +1308,72 @@
           transition: 1
         target:
           entity_id: all
+- id: '1616499915162'
+  alias: Anna's phone - smart charging
+  description: ''
+  trigger:
+  - type: battery_level
+    platform: device
+    device_id: 5fe5c0fe0b3111eb8c0681a6c5c84147
+    entity_id: sensor.moto_g_5g_plus_battery_level
+    domain: sensor
+    above: 80
+  condition:
+  - condition: time
+    after: '22:00'
+  - condition: device
+    type: is_on
+    device_id: c8e33d4fc2394e1995f48293761339f9
+    entity_id: switch.annas_phone_charger
+    domain: switch
+  action:
+  - type: turn_off
+    device_id: c8e33d4fc2394e1995f48293761339f9
+    entity_id: switch.annas_phone_charger
+    domain: switch
+  mode: single
+- id: '1616500250252'
+  alias: Anna's phone - turn off charger
+  description: ''
+  trigger:
+  - type: not_plugged_in
+    platform: device
+    device_id: 5fe5c0fe0b3111eb8c0681a6c5c84147
+    entity_id: binary_sensor.moto_g_5g_plus_is_charging
+    domain: binary_sensor
+  - type: battery_level
+    platform: device
+    device_id: 5fe5c0fe0b3111eb8c0681a6c5c84147
+    entity_id: sensor.moto_g_5g_plus_battery_level
+    domain: sensor
+    above: 99
+  condition:
+  - condition: device
+    type: is_on
+    device_id: c8e33d4fc2394e1995f48293761339f9
+    entity_id: switch.annas_phone_charger
+    domain: switch
+  action:
+  - type: turn_off
+    device_id: c8e33d4fc2394e1995f48293761339f9
+    entity_id: switch.annas_phone_charger
+    domain: switch
+  mode: single
+- id: '1616588148819'
+  alias: 'Lights: Fix living room 2 randomly turning on'
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: light.living_room_2
+    from: 'off'
+    to: 'on'
+    for: 00:00:05
+  condition:
+  - condition: state
+    entity_id: light.living_room_1
+    state: 'off'
+  action:
+  - service: light.turn_off
+    target:
+      entity_id: light.living_room_2
+  mode: single
