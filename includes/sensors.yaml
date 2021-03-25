@@ -31,7 +31,7 @@
   sensors:
     hallway_motion_sensor_temperature_rounded:
       friendly_name: 'Hall Temp'
-      value_template: '{{states.sensor.hallway_motion_sensor_temperature.state |round(0)}}'
+      value_template: '{{states.sensor.hue_motion_sensor_temperature.state |round(0)}}'
 - platform: template
   sensors:
     white_temperature_rounded:
@@ -44,14 +44,19 @@
       value_template: '{{states.sensor.bed1_temperature.state |round(0)}}'
 - platform: template
   sensors:
+    bed2_temperature_rounded:
+      friendly_name: 'Bed 2 Temp'
+      value_template: '{{states.sensor.bed2_temperature.state |round(0)}}'
+- platform: template
+  sensors:
     seb_temperature_rounded:
       friendly_name: 'Seb Temp'
-      value_template: '{{states.sensor.seb_temperature.state |round(0)}}'
+      value_template: '{{states.sensor.seb_d1_temperature.state |round(0)}}'
 - platform: template
   sensors:
     reuben_temperature_rounded:
       friendly_name: 'Reuben Temp'
-      value_template: '{{states.sensor.reu_temperature.state |round(0)}}'
+      value_template: '{{states.sensor.reu_d1_temperature.state |round(0)}}'
 - platform: template
   sensors:
     bathroom_temperature_rounded:

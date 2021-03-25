@@ -434,22 +434,36 @@
                                     "type": "vertical-stack"
                                 },
                                 {
-                                    "entities": [
+                                    "type": "horizontal-stack",
+                                    "cards": [
                                         {
-                                            "entity": "switch.dehumidifier"
+                                            "type": "button",
+                                            "tap_action": {
+                                                "action": "toggle"
+                                            },
+                                            "entity": "switch.toms_phone_charger",
+                                            "icon": "mdi:power-plug",
+                                            "name": "Tom's Charger"
+                                        },
+                                        {
+                                            "type": "button",
+                                            "tap_action": {
+                                                "action": "toggle"
+                                            },
+                                            "entity": "switch.annas_phone_charger",
+                                            "icon": "mdi:power-plug",
+                                            "name": "Anna's Charger"
                                         }
-                                    ],
-                                    "show_header_toggle": false,
-                                    "type": "entities"
+                                    ]
                                 },
                                 {
                                     "cards": [
                                         {
-                                            "entity": "switch.blanket_anna",
+                                            "entity": "switch.blanket_tom",
                                             "type": "button"
                                         },
                                         {
-                                            "entity": "switch.blanket_tom",
+                                            "entity": "switch.blanket_anna",
                                             "type": "button"
                                         }
                                     ],
@@ -1027,9 +1041,22 @@
                                     "type": "custom:button-card"
                                 },
                                 {
-                                    "entity": "light.kitchen_corner",
-                                    "type": "light",
-                                    "name": " "
+                                    "type": "horizontal-stack",
+                                    "cards": [
+                                        {
+                                            "type": "light",
+                                            "entity": "light.kitchen_corner",
+                                            "name": " "
+                                        },
+                                        {
+                                            "type": "button",
+                                            "entity": "binary_sensor.fridge_door",
+                                            "tap_action": {
+                                                "action": "more-info"
+                                            },
+                                            "show_name": false
+                                        }
+                                    ]
                                 },
                                 {
                                     "elements": [
@@ -1444,6 +1471,22 @@
                         {
                             "elements": [
                                 {
+                                    "entity": "binary_sensor.garage_door",
+                                    "style": {
+                                        "left": "18%",
+                                        "top": "90%"
+                                    },
+                                    "type": "state-icon"
+                                },
+                                {
+                                    "entity": "binary_sensor.living_room_door",
+                                    "style": {
+                                        "left": "57%",
+                                        "top": "60%"
+                                    },
+                                    "type": "state-icon"
+                                },
+                                {
                                     "entity": "sensor.white_temperature_rounded",
                                     "style": {
                                         "background": "center / contain no-repeat url(\"/local/nest.png\")",
@@ -1454,11 +1497,17 @@
                                     "type": "state-label"
                                 },
                                 {
-                                    "entity": "sensor.soil_moisture_level",
+                                    "entity": "light.kitchen_corner",
+                                    "hold_action": {
+                                        "action": "more-info"
+                                    },
                                     "style": {
                                         "font-size": "12px",
                                         "left": "36%",
-                                        "top": "30%"
+                                        "top": "4.5%"
+                                    },
+                                    "tap_action": {
+                                        "action": "toggle"
                                     },
                                     "type": "state-icon"
                                 },
@@ -1579,6 +1628,14 @@
                         {
                             "elements": [
                                 {
+                                    "entity": "binary_sensor.main_bedroom_door",
+                                    "style": {
+                                        "left": "57%",
+                                        "top": "60%"
+                                    },
+                                    "type": "state-icon"
+                                },
+                                {
                                     "entity": "light.main_bedroom_ceiling",
                                     "hold_action": {
                                         "action": "more-info"
@@ -1619,7 +1676,7 @@
                                     "type": "state-label"
                                 },
                                 {
-                                    "entity": "cover.tradfri_blind",
+                                    "entity": "cover.large_blind",
                                     "style": {
                                         "left": "79%",
                                         "top": "90%"
@@ -1650,6 +1707,16 @@
                                     "type": "state-icon"
                                 },
                                 {
+                                    "entity": "sensor.bed2_temperature_rounded",
+                                    "style": {
+                                        "background": "center / contain no-repeat url(\"/local/nest.png\")",
+                                        "font-size": "12px",
+                                        "left": "70%",
+                                        "top": "30%"
+                                    },
+                                    "type": "state-label"
+                                },
+                                {
                                     "entity": "light.reuben_ceiling",
                                     "hold_action": {
                                         "action": "more-info"
@@ -1665,7 +1732,7 @@
                                     "type": "state-icon"
                                 },
                                 {
-                                    "entity": "light.reuben",
+                                    "entity": "light.rname",
                                     "hold_action": {
                                         "action": "more-info"
                                     },
@@ -1676,6 +1743,15 @@
                                     },
                                     "tap_action": {
                                         "action": "toggle"
+                                    },
+                                    "type": "state-icon"
+                                },
+                                {
+                                    "entity": "binary_sensor.reu_d1_motion",
+                                    "style": {
+                                        "font-size": "12px",
+                                        "left": "10%",
+                                        "top": "85%"
                                     },
                                     "type": "state-icon"
                                 },
@@ -1705,6 +1781,15 @@
                                     "type": "state-icon"
                                 },
                                 {
+                                    "entity": "binary_sensor.seb_d1_motion",
+                                    "style": {
+                                        "font-size": "12px",
+                                        "left": "38%",
+                                        "top": "15%"
+                                    },
+                                    "type": "state-icon"
+                                },
+                                {
                                     "entity": "sensor.seb_temperature_rounded",
                                     "style": {
                                         "background": "center / contain no-repeat url(\"/local/nest.png\")",
@@ -1723,6 +1808,21 @@
                                         "font-size": "12px",
                                         "left": "38.5%",
                                         "top": "5%"
+                                    },
+                                    "tap_action": {
+                                        "action": "toggle"
+                                    },
+                                    "type": "state-icon"
+                                },
+                                {
+                                    "entity": "light.rname",
+                                    "hold_action": {
+                                        "action": "more-info"
+                                    },
+                                    "style": {
+                                        "font-size": "12px",
+                                        "left": "48.5%",
+                                        "top": "40%"
                                     },
                                     "tap_action": {
                                         "action": "toggle"
@@ -2472,6 +2572,27 @@
                                     "entity": "input_boolean.prevent_deep_sleep"
                                 }
                             ]
+                        },
+                        {
+                            "type": "plant-status",
+                            "entity": "plant.basil",
+                            "name": "Basil"
+                        },
+                        {
+                            "type": "plant-status",
+                            "entity": "plant.rose",
+                            "name": "Rose"
+                        },
+                        {
+                            "type": "button",
+                            "tap_action": {
+                                "action": "toggle"
+                            },
+                            "entity": "binary_sensor.fridge_door"
+                        },
+                        {
+                            "type": "entity",
+                            "entity": "binary_sensor.fridge_door"
                         }
                     ],
                     "icon": "mdi:beta",
