@@ -2694,16 +2694,19 @@
                             "type": "entities",
                             "entities": [
                                 {
-                                    "entity": "light.tagreader_case_led"
+                                    "entity": "light.tagreaderseb_led"
                                 },
                                 {
-                                    "entity": "switch.tagreader_case_buzzer_enabled"
+                                    "entity": "switch.tagreaderseb_buzzer_enabled"
                                 },
                                 {
-                                    "entity": "switch.tagreader_case_led_enabled"
+                                    "entity": "switch.tagreaderseb_led_enabled"
+                                },
+                                {
+                                    "entity": "binary_sensor.tagreaderseb_status"
                                 }
                             ],
-                            "title": "Tag Reader",
+                            "title": "Seb's Tag Reader",
                             "show_header_toggle": false,
                             "state_color": true
                         },
@@ -2723,7 +2726,7 @@
                                     "entity": "binary_sensor.tagreader_status"
                                 }
                             ],
-                            "title": "Tag Reader I2C",
+                            "title": "Reuben's Tag Reader",
                             "show_header_toggle": false,
                             "state_color": true
                         }
