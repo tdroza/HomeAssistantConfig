@@ -1075,57 +1075,72 @@
       media_content_type: music
     entity_id: media_player.living_room_display
   mode: single
+
+
 - id: '1604341003387'
-  alias: Podcast test
-  description: ''
+  alias: 'NFC: Podcast Player'
+  mode: restart
+  variables:
+    media_players:
+      4dd136882e204aec5b9809887714f25b: media_player.bedroom_2_speaker
+    tags:
+      A3-22-67-02:
+        title: Marvellous Musical
+        podcast_counter: counter.podcast_marvellous_musical
+        sensor: sensor.podcast_marvellous_musical
+      04-4D-6F-AA-ED-6C-80:
+        title: Peace Out
+        podcast_counter: counter.podcast_peace_out
+        sensor: sensor.podcast_peace_out
   trigger:
-  - platform: tag
-    tag_id: d9354ba8-ca01-4715-9654-c80546db17a8
-  condition: []
+    platform: event
+    event_type: tag_scanned
+  condition:
+  - '{{ trigger.event.data.tag_id in tags }}'
+  - '{{ trigger.event.data.device_id in media_players }}'
   action:
-  - variables:
-      number_of_podcasts: '{{states.sensor.podcast_marvellous_musical.attributes.entries  |
-        length }}'
-      podcast_player: media_player.seb_s_home
+  - variables: 
+      number_of_podcasts: "{{ state_attr(tags[trigger.event.data.tag_id].sensor, 'entries') | length }}"
+      podcast_counter: '{{ tags[trigger.event.data.tag_id].podcast_counter }}'
+      podcast_sensor: '{{ tags[trigger.event.data.tag_id].sensor }}'
+      media_player_entity_id: '{{ media_players[trigger.event.data.device_id] }}'
   - choose:
     - conditions:
       - condition: template
-        value_template: '{{ states.counter.marvellous_musical.state | int >= number_of_podcasts
-          | int }} '
+        value_template: "{{ states(podcast_counter) | int >= number_of_podcasts | int }}"
       sequence:
       - service: counter.configure
         data:
-          value: '{{ number_of_podcasts - 1 }}'
-        entity_id: counter.marvellous_musical
+          value: '{{ number_of_podcasts - 1}}'
+          entity_id: '{{podcast_counter}}'
     default: []
   - service: tts.google_translate_say
     data:
-      entity_id: '{{ podcast_player }}'
-      message: '{{ states.sensor.podcast_marvellous_musical.attributes.entries[states.counter.marvellous_musical.state
-        | int].title }}'
+      entity_id: '{{ media_player_entity_id }}'
+      message: "{{tags[trigger.event.data.tag_id].title}} {{state_attr(podcast_sensor,'entries')[states(podcast_counter) | int].title }}"
   - delay: 00:00:02
-  - wait_template: '{{ states(podcast_player) == ''idle'' }}'
+  - wait_template: '{{ states(media_player_entity_id) == ''idle'' }}'
     continue_on_timeout: true
     timeout: '10'
   - service: media_player.play_media
     data:
-      media_content_id: '{{ (state_attr(''sensor.podcast_marvellous_musical'',''entries'')[states.counter.marvellous_musical.state
-        | int].links | selectattr(''rel'',''eq'',''enclosure'') | list)[0].href }}'
+      media_content_id: "{{ (state_attr(podcast_sensor,'entries')[states(podcast_counter) | int].links | selectattr('rel','eq','enclosure') | list)[0].href }}"
       media_content_type: music
-      entity_id: '{{ podcast_player }}'
+      entity_id: '{{ media_player_entity_id }}'    
   - choose:
     - conditions:
       - condition: template
-        value_template: '{{ states.counter.marvellous_musical.state | int == 0 }} '
+        value_template: '{{ states(podcast_counter) | int == 0 }} '
       sequence:
       - service: counter.configure
         data:
           value: '{{ number_of_podcasts | int - 1 }}'
-        entity_id: counter.marvellous_musical
+          entity_id: '{{podcast_counter}}'
     default:
     - service: counter.decrement
-      entity_id: counter.marvellous_musical
-  mode: restart
+      data: 
+        entity_id: '{{podcast_counter}}'
+      
 - id: '1604656539815'
   alias: Turn on living room lights when door opened
   description: ''
