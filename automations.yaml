@@ -1075,16 +1075,31 @@
       media_content_type: music
     entity_id: media_player.living_room_display
   mode: single
-
-
 - id: '1604341003387'
   alias: 'NFC: Podcast Player'
   mode: restart
   variables:
     media_players:
       4dd136882e204aec5b9809887714f25b: media_player.bedroom_2_speaker
+      43ddd1e400d41d9d547f7bc24a95f86d: media_player.reuben_s_room_speaker
     tags:
-      A3-22-67-02:
+      04-35-6F-AA-ED-6C-80:
+        title: But Why
+        podcast_counter: counter.podcast_but_why
+        sensor: sensor.podcast_but_why
+      04-58-6E-AA-ED-6C-80:
+        title: Goodnight Stories for Rebel Girls
+        podcast_counter: counter.podcast_goodnight_stories
+        sensor: sensor.podcast_goodnight_stories
+      04-55-6F-AA-ED-6C-80:
+        title: Story Pirates
+        podcast_counter: counter.podcast_story_pirates
+        sensor: sensor.podcast_story_pirates
+      04-51-6F-AA-ED-6C-80:
+        title: Maddie's Sound Explorers
+        podcast_counter: counter.podcast_maddie_s_sound_explorers
+        sensor: sensor.podcast_sound_explorers
+      04-31-6F-AA-ED-6C-80:
         title: Marvellous Musical
         podcast_counter: counter.podcast_marvellous_musical
         sensor: sensor.podcast_marvellous_musical
@@ -1099,15 +1114,17 @@
   - '{{ trigger.event.data.tag_id in tags }}'
   - '{{ trigger.event.data.device_id in media_players }}'
   action:
-  - variables: 
-      number_of_podcasts: "{{ state_attr(tags[trigger.event.data.tag_id].sensor, 'entries') | length }}"
+  - variables:
+      number_of_podcasts: '{{ state_attr(tags[trigger.event.data.tag_id].sensor, ''entries'')
+        | length }}'
       podcast_counter: '{{ tags[trigger.event.data.tag_id].podcast_counter }}'
       podcast_sensor: '{{ tags[trigger.event.data.tag_id].sensor }}'
       media_player_entity_id: '{{ media_players[trigger.event.data.device_id] }}'
   - choose:
     - conditions:
       - condition: template
-        value_template: "{{ states(podcast_counter) | int >= number_of_podcasts | int }}"
+        value_template: '{{ states(podcast_counter) | int >= number_of_podcasts |
+          int }}'
       sequence:
       - service: counter.configure
         data:
@@ -1117,16 +1134,18 @@
   - service: tts.google_translate_say
     data:
       entity_id: '{{ media_player_entity_id }}'
-      message: "{{tags[trigger.event.data.tag_id].title}} {{state_attr(podcast_sensor,'entries')[states(podcast_counter) | int].title }}"
+      message: '{{tags[trigger.event.data.tag_id].title}} {{state_attr(podcast_sensor,''entries'')[states(podcast_counter)
+        | int].title }}'
   - delay: 00:00:02
   - wait_template: '{{ states(media_player_entity_id) == ''idle'' }}'
     continue_on_timeout: true
     timeout: '10'
   - service: media_player.play_media
     data:
-      media_content_id: "{{ (state_attr(podcast_sensor,'entries')[states(podcast_counter) | int].links | selectattr('rel','eq','enclosure') | list)[0].href }}"
+      media_content_id: '{{ (state_attr(podcast_sensor,''entries'')[states(podcast_counter)
+        | int].links | selectattr(''rel'',''eq'',''enclosure'') | list)[0].href }}'
       media_content_type: music
-      entity_id: '{{ media_player_entity_id }}'    
+      entity_id: '{{ media_player_entity_id }}'
   - choose:
     - conditions:
       - condition: template
@@ -1138,9 +1157,8 @@
           entity_id: '{{podcast_counter}}'
     default:
     - service: counter.decrement
-      data: 
+      data:
         entity_id: '{{podcast_counter}}'
-      
 - id: '1604656539815'
   alias: Turn on living room lights when door opened
   description: ''
@@ -1201,6 +1219,15 @@
     at: '20:30'
   condition: []
   action:
+  - service: light.turn_on
+    data:
+      color_name: purple
+    target:
+      entity_id:
+      - light.seb_s_colour
+  - wait_template: ''
+    timeout: 00:15:00
+    continue_on_timeout: true
   - service: light.turn_off
     data:
       entity_id:
@@ -1208,7 +1235,7 @@
       - light.sebs_lamp
       - light.reuben_ceiling
       - light.rname
-  mode: single
+  mode: restart
 - id: '1611402292310'
   alias: 'Lights: turn on main bedroom light for 5 minutes when for opens'
   description: ''

@@ -69,6 +69,18 @@
       value_template: '{{states.sensor.ensuite_temperature.state |round(0)}}'
 - platform: feedparser
   scan_interval: 43200
+  name: podcast_but_why
+  feed_url: https://podcasts.vpr.net/but-why
+- platform: feedparser
+  scan_interval: 43200
+  name: podcast_goodnight_stories
+  feed_url: https://feeds.megaphone.fm/RGS8260109708
+- platform: feedparser
+  scan_interval: 43200
+  name: podcast_story_pirates
+  feed_url: https://feeds.megaphone.fm/storypirates
+- platform: feedparser
+  scan_interval: 43200
   name: podcast_sound_explorers
   feed_url: https://feeds.megaphone.fm/soundexplorers
 - platform: feedparser
