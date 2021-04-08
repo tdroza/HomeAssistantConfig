@@ -791,8 +791,6 @@
   mode: single
   variables:
     media_players:
-      e4fe6e4208d711eb87685b946672c241: media_player.reuben_s_room_speaker
-      c3bd660708d811ebac3afd455d849421: media_player.reuben_s_room_speaker
       43ddd1e400d41d9d547f7bc24a95f86d: media_player.reuben_s_room_speaker
       4dd136882e204aec5b9809887714f25b: media_player.seb_s_home
     tags:
@@ -800,10 +798,6 @@
         media_content_id: https://tdroza.duckdns.org/local/bomb.mp3
         media_content_type: music
         title: Fact Bomb!
-      04-7B-FC-EA-83-6B-80:
-        media_content_id: https://firebasestorage.googleapis.com/v0/b/storytime-7c623.appspot.com/o/stories%2F4Z0FQvDMnNyIOtJeBa93%2Frecordings%2FHzFp8GQRWwFEbkB4hSLw%2Frecordings%2Faudio.mp3?alt=media&token=b107fb98-e8af-4d60-908c-3be902cc76f6
-        media_content_type: music
-        title: Star Wars (NFC Ring)
       04-5C-6E-AA-ED-6C-80:
         media_content_id: https://firebasestorage.googleapis.com/v0/b/storytime-7c623.appspot.com/o/stories%2F4Z0FQvDMnNyIOtJeBa93%2Frecordings%2FHzFp8GQRWwFEbkB4hSLw%2Frecordings%2Faudio.mp3?alt=media&token=b107fb98-e8af-4d60-908c-3be902cc76f6
         media_content_type: music
@@ -1080,9 +1074,13 @@
   mode: restart
   variables:
     media_players:
-      4dd136882e204aec5b9809887714f25b: media_player.bedroom_2_speaker
+      4dd136882e204aec5b9809887714f25b: media_player.seb_s_home
       43ddd1e400d41d9d547f7bc24a95f86d: media_player.reuben_s_room_speaker
     tags:
+      04-7B-FC-EA-83-6B-80:
+        title: Story Time
+        podcast_counter: counter.podcast_story_time
+        sensor: sensor.podcast_story_time
       04-35-6F-AA-ED-6C-80:
         title: But Why
         podcast_counter: counter.podcast_but_why
