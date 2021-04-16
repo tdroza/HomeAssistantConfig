@@ -71,30 +71,71 @@
   scan_interval: 43200
   name: podcast_but_why
   feed_url: https://podcasts.vpr.net/but-why
+  inclusions: 
+    - title
+    - links
 - platform: feedparser
   scan_interval: 43200
   name: podcast_goodnight_stories
   feed_url: https://feeds.megaphone.fm/RGS8260109708
+  inclusions: 
+    - title
+    - links
 - platform: feedparser
   scan_interval: 43200
   name: podcast_story_pirates
   feed_url: https://feeds.megaphone.fm/storypirates
 - platform: feedparser
   scan_interval: 43200
+  name: podcast_goodnight_stories
+  feed_url: https://feeds.megaphone.fm/RGS8260109708
+  inclusions: 
+    - title
+    - links
+- platform: feedparser
+  scan_interval: 43200
   name: podcast_sound_explorers
   feed_url: https://feeds.megaphone.fm/soundexplorers
+- platform: feedparser
+  scan_interval: 43200
+  name: podcast_goodnight_stories
+  feed_url: https://feeds.megaphone.fm/RGS8260109708
+  inclusions: 
+    - title
+    - links
 - platform: feedparser
   scan_interval: 43200
   name: podcast_marvellous_musical
   feed_url: https://rss.hosting.thisisdax.com/99ebc61a-7b26-4f76-b595-9e2020ad84ac
 - platform: feedparser
   scan_interval: 43200
+  name: podcast_goodnight_stories
+  feed_url: https://feeds.megaphone.fm/RGS8260109708
+  inclusions: 
+    - title
+    - links
+- platform: feedparser
+  scan_interval: 43200
   name: podcast_story_time
   feed_url: https://bedtime.fm/storytime/feed
 - platform: feedparser
   scan_interval: 43200
+  name: podcast_goodnight_stories
+  feed_url: https://feeds.megaphone.fm/RGS8260109708
+  inclusions: 
+    - title
+    - links
+- platform: feedparser
+  scan_interval: 43200
   name: podcast_peace_out
   feed_url: https://bedtime.fm/peaceout/feed
+- platform: feedparser
+  scan_interval: 43200
+  name: podcast_goodnight_stories
+  feed_url: https://feeds.megaphone.fm/RGS8260109708
+  inclusions: 
+    - title
+    - links
 - platform: feedparser
   scan_interval: 43200
   name: QOTD
@@ -179,3 +220,31 @@
   duration:
     days: 7
   end: "{{ now() }}"
+- platform: template
+  sensors:
+    raingauge_tips:
+      value_template: "{{ states('sensor.raingauge_tips_on') |int + states('sensor.raingauge_tips_off') | int }}"
+- platform: history_stats
+  name: Raingauge tips on
+  entity_id: binary_sensor.rain_gauge
+  state: 'on'
+  type: count
+  start: '{{ now().replace(hour=0, minute=0, second=0) }}'
+  end: '{{ now() }}'
+- platform: history_stats
+  name: Raingauge tips off
+  entity_id: binary_sensor.rain_gauge
+  state: 'off'
+  type: count
+  start: '{{ now().replace(hour=0, minute=0, second=0) }}'
+  end: '{{ now() }}'  
+- platform: template
+  sensors:
+      rainfall_today:
+          friendly_name: Rainfall today
+          unit_of_measurement: mm
+          value_template: >-
+            {% set count = states('sensor.raingauge_tips') | int %}
+            {% set mm_per_pulse = 1.25 %}
+            {% set mm = count * mm_per_pulse %}
+            {{ mm|round(1, 'floor') }}
