@@ -695,7 +695,7 @@
   variables:
     light_map:
       binary_sensor.seb_d1_motion:
-      - light.seb_s_colour
+      - light.seb_s_ceiling
       - light.sebs_lamp
       binary_sensor.reu_d1_motion: light.reuben_ceiling
   mode: single
@@ -724,7 +724,7 @@
   variables:
     light_map:
       binary_sensor.seb_d1_motion:
-      - light.seb_s_colour
+      - light.seb_s_ceiling
       - light.sebs_lamp
       binary_sensor.reu_d1_motion: light.reuben_ceiling
   mode: single
@@ -1152,6 +1152,10 @@
         title: Goodnight Stories for Rebel Girls
         podcast_counter: counter.podcast_goodnight_stories
         sensor: sensor.podcast_goodnight_stories
+      04-35-FD-EA-83-6B-81:
+        title: Goodnight Stories for Rebel Girls
+        podcast_counter: counter.podcast_goodnight_stories
+        sensor: sensor.podcast_goodnight_stories
       04-55-6F-AA-ED-6C-80:
         title: Story Pirates
         podcast_counter: counter.podcast_story_pirates
@@ -1230,21 +1234,23 @@
   action:
   - service: light.turn_on
     data:
-      color_name: purple
+      brightness: 25
     target:
       entity_id:
-      - light.seb_s_colour
+      - light.seb_s_ceiling
+      - light.reuben_ceiling
   - delay:
       hours: 0
       minutes: 15
       seconds: 0
       milliseconds: 0
   - service: light.turn_off
-    data:
+    data: {}
+    target:
       entity_id:
-      - light.seb_s_colour
       - light.sebs_lamp
       - light.reuben_ceiling
+      - light.seb_s_ceiling
       - light.rname
   mode: single
 - id: '1611402292310'

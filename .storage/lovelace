@@ -265,58 +265,8 @@
                                                     },
                                                     "entities": [
                                                         {
-                                                            "entity": "light.seb_s_colour",
+                                                            "entity": "light.seb_s_ceiling",
                                                             "type": "custom:slider-entity-row"
-                                                        },
-                                                        {
-                                                            "type": "custom:rgb-light-card",
-                                                            "entity": "light.seb_s_colour",
-                                                            "hide_when_off": true,
-                                                            "justify": "center",
-                                                            "colors": [
-                                                                {
-                                                                    "rgb_color": [
-                                                                        255,
-                                                                        0,
-                                                                        0
-                                                                    ]
-                                                                },
-                                                                {
-                                                                    "rgb_color": [
-                                                                        255,
-                                                                        165,
-                                                                        0
-                                                                    ]
-                                                                },
-                                                                {
-                                                                    "rgb_color": [
-                                                                        255,
-                                                                        255,
-                                                                        0
-                                                                    ]
-                                                                },
-                                                                {
-                                                                    "rgb_color": [
-                                                                        0,
-                                                                        255,
-                                                                        0
-                                                                    ]
-                                                                },
-                                                                {
-                                                                    "rgb_color": [
-                                                                        0,
-                                                                        0,
-                                                                        255
-                                                                    ]
-                                                                },
-                                                                {
-                                                                    "rgb_color": [
-                                                                        255,
-                                                                        0,
-                                                                        255
-                                                                    ]
-                                                                }
-                                                            ]
                                                         },
                                                         {
                                                             "entity": "light.sebs_lamp",
@@ -803,7 +753,7 @@
                                 {
                                     "cards": [
                                         {
-                                            "entity": "light.seb_s_colour",
+                                            "entity": "light.seb_s_ceiling",
                                             "type": "light",
                                             "name": " "
                                         },
@@ -2729,6 +2679,49 @@
                             "title": "Reuben's Tag Reader",
                             "show_header_toggle": false,
                             "state_color": true
+                        }
+                    ]
+                },
+                {
+                    "title": "Rainfall",
+                    "path": "rainfall",
+                    "icon": "mdi:weather-rainy",
+                    "badges": [],
+                    "cards": [
+                        {
+                            "type": "glance",
+                            "entities": [
+                                {
+                                    "entity": "binary_sensor.rain_gauge"
+                                },
+                                {
+                                    "entity": "sensor.raingauge_tips"
+                                },
+                                {
+                                    "entity": "sensor.rainfall_today"
+                                }
+                            ],
+                            "title": "Rainfall"
+                        },
+                        {
+                            "type": "custom:mini-graph-card",
+                            "card": null,
+                            "entities": [
+                                "sensor.raingauge_tips"
+                            ],
+                            "hours_to_show": 48,
+                            "name": "Rain gauge tips (48hrs)",
+                            "points_per_hour": 5
+                        },
+                        {
+                            "type": "custom:mini-graph-card",
+                            "entities": [
+                                "sensor.rainfall_today"
+                            ],
+                            "hours_to_show": 48,
+                            "name": "Rainfall today",
+                            "points_per_hour": 5,
+                            "icon": "mdi:weather-rainy"
                         }
                     ]
                 }
