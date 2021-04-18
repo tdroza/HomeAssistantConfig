@@ -695,9 +695,9 @@
   variables:
     light_map:
       binary_sensor.seb_d1_motion:
-      - light.seb_s_ceiling
+      - light.sebs_ceiling
       - light.sebs_lamp
-      binary_sensor.reu_d1_motion: light.reuben_ceiling
+      binary_sensor.reu_d1_motion: light.reubens_ceiling
   mode: single
 - id: '1590597141876'
   alias: 'Lights: Turn off boys'' light when no motion'
@@ -724,9 +724,9 @@
   variables:
     light_map:
       binary_sensor.seb_d1_motion:
-      - light.seb_s_ceiling
+      - light.sebs_ceiling
       - light.sebs_lamp
-      binary_sensor.reu_d1_motion: light.reuben_ceiling
+      binary_sensor.reu_d1_motion: light.reubens_ceiling
   mode: single
 - id: '1592899929119'
   alias: 'Lights: Turn off the main bedroom lights at 8am'
@@ -1234,11 +1234,23 @@
   action:
   - service: light.turn_on
     data:
-      brightness: 25
+      flash: short
     target:
       entity_id:
-      - light.seb_s_ceiling
-      - light.reuben_ceiling
+      - light.sebs_ceiling
+      - light.reubens_ceiling
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 5
+      milliseconds: 0
+  - service: light.turn_on
+    target:
+      entity_id:
+      - light.sebs_ceiling
+      - light.reubens_ceiling
+    data:
+      brightness: 25
   - delay:
       hours: 0
       minutes: 15
@@ -1249,10 +1261,10 @@
     target:
       entity_id:
       - light.sebs_lamp
-      - light.reuben_ceiling
-      - light.seb_s_ceiling
+      - light.reubens_ceiling
+      - light.sebs_ceiling
       - light.rname
-  mode: single
+  mode: restart
 - id: '1611402292310'
   alias: 'Lights: turn on main bedroom light for 5 minutes when for opens'
   description: ''
@@ -1313,7 +1325,7 @@
       button_single_press:
       - service: light.toggle
         data: {}
-        entity_id: light.reuben_ceiling
+        entity_id: light.reubens_ceiling
       button_double_press:
       - service: light.toggle
         data: {}

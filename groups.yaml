@@ -13,10 +13,10 @@ all_my_lights:
     - light.lightstrip
     - light.living_room
     - light.main_bedroom
-    - light.reuben_ceiling
+    - light.reubens_ceiling
     - light.rname
     - light.bloom
-    - light.seb_s_ceiling
+    - light.sebs_ceiling
     - light.sebs_lamp
     - light.second_bedroom_light
     - light.desk
@@ -24,10 +24,16 @@ all_my_lights:
 room_seb:
   name: 'Seb''s bedroom'
   entities:
-    - light.seb_s_colour
+    - light.sebs_ceiling
     - switch.sonoff_1000d4baef_1
     - light.sebs_lamp
 
+room_reu:
+  name: 'Reu''s bedroom'
+  entities:
+    light.reubens_ceiling
+    
+    
 room_bed2:
   name: 'Second bedroom'
   entities:

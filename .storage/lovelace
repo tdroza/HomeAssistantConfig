@@ -265,8 +265,58 @@
                                                     },
                                                     "entities": [
                                                         {
-                                                            "entity": "light.seb_s_ceiling",
+                                                            "entity": "light.sebs_ceiling",
                                                             "type": "custom:slider-entity-row"
+                                                        },
+                                                        {
+                                                            "type": "custom:rgb-light-card",
+                                                            "entity": "light.sebs_ceiling",
+                                                            "hide_when_off": true,
+                                                            "justify": "center",
+                                                            "colors": [
+                                                                {
+                                                                    "rgb_color": [
+                                                                        255,
+                                                                        0,
+                                                                        0
+                                                                    ]
+                                                                },
+                                                                {
+                                                                    "rgb_color": [
+                                                                        255,
+                                                                        165,
+                                                                        0
+                                                                    ]
+                                                                },
+                                                                {
+                                                                    "rgb_color": [
+                                                                        255,
+                                                                        255,
+                                                                        0
+                                                                    ]
+                                                                },
+                                                                {
+                                                                    "rgb_color": [
+                                                                        0,
+                                                                        255,
+                                                                        0
+                                                                    ]
+                                                                },
+                                                                {
+                                                                    "rgb_color": [
+                                                                        0,
+                                                                        0,
+                                                                        255
+                                                                    ]
+                                                                },
+                                                                {
+                                                                    "rgb_color": [
+                                                                        255,
+                                                                        0,
+                                                                        255
+                                                                    ]
+                                                                }
+                                                            ]
                                                         },
                                                         {
                                                             "entity": "light.sebs_lamp",
@@ -281,45 +331,63 @@
                                                 {
                                                     "type": "custom:fold-entity-row",
                                                     "head": {
-                                                        "entity": "light.reubens_bedroom_lights",
+                                                        "entity": "group.room_reu",
                                                         "name": "Reuben's bedroom",
                                                         "icon": "mdi:lightbulb-group-outline"
                                                     },
                                                     "entities": [
                                                         {
-                                                            "entity": "light.reuben_ceiling",
+                                                            "entity": "light.reubens_ceiling",
                                                             "name": "Ceiling",
                                                             "type": "custom:slider-entity-row"
                                                         },
                                                         {
                                                             "type": "custom:rgb-light-card",
-                                                            "entity": "light.reuben_ceiling",
+                                                            "entity": "light.reubens_ceiling",
                                                             "hide_when_off": true,
                                                             "justify": "center",
                                                             "colors": [
                                                                 {
-                                                                    "color_temp": 200,
-                                                                    "icon_color": "linear-gradient(15deg,rgba(255,255,255,1) 20%, rgba(193,193,193,1) 100%)"
+                                                                    "rgb_color": [
+                                                                        255,
+                                                                        0,
+                                                                        0
+                                                                    ]
                                                                 },
                                                                 {
-                                                                    "color_temp": 242,
-                                                                    "icon_color": "linear-gradient(15deg, rgba(255,231,185,1) 0%, rgba(196,220,229,1) 100%)"
+                                                                    "rgb_color": [
+                                                                        255,
+                                                                        165,
+                                                                        0
+                                                                    ]
                                                                 },
                                                                 {
-                                                                    "color_temp": 284,
-                                                                    "icon_color": "linear-gradient(15deg, rgba(254,199,110,1) 0%, rgba(233,233,233,1) 100%)"
+                                                                    "rgb_color": [
+                                                                        255,
+                                                                        255,
+                                                                        0
+                                                                    ]
                                                                 },
                                                                 {
-                                                                    "color_temp": 326,
-                                                                    "icon_color": "linear-gradient(15deg, rgba(255,220,167,1) 0%, rgba(255,183,116,1) 100%)"
+                                                                    "rgb_color": [
+                                                                        0,
+                                                                        255,
+                                                                        0
+                                                                    ]
                                                                 },
                                                                 {
-                                                                    "color_temp": 357,
-                                                                    "icon_color": "linear-gradient(15deg, rgba(255,205,126,1) 0%, rgba(252,156,49,1) 100%)"
+                                                                    "rgb_color": [
+                                                                        0,
+                                                                        0,
+                                                                        255
+                                                                    ]
                                                                 },
                                                                 {
-                                                                    "color_temp": 370,
-                                                                    "icon_color": "linear-gradient(15deg, rgba(255,190,92,1) 0%, rgba(255,123,0,1) 100%)"
+                                                                    "rgb_color": [
+                                                                        255,
+                                                                        0,
+                                                                        255
+                                                                    ]
                                                                 }
                                                             ]
                                                         },
@@ -753,7 +821,7 @@
                                 {
                                     "cards": [
                                         {
-                                            "entity": "light.seb_s_ceiling",
+                                            "entity": "light.sebs_ceiling",
                                             "type": "light",
                                             "name": " "
                                         },
@@ -838,7 +906,7 @@
                                 {
                                     "cards": [
                                         {
-                                            "entity": "light.reuben_ceiling",
+                                            "entity": "light.reubens_ceiling",
                                             "name": " ",
                                             "type": "light"
                                         },
@@ -1667,7 +1735,7 @@
                                     "type": "state-label"
                                 },
                                 {
-                                    "entity": "light.reuben_ceiling",
+                                    "entity": "light.reubens_ceiling",
                                     "hold_action": {
                                         "action": "more-info"
                                     },
@@ -1716,7 +1784,7 @@
                                     "type": "state-label"
                                 },
                                 {
-                                    "entity": "light.seb_s_colour",
+                                    "entity": "light.sebs_ceiling",
                                     "hold_action": {
                                         "action": "more-info"
                                     },
