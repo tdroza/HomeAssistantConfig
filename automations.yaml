@@ -736,14 +736,31 @@
     platform: time
   condition: []
   action:
-  - device_id: 9a9d18e0bac44a38a143ed6f268f38a4
-    domain: light
-    entity_id: light.main_bedroom_bloom
-    type: turn_off
-  - device_id: 5f159654348248d4a706a85a40b381ba
-    domain: light
+  - type: turn_off
+    device_id: dd0fc2584dec5826995ff2cd2247533c
     entity_id: light.main_bedroom_ceiling
-    type: turn_off
+    domain: light
+  - type: turn_off
+    device_id: b9c88a37811e285dc2b594f847e29cf1
+    entity_id: light.main_bedroom_bloom
+    domain: light
+  - type: turn_off
+    device_id: 61f89eb89fac9724606bb7e0ffc52c9b
+    entity_id: light.reubens_ceiling
+    domain: light
+  - type: turn_off
+    device_id: e04b748fc61f7ca1d9a4a202ddcefe7a
+    entity_id: light.rname
+    domain: light
+  - type: turn_off
+    device_id: a7042a8ceb408ac6488c43cad4549a82
+    entity_id: light.sebs_ceiling
+    domain: light
+  - type: turn_off
+    device_id: 4fcff377266e9e7d5f9b7098401120b6
+    entity_id: light.sebs_lamp
+    domain: light
+  mode: single
 - id: '1600196508217'
   alias: Daily camera photo - Nexus
   description: ''
@@ -1251,6 +1268,7 @@
       - light.reubens_ceiling
     data:
       brightness: 25
+      color_name: purple
   - delay:
       hours: 0
       minutes: 15
@@ -1475,3 +1493,22 @@
     media_players:
       4dd136882e204aec5b9809887714f25b: media_player.seb_s_home
       43ddd1e400d41d9d547f7bc24a95f86d: media_player.reuben_s_room_speaker
+- id: '1619433471864'
+  alias: 'Lights: Boys'' wakeup light'
+  description: Fade in ceiling lights 10min before wakeup time
+  trigger:
+  - platform: template
+    value_template: '{{ now().hour * 3600 + now().minute * 60 >= state_attr(''input_datetime.boys_wakeup'',''timestamp'')
+      - 600 }}'
+  condition: []
+  action:
+  - service: light.turn_on
+    data:
+      transition: 600
+      brightness_pct: 100
+      color_name: lightyellow
+    target:
+      entity_id:
+      - light.reubens_ceiling
+      - light.sebs_ceiling
+  mode: single
