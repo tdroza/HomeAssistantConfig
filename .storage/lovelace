@@ -460,7 +460,7 @@
                                                 "action": "toggle"
                                             },
                                             "entity": "switch.toms_phone_charger",
-                                            "icon": "mdi:power-plug",
+                                            "icon": "mdi:cellphone-charging",
                                             "name": "Tom's Charger"
                                         },
                                         {
@@ -469,7 +469,7 @@
                                                 "action": "toggle"
                                             },
                                             "entity": "switch.annas_phone_charger",
-                                            "icon": "mdi:power-plug",
+                                            "icon": "mdi:cellphone-charging",
                                             "name": "Anna's Charger"
                                         }
                                     ]
@@ -2760,26 +2760,19 @@
                             "type": "glance",
                             "entities": [
                                 {
-                                    "entity": "binary_sensor.rain_gauge"
+                                    "entity": "binary_sensor.rain_gauge",
+                                    "name": "State"
                                 },
                                 {
-                                    "entity": "sensor.raingauge_tips"
+                                    "entity": "sensor.raingauge_tips",
+                                    "name": "Tips today"
                                 },
                                 {
-                                    "entity": "sensor.rainfall_today"
+                                    "entity": "sensor.rainfall_today",
+                                    "name": "Rainfall today"
                                 }
                             ],
-                            "title": "Rainfall"
-                        },
-                        {
-                            "type": "custom:mini-graph-card",
-                            "card": null,
-                            "entities": [
-                                "sensor.raingauge_tips"
-                            ],
-                            "hours_to_show": 48,
-                            "name": "Rain gauge tips (48hrs)",
-                            "points_per_hour": 5
+                            "title": "Rain Gauge"
                         },
                         {
                             "type": "custom:mini-graph-card",
@@ -2790,6 +2783,30 @@
                             "name": "Rainfall today",
                             "points_per_hour": 5,
                             "icon": "mdi:weather-rainy"
+                        },
+                        {
+                            "type": "custom:mini-graph-card",
+                            "card": null,
+                            "entities": [
+                                "sensor.raingauge_tips"
+                            ],
+                            "hours_to_show": 48,
+                            "name": "Rain gauge tips (48hrs)",
+                            "points_per_hour": 5,
+                            "icon": "mdi:scale-balance"
+                        },
+                        {
+                            "type": "custom:mini-graph-card",
+                            "entities": [
+                                "sensor.rainfall_today"
+                            ],
+                            "hours_to_show": 168,
+                            "group_by": "date",
+                            "show": {
+                                "graph": "bar"
+                            },
+                            "icon": "mdi:calendar",
+                            "name": "Daily rainfall"
                         }
                     ]
                 }
