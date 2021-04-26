@@ -223,7 +223,7 @@
 - platform: template
   sensors:
     raingauge_tips:
-      value_template: "{{ states('sensor.raingauge_tips_on') |int + states('sensor.raingauge_tips_off') | int }}"
+      value_template: "{{ states('sensor.raingauge_tips_on') |int + states('sensor.raingauge_tips_off') | int  - 1}}"
 - platform: history_stats
   name: Raingauge tips on
   entity_id: binary_sensor.rain_gauge
