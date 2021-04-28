@@ -74,28 +74,23 @@
   inclusions: 
     - title
     - links
-- platform: feedparser
-  scan_interval: 43200
-  name: podcast_goodnight_stories
-  feed_url: https://feeds.megaphone.fm/RGS8260109708
-  inclusions: 
-    - title
-    - links
+    - published
 - platform: feedparser
   scan_interval: 43200
   name: podcast_story_pirates
   feed_url: https://feeds.megaphone.fm/storypirates
-- platform: feedparser
-  scan_interval: 43200
-  name: podcast_goodnight_stories
-  feed_url: https://feeds.megaphone.fm/RGS8260109708
   inclusions: 
     - title
     - links
+    - published
 - platform: feedparser
   scan_interval: 43200
   name: podcast_sound_explorers
   feed_url: https://feeds.megaphone.fm/soundexplorers
+  inclusions: 
+    - title
+    - links
+    - published
 - platform: feedparser
   scan_interval: 43200
   name: podcast_goodnight_stories
@@ -103,39 +98,23 @@
   inclusions: 
     - title
     - links
+    - published
 - platform: feedparser
   scan_interval: 43200
   name: podcast_marvellous_musical
   feed_url: https://rss.hosting.thisisdax.com/99ebc61a-7b26-4f76-b595-9e2020ad84ac
-- platform: feedparser
-  scan_interval: 43200
-  name: podcast_goodnight_stories
-  feed_url: https://feeds.megaphone.fm/RGS8260109708
   inclusions: 
     - title
     - links
-- platform: feedparser
-  scan_interval: 43200
-  name: podcast_story_time
-  feed_url: https://bedtime.fm/storytime/feed
-- platform: feedparser
-  scan_interval: 43200
-  name: podcast_goodnight_stories
-  feed_url: https://feeds.megaphone.fm/RGS8260109708
-  inclusions: 
-    - title
-    - links
+    - published
 - platform: feedparser
   scan_interval: 43200
   name: podcast_peace_out
   feed_url: https://bedtime.fm/peaceout/feed
-- platform: feedparser
-  scan_interval: 43200
-  name: podcast_goodnight_stories
-  feed_url: https://feeds.megaphone.fm/RGS8260109708
   inclusions: 
     - title
     - links
+    - published
 - platform: feedparser
   scan_interval: 43200
   name: QOTD
