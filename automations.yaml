@@ -691,7 +691,7 @@
   - service: light.turn_on
     data:
       entity_id: '{{ light_map[trigger.entity_id] }}'
-      color_name: yellow
+      color_name: wheat
   variables:
     light_map:
       binary_sensor.seb_d1_motion:
@@ -1506,7 +1506,7 @@
     data:
       transition: 600
       brightness_pct: 100
-      color_name: lightyellow
+      color_name: wheat
     target:
       entity_id:
       - light.reubens_ceiling
