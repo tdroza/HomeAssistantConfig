@@ -17,7 +17,7 @@
     vacuum_state:
       value_template: 'Ditto: {{ states.vacuum.ditto.attributes.status }}'
     vacuum_last_run:
-      value_template: '{{ as_timestamp(states.vacuum.ditto.attributes.clean_start) | timestamp_custom("%d.%m.%Y") }}'
+      value_template: '{{ as_timestamp(states.vacuum.ditto.attributes.clean_start) | timestamp_custom("%a, %d %b %Y %H:%M") }}'
     vacuum_last_qm:
       value_template: '{{ states.vacuum.ditto.attributes.clean_area | round(0) }} m²'
     vacuum_battery:

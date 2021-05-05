@@ -1077,172 +1077,44 @@
                                     ]
                                 },
                                 {
-                                    "elements": [
-                                        {
-                                            "entity": "sensor.vacuum_state",
-                                            "style": {
-                                                "background-color": "rgba(0, 0, 0, 0.3)",
-                                                "bottom": 0,
-                                                "color": "white",
-                                                "font-size": "16px",
-                                                "left": 0,
-                                                "line-height": "32px",
-                                                "padding": "0 8px",
-                                                "pointer-events": "none",
-                                                "transform": "initial",
-                                                "width": "100%"
+                                    "type": "custom:vacuum-card",
+                                    "entity": "vacuum.ditto",
+                                    "image": "default",
+                                    "stats": {
+                                        "default": [
+                                            {
+                                                "entity_id": "sensor.vacuum_last_qm",
+                                                "subtitle": "Last clean area"
                                             },
-                                            "type": "state-label"
+                                            {
+                                                "entity_id": "sensor.vacuum_last_run",
+                                                "attribute": "clean_stop",
+                                                "subtitle": "Last clean date"
+                                            }
+                                        ]
+                                    },
+                                    "actions": [
+                                        {
+                                            "name": "Clean living room",
+                                            "service": "neato.custom_cleaning",
+                                            "service_data": {
+                                                "zone": "Lounge"
+                                            },
+                                            "icon": "mdi:sofa"
                                         },
                                         {
-                                            "entity": "vacuum.ditto",
-                                            "icon": "mdi:home",
-                                            "service": "vacuum.return_to_base",
-                                            "style": {
-                                                "bottom": 0,
-                                                "color": "white",
-                                                "line-height": "32px",
-                                                "margin": "0 152px 0 0",
-                                                "padding": "8px",
-                                                "right": 0,
-                                                "transform": "initial"
+                                            "name": "Clean kitchen",
+                                            "service": "neato.custom_cleaning",
+                                            "service_data": {
+                                                "zone": "Whole Room"
                                             },
-                                            "tap_action": "call-service",
-                                            "type": "icon"
-                                        },
-                                        {
-                                            "entity": "vacuum.ditto",
-                                            "icon": "mdi:bell-ring",
-                                            "service": "vacuum.locate",
-                                            "style": {
-                                                "bottom": 0,
-                                                "color": "white",
-                                                "line-height": "32px",
-                                                "margin": "0 112px 0 0",
-                                                "padding": "8px",
-                                                "right": 0,
-                                                "transform": "initial"
-                                            },
-                                            "tap_action": "call-service",
-                                            "type": "icon"
-                                        },
-                                        {
-                                            "entity": "switch.ditto_schedule",
-                                            "style": {
-                                                "--paper-item-icon-color": "rgb(255,255,255)",
-                                                "bottom": 0,
-                                                "color": "white",
-                                                "line-height": "32px",
-                                                "margin": "0 42px -4px 0",
-                                                "padding": "8px",
-                                                "right": 0,
-                                                "transform": "initial"
-                                            },
-                                            "tap_action": "toggle",
-                                            "type": "state-icon"
-                                        },
-                                        {
-                                            "entity": "camera.ditto_cleaning_map",
-                                            "icon": "mdi:map",
-                                            "style": {
-                                                "bottom": 0,
-                                                "color": "white",
-                                                "line-height": "32px",
-                                                "margin": "0 8px 0 0",
-                                                "padding": "8px",
-                                                "right": 0,
-                                                "transform": "initial"
-                                            },
-                                            "type": "icon"
-                                        },
-                                        {
-                                            "entity": "sensor.vacuum_battery",
-                                            "style": {
-                                                "color": "rgba(255,255,255,1)",
-                                                "font-size": "12px",
-                                                "line-height": "32px",
-                                                "margin": "1px 35px",
-                                                "pointer-events": "none",
-                                                "right": 0,
-                                                "text-shadow": "rgba(0, 0, 0, 0.8) 0px 0px 2px",
-                                                "top": 0,
-                                                "transform": "initial"
-                                            },
-                                            "type": "state-label"
-                                        },
-                                        {
-                                            "entity": "sensor.vacuum_battery",
-                                            "style": {
-                                                "--paper-item-icon-color": "rgb(255,255,255)",
-                                                "color": "rgba(255,255,255,1)",
-                                                "line-height": "32px",
-                                                "margin": "3px 5px 0 0",
-                                                "pointer-events": "none",
-                                                "right": 0,
-                                                "top": 0,
-                                                "transform": "scale(0.8)"
-                                            },
-                                            "type": "state-icon"
-                                        },
-                                        {
-                                            "entity": "sensor.vacuum_last_run",
-                                            "style": {
-                                                "color": "rgba(255,255,255,1)",
-                                                "font-size": "12px",
-                                                "line-height": "32px",
-                                                "margin": "30px 35px",
-                                                "pointer-events": "none",
-                                                "right": 0,
-                                                "text-shadow": "rgba(0, 0, 0, 0.8) 0px 0px 2px",
-                                                "top": 0,
-                                                "transform": "initial"
-                                            },
-                                            "type": "state-label"
-                                        },
-                                        {
-                                            "icon": "mdi:calendar-check",
-                                            "style": {
-                                                "color": "rgba(255,255,255,1)",
-                                                "line-height": "32px",
-                                                "margin": "36px 13px",
-                                                "pointer-events": "none",
-                                                "right": 0,
-                                                "top": 0,
-                                                "transform": "scale(0.8)"
-                                            },
-                                            "type": "icon"
-                                        },
-                                        {
-                                            "entity": "sensor.vacuum_last_qm",
-                                            "style": {
-                                                "color": "rgba(255,255,255,1)",
-                                                "font-size": "12px",
-                                                "line-height": "32px",
-                                                "margin": "59px 35px",
-                                                "pointer-events": "none",
-                                                "right": 0,
-                                                "text-shadow": "rgba(0, 0, 0, 0.8) 0px 0px 2px",
-                                                "top": 0,
-                                                "transform": "initial"
-                                            },
-                                            "type": "state-label"
-                                        },
-                                        {
-                                            "icon": "mdi:floor-plan",
-                                            "style": {
-                                                "color": "rgba(255,255,255,1)",
-                                                "line-height": "32px",
-                                                "margin": "65px 13px",
-                                                "pointer-events": "none",
-                                                "right": 0,
-                                                "top": 0,
-                                                "transform": "scale(0.8)"
-                                            },
-                                            "type": "icon"
+                                            "icon": "mdi:silverware-fork-knife"
                                         }
                                     ],
-                                    "image": "/local/neato.jpg",
-                                    "type": "picture-elements"
+                                    "compact_view": false,
+                                    "show_name": true,
+                                    "show_status": true,
+                                    "show_toolbar": true
                                 },
                                 {
                                     "card": null,
@@ -2779,9 +2651,10 @@
                             "entities": [
                                 "sensor.rainfall_today"
                             ],
-                            "hours_to_show": 48,
+                            "hours_to_show": 24,
+                            "animate": true,
                             "name": "Rainfall today",
-                            "points_per_hour": 5,
+                            "points_per_hour": 6,
                             "icon": "mdi:weather-rainy"
                         },
                         {
@@ -2791,6 +2664,7 @@
                                 "sensor.raingauge_tips"
                             ],
                             "hours_to_show": 48,
+                            "animate": true,
                             "name": "Rain gauge tips (48hrs)",
                             "points_per_hour": 5,
                             "icon": "mdi:scale-balance"
@@ -2801,6 +2675,8 @@
                                 "sensor.rainfall_today"
                             ],
                             "hours_to_show": 168,
+                            "aggregate_func": "last",
+                            "animate": true,
                             "group_by": "date",
                             "show": {
                                 "graph": "bar"
