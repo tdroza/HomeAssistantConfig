@@ -1098,17 +1098,37 @@
                                             "name": "Clean living room",
                                             "service": "neato.custom_cleaning",
                                             "service_data": {
+                                                "entity_id": "vacuum.ditto",
                                                 "zone": "Lounge"
                                             },
                                             "icon": "mdi:sofa"
                                         },
                                         {
-                                            "name": "Clean kitchen",
+                                            "name": "Clean Whole Room",
                                             "service": "neato.custom_cleaning",
                                             "service_data": {
+                                                "entity_id": "vacuum.ditto",
                                                 "zone": "Whole Room"
                                             },
                                             "icon": "mdi:silverware-fork-knife"
+                                        },
+                                        {
+                                            "name": "Clean Kitchen",
+                                            "service": "neato.custom_cleaning",
+                                            "service_data": {
+                                                "entity_id": "vacuum.ditto",
+                                                "zone": "Kitchen"
+                                            },
+                                            "icon": "mdi:fridge-variant"
+                                        },
+                                        {
+                                            "name": "Clean Hallway",
+                                            "service": "neato.custom_cleaning",
+                                            "service_data": {
+                                                "entity_id": "vacuum.ditto",
+                                                "zone": "Hallway"
+                                            },
+                                            "icon": "mdi:coat-rack"
                                         }
                                     ],
                                     "compact_view": false,
@@ -2659,18 +2679,6 @@
                         },
                         {
                             "type": "custom:mini-graph-card",
-                            "card": null,
-                            "entities": [
-                                "sensor.raingauge_tips"
-                            ],
-                            "hours_to_show": 48,
-                            "animate": true,
-                            "name": "Rain gauge tips (48hrs)",
-                            "points_per_hour": 5,
-                            "icon": "mdi:scale-balance"
-                        },
-                        {
-                            "type": "custom:mini-graph-card",
                             "entities": [
                                 "sensor.rainfall_today"
                             ],
@@ -2683,6 +2691,18 @@
                             },
                             "icon": "mdi:calendar",
                             "name": "Daily rainfall"
+                        },
+                        {
+                            "type": "custom:mini-graph-card",
+                            "card": null,
+                            "entities": [
+                                "sensor.raingauge_tips"
+                            ],
+                            "hours_to_show": 48,
+                            "animate": true,
+                            "name": "Rain gauge tips (48hrs)",
+                            "points_per_hour": 5,
+                            "icon": "mdi:scale-balance"
                         }
                     ]
                 },
