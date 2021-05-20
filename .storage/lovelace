@@ -2649,22 +2649,27 @@
                     "badges": [],
                     "cards": [
                         {
-                            "type": "glance",
+                            "type": "entities",
                             "entities": [
                                 {
+                                    "entities": [
+                                        {
+                                            "entity": "sensor.raingauge_tips",
+                                            "name": "Tips"
+                                        },
+                                        {
+                                            "entity": "sensor.rainfall_today",
+                                            "name": "Rainfall"
+                                        }
+                                    ],
                                     "entity": "binary_sensor.rain_gauge",
-                                    "name": "State"
-                                },
-                                {
-                                    "entity": "sensor.raingauge_tips",
-                                    "name": "Tips today"
-                                },
-                                {
-                                    "entity": "sensor.rainfall_today",
-                                    "name": "Rainfall today"
+                                    "name": "Rainfall",
+                                    "secondary_info": "last-changed",
+                                    "state_color": true,
+                                    "type": "custom:multiple-entity-row"
                                 }
                             ],
-                            "title": "Rain Gauge"
+                            "title": "Rainfall today"
                         },
                         {
                             "type": "custom:mini-graph-card",
