@@ -2669,7 +2669,8 @@
                                     "type": "custom:multiple-entity-row"
                                 }
                             ],
-                            "title": "Rainfall today"
+                            "title": "Rainfall today",
+                            "icon": "mdi:weather-rainy"
                         },
                         {
                             "type": "custom:mini-graph-card",
@@ -2680,7 +2681,7 @@
                             "animate": true,
                             "name": "Rainfall today",
                             "points_per_hour": 6,
-                            "icon": "mdi:weather-rainy"
+                            "icon": "mdi:counter"
                         },
                         {
                             "type": "custom:mini-graph-card",
