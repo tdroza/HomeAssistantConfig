@@ -1519,9 +1519,9 @@
       - light.reubens_ceiling
       - light.sebs_ceiling
   mode: single
-- id: '1619614544165'
-  alias: Fridge door
-  description: Notify if fridge door opened for 60 seconds
+- id: '1621850581589'
+  alias: Close the fridge door
+  description: ''
   trigger:
   - type: opened
     platform: device
@@ -1535,8 +1535,24 @@
       milliseconds: 0
   condition: []
   action:
-  - service: notify.tom_and_anna
-    data:
-      title: Fridge freezer door
-      message: 🧊 The fridge or freezer door has been open for more than 1 minute
+  - repeat:
+      sequence:
+      - service: tts.google_translate_say
+        target:
+          entity_id:
+          - media_player.kitchen_chromecast
+          - media_player.living_room_display
+        data:
+          message: Please close the fridge door
+          entity_id: media_player.kitchen_chromecast
+      - service: notify.tom_and_anna
+        data:
+          title: Fridge freezer door
+          message: 🧊 The fridge or freezer door has been open for more than 1 minute
+      - delay:
+          seconds: 30
+      until:
+      - condition: state
+        entity_id: binary_sensor.fridge_door
+        state: 'off'
   mode: single
