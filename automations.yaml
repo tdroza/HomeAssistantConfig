@@ -77,67 +77,55 @@
     entity_id: group.all_my_lights
     state: 'on'
   action:
-  - service: telegram_bot.send_message
+  - service: notify.tom_and_anna
     data:
-      inline_keyboard:
-      - Turn off:/off
-      target:
-      - '{{ states(''input_text.telegram_td'') }}'
-      - '{{ states(''input_text.telegram_ad'') }}'
-      message: 💡 Nobody is home but lights have been left on
-  - alias: ''
-    data: {}
-    entity_id: automation.lights_on_repeat_notification
-    service: automation.turn_on
+      data:
+        actions:
+        - action: LIGHTS_OFF
+          title: Turn off lights
+      title: Lights are on
+      message: 💡 Nobody is home but lights have been left on . I'll remind you every
+        15 minutes.
+  mode: single
 - id: '1576771228052'
   alias: 'Lights on: repeat notification'
   description: This automation is turned on by the "nobody home" automation and fires
     every 15 mins.
   trigger:
-  - minutes: /15
-    platform: time_pattern
+  - platform: state
+    entity_id: group.all_persons
+    from: home
+    to: not_home
+    for: 00:15:00
   condition:
   - condition: state
     entity_id: input_boolean.do_not_disturb
     state: 'off'
-  action:
-  - service: telegram_bot.send_message
-    data:
-      inline_keyboard:
-      - Turn off:/off
-      target:
-      - '{{ states(''input_text.telegram_td'') }}'
-      - '{{ states(''input_text.telegram_ad'') }}'
-      message: Nobody is home but lights have been left on . I'll remind you every
-        15 minutes.
-  initial_state: false
-  mode: single
-- id: '1576772552665'
-  alias: 'Lights on: disable repeat notification'
-  description: ''
-  trigger:
-  - entity_id: group.all_my_lights
-    from: 'on'
-    platform: state
-    to: 'off'
-  - entity_id: switch.christmas_star
-    from: 'on'
-    platform: state
-    to: 'off'
-  condition:
-  - condition: state
-    entity_id: automation.lights_on_repeat_notification
-    state: 'on'
   - condition: state
     entity_id: group.all_my_lights
-    state: 'off'
-  - condition: state
-    entity_id: input_boolean.do_not_disturb
-    state: 'off'
+    state: 'on'
   action:
-  - data:
-      entity_id: automation.lights_on_repeat_notification
-    service: automation.turn_off
+  - repeat:
+      until:
+      - condition: state
+        entity_id: group.all_my_lights
+        state: 'off'
+      sequence:
+      - service: notify.tom_and_anna
+        data:
+          data:
+            actions:
+            - action: LIGHTS_OFF
+              title: Turn off lights
+          title: Lights are on
+          message: Nobody is home but lights have been left on . I'll remind you every
+            15 minutes.
+      - delay:
+          hours: 0
+          minutes: 15
+          seconds: 0
+          milliseconds: 0
+  initial_state: false
   mode: single
 - id: '1576773012546'
   alias: Presence - Somebody arrived home
@@ -156,9 +144,10 @@
     service: notify.telegram_td
   mode: single
 - id: '1576773914306'
-  alias: Telegram /off
+  alias: 'Lights: Handle "Lights Off" command'
   description: Respond to a manually typed Telegram message of "/off" (using telegram_command)
-    or a "/off"  message from the inline_keyboard notification button (using telegram_callback)
+    or a "/off"  message from the inline_keyboard notification button (using telegram_callback),
+    or event from mobile app notification button
   trigger:
   - event_data:
       command: /off
@@ -168,6 +157,10 @@
       command: /off
     event_type: telegram_command
     platform: event
+  - platform: event
+    event_type: mobile_app_notification_action
+    event_data:
+      action: LIGHTS_OFF
   condition: []
   action:
   - data:
@@ -179,12 +172,13 @@
   - data:
       entity_id: switch.christmas_star
     service: switch.turn_off
-  - service: telegram_bot.send_message
+  - service: notify.tom_and_anna
     data:
       target:
       - '{{ states(''input_text.telegram_td'') }}'
       - '{{ states(''input_text.telegram_ad'') }}'
       message: All lights turned off.
+  mode: single
 - id: '1577980276286'
   alias: Presence - Left work (Tom)
   description: Send a telegram notification when Tom has been away from work for 2
@@ -568,34 +562,46 @@
     service: switch.turn_off
 - id: '1588449990654'
   alias: 'Garage: Notification (repeat)'
-  description: At 15 min intervals (as long as > 10 mins since door opened) send a
-    reminder notification
+  description: At 15 min intervals play/send a reminder notification
   trigger:
-  - minutes: /15
-    platform: time_pattern
+  - type: opened
+    platform: device
+    device_id: 95b859a2f9f711eaa43c6ba5d5c98dd1
+    entity_id: binary_sensor.garage_door
+    domain: binary_sensor
+    for:
+      hours: 0
+      minutes: 15
+      seconds: 0
+      milliseconds: 0
   condition:
-  - condition: template
-    value_template: '{{ as_timestamp(now()) - as_timestamp(states.binary_sensor.garage_door.last_changed)
-      > 10*60 }}'
   - condition: state
     entity_id: input_boolean.do_not_disturb
     state: 'off'
   action:
-  - data:
-      entity_id:
-      - media_player.living_room_display
-      - media_player.hallway_home
-      message: The garage door was opened {{ relative_time(states.binary_sensor.garage_door.last_changed)
-        }} ago.
-    service: tts.google_translate_say
-  - data:
-      title: Garage door
-      message: The garage door was opened {{ relative_time(states.binary_sensor.garage_door.last_changed)
-        }} ago
-      data:
-        group: Garage
-        channel: Garage
-    service: notify.tom_and_anna
+  - repeat:
+      sequence:
+      - service: tts.google_translate_say
+        data:
+          entity_id:
+          - media_player.living_room_display
+          - media_player.hallway_home
+          message: The garage door was opened {{ relative_time(states.binary_sensor.garage_door.last_changed)
+            }} ago.
+      - service: notify.tom_and_anna
+        data:
+          title: Garage door
+          message: The garage door was opened {{ relative_time(states.binary_sensor.garage_door.last_changed)
+            }} ago
+          data:
+            group: Garage
+            channel: Garage
+      - delay:
+          minutes: 15
+      until:
+      - condition: state
+        entity_id: binary_sensor.garage_door
+        state: 'off'
   mode: single
 - id: '1588450174191'
   alias: 'Garage: Open'
@@ -616,9 +622,6 @@
         channel: Garage
         vibrationPattern: 10, 100, 500, 100, 500, 500
     service: notify.mobile_app_in2013
-  - data: {}
-    entity_id: automation.garage_notification_repeat
-    service: automation.turn_on
   - data:
       entity_id:
       - media_player.living_room_display
@@ -645,9 +648,6 @@
         group: Garage
         channel: Garage
         vibrationPattern: 10, 100, 500, 100, 500, 500
-  - data: {}
-    entity_id: automation.garage_notification_repeat
-    service: automation.turn_off
   - data:
       entity_id:
       - media_player.living_room_display
@@ -1284,7 +1284,7 @@
       - light.rname
   mode: restart
 - id: '1611402292310'
-  alias: 'Lights: turn on main bedroom light for 5 minutes when for opens'
+  alias: 'Lights: turn on main bedroom light for 5 minutes when door opens'
   description: ''
   trigger:
   - type: opened
@@ -1555,4 +1555,39 @@
       - condition: state
         entity_id: binary_sensor.fridge_door
         state: 'off'
+  mode: single
+- id: '1622117441450'
+  alias: 'Light: turn on desk light'
+  description: ''
+  trigger:
+  - type: vibration
+    platform: device
+    device_id: 5c533a8c95dc1742f198061c002cc8da
+    entity_id: binary_sensor.coffee_table
+    domain: binary_sensor
+  condition: []
+  action:
+  - service: light.turn_on
+    target:
+      entity_id: light.desk
+  mode: single
+- id: '1622117496609'
+  alias: 'Light: turn off desk light'
+  description: ''
+  trigger:
+  - type: no_vibration
+    platform: device
+    device_id: 5c533a8c95dc1742f198061c002cc8da
+    entity_id: binary_sensor.coffee_table
+    domain: binary_sensor
+    for:
+      hours: 0
+      minutes: 20
+      seconds: 0
+      milliseconds: 0
+  condition: []
+  action:
+  - service: light.turn_off
+    target:
+      entity_id: light.desk
   mode: single
