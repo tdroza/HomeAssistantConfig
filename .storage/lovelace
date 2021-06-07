@@ -870,7 +870,7 @@
                                             ],
                                             "entities": [
                                                 {
-                                                    "entity": "sensor.seb_temperature",
+                                                    "entity": "sensor.seb_d1_temperature",
                                                     "index": 0,
                                                     "name": "Temp"
                                                 },
@@ -2415,41 +2415,6 @@
                         {
                             "entities": [
                                 {
-                                    "entity": "binary_sensor.seb_d1_motion"
-                                },
-                                {
-                                    "entity": "sensor.seb_d1_temperature"
-                                }
-                            ],
-                            "show_name": false,
-                            "title": "Seb",
-                            "type": "glance"
-                        },
-                        {
-                            "entities": [
-                                {
-                                    "entity": "binary_sensor.reu_d1_motion"
-                                },
-                                {
-                                    "entity": "sensor.reu_d1_temperature"
-                                }
-                            ],
-                            "show_name": false,
-                            "show_state": true,
-                            "title": "Reu",
-                            "type": "glance"
-                        },
-                        {
-                            "entity": "binary_sensor.main_bedroom_door",
-                            "type": "entity"
-                        },
-                        {
-                            "type": "entity",
-                            "entity": "binary_sensor.living_room_door"
-                        },
-                        {
-                            "entities": [
-                                {
                                     "entity": "light.living_room_2"
                                 }
                             ],
@@ -2492,17 +2457,6 @@
                             "type": "plant-status",
                             "entity": "plant.rose",
                             "name": "Rose"
-                        },
-                        {
-                            "type": "button",
-                            "tap_action": {
-                                "action": "toggle"
-                            },
-                            "entity": "binary_sensor.fridge_door"
-                        },
-                        {
-                            "type": "entity",
-                            "entity": "binary_sensor.fridge_door"
                         }
                     ],
                     "icon": "mdi:beta",
