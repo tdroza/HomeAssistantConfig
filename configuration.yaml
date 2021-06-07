@@ -27,23 +27,18 @@ downloader: !include includes/downloader.yaml
 neato: !include includes/neato.yaml
 plant: !include includes/plant.yaml
 
-pi_hole:
-  - host: 192.168.1.215
-
+sonoff:
+  username: !secret ewelink_username
+  password: !secret ewelink_password
+  sensors: power, current, voltage
+  force_update: power
+  
 octoprint:
   host: octopi.lan
   api_key: '97D2B94F6BE14938871A03CE0E1D23C0'
   name: 'Printer'
   bed: true
   number_of_tools: 1
-
-speedtestdotnet:
-  scan_interval:  
-    hours: 1
-  monitored_conditions:
-    - ping
-    - download
-    - upload
 
 telegram_bot:
   - platform: polling
@@ -60,17 +55,6 @@ input_text:
 google: 
   client_id: !secret google_client_id
   client_secret: !secret google_client_secret
-  
-sonoff:
-  username: !secret ewelink_username
-  password: !secret ewelink_password
-  grace_period: 600
-  
-tuya: 
-  username: !secret tuya_username
-  password: !secret tuya_password
-  country_code: '44'
-  platform: 'tuya'
 
 homeassistant:
   customize: !include customize.yaml

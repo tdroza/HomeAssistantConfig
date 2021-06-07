@@ -128,15 +128,6 @@
   name: BBC News
   feed_url: http://feeds.bbci.co.uk/news/rss.xml
   show_topn: 5
-- platform: google_travel_time
-  name: 'Shipley to Leeds'
-  api_key: !secret gcloud_api_key
-  origin: Shipley, UK
-  destination: Leeds, UK
-  scan_interval: 3600
-  options:
-    mode: transit
-    transit_mode: train
 - platform: uk_transport
   scan_interval: 86400
   app_id: !secret uk_transport-app_id
