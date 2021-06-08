@@ -1383,8 +1383,9 @@
                                 {
                                     "entity": "binary_sensor.garage_door",
                                     "style": {
-                                        "left": "18%",
-                                        "top": "90%"
+                                        "transform": "scale(5,5)",
+                                        "left": "12.5%",
+                                        "top": "84%"
                                     },
                                     "type": "state-icon"
                                 },
@@ -1405,6 +1406,16 @@
                                         "top": "39%"
                                     },
                                     "type": "state-label"
+                                },
+                                {
+                                    "entity": "binary_sensor.fridge_door",
+                                    "style": {
+                                        "transform": "scale(2,2)",
+                                        "left": "32%",
+                                        "top": "32%"
+                                    },
+                                    "type": "state-icon",
+                                    "icon": "mdi:fridge-variant"
                                 },
                                 {
                                     "entity": "light.kitchen_corner",
@@ -1614,6 +1625,22 @@
                                     "tap_action": {
                                         "action": "toggle"
                                     },
+                                    "type": "state-icon"
+                                },
+                                {
+                                    "entity": "light.desk",
+                                    "hold_action": {
+                                        "action": "more-info"
+                                    },
+                                    "style": {
+                                        "transform": "scale(1.5,1.5)",
+                                        "left": "88%",
+                                        "top": "25%"
+                                    },
+                                    "tap_action": {
+                                        "action": "toggle"
+                                    },
+                                    "icon": "mdi:desk",
                                     "type": "state-icon"
                                 },
                                 {
