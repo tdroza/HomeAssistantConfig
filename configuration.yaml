@@ -15,30 +15,25 @@ automation: !include automations.yaml
 automation old: !include_dir_merge_list automations
 binary_sensor: !include includes/binary_sensors.yaml
 device_tracker: !include includes/device_trackers.yaml
+downloader: !include includes/downloader.yaml
+google_assistant: !include includes/google_assistant.yaml
 group: !include groups.yaml
 http: !include includes/http.yaml
 light: !include includes/light_groups.yaml
+neato: !include includes/neato.yaml
 notify: !include includes/notify.yaml
+octoprint: !include includes/octoprint.yaml
+plant: !include includes/plant.yaml
 recorder: !include includes/recorder.yaml
 script: !include scripts.yaml
 sensor: !include includes/sensors.yaml
 zone: !include zones.yaml
-downloader: !include includes/downloader.yaml
-neato: !include includes/neato.yaml
-plant: !include includes/plant.yaml
 
 sonoff:
   username: !secret ewelink_username
   password: !secret ewelink_password
   sensors: power, current, voltage
   force_update: power
-  
-octoprint:
-  host: octopi.lan
-  api_key: '97D2B94F6BE14938871A03CE0E1D23C0'
-  name: 'Printer'
-  bed: true
-  number_of_tools: 1
 
 telegram_bot:
   - platform: polling
@@ -66,8 +61,6 @@ ifttt:
   key:
     tom: !secret tom_ifttt
     anna: !secret anna_ifttt
-
-google_assistant: !include includes/google_assistant.yaml
 
 zoom: 
     client_id: !secret zoom_client_id
