@@ -4,12 +4,13 @@
 
 # You can whitelist files/folders with !, these will not be ignored.
 !esphome/
+!includes/
 !*.yaml
 !.gitignore
 !*.md
 
 # Ignore folders.
-.storage
+.storage/*
 .cloud
 .google.token
 
