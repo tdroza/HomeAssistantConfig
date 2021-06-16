@@ -190,10 +190,55 @@
   duration:
     days: 7
   end: "{{ now() }}"
+
+# Sensors for the holiday mode lighting automation
+# All sensors will have naming convention "sensor.replay_xxxxx"
+- platform: history_stats
+  name: "replay_living_room_lights"
+  entity_id: light.living_room_lights
+  state: "on"
+  type: count
+  start: >
+    {{ as_timestamp(now()) - (7*86400) }}
+  duration: 00:00:30
+- platform: history_stats
+  name: "replay_main_bedroom"
+  entity_id: light.main_bedroom
+  state: "on"
+  type: count
+  start: >
+    {{ as_timestamp(now()) - (7*86400) }}
+  duration: 00:00:30  
+- platform: history_stats
+  name: "replay_main_bedroom_bloom"
+  entity_id: light.main_bedroom_bloom
+  state: "on"
+  type: count
+  start: >
+    {{ as_timestamp(now()) - (7*86400) }}
+  duration: 00:00:30
+- platform: history_stats
+  name: "replay_reuben_ceilin"
+  entity_id: light.reubens_ceiling
+  state: "on"
+  type: count
+  start: >
+    {{ as_timestamp(now()) - (7*86400) }}
+  duration: 00:00:30  
+
+# DO NOTHING HELPER
+# Use this sensor as a dummy placeholder in the blueprint automation
+- platform: template
+  sensors:
+    do_nothing:
+      friendly_name: 'Do Nothing - Dummy Sensor'
+      value_template: 'off'
 - platform: template
   sensors:
     raingauge_tips:
       value_template: "{{ states('sensor.raingauge_tips_on') |int + states('sensor.raingauge_tips_off') | int  - 1}}"
+
+# Rain Gauge
 - platform: history_stats
   name: Raingauge tips on
   entity_id: binary_sensor.rain_gauge
