@@ -686,6 +686,9 @@
   condition:
   - condition: time
     after: 07:30
+    before: 08:30
+  - condition: time
+    after: '17:00'
     before: '20:00'
   action:
   - service: light.turn_on
