@@ -64,7 +64,7 @@
       message: Nobody is home right now
     service: notify.telegram_td
 - id: '1576676147603'
-  alias: 'Lights on: Nobody home and lights on'
+  alias: 'Lights on: Nobody home and lights on (repeat)'
   description: ''
   trigger:
   - entity_id: group.all_persons
@@ -76,40 +76,11 @@
   - condition: state
     entity_id: group.all_my_lights
     state: 'on'
-  action:
-  - service: notify.tom_and_anna
-    data:
-      data:
-        actions:
-        - action: LIGHTS_OFF
-          title: Turn off lights
-      title: Lights are on
-      message: 💡 Nobody is home but lights have been left on . I'll remind you every
-        15 minutes.
-  mode: single
-- id: '1576771228052'
-  alias: 'Lights on: repeat notification'
-  description: This automation is turned on by the "nobody home" automation and fires
-    every 15 mins.
-  trigger:
-  - platform: state
-    entity_id: group.all_persons
-    from: home
-    to: not_home
-    for: 00:15:00
-  condition:
   - condition: state
     entity_id: input_boolean.do_not_disturb
     state: 'off'
-  - condition: state
-    entity_id: group.all_my_lights
-    state: 'on'
   action:
   - repeat:
-      until:
-      - condition: state
-        entity_id: group.all_my_lights
-        state: 'off'
       sequence:
       - service: notify.tom_and_anna
         data:
@@ -118,14 +89,14 @@
             - action: LIGHTS_OFF
               title: Turn off lights
           title: Lights are on
-          message: Nobody is home but lights have been left on . I'll remind you every
-            15 minutes.
+          message: 💡 Nobody is home but lights have been left on . I'll remind you
+            every 15 minutes.
       - delay:
-          hours: 0
           minutes: 15
-          seconds: 0
-          milliseconds: 0
-  initial_state: false
+      until:
+      - condition: state
+        entity_id: group.all_my_lights
+        state: 'off'
   mode: single
 - id: '1576773012546'
   alias: Presence - Somebody arrived home
