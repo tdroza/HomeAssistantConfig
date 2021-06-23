@@ -9,3 +9,11 @@
     service: switch.turn_off
   - entity_id: switch.sonoff_10001f5fa0
     service: switch.turn_off
+toggle_dnd:
+  alias: Toggle DND
+  sequence:
+  - service: input_boolean.toggle
+    target:
+      entity_id: input_boolean.do_not_disturb
+  mode: single
+  icon: mdi:volume-off
