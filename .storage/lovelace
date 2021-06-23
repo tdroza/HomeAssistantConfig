@@ -1861,6 +1861,10 @@
                     "title": "Google"
                 },
                 {
+                    "icon": "mdi:history",
+                    "panel": false,
+                    "path": "history",
+                    "title": "History",
                     "badges": [],
                     "cards": [
                         {
@@ -1915,12 +1919,21 @@
                             "refresh_interval": 0,
                             "title": "Temp & Humidity (48h)",
                             "type": "history-graph"
+                        },
+                        {
+                            "type": "history-graph",
+                            "entities": [
+                                {
+                                    "entity": "light.living_room_lights"
+                                },
+                                {
+                                    "entity": "light.hallway"
+                                }
+                            ],
+                            "hours_to_show": 168,
+                            "refresh_interval": 0
                         }
-                    ],
-                    "icon": "mdi:history",
-                    "panel": true,
-                    "path": "history",
-                    "title": "History"
+                    ]
                 },
                 {
                     "badges": [],
