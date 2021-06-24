@@ -498,25 +498,40 @@
       message: Camera 1
     service: notify.telegram_td
 - id: '1584977470639'
-  alias: Telegram - Daily Beautiful News
-  description: Every day send the daily Beautiful News image from https://informationisbeautiful.net/beautifulnews/
+  alias: Telegram - Daily Image
+  description: Every day send the latest image from a chosen RSS feed
   trigger:
   - at: '14:00:00'
     platform: time
   condition: []
   action:
   - data: {}
-    entity_id: sensor.beautifulnews
+    entity_id: sensor.nasadaily
     service: homeassistant.update_entity
-  - delay: '10'
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 10
+      milliseconds: 0
   - data:
       data:
         photo:
-          caption: '{{ state_attr(''sensor.beautifulnews'',''entries'')[0].title }}'
-          url: '{{ (state_attr(''sensor.beautifulnews'',''entries'')[0].links | selectattr(''rel'',
+          caption: '{{ state_attr(''sensor.nasadaily'',''entries'')[0].title }}'
+          url: '{{ (state_attr(''sensor.nasadaily'',''entries'')[0].links | selectattr(''rel'',
             ''eq'',''enclosure'') | list)[0].href }}'
-      message: test
+      message: ''
+      title: NASA Daily
     service: notify.telegram_td
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 3
+      milliseconds: 0
+  - data:
+      title: ''
+      message: '{{ state_attr(''sensor.nasadaily'',''entries'')[0].summary }}'
+    service: notify.telegram_td
+  mode: single
 - id: '1586469687141'
   alias: 'Globe: turn off after 30m'
   description: ''

@@ -120,8 +120,8 @@
   name: QOTD
   feed_url: http://feeds.feedburner.com/theysaidso/qod/inspire
 - platform: feedparser
-  name: BeautifulNews
-  feed_url: http://feeds.feedburner.com/beautifulnewsdaily
+  name: NASADAily
+  feed_url: https://www.nasa.gov/rss/dyn/lg_image_of_the_day.rss
   scan_interval: 43200
   show_topn: 1  
 - platform: feedparser
