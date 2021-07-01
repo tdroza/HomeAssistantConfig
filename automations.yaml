@@ -1580,3 +1580,33 @@
     target:
       entity_id: light.desk
   mode: single
+- id: '1625066107430'
+  alias: 'Bins: Recycling notification'
+  description: ''
+  trigger:
+  - platform: template
+    value_template: '{{ ((as_timestamp(state_attr(''calendar.recycling'', ''start_time''))
+      - as_timestamp(now())) | int /3600 ) | round(0) < 13}}'
+  - platform: template
+    value_template: '{{ ((as_timestamp(state_attr(''calendar.regular'', ''start_time''))
+      - as_timestamp(now())) | int /3600 ) | round(0) < 13}}'
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: template
+        value_template: '{{ as_timestamp(state_attr(''calendar.recycling'', ''start_time''))
+          <  as_timestamp(state_attr(''calendar.regular'', ''start_time'')) }}'
+      sequence:
+      - service: notify.mobile_app_in2013
+        data:
+          message: Recycling collection is due tomorrow. Don't forget to put the bin
+            out!
+          title: Bin Collection
+    default:
+    - service: notify.mobile_app_in2013
+      data:
+        title: Bin Collection
+        message: Regular bin collection is due tomorrow. Don't forget to put the bin
+          out!
+  mode: single

@@ -2827,6 +2827,43 @@
                             "show_header_toggle": false
                         }
                     ]
+                },
+                {
+                    "title": "Waste Collection",
+                    "path": "waste-collection",
+                    "icon": "mdi:recycle",
+                    "badges": [],
+                    "cards": [
+                        {
+                            "type": "vertical-stack",
+                            "cards": [
+                                {
+                                    "name": "Waste collection",
+                                    "template": "button-card-headers",
+                                    "type": "custom:button-card"
+                                },
+                                {
+                                    "type": "entities",
+                                    "entities": [
+                                        {
+                                            "type": "custom:template-entity-row",
+                                            "name": "Recycling",
+                                            "state": "{{ ((as_timestamp(state_attr('calendar.recycling', 'start_time')) - as_timestamp(now())) | int /60/1440) | round(0) }}",
+                                            "secondary": "{{as_timestamp(state_attr('calendar.recycling', 'start_time')) | timestamp_custom('%d %B %Y')}}",
+                                            "icon": "mdi:recycle"
+                                        },
+                                        {
+                                            "type": "custom:template-entity-row",
+                                            "name": "General waste",
+                                            "state": "{{ ((as_timestamp(state_attr('calendar.regular', 'start_time')) - as_timestamp(now())) | int /60/1440) | round(0) }}",
+                                            "secondary": "{{as_timestamp(state_attr('calendar.regular', 'start_time')) | timestamp_custom('%d %B %Y')}}",
+                                            "icon": "mdi:trash-can"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 }
             ]
         }

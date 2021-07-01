@@ -1,0 +1,69 @@
+
+- cal_id: al3665kusdltaoe46nj209b4hb3u59er@import.calendar.google.com
+  entities:
+  - device_id: calendar
+    ignore_availability: true
+    name: Calendar
+    track: true
+
+- cal_id: d043mjoldivg2lnptvuiu1uras@group.calendar.google.com
+  entities:
+  - device_id: family
+    ignore_availability: true
+    name: Family
+    track: true
+
+- cal_id: tdroza@gmail.com
+  entities:
+  - device_id: tdroza_gmail_com
+    ignore_availability: true
+    name: tdroza@gmail.com
+    track: true
+
+- cal_id: addressbook#contacts@group.v.calendar.google.com
+  entities:
+  - device_id: contacts
+    ignore_availability: true
+    name: Contacts
+    track: false
+
+- cal_id: en.uk#holiday@group.v.calendar.google.com
+  entities:
+  - device_id: holidays_in_united_kingdom
+    ignore_availability: true
+    name: Holidays in United Kingdom
+    track: false
+
+- cal_id: akv1a7ikoo7eomlcbidqakh4t4@group.calendar.google.com
+  entities:
+  - device_id: home_school
+    ignore_availability: true
+    name: Home School
+    track: true
+
+- cal_id: lkcrqe511l7obakrgeeilveauk@group.calendar.google.com
+  entities:
+  - device_id: sandal_rs_birthdays
+    ignore_availability: true
+    name: 'Sandal: RS Birthdays'
+    track: true
+
+- cal_id: 9e93435b8bfeosnos149iv1bcqj699e0@import.calendar.google.com
+  entities:
+  - device_id: pjc_music_school
+    ignore_availability: true
+    name: PJC Music School
+    track: true
+
+- cal_id: q4jn793r5nd043ihlth4amh4l0@group.calendar.google.com
+  entities:
+  - device_id: regular
+    ignore_availability: true
+    name: Regular Waste
+    track: true
+    search: 'Regular'
+  - device_id: recycling
+    ignore_availability: true
+    name: Recycling
+    track: true
+    search: 'Recycling'
