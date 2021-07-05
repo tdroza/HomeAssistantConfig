@@ -670,12 +670,14 @@
     entity_id: binary_sensor.reu_d1_motion
     domain: binary_sensor
   condition:
-  - condition: time
-    after: 07:30
-    before: 08:30
-  - condition: time
-    after: '17:00'
-    before: '20:00'
+  - condition: or
+    conditions:
+    - condition: time
+      after: 07:30
+      before: 08:30
+    - condition: time
+      after: '17:00'
+      before: '20:00'
   action:
   - service: light.turn_on
     data:
@@ -748,6 +750,10 @@
   - type: turn_off
     device_id: 4fcff377266e9e7d5f9b7098401120b6
     entity_id: light.sebs_lamp
+    domain: light
+  - type: turn_off
+    device_id: 860920bf5b3374e4ea3344b553666bcf
+    entity_id: light.main_bedroom_ceiling
     domain: light
   mode: single
 - id: '1600196508217'
@@ -976,14 +982,15 @@
   - condition: time
     after: '21:30'
   action:
-  - type: turn_on
-    device_id: 9a9d18e0bac44a38a143ed6f268f38a4
-    entity_id: light.main_bedroom_bloom
-    domain: light
   - type: turn_off
-    device_id: 5f159654348248d4a706a85a40b381ba
+    device_id: 860920bf5b3374e4ea3344b553666bcf
     entity_id: light.main_bedroom_ceiling
     domain: light
+  - type: turn_on
+    device_id: b9c88a37811e285dc2b594f847e29cf1
+    entity_id: light.main_bedroom_bloom
+    domain: light
+    brightness_pct: 80
   mode: single
 - id: '1603396218827'
   alias: Tom's phone - smart charging
@@ -1288,13 +1295,13 @@
     before: '22:30'
   action:
   - type: turn_on
-    device_id: dd0fc2584dec5826995ff2cd2247533c
+    device_id: 860920bf5b3374e4ea3344b553666bcf
     entity_id: light.main_bedroom_ceiling
     domain: light
-    brightness_pct: 30
+    brightness_pct: 80
   - delay: 00:05:00
   - type: turn_off
-    device_id: dd0fc2584dec5826995ff2cd2247533c
+    device_id: 860920bf5b3374e4ea3344b553666bcf
     entity_id: light.main_bedroom_ceiling
     domain: light
   mode: restart
