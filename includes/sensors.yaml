@@ -263,3 +263,36 @@
             {% set mm_per_pulse = 1.25 %}
             {% set mm = count * mm_per_pulse %}
             {{ mm|round(1, 'floor') }}
+- platform: min_max
+  type: min
+  name: all_temps_min
+  entity_ids:
+    - sensor.bed1_temperature
+    - sensor.seb_temperature
+    - sensor.reu_d1_temperature
+    - sensor.bathroom_temperature
+    - sensor.ensuite_temperature
+    - sensor.living_room_temp
+- platform: min_max
+  type: max
+  name: all_temps_max
+  entity_ids:
+    - sensor.bed1_temperature
+    - sensor.seb_temperature
+    - sensor.reu_d1_temperature
+    - sensor.bathroom_temperature
+    - sensor.ensuite_temperature
+    - sensor.living_room_temp
+- platform: statistics
+  name: temps_min_stats
+  entity_id: sensor.all_temps_min
+  sampling_size: 1000
+  max_age:
+    hours: 24
+- platform: statistics
+  name: temps_max_stats
+  entity_id: sensor.all_temps_max
+  sampling_size: 1000
+  max_age:
+    hours: 24
+  
