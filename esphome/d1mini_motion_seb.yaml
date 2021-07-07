@@ -30,7 +30,7 @@ ota:
 
 dallas:
   - pin: D3
-    update_interval: 300s
+    update_interval: 600s
   
 sensor:
   - platform: dallas
