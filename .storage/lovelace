@@ -870,7 +870,7 @@
                                             },
                                             {
                                                 "value_template": "{{ state_attr(\"sensor.temps_min_stats\", \"mean\") }}",
-                                                "color_template": "{{ states(\"input_text.colour_medium-low\")}}"
+                                                "color_template": "{{ states(\"input_text.colour_medium_low\")}}"
                                             },
                                             {
                                                 "value_template": "{{ (state_attr(\"sensor.temps_min_stats\", \"mean\") +  state_attr(\"sensor.temps_max_stats\", \"mean\"))/2 }}",
@@ -878,7 +878,7 @@
                                             },
                                             {
                                                 "value_template": "{{ {{ state_attr(\"sensor.temps_max_stats\", \"mean\") }} }}",
-                                                "color_template": "{{ states(\"input_text.colour_medium-high\")}}"
+                                                "color_template": "{{ states(\"input_text.colour_medium_high\")}}"
                                             },
                                             {
                                                 "value_template": "{{ state_attr(\"sensor.temps_max_stats\", \"max_value\") - state_attr(\"sensor.temps_max_stats\", \"standard_deviation\") }}",
