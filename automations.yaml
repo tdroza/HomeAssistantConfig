@@ -1464,7 +1464,7 @@
     entity_id: light.living_room_2
     from: 'off'
     to: 'on'
-    for: 00:00:05
+    for: 00:00:03
   condition:
   - condition: state
     entity_id: light.living_room_1
@@ -1616,4 +1616,58 @@
         title: Bin Collection
         message: Regular bin collection is due tomorrow. Don't forget to put the bin
           out!
+  mode: single
+- id: '1626116356389'
+  alias: 'Lights: Turn on TV Backlight'
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: light.living_room_lights
+    for: 0:00:05
+    from: 'off'
+    to: 'on'
+  - platform: state
+    entity_id: switch.living_room_watch_tv
+    from: 'off'
+    to: 'on'
+  - platform: state
+    entity_id: switch.living_room_watch_tv
+    from: 'off'
+    to: 'on'
+  condition: []
+  action:
+  - service: light.turn_on
+    target:
+      device_id: 3e6c31ee1302701c6ed52132c128c57d
+  mode: single
+- id: '1626117606618'
+  alias: 'Lights: Turn off TV Backlight'
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: switch.living_room_watch_a_movie
+    from: 'on'
+    to: 'off'
+  - platform: state
+    entity_id: switch.living_room_watch_tv
+    from: 'on'
+    to: 'off'
+  - platform: state
+    entity_id: light.living_room_lights
+    from: 'on'
+    to: 'off'
+  condition:
+  - condition: state
+    entity_id: switch.living_room_watch_a_movie
+    state: 'off'
+  - condition: state
+    entity_id: switch.living_room_watch_tv
+    state: 'off'
+  - condition: state
+    entity_id: light.living_room_lights
+    state: 'off'
+  action:
+  - service: light.turn_off
+    target:
+      device_id: 3e6c31ee1302701c6ed52132c128c57d
   mode: single
