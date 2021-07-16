@@ -1237,16 +1237,6 @@
                                         }
                                     ],
                                     "type": "entities"
-                                },
-                                {
-                                    "card": null,
-                                    "entities": [
-                                        "sensor.sonoff_10003a0e20_power"
-                                    ],
-                                    "hours_to_show": 168,
-                                    "name": "Washer Power",
-                                    "points_per_hour": 5,
-                                    "type": "custom:mini-graph-card"
                                 }
                             ],
                             "type": "vertical-stack"
