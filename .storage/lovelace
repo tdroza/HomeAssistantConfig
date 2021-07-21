@@ -635,67 +635,76 @@
                                             "entity": "light.lightstrip"
                                         },
                                         {
+                                            "entity": "switch.kodi",
+                                            "type": "button"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "horizontal-stack",
+                                    "cards": [
+                                        {
                                             "type": "button",
                                             "tap_action": {
                                                 "action": "toggle"
                                             },
                                             "entity": "binary_sensor.living_room_door",
                                             "show_name": false
+                                        },
+                                        {
+                                            "type": "custom:card-templater",
+                                            "entities": [
+                                                "sensor.temps_min_stats",
+                                                "sensor.temps_max_stats"
+                                            ],
+                                            "card": {
+                                                "color_thresholds": [
+                                                    {
+                                                        "value_template": "{{ state_attr(\"sensor.temps_min_stats\", \"min_value\") - state_attr(\"sensor.temps_min_stats\", \"standard_deviation\") }}",
+                                                        "color_template": "{{ states(\"input_text.colour_low\")}}"
+                                                    },
+                                                    {
+                                                        "value_template": "{{ state_attr(\"sensor.temps_min_stats\", \"mean\") }}",
+                                                        "color_template": "{{ states(\"input_text.colour_medium_low\")}}"
+                                                    },
+                                                    {
+                                                        "value_template": "{{ (state_attr(\"sensor.temps_min_stats\", \"mean\") +  state_attr(\"sensor.temps_max_stats\", \"mean\"))/2 }}",
+                                                        "color_template": "{{ states(\"input_text.colour_medium\")}}"
+                                                    },
+                                                    {
+                                                        "value_template": "{{ {{ state_attr(\"sensor.temps_max_stats\", \"mean\") }} }}",
+                                                        "color_template": "{{ states(\"input_text.colour_medium_high\")}}"
+                                                    },
+                                                    {
+                                                        "value_template": "{{ state_attr(\"sensor.temps_max_stats\", \"max_value\") - state_attr(\"sensor.temps_max_stats\", \"standard_deviation\") }}",
+                                                        "color_template": "{{ states(\"input_text.colour_high\")}}"
+                                                    }
+                                                ],
+                                                "entities": [
+                                                    {
+                                                        "entity": "sensor.living_room_temp",
+                                                        "index": 0,
+                                                        "name": "Temp"
+                                                    },
+                                                    {
+                                                        "color": "var(--humidity)",
+                                                        "entity": "sensor.living_room_humidity",
+                                                        "index": 1,
+                                                        "name": "Humidity",
+                                                        "y_axis": "secondary"
+                                                    }
+                                                ],
+                                                "name": "Living room",
+                                                "points_per_hour": 1,
+                                                "show": {
+                                                    "icon": false,
+                                                    "labels": true,
+                                                    "name": false
+                                                },
+                                                "type": "custom:mini-graph-card"
+                                            }
                                         }
                                     ]
-                                },
-                                {
-                                    "type": "custom:card-templater",
-                                    "entities": [
-                                        "sensor.temps_min_stats",
-                                        "sensor.temps_max_stats"
-                                    ],
-                                    "card": {
-                                        "color_thresholds": [
-                                            {
-                                                "value_template": "{{ state_attr(\"sensor.temps_min_stats\", \"min_value\") - state_attr(\"sensor.temps_min_stats\", \"standard_deviation\") }}",
-                                                "color_template": "{{ states(\"input_text.colour_low\")}}"
-                                            },
-                                            {
-                                                "value_template": "{{ state_attr(\"sensor.temps_min_stats\", \"mean\") }}",
-                                                "color_template": "{{ states(\"input_text.colour_medium_low\")}}"
-                                            },
-                                            {
-                                                "value_template": "{{ (state_attr(\"sensor.temps_min_stats\", \"mean\") +  state_attr(\"sensor.temps_max_stats\", \"mean\"))/2 }}",
-                                                "color_template": "{{ states(\"input_text.colour_medium\")}}"
-                                            },
-                                            {
-                                                "value_template": "{{ {{ state_attr(\"sensor.temps_max_stats\", \"mean\") }} }}",
-                                                "color_template": "{{ states(\"input_text.colour_medium_high\")}}"
-                                            },
-                                            {
-                                                "value_template": "{{ state_attr(\"sensor.temps_max_stats\", \"max_value\") - state_attr(\"sensor.temps_max_stats\", \"standard_deviation\") }}",
-                                                "color_template": "{{ states(\"input_text.colour_high\")}}"
-                                            }
-                                        ],
-                                        "entities": [
-                                            {
-                                                "entity": "sensor.living_room_temp",
-                                                "index": 0,
-                                                "name": "Temp"
-                                            },
-                                            {
-                                                "color": "var(--humidity)",
-                                                "entity": "sensor.living_room_humidity",
-                                                "index": 1,
-                                                "name": "Humidity",
-                                                "y_axis": "secondary"
-                                            }
-                                        ],
-                                        "name": "Living room",
-                                        "points_per_hour": 1,
-                                        "show": {
-                                            "icon": false,
-                                            "labels": true,
-                                            "name": false
-                                        },
-                                        "type": "custom:mini-graph-card"
-                                    }
                                 }
                             ],
                             "type": "vertical-stack"
