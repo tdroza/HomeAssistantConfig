@@ -21,19 +21,19 @@ sensor:
   - platform: xiaomi_lywsdcgq
     mac_address: 58:2D:34:35:F1:F7
     temperature:
-      name: "Seb Temperature"
+      name: "Kitchen Temperature"
     humidity:
-      name: "Seb Humidity"
+      name: "Kitchen Humidity"
     battery_level:
-      name: "Seb Battery"
+      name: "Kitchen Battery"
   - platform: xiaomi_lywsdcgq
     mac_address: 58:2D:34:35:ED:5E
     temperature:
-      name: "Reu Temperature"
+      name: "Office Temperature"
     humidity:
-      name: "Reu Humidity"
+      name: "Office Humidity"
     battery_level:
-      name: "Reu Battery"
+      name: "Office Battery"
   - platform: xiaomi_lywsdcgq
     mac_address: 58:2D:34:36:B3:94
     temperature:
