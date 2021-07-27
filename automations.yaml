@@ -1671,3 +1671,31 @@
     target:
       device_id: 3e6c31ee1302701c6ed52132c128c57d
   mode: single
+- id: '1627329816479'
+  alias: 'Lights: Hallway motion sensor'
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.hue_motion_sensor_motion
+    from: 'off'
+    to: 'on'
+  condition:
+  - condition: state
+    entity_id: sensor.hue_motion_sensor_light_level
+    state: true
+    attribute: dark
+  action:
+  - service: light.turn_on
+    target:
+      area_id: b3e17bb69aba419bacc48dbbb6fa5f73
+    data:
+      brightness: 57
+  - delay:
+      hours: 0
+      minutes: 3
+      seconds: 0
+      milliseconds: 0
+  - service: light.turn_off
+    target:
+      area_id: b3e17bb69aba419bacc48dbbb6fa5f73
+  mode: restart
