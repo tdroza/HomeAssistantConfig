@@ -562,43 +562,50 @@
                                     "type": "horizontal-stack"
                                 },
                                 {
-                                    "card": null,
-                                    "color_thresholds": [
-                                        {
-                                            "color": "var(--temp-twenty)",
-                                            "value": 20
-                                        },
-                                        {
-                                            "color": "var(--temp-nineteen)",
-                                            "value": 19
-                                        },
-                                        {
-                                            "color": "var(--temp-eighteen)",
-                                            "value": 18
-                                        },
-                                        {
-                                            "color": "var(--temp-seventeen)",
-                                            "value": 17
-                                        },
-                                        {
-                                            "color": "var(--temp-sixteen)",
-                                            "value": 16
-                                        }
-                                    ],
+                                    "type": "custom:card-templater",
                                     "entities": [
-                                        {
-                                            "entity": "sensor.hallway_motion_sensor_temperature",
-                                            "index": 0,
-                                            "name": "Temp"
-                                        }
+                                        "sensor.temps_min_stats",
+                                        "sensor.temps_max_stats"
                                     ],
-                                    "points_per_hour": 1,
-                                    "show": {
-                                        "icon": false,
-                                        "labels": true,
-                                        "name": false
-                                    },
-                                    "type": "custom:mini-graph-card"
+                                    "card": {
+                                        "color_thresholds": [
+                                            {
+                                                "value_template": "{{ state_attr(\"sensor.temps_min_stats\", \"min_value\") - state_attr(\"sensor.temps_min_stats\", \"standard_deviation\") }}",
+                                                "color_template": "{{ states(\"input_text.colour_low\")}}"
+                                            },
+                                            {
+                                                "value_template": "{{ state_attr(\"sensor.temps_min_stats\", \"mean\") }}",
+                                                "color_template": "{{ states(\"input_text.colour_medium_low\")}}"
+                                            },
+                                            {
+                                                "value_template": "{{ (state_attr(\"sensor.temps_min_stats\", \"mean\") +  state_attr(\"sensor.temps_max_stats\", \"mean\"))/2 }}",
+                                                "color_template": "{{ states(\"input_text.colour_medium\")}}"
+                                            },
+                                            {
+                                                "value_template": "{{ {{ state_attr(\"sensor.temps_max_stats\", \"mean\") }} }}",
+                                                "color_template": "{{ states(\"input_text.colour_medium_high\")}}"
+                                            },
+                                            {
+                                                "value_template": "{{ state_attr(\"sensor.temps_max_stats\", \"max_value\") - state_attr(\"sensor.temps_max_stats\", \"standard_deviation\") }}",
+                                                "color_template": "{{ states(\"input_text.colour_high\")}}"
+                                            }
+                                        ],
+                                        "entities": [
+                                            {
+                                                "entity": "sensor.hue_motion_sensor_temperature",
+                                                "index": 0,
+                                                "name": "Temp"
+                                            }
+                                        ],
+                                        "name": "Living room",
+                                        "points_per_hour": 1,
+                                        "show": {
+                                            "icon": false,
+                                            "labels": true,
+                                            "name": false
+                                        },
+                                        "type": "custom:mini-graph-card"
+                                    }
                                 }
                             ],
                             "type": "vertical-stack"
@@ -1053,13 +1060,13 @@
                                                 ],
                                                 "entities": [
                                                     {
-                                                        "entity": "sensor.bed2_temperature",
+                                                        "entity": "sensor.office_temperature",
                                                         "index": 0,
                                                         "name": "Temp"
                                                     },
                                                     {
                                                         "color": "var(--humidity)",
-                                                        "entity": "sensor.bed2_humidity",
+                                                        "entity": "sensor.office_humidity",
                                                         "index": 1,
                                                         "name": "Humidity",
                                                         "y_axis": "secondary"
