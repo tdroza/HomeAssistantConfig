@@ -1605,13 +1605,13 @@
         value_template: '{{ as_timestamp(state_attr(''calendar.recycling'', ''start_time''))
           <  as_timestamp(state_attr(''calendar.regular'', ''start_time'')) }}'
       sequence:
-      - service: notify.mobile_app_in2013
+      - service: notify.tom_and_anna
         data:
           message: Recycling collection is due tomorrow. Don't forget to put the bin
             out!
           title: Bin Collection
     default:
-    - service: notify.mobile_app_in2013
+    - service: notify.tom_and_anna
       data:
         title: Bin Collection
         message: Regular bin collection is due tomorrow. Don't forget to put the bin
