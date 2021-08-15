@@ -168,7 +168,7 @@ sensor:
     internal: true    
   - platform: homeassistant
     id: bed2_temp
-    entity_id: sensor.bed2_temperature
+    entity_id: sensor.office_temperature
     internal: true    
   - platform: homeassistant
     id: reu_temp
@@ -196,7 +196,7 @@ sensor:
     internal: true
   - platform: homeassistant
     id: bed2_humidity
-    entity_id: sensor.bed2_humidity
+    entity_id: sensor.office_humidity
     internal: true
   - platform: homeassistant
     id: seb_humidity
