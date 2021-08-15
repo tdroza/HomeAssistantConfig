@@ -1,0 +1,54 @@
+esphome:
+  name: ${device_name}
+  platform: ESP8266
+  board: d1_mini
+
+substitutions:
+  device_name: "air-quality"
+  friendly_name: "Air Quality"
+  
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+
+ota:
+
+wifi:
+  ssid: !secret wifi_iot_ssid
+  password: !secret wifi_password
+  domain: ".lan"
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "${friendly_name} AP"
+    password: !secret wifi_password
+    
+captive_portal:
+
+external_components:
+  - source: github://sermayoral/esphome@pm1006
+    components: [ pm1006 ]
+    
+i2c:
+  sda: D3
+  scl: D4
+  
+uart:
+  rx_pin: D2
+  baud_rate: 9600
+
+sensor:
+  - platform: pm1006
+    pm_2_5:
+      name: "${friendly_name} PM2.5"
+      
+  - platform: bmp280
+    address: 0x76
+    temperature:
+      name: "${friendly_name} Temperature"
+      oversampling: 16x
+    pressure:
+      name: "${friendly_name} Pressure"
+    update_interval: 60s

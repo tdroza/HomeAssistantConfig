@@ -1225,6 +1225,90 @@
                                         },
                                         "type": "custom:mini-graph-card"
                                     }
+                                },
+                                {
+                                    "color_thresholds": [
+                                        {
+                                            "value": 0,
+                                            "color": "#00bb00"
+                                        },
+                                        {
+                                            "value": 36,
+                                            "color": "#ffbf00"
+                                        },
+                                        {
+                                            "value": 86,
+                                            "color": "#ff0000"
+                                        }
+                                    ],
+                                    "entities": [
+                                        {
+                                            "entity": "sensor.air_quality_pm2_5",
+                                            "index": 0,
+                                            "name": "PM2.5"
+                                        }
+                                    ],
+                                    "name": "Air Quality",
+                                    "points_per_hour": 12,
+                                    "show": {
+                                        "icon": true,
+                                        "labels": true,
+                                        "name": true
+                                    },
+                                    "type": "custom:mini-graph-card"
+                                },
+                                {
+                                    "type": "custom:card-templater",
+                                    "entities": [
+                                        "sensor.temps_min_stats",
+                                        "sensor.temps_max_stats"
+                                    ],
+                                    "card": {
+                                        "color_thresholds": [
+                                            {
+                                                "value_template": "{{ state_attr(\"sensor.temps_min_stats\", \"min_value\") - state_attr(\"sensor.temps_min_stats\", \"standard_deviation\") }}",
+                                                "color_template": "{{ states(\"input_text.colour_low\")}}"
+                                            },
+                                            {
+                                                "value_template": "{{ state_attr(\"sensor.temps_min_stats\", \"mean\") }}",
+                                                "color_template": "{{ states(\"input_text.colour_medium_low\")}}"
+                                            },
+                                            {
+                                                "value_template": "{{ (state_attr(\"sensor.temps_min_stats\", \"mean\") +  state_attr(\"sensor.temps_max_stats\", \"mean\"))/2 }}",
+                                                "color_template": "{{ states(\"input_text.colour_medium\")}}"
+                                            },
+                                            {
+                                                "value_template": "{{ {{ state_attr(\"sensor.temps_max_stats\", \"mean\") }} }}",
+                                                "color_template": "{{ states(\"input_text.colour_medium_high\")}}"
+                                            },
+                                            {
+                                                "value_template": "{{ state_attr(\"sensor.temps_max_stats\", \"max_value\") - state_attr(\"sensor.temps_max_stats\", \"standard_deviation\") }}",
+                                                "color_template": "{{ states(\"input_text.colour_high\")}}"
+                                            }
+                                        ],
+                                        "entities": [
+                                            {
+                                                "entity": "sensor.air_quality_temperature",
+                                                "index": 0,
+                                                "name": "Temp"
+                                            },
+                                            {
+                                                "color": "var(--humidity)",
+                                                "entity": "sensor.air_quality_pressure",
+                                                "index": 1,
+                                                "name": "Pressure",
+                                                "y_axis": "secondary"
+                                            }
+                                        ],
+                                        "name": "Litchen",
+                                        "points_per_hour": 1,
+                                        "show": {
+                                            "icon": false,
+                                            "labels": true,
+                                            "name": false
+                                        },
+                                        "type": "custom:mini-graph-card"
+                                    }
                                 }
                             ],
                             "type": "vertical-stack"
@@ -2535,6 +2619,10 @@
                             "type": "plant-status",
                             "entity": "plant.rose",
                             "name": "Rose"
+                        },
+                        {
+                            "type": "custom:slider-entity-row",
+                            "entity": "input_number.stepper_position"
                         }
                     ],
                     "icon": "mdi:beta",
