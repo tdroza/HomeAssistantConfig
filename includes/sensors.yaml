@@ -218,14 +218,30 @@
     {{ as_timestamp(now()) - (7*86400) }}
   duration: 00:00:30
 - platform: history_stats
-  name: "replay_reuben_ceilin"
+  name: "replay_reuben_ceiling"
   entity_id: light.reubens_ceiling
   state: "on"
   type: count
   start: >
     {{ as_timestamp(now()) - (7*86400) }}
   duration: 00:00:30  
-
+- platform: history_stats
+  name: "replay_hallway"
+  entity_id: light.hallway
+  state: "on"
+  type: count
+  start: >
+    {{ as_timestamp(now()) - (7*86400) }}
+  duration: 00:00:30  
+- platform: history_stats
+  name: "replay_sebs_ceiling"
+  entity_id: light.sebs_ceiling
+  state: "on"
+  type: count
+  start: >
+    {{ as_timestamp(now()) - (7*86400) }}
+  duration: 00:00:30  
+    
 # DO NOTHING HELPER
 # Use this sensor as a dummy placeholder in the blueprint automation
 - platform: template

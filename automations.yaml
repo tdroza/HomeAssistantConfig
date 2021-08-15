@@ -1699,3 +1699,30 @@
     target:
       area_id: b3e17bb69aba419bacc48dbbb6fa5f73
   mode: restart
+- id: '1627654587843'
+  alias: Lights - Vacation Lighting
+  description: ''
+  use_blueprint:
+    path: VacationLights/vacation_lights.yaml
+    input:
+      vacation_mode_toggle: input_boolean.holiday_mode
+      replay_sensor_1: sensor.replay_hallway
+      light_target_1: light.hallway
+      replay_sensor_2: sensor.replay_living_room_lights
+      light_target_2: light.living_room_lights
+      replay_sensor_3: sensor.replay_main_bedroom
+      light_target_3: light.main_bedroom_ceiling
+      replay_sensor_4: sensor.replay_main_bedroom_bloom
+      light_target_4: light.main_bedroom_bloom
+      replay_sensor_5: sensor.replay_reuben_ceiling
+      light_target_5: light.reubens_ceiling
+      replay_sensor_6: sensor.replay_sebs_ceiling
+      light_target_6: light.sebs_ceiling
+      replay_sensor_7: sensor.do_nothing
+      light_target_7: sensor.do_nothing
+      replay_sensor_8: sensor.do_nothing
+      replay_sensor_9: sensor.do_nothing
+      light_target_8: sensor.do_nothing
+      light_target_9: sensor.do_nothing
+      replay_sensor_10: sensor.do_nothing
+      light_target_10: sensor.do_nothing
