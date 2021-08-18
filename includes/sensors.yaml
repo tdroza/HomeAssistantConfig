@@ -311,4 +311,9 @@
   sampling_size: 1000
   max_age:
     hours: 24
+- platform: min_max
+  type: max
+  name: pm2_5_max
+  entity_ids:
+    - sensor.air_quality_pm2_5  
   

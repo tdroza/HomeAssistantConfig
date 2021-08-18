@@ -1227,35 +1227,44 @@
                                     }
                                 },
                                 {
-                                    "color_thresholds": [
-                                        {
-                                            "value": 0,
-                                            "color": "#00bb00"
-                                        },
-                                        {
-                                            "value": 36,
-                                            "color": "#ffbf00"
-                                        },
-                                        {
-                                            "value": 86,
-                                            "color": "#ff0000"
-                                        }
-                                    ],
+                                    "type": "custom:card-templater",
                                     "entities": [
-                                        {
-                                            "entity": "sensor.air_quality_pm2_5",
-                                            "index": 0,
-                                            "name": "PM2.5"
-                                        }
+                                        "sensor.pm2_5_max"
                                     ],
-                                    "name": "Air Quality",
-                                    "points_per_hour": 12,
-                                    "show": {
-                                        "icon": true,
-                                        "labels": true,
-                                        "name": true
-                                    },
-                                    "type": "custom:mini-graph-card"
+                                    "card": {
+                                        "color_thresholds": [
+                                            {
+                                                "value": 1,
+                                                "color": "#00bb00"
+                                            },
+                                            {
+                                                "value": 36,
+                                                "color": "#ffbf00"
+                                            },
+                                            {
+                                                "value": 86,
+                                                "color": "#ff0000"
+                                            }
+                                        ],
+                                        "entities": [
+                                            {
+                                                "entity": "sensor.air_quality_pm2_5",
+                                                "index": 0,
+                                                "name": "PM2.5"
+                                            }
+                                        ],
+                                        "name": "Air Quality",
+                                        "aggregate_func": "min",
+                                        "points_per_hour": 12,
+                                        "color_thresholds_transition": "hard",
+                                        "upper_bound_template": "{{ [state_attr(\"sensor.pm2_5_max\",\"max_value\"), 300] | min }}",
+                                        "show": {
+                                            "icon": true,
+                                            "labels": true,
+                                            "name": true
+                                        },
+                                        "type": "custom:mini-graph-card"
+                                    }
                                 },
                                 {
                                     "type": "custom:card-templater",
