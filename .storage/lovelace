@@ -1254,8 +1254,8 @@
                                             }
                                         ],
                                         "name": "Air Quality",
-                                        "aggregate_func": "min",
-                                        "points_per_hour": 12,
+                                        "aggregate_func": "avg",
+                                        "points_per_hour": 60,
                                         "color_thresholds_transition": "hard",
                                         "upper_bound_template": "{{ [state_attr(\"sensor.pm2_5_max\",\"max_value\"), 300] | min }}",
                                         "show": {
