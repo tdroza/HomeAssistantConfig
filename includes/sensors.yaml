@@ -312,7 +312,7 @@
   max_age:
     hours: 24
 - platform: statistics
-  sampling_size: 1000
+  sampling_size: 2000
   max_age:
     hours: 24
   name: pm2_5_max
