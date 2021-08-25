@@ -14,7 +14,7 @@ wifi:
 captive_portal:
 
 substitutions:
-  devicename: tagreader_seb
+  devicename: tagreader-seb
   friendly_name: TagReaderSeb
 
 esphome:

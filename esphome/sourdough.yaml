@@ -1,5 +1,5 @@
 esphome:
-  name: d1_mini_distance_temp
+  name: sourdough
   platform: ESP8266
   board: d1_mini
 

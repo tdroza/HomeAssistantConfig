@@ -2716,23 +2716,6 @@
                             "type": "entities",
                             "entities": [
                                 {
-                                    "entity": "light.tagreader_hwspi_led"
-                                },
-                                {
-                                    "entity": "switch.tagreader_hwspi_buzzer_enabled"
-                                },
-                                {
-                                    "entity": "switch.tagreader_hwspi_led_enabled"
-                                }
-                            ],
-                            "title": "Tag Reader SPI",
-                            "show_header_toggle": false,
-                            "state_color": true
-                        },
-                        {
-                            "type": "entities",
-                            "entities": [
-                                {
                                     "entity": "light.tagreaderseb_led"
                                 },
                                 {
@@ -2753,16 +2736,16 @@
                             "type": "entities",
                             "entities": [
                                 {
-                                    "entity": "light.tagreader_led"
+                                    "entity": "light.tagreaderreu_led"
                                 },
                                 {
-                                    "entity": "switch.tagreader_buzzer_enabled"
+                                    "entity": "switch.tagreaderreu_buzzer_enabled"
                                 },
                                 {
-                                    "entity": "switch.tagreader_led_enabled"
+                                    "entity": "switch.tagreaderreu_led_enabled"
                                 },
                                 {
-                                    "entity": "binary_sensor.tagreader_status"
+                                    "entity": "binary_sensor.tagreaderreu_status"
                                 }
                             ],
                             "title": "Reuben's Tag Reader",
