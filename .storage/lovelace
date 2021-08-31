@@ -228,6 +228,7 @@
                                                     "entities": [
                                                         {
                                                             "entity": "light.second_bedroom_light",
+                                                            "toggle": true,
                                                             "name": "Ceiling",
                                                             "type": "custom:slider-entity-row"
                                                         },
@@ -248,7 +249,8 @@
                                                     "entities": [
                                                         {
                                                             "entity": "light.sebs_ceiling",
-                                                            "type": "custom:slider-entity-row"
+                                                            "type": "custom:slider-entity-row",
+                                                            "toggle": true
                                                         },
                                                         {
                                                             "type": "custom:rgb-light-card",
@@ -320,6 +322,7 @@
                                                     "entities": [
                                                         {
                                                             "entity": "light.reubens_ceiling",
+                                                            "toggle": true,
                                                             "name": "Ceiling",
                                                             "type": "custom:slider-entity-row"
                                                         },
