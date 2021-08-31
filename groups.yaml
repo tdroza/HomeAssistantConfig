@@ -31,7 +31,8 @@ room_seb:
 room_reu:
   name: 'Reu''s bedroom'
   entities:
-    light.reubens_ceiling
+  - light.reubens_ceiling
+  - light.rname
     
     
 room_bed2:

@@ -639,7 +639,7 @@
                                             "tap_action": {
                                                 "action": "toggle"
                                             },
-                                            "entity": "light.lightstrip"
+                                            "entity": "light.tv_backlight"
                                         },
                                         {
                                             "entity": "switch.kodi",
