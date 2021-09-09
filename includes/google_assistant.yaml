@@ -64,7 +64,7 @@ entity_config:
       expose: true
     light.window1:
       name: "Window 1"
-      expose: true
+      expose: false
     light.sebs_lamp:
       name: "Sebs lamp"
       aliases:
@@ -77,7 +77,7 @@ entity_config:
         - Christmas
         - Christmas tree
         - Tree
-      expose: true
+      expose: false
     input_boolean.do_not_disturb:
       expose: true
 
