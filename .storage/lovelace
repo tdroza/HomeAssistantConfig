@@ -97,7 +97,7 @@
                                                             "entity": "light.living_room_2",
                                                             "type": "custom:slider-entity-row"
                                                         },
-                                                        "light.lightstrip"
+                                                        "light.tv_backlight"
                                                     ],
                                                     "head": {
                                                         "entity": "light.living_room",
