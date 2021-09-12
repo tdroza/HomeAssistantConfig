@@ -100,7 +100,7 @@
                                                         "light.tv_backlight"
                                                     ],
                                                     "head": {
-                                                        "entity": "light.living_room",
+                                                        "entity": "group.room_living",
                                                         "icon": "mdi:lightbulb-group-outline"
                                                     },
                                                     "type": "custom:fold-entity-row"

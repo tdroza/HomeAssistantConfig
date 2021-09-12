@@ -21,6 +21,13 @@ all_my_lights:
     - light.second_bedroom_light
     - light.desk
     
+room_living:
+  name: 'Living Room'
+  entities:
+    - light.living_room_1
+    - light.living_room_1
+    - light.tv_backlight
+    
 room_seb:
   name: 'Seb''s bedroom'
   entities:
