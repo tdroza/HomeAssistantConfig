@@ -1344,6 +1344,12 @@
       - service: light.toggle
         data: {}
         entity_id: light.rname
+      button_long_press:
+      - service: light.turn_on
+        target:
+          device_id: 61f89eb89fac9724606bb7e0ffc52c9b
+        data:
+          brightness_pct: 5
 - id: '1613133024887'
   alias: Fact Bomb!
   description: ''
