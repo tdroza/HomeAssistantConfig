@@ -129,9 +129,9 @@ light:
 - platform: fastled_clockless
   chipset: WS2812
   pin: D8
-  default_transition_length: 10ms
   num_leds: 1
   rgb_order: GRB
+  flash_transition_length: 500ms
   id: activity_led
   name: "${friendly_name} LED"
   restore_mode: ALWAYS_OFF
