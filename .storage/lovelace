@@ -2330,6 +2330,12 @@
                             "hours_to_show": 2,
                             "points_per_hour": 12,
                             "type": "custom:mini-graph-card"
+                        },
+                        {
+                            "type": "picture-entity",
+                            "entity": "camera.octoprint",
+                            "camera_image": "camera.octoprint",
+                            "camera_view": "live"
                         }
                     ],
                     "icon": "mdi:printer-3d",

@@ -67,4 +67,9 @@ zoom:
     client_id: !secret zoom_client_id
     client_secret: !secret zoom_client_secret
     verification_token: !secret zoom_verification_token
-    
+
+camera:
+  - platform: mjpeg
+    name: OctoPrint
+    still_image_url: http://octopi.lan/webcam/?action=snapshot
+    mjpeg_url: http://octopi.lan/webcam/?action=stream
