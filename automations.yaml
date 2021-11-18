@@ -936,6 +936,10 @@
         media_content_id: https://firebasestorage.googleapis.com/v0/b/storytime-7c623.appspot.com/o/stories%2FJmpqpkXqfCBjrTm5S67I%2Frecordings%2FbuNFPC9gGbIIkZQokx1g%2Frecordings%2Faudio.mp3?alt=media&token=3215cdfe-9add-464d-8f92-e69b7737bedc
         media_content_type: music
         title: Dinky Donkey
+      04-6C-7F-62-EC-6B-81:
+        media_content_id: https://firebasestorage.googleapis.com/v0/b/storytime-7c623.appspot.com/o/stories%2F68Dfu5tTDPPeCXmUWivB%2Frecordings%2FGz1udqevXgaGvPoonUq4%2Frecordings%2Faudio.mp3?alt=media&token=c4a3ccff-07e5-4dca-8f5b-7db9bb08797b
+        media_content_type: music
+        title: Monty and Milli        
 - id: '1602617983905'
   alias: 'Zoom: Notify start/end call'
   description: ''
@@ -1158,10 +1162,6 @@
         podcast_counter: counter.podcast_but_why
         sensor: sensor.podcast_but_why
       04-58-6E-AA-ED-6C-80:
-        title: Goodnight Stories for Rebel Girls
-        podcast_counter: counter.podcast_goodnight_stories
-        sensor: sensor.podcast_goodnight_stories
-      04-35-FD-EA-83-6B-81:
         title: Goodnight Stories for Rebel Girls
         podcast_counter: counter.podcast_goodnight_stories
         sensor: sensor.podcast_goodnight_stories
