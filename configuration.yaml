@@ -23,7 +23,6 @@ light: !include includes/light_groups.yaml
 neato: !include includes/neato.yaml
 nest: !include includes/nest.yaml
 notify: !include includes/notify.yaml
-octoprint: !include includes/octoprint.yaml
 plant: !include includes/plant.yaml
 recorder: !include includes/recorder.yaml
 script: !include scripts.yaml

@@ -2279,15 +2279,15 @@
                             "cards": null,
                             "entities": [
                                 {
-                                    "entity": "sensor.printer_current_state",
+                                    "entity": "sensor.octoprint_current_state",
                                     "name": "Status"
                                 },
                                 {
-                                    "entity": "sensor.printer_actual_bed_temp",
+                                    "entity": "sensor.octoprint_actual_bed_temp",
                                     "name": "Bed"
                                 },
                                 {
-                                    "entity": "sensor.printer_actual_tool0_temp",
+                                    "entity": "sensor.octoprint_actual_tool0_temp",
                                     "name": "Tool"
                                 }
                             ],
@@ -2296,13 +2296,10 @@
                         {
                             "entities": [
                                 {
-                                    "entity": "sensor.printer_time_elapsed"
+                                    "entity": "sensor.octoprint_start_time"
                                 },
                                 {
-                                    "entity": "sensor.printer_time_remaining"
-                                },
-                                {
-                                    "entity": "sensor.printer_job_percentage"
+                                    "entity": "sensor.octoprint_estimated_finish_time"
                                 }
                             ],
                             "type": "glance"
