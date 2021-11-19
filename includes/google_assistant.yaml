@@ -54,7 +54,11 @@ entity_config:
         - Coffee
         - Coffee light
     light.desk:
-      name: "Desk light"
+      name: "Tom's Desk light"
+      room: "Second Bedroom"
+      expose: true
+    light.anna_s_desk:
+      name: "Anna's Desk light"
       room: "Second Bedroom"
       expose: true
     light.rname:

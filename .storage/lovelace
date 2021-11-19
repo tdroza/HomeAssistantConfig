@@ -236,6 +236,11 @@
                                                             "entity": "light.desk",
                                                             "toggle": true,
                                                             "type": "custom:slider-entity-row"
+                                                        },
+                                                        {
+                                                            "entity": "light.anna_s_desk",
+                                                            "toggle": true,
+                                                            "type": "custom:slider-entity-row"
                                                         }
                                                     ]
                                                 },
@@ -1026,6 +1031,11 @@
                                             "entity": "light.desk",
                                             "type": "light",
                                             "name": " "
+                                        },
+                                        {
+                                            "type": "light",
+                                            "entity": "light.anna_s_desk",
+                                            "icon": "mdi:desk-lamp"
                                         }
                                     ],
                                     "type": "horizontal-stack"

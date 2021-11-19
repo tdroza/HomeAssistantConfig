@@ -939,7 +939,7 @@
       04-6C-7F-62-EC-6B-81:
         media_content_id: https://firebasestorage.googleapis.com/v0/b/storytime-7c623.appspot.com/o/stories%2F68Dfu5tTDPPeCXmUWivB%2Frecordings%2FGz1udqevXgaGvPoonUq4%2Frecordings%2Faudio.mp3?alt=media&token=c4a3ccff-07e5-4dca-8f5b-7db9bb08797b
         media_content_type: music
-        title: Monty and Milli        
+        title: Monty and Milli
 - id: '1602617983905'
   alias: 'Zoom: Notify start/end call'
   description: ''
@@ -1736,7 +1736,7 @@
       replay_sensor_10: sensor.do_nothing
       light_target_10: sensor.do_nothing
 - id: '1636562395777'
-  alias: 'Light: Window light percentage'
+  alias: 'Light: Anna''s desk light percentage'
   description: Illuminate a percentage of the light bar according to elapsed minutes
     of the day
   trigger:
@@ -1744,14 +1744,14 @@
     minutes: /5
   condition:
   - condition: device
-    type: is_on
+    type: is_off
     device_id: 15c7c1209eca0c917609946d19b62db6
-    entity_id: light.window1
-    domain: light
+    entity_id: switch.anna_s_desk_nightlight
+    domain: switch
   action:
   - service: wled.effect
     target:
-      entity_id: light.window1
+      entity_id: light.anna_s_desk
     data:
       effect: percent
       palette: temperature
