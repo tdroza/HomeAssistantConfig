@@ -10,7 +10,7 @@ all_my_lights:
     - light.advent
     - light.hallway
     - light.lightstick
-    - light.lightstrip
+    - light.tv_backlight
     - light.living_room
     - light.main_bedroom
     - light.reubens_ceiling
@@ -20,6 +20,7 @@ all_my_lights:
     - light.sebs_lamp
     - light.second_bedroom_light
     - light.desk
+    - light.anna_s_desk
     
 room_living:
   name: 'Living Room'

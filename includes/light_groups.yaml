@@ -3,7 +3,7 @@
   entities:
   - light.living_room_1
   - light.living_room_2
-  - light.lightstrip
+  - light.tv_backlight
 - platform: group
   name: Main Bedroom Lights
   entities:
@@ -24,3 +24,4 @@
   entities:
     - light.second_bedroom
     - light.desk
+    - light.anna_s_desk
