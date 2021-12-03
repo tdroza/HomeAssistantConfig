@@ -1742,6 +1742,11 @@
   trigger:
   - platform: time_pattern
     minutes: /5
+  - platform: device
+    type: turned_on
+    device_id: 15c7c1209eca0c917609946d19b62db6
+    entity_id: light.anna_s_desk
+    domain: light
   condition:
   - condition: device
     type: is_off
@@ -1758,4 +1763,47 @@
       intensity: '{{ (100 * ((as_timestamp(now()) | timestamp_custom("%-H") | int
         * 60) + as_timestamp(now()) | timestamp_custom("%-M") | int) / 1440 )| round
         }}'
+  mode: single
+- id: '1637928927711'
+  alias: 'Office: Turn on'
+  description: Turn on desk, and lights
+  trigger:
+  - platform: time
+    at: 08:30
+  condition:
+  - condition: state
+    entity_id: binary_sensor.workday_sensor
+    state: 'on'
+  action:
+  - type: turn_on
+    device_id: b1e67ae9d70423911cd751c767cce4fa
+    entity_id: switch.toms_desk
+    domain: switch
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 30
+      milliseconds: 0
+  - service: light.turn_on
+    target:
+      entity_id: light.anna_s_desk
+  mode: single
+- id: '1637929014156'
+  alias: 'Office: Turn off'
+  description: Turn off lights and desk
+  trigger:
+  - platform: time
+    at: '18:00'
+  condition:
+  - condition: state
+    entity_id: binary_sensor.workday_sensor
+    state: 'on'
+  action:
+  - service: light.turn_off
+    target:
+      entity_id: light.anna_s_desk
+  - type: turn_off
+    device_id: b1e67ae9d70423911cd751c767cce4fa
+    entity_id: switch.toms_desk
+    domain: switch
   mode: single
