@@ -6,22 +6,67 @@
             {
                 "name": "LUMI lumi.sensor_magnet.aq2",
                 "ieee": "00:15:8d:00:04:46:ef:c8",
-                "last_seen": 1603025089.5161703
+                "last_seen": 1638540391.0886326
             },
             {
                 "name": "LUMI lumi.sensor_magnet.aq2",
                 "ieee": "00:15:8d:00:04:78:e0:70",
-                "last_seen": 1603024001.4517958
+                "last_seen": 1638541471.3997252
             },
             {
                 "name": "LUMI lumi.sensor_magnet.aq2",
                 "ieee": "00:15:8d:00:04:a0:1a:c7",
-                "last_seen": 1603025439.7518256
+                "last_seen": 1638541412.9553537
             },
             {
-                "name": "Texas Instruments ZNP Coordinator",
+                "name": "IKEA of Sweden TRADFRI wireless dimmer",
+                "ieee": "00:0b:57:ff:fe:2c:28:be",
+                "last_seen": 1637082682.7456915
+            },
+            {
+                "name": "IKEA of Sweden TRADFRI wireless dimmer",
+                "ieee": "d0:cf:5e:ff:fe:d6:df:eb",
+                "last_seen": 1637061823.7139919
+            },
+            {
+                "name": "LUMI lumi.remote.b1acn01",
+                "ieee": "00:15:8d:00:04:01:7a:78",
+                "last_seen": 1638541517.7356665
+            },
+            {
+                "name": "LUMI lumi.remote.b1acn01",
+                "ieee": "00:15:8d:00:04:01:97:94",
+                "last_seen": 1638539113.679103
+            },
+            {
+                "name": "unk_manufacturer unk_model",
+                "ieee": "00:15:8d:00:04:1d:98:fe",
+                "last_seen": 1638540106.6848617
+            },
+            {
+                "name": "LUMI lumi.sensor_magnet.aq2",
+                "ieee": "00:15:8d:00:06:8b:4d:0d",
+                "last_seen": 1638539090.5206766
+            },
+            {
+                "name": "LUMI lumi.sensor_magnet.aq2",
+                "ieee": "00:15:8d:00:06:8b:bb:f4",
+                "last_seen": 1635062178.5714266
+            },
+            {
+                "name": "IKEA of Sweden TRADFRI bulb E27 W opal 1000lm",
+                "ieee": "00:0b:3c:ff:fe:f9:29:0b",
+                "last_seen": 1637082516.9330692
+            },
+            {
+                "name": "LUMI lumi.sensor_cube.aqgl01",
+                "ieee": "00:15:8d:00:04:87:39:a7",
+                "last_seen": 1636554217.8198314
+            },
+            {
+                "name": "Texas Instruments CC2531, Z-Stack Home 1.2 (build 20180507)",
                 "ieee": "00:12:4b:00:19:3b:18:68",
-                "last_seen": 1603022042.6889095
+                "last_seen": 1638536413.1707811
             }
         ]
     }
