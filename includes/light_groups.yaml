@@ -3,7 +3,6 @@
   entities:
   - light.living_room_1
   - light.living_room_2
-  - light.tv_backlight
 - platform: group
   name: Main Bedroom Lights
   entities:
