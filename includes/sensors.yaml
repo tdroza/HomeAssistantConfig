@@ -12,6 +12,16 @@
       value_template: '{{ states.weather.millview.attributes.wind_speed }}'
     weather_windbearing:
       value_template: '{{ states.weather.millview.attributes.wind_bearing }}'
+    coinbase_portfolio_balance:
+      value_template: >
+        {%- set btc = state_attr('sensor.coinbase_btc_wallet','Balance in native currency')[:-4] | int -%}
+        {%- set eth = state_attr('sensor.coinbase_eth_wallet','Balance in native currency')[:-4] | int %}
+        {%- set ltc = state_attr('sensor.coinbase_ltc_wallet','Balance in native currency')[:-4] | int %}
+        {%- set xlm = state_attr('sensor.coinbase_xlm_wallet','Balance in native currency')[:-4] | int %}
+        {%- set doge = state_attr('sensor.coinbase_doge_wallet','Balance in native currency')[:-4] | int %}
+        {%- set sol = state_attr('sensor.coinbase_sol_wallet','Balance in native currency')[:-4] | int %}
+        {{ "£%.2f" | format (btc + eth + ltc + xlm + doge + sol)}} GBP
+
 - platform: template
   sensors:
     vacuum_state:
