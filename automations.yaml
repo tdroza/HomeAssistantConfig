@@ -1,828 +1,845 @@
-- id: '1575922124106'
+- id: "1575922124106"
   alias: Close the blinds as dusk
-  description: ''
+  description: ""
   trigger:
-  - platform: numeric_state
-    entity_id: sun.sun
-    below: '-2'
-    attribute: elevation
+    - platform: numeric_state
+      entity_id: sun.sun
+      below: "-2"
+      attribute: elevation
   condition: []
   action:
-  - alias: ''
-    data:
-      entity_id: all
-    service: cover.close_cover
+    - alias: ""
+      data:
+        entity_id: all
+      service: cover.close_cover
   mode: single
-- id: '1575923914112'
+- id: "1575923914112"
   alias: ifttt_webhook
   trigger:
-  - event_data:
-      action: call_service
-    event_type: ifttt_webhook_received
-    platform: event
+    - event_data:
+        action: call_service
+      event_type: ifttt_webhook_received
+      platform: event
   action:
-  - data:
-      entity_id: '{{ trigger.event.data.entity_id }}'
-    service: '{{ trigger.event.data.service }}'
-- id: '1576537003318'
+    - data:
+        entity_id: "{{ trigger.event.data.entity_id }}"
+      service: "{{ trigger.event.data.service }}"
+- id: "1576537003318"
   alias: ifttt_webhook_params
   trigger:
-  - platform: event
-    event_data:
-      action: call_service_with_params
-    event_type: ifttt_webhook_received
+    - platform: event
+      event_data:
+        action: call_service_with_params
+      event_type: ifttt_webhook_received
   action:
-  - service: '{{ trigger.event.data.service }}'
-    data:
-      brightness: '{{ trigger.event.data.brightness }}'
-      effect: '{{ trigger.event.data.effect }}'
-      entity_id: '{{ trigger.event.data.entity_id }}'
-- id: '1580936086819'
+    - service: "{{ trigger.event.data.service }}"
+      data:
+        brightness: "{{ trigger.event.data.brightness }}"
+        effect: "{{ trigger.event.data.effect }}"
+        entity_id: "{{ trigger.event.data.entity_id }}"
+- id: "1580936086819"
   alias: ifttt kodi rpc
-  description: ''
+  description: ""
   trigger:
-  - platform: event
-    event_data:
-      action: kodi_rpc_service
-    event_type: ifttt_webhook_received
+    - platform: event
+      event_data:
+        action: kodi_rpc_service
+      event_type: ifttt_webhook_received
   condition: []
   action:
-  - service: '{{ trigger.event.data.service }}'
-    data:
-      method: '{{ trigger.event.data.method }}'
-- id: '1576675828079'
+    - service: "{{ trigger.event.data.service }}"
+      data:
+        method: "{{ trigger.event.data.method }}"
+- id: "1576675828079"
   alias: Presence - Nobody home
-  description: ''
+  description: ""
   trigger:
-  - entity_id: group.all_persons
-    from: home
-    platform: state
-    to: not_home
+    - entity_id: group.all_persons
+      from: home
+      platform: state
+      to: not_home
   condition: []
   action:
-  - data:
-      message: Nobody is home right now
-    service: notify.telegram_td
-- id: '1576676147603'
-  alias: 'Lights on: Nobody home and lights on (repeat)'
-  description: ''
+    - data:
+        message: Nobody is home right now
+      service: notify.telegram_td
+- id: "1576676147603"
+  alias: "Lights on: Nobody home and lights on (repeat)"
+  description: ""
   trigger:
-  - entity_id: group.all_persons
-    for: 00:02:00
-    from: home
-    platform: state
-    to: not_home
+    - entity_id: group.all_persons
+      for: 00:02:00
+      from: home
+      platform: state
+      to: not_home
   condition:
-  - condition: state
-    entity_id: group.all_my_lights
-    state: 'on'
-  - condition: state
-    entity_id: input_boolean.do_not_disturb
-    state: 'off'
+    - condition: state
+      entity_id: group.all_my_lights
+      state: "on"
+    - condition: state
+      entity_id: input_boolean.do_not_disturb
+      state: "off"
   action:
-  - repeat:
-      sequence:
-      - service: notify.tom_and_anna
-        data:
-          data:
-            actions:
-            - action: LIGHTS_OFF
-              title: Turn off lights
-          title: Lights are on
-          message: 💡 Nobody is home but lights have been left on . I'll remind you
-            every 15 minutes.
-      - delay:
-          minutes: 15
-      until:
-      - condition: state
-        entity_id: group.all_my_lights
-        state: 'off'
+    - repeat:
+        sequence:
+          - service: notify.tom_and_anna
+            data:
+              data:
+                actions:
+                  - action: LIGHTS_OFF
+                    title: Turn off lights
+              title: Lights are on
+              message:
+                💡 Nobody is home but lights have been left on . I'll remind you
+                every 15 minutes.
+          - delay:
+              minutes: 15
+        until:
+          - condition: state
+            entity_id: group.all_my_lights
+            state: "off"
   mode: single
-- id: '1576773012546'
+- id: "1576773012546"
   alias: Presence - Somebody arrived home
-  description: ''
+  description: ""
   trigger:
-  - entity_id: group.all_persons
-    from: not_home
-    platform: state
-    to: home
+    - entity_id: group.all_persons
+      from: not_home
+      platform: state
+      to: home
   condition: []
   action:
-  - data:
-      message: "{%- for person in states.group.all_persons.attributes.entity_id -%}\n\
-        \  {%- if is_state(person, 'home') -%} \n    {{ state_attr(person, 'friendly_name')\
-        \ }} just arrived home\n  {%- endif -%}\n{%- endfor -%} \n"
-    service: notify.telegram_td
+    - data:
+        message:
+          "{%- for person in states.group.all_persons.attributes.entity_id -%}\n\
+          \  {%- if is_state(person, 'home') -%} \n    {{ state_attr(person, 'friendly_name')\
+          \ }} just arrived home\n  {%- endif -%}\n{%- endfor -%} \n"
+      service: notify.telegram_td
   mode: single
-- id: '1576773914306'
+- id: "1576773914306"
   alias: 'Lights: Handle "Lights Off" command'
-  description: Respond to a manually typed Telegram message of "/off" (using telegram_command)
+  description:
+    Respond to a manually typed Telegram message of "/off" (using telegram_command)
     or a "/off"  message from the inline_keyboard notification button (using telegram_callback),
     or event from mobile app notification button
   trigger:
-  - event_data:
-      command: /off
-    event_type: telegram_callback
-    platform: event
-  - event_data:
-      command: /off
-    event_type: telegram_command
-    platform: event
-  - platform: event
-    event_type: mobile_app_notification_action
-    event_data:
-      action: LIGHTS_OFF
+    - event_data:
+        command: /off
+      event_type: telegram_callback
+      platform: event
+    - event_data:
+        command: /off
+      event_type: telegram_command
+      platform: event
+    - platform: event
+      event_type: mobile_app_notification_action
+      event_data:
+        action: LIGHTS_OFF
   condition: []
   action:
-  - data:
-      entity_id: all
-    service: light.turn_off
-  - data:
-      entity_id: switch.sonoff_10001f5fa0
-    service: switch.turn_off
-  - data:
-      entity_id: switch.christmas_star
-    service: switch.turn_off
-  - service: notify.tom_and_anna
-    data:
-      target:
-      - '{{ states(''input_text.telegram_td'') }}'
-      - '{{ states(''input_text.telegram_ad'') }}'
-      message: All lights turned off.
+    - data:
+        entity_id: all
+      service: light.turn_off
+    - data:
+        entity_id: switch.sonoff_10001f5fa0
+      service: switch.turn_off
+    - data:
+        entity_id: switch.christmas_star
+      service: switch.turn_off
+    - service: notify.tom_and_anna
+      data:
+        target:
+          - "{{ states('input_text.telegram_td') }}"
+          - "{{ states('input_text.telegram_ad') }}"
+        message: All lights turned off.
   mode: single
-- id: '1577980276286'
+- id: "1577980276286"
   alias: Presence - Left work (Tom)
-  description: Send a telegram notification when Tom has been away from work for 2
+  description:
+    Send a telegram notification when Tom has been away from work for 2
     minutes
   trigger:
-  - entity_id: person.tom
-    for: 00:02:00
-    from: BJSS
-    platform: state
-    to: not_home
+    - entity_id: person.tom
+      for: 00:02:00
+      from: BJSS
+      platform: state
+      to: not_home
   condition:
-  - condition: template
-    value_template: '{{ not is_state(''sensor.oneplus5t_wifi_connection'', ''BJSS-Staff'')
-      }}'
-  - after: '16:30'
-    condition: time
+    - condition: template
+      value_template:
+        "{{ not is_state('sensor.oneplus5t_wifi_connection', 'BJSS-Staff')
+        }}"
+    - after: "16:30"
+      condition: time
   action:
-  - data:
-      message: Tom left work 2 minutes ago
-    service: notify.telegram_td
-- id: '1578494385278'
+    - data:
+        message: Tom left work 2 minutes ago
+      service: notify.telegram_td
+- id: "1578494385278"
   alias: Presence - Left work (Anna)
   description: Send a Telegram notification when Anna been away from work for 2 minutes
   trigger:
-  - entity_id: person.anna
-    for: 00:02:00
-    from: AD Work
-    platform: state
-    to: not_home
+    - entity_id: person.anna
+      for: 00:02:00
+      from: AD Work
+      platform: state
+      to: not_home
   condition: []
   action:
-  - data:
-      message: Anna left work 2 minutes ago.
-    service: notify.telegram_td
-- id: '1578592845893'
-  alias: 'Presence: Left Leeds (Tom)'
+    - data:
+        message: Anna left work 2 minutes ago.
+      service: notify.telegram_td
+- id: "1578592845893"
+  alias: "Presence: Left Leeds (Tom)"
   description: Send a Telegram notification when Tom been away from work for 2 minutes
   trigger:
-  - entity_id: person.tom
-    for: 00:02:00
-    from: Leeds Station
-    platform: state
-    to: not_home
+    - entity_id: person.tom
+      for: 00:02:00
+      from: Leeds Station
+      platform: state
+      to: not_home
   condition:
-  - after: '16:30'
-    condition: time
+    - after: "16:30"
+      condition: time
   action:
-  - service: telegram_bot.send_message
-    data:
-      target:
-      - '{{ states(''input_text.telegram_td'') }}'
-      - '{{ states(''input_text.telegram_ad'') }}'
-      message: Tom left Leeds Station 2 minutes ago
-- id: '1580903225785'
-  alias: 'Presence: Greeting'
+    - service: telegram_bot.send_message
+      data:
+        target:
+          - "{{ states('input_text.telegram_td') }}"
+          - "{{ states('input_text.telegram_ad') }}"
+        message: Tom left Leeds Station 2 minutes ago
+- id: "1580903225785"
+  alias: "Presence: Greeting"
   description: Play a greeting when Tom arrives home
   trigger:
-  - entity_id: person.tom
-    from: not_home
-    platform: state
-    to: home
+    - entity_id: person.tom
+      from: not_home
+      platform: state
+      to: home
   condition: []
   action:
-  - delay: 00:00:30
-  - data:
-      message: Hello Tom, {{ states('sensor.compliment') }}
-    entity_id: media_player.hallway_home
-    service: tts.google_translate_say
-- id: '1580921419430'
-  alias: 'Trains: Update Next LDS-SHY train'
-  description: Between the hours of 16:00 and 18:00 update the LDS-SHY train sensor
+    - delay: 00:00:30
+    - data:
+        message: Hello Tom, {{ states('sensor.compliment') }}
+      entity_id: media_player.hallway_home
+      service: tts.google_translate_say
+- id: "1580921419430"
+  alias: "Trains: Update Next LDS-SHY train"
+  description:
+    Between the hours of 16:00 and 18:00 update the LDS-SHY train sensor
     every 15 minutes
   trigger:
-  - hours: '16'
-    minutes: /2
-    platform: time_pattern
-  - hours: '17'
-    minutes: /15
-    platform: time_pattern
+    - hours: "16"
+      minutes: /2
+      platform: time_pattern
+    - hours: "17"
+      minutes: /15
+      platform: time_pattern
   condition: []
   action:
-  - entity_id: sensor.next_train_to_shy
-    service: homeassistant.update_entity
-- id: '1580923110072'
-  alias: 'Trains: Update Next SHY-LDS train'
+    - entity_id: sensor.next_train_to_shy
+      service: homeassistant.update_entity
+- id: "1580923110072"
+  alias: "Trains: Update Next SHY-LDS train"
   description: Between the hours of 07:00 and 09:00 update the SHY-LDS train sensor
   trigger:
-  - hours: '07'
-    minutes: /2
-    platform: time_pattern
-  - hours: 08
-    minutes: /15
-    platform: time_pattern
+    - hours: "07"
+      minutes: /2
+      platform: time_pattern
+    - hours: 08
+      minutes: /15
+      platform: time_pattern
   condition: []
   action:
-  - entity_id: sensor.next_train_to_lds
-    service: homeassistant.update_entity
-- id: '1580937267396'
-  alias: 'Kodi: Dim lights when playing'
-  description: ''
+    - entity_id: sensor.next_train_to_lds
+      service: homeassistant.update_entity
+- id: "1580937267396"
+  alias: "Kodi: Dim lights when playing"
+  description: ""
   trigger:
-  - entity_id: media_player.kodi
-    platform: state
-    to: playing
+    - entity_id: media_player.kodi
+      platform: state
+      to: playing
   condition:
-  - condition: state
-    entity_id: light.living_room
-    state: 'on'
+    - condition: state
+      entity_id: light.living_room
+      state: "on"
   action:
-  - data:
-      brightness: 5
-    entity_id: light.living_room_1, light.living_room_2
-    service: light.turn_on
-- id: '1580937548623'
-  alias: 'Kodi: Brighten lights when stop playing'
-  description: ''
+    - data:
+        brightness: 5
+      entity_id: light.living_room_1, light.living_room_2
+      service: light.turn_on
+- id: "1580937548623"
+  alias: "Kodi: Brighten lights when stop playing"
+  description: ""
   trigger:
-  - entity_id: media_player.kodi
-    from: playing
-    platform: state
-    to: paused
-  - entity_id: media_player.kodi
-    from: playing
-    platform: state
-    to: idle
-  - entity_id: media_player.kodi
-    from: paused
-    platform: state
-    to: idle
+    - entity_id: media_player.kodi
+      from: playing
+      platform: state
+      to: paused
+    - entity_id: media_player.kodi
+      from: playing
+      platform: state
+      to: idle
+    - entity_id: media_player.kodi
+      from: paused
+      platform: state
+      to: idle
   condition:
-  - condition: state
-    entity_id: light.living_room
-    state: 'on'
+    - condition: state
+      entity_id: light.living_room
+      state: "on"
   action:
-  - data:
-      brightness: 200
-    entity_id: light.living_room_1, light.living_room_2
-    service: light.turn_on
+    - data:
+        brightness: 200
+      entity_id: light.living_room_1, light.living_room_2
+      service: light.turn_on
   mode: single
-- id: '1581026602537'
-  alias: 'Dehumidifier: Turn on'
+- id: "1581026602537"
+  alias: "Dehumidifier: Turn on"
   description: Turn on when humidity above 80
   trigger:
-  - above: 80
-    entity_id: sensor.ensuite_humidity
-    platform: numeric_state
+    - above: 80
+      entity_id: sensor.ensuite_humidity
+      platform: numeric_state
   condition: []
   action:
-  - data: {}
-    entity_id: switch.dehumidifier
-    service: switch.turn_on
-- id: '1581026980222'
-  alias: 'Dehumidifier: Turn off'
+    - data: {}
+      entity_id: switch.dehumidifier
+      service: switch.turn_on
+- id: "1581026980222"
+  alias: "Dehumidifier: Turn off"
   description: Turn off when humidity below 70 for 5 minutes
   trigger:
-  - below: 70
-    entity_id: sensor.ensuite_humidity
-    for: 00:05:00
-    platform: numeric_state
+    - below: 70
+      entity_id: sensor.ensuite_humidity
+      for: 00:05:00
+      platform: numeric_state
   condition:
-  - condition: state
-    entity_id: switch.dehumidifier
-    state: 'on'
+    - condition: state
+      entity_id: switch.dehumidifier
+      state: "on"
   action:
-  - entity_id: switch.dehumidifier
-    service: switch.turn_off
-- id: '1581757504089'
+    - entity_id: switch.dehumidifier
+      service: switch.turn_off
+- id: "1581757504089"
   alias: Printer - Notify when complete
   description: Send a telegram and broadcast to Google Home when Printer is done
   trigger:
-  - entity_id: binary_sensor.printer_printing
-    from: 'on'
-    platform: state
-    to: 'off'
+    - entity_id: binary_sensor.printer_printing
+      from: "on"
+      platform: state
+      to: "off"
   condition:
-  - condition: numeric_state
-    entity_id: sensor.printer_job_percentage
-    above: '95'
-  - condition: state
-    entity_id: input_boolean.do_not_disturb
-    state: 'off'
+    - condition: numeric_state
+      entity_id: sensor.printer_job_percentage
+      above: "95"
+    - condition: state
+      entity_id: input_boolean.do_not_disturb
+      state: "off"
   action:
-  - data:
-      message: The 3D Printer has finished
-    service: notify.telegram_td
-  - data:
-      entity_id: media_player.living_room_display
-      message: The printer has finished
-    service: tts.google_translate_say
+    - data:
+        message: The 3D Printer has finished
+      service: notify.telegram_td
+    - data:
+        entity_id: media_player.living_room_display
+        message: The printer has finished
+      service: tts.google_translate_say
   mode: single
-- id: '1581776307274'
-  alias: 'Washer: Notify done (repeat)'
-  description: ''
+- id: "1581776307274"
+  alias: "Washer: Notify done (repeat)"
+  description: ""
   trigger:
-  - minutes: /15
-    platform: time_pattern
+    - minutes: /15
+      platform: time_pattern
   condition:
-  - condition: template
-    value_template: '{{ as_timestamp(now()) - as_timestamp(states.binary_sensor.washer.last_changed)
-      > 10*60 }}'
-  - condition: state
-    entity_id: input_boolean.do_not_disturb
-    state: 'off'
+    - condition: template
+      value_template:
+        "{{ as_timestamp(now()) - as_timestamp(states.binary_sensor.washer.last_changed)
+        > 10*60 }}"
+    - condition: state
+      entity_id: input_boolean.do_not_disturb
+      state: "off"
   action:
-  - data:
-      entity_id:
-      - media_player.living_room_display
-      - media_player.hallway_home
-      message: The washing machine finished {{ relative_time(states.binary_sensor.washer.last_changed)
-        }} ago, please hang out the washing
-    service: tts.google_translate_say
-  - data:
-      title: Washing Machine
-      message: 🧺 The washing machine finished {{ relative_time(states.binary_sensor.washer.last_changed)
-        }} ago, please hang out the washing
-      data:
-        actions:
-        - action: WASHER_EMPTIED
-          title: Washer emptied
-        group: Washing machine
-        channel: WashingMachine
-    service: notify.tom_and_anna
+    - data:
+        entity_id:
+          - media_player.living_room_display
+          - media_player.hallway_home
+        message:
+          The washing machine finished {{ relative_time(states.binary_sensor.washer.last_changed)
+          }} ago, please hang out the washing
+      service: tts.google_translate_say
+    - data:
+        title: Washing Machine
+        message:
+          🧺 The washing machine finished {{ relative_time(states.binary_sensor.washer.last_changed)
+          }} ago, please hang out the washing
+        data:
+          actions:
+            - action: WASHER_EMPTIED
+              title: Washer emptied
+          group: Washing machine
+          channel: WashingMachine
+      service: notify.tom_and_anna
   mode: single
-- id: '1581777155699'
-  alias: 'Washer: Machine finished'
-  description: ''
+- id: "1581777155699"
+  alias: "Washer: Machine finished"
+  description: ""
   trigger:
-  - entity_id: binary_sensor.washer
-    from: 'on'
-    platform: state
-    to: 'off'
+    - entity_id: binary_sensor.washer
+      from: "on"
+      platform: state
+      to: "off"
   condition: []
   action:
-  - entity_id: automation.washer_notify_done
-    service: automation.turn_on
-  - data:
-      entity_id:
-      - media_player.living_room_display
-      - media_player.bedroom_2_speaker
-      - media_player.hallway_home
-      message: The washing machine has finished.
-    service: tts.google_translate_say
-  - service: notify.tom_and_anna
-    data:
-      title: Washing Machine
-      message: 🧺 The washing machine has finished, please hang out the washing
+    - entity_id: automation.washer_notify_done
+      service: automation.turn_on
+    - data:
+        entity_id:
+          - media_player.living_room_display
+          - media_player.bedroom_2_speaker
+          - media_player.hallway_home
+        message: The washing machine has finished.
+      service: tts.google_translate_say
+    - service: notify.tom_and_anna
       data:
-        actions:
-        - action: WASHER_EMPTIED
-          title: Washer emptied
-        group: Washing machine
-        channel: WashingMachine
-        vibrationPattern: 10, 100, 500, 100, 500, 500
+        title: Washing Machine
+        message: 🧺 The washing machine has finished, please hang out the washing
+        data:
+          actions:
+            - action: WASHER_EMPTIED
+              title: Washer emptied
+          group: Washing machine
+          channel: WashingMachine
+          vibrationPattern: 10, 100, 500, 100, 500, 500
   mode: single
-- id: '1581777529393'
-  alias: 'Washer: Handle *washer_emptied* notification response'
-  description: ''
+- id: "1581777529393"
+  alias: "Washer: Handle *washer_emptied* notification response"
+  description: ""
   trigger:
-  - event_data:
-      command: /washer_emptied
-    event_type: telegram_callback
-    platform: event
-  - event_data:
-      command: /washer_emptied
-    event_type: telegram_command
-    platform: event
-  - platform: event
-    event_type: mobile_app_notification_action
-    event_data:
-      action: WASHER_EMPTIED
+    - event_data:
+        command: /washer_emptied
+      event_type: telegram_callback
+      platform: event
+    - event_data:
+        command: /washer_emptied
+      event_type: telegram_command
+      platform: event
+    - platform: event
+      event_type: mobile_app_notification_action
+      event_data:
+        action: WASHER_EMPTIED
   condition: []
   action:
-  - entity_id: automation.washer_notify_done
-    service: automation.turn_off
-  - data:
-      message: 'Great! The forecast for today is: {{ state_attr(''weather.millview'',
-        ''temperature'') }}°C, {{ states(''weather.millview'')}}. Wind speed is {{
-        state_attr(''weather.millview'', ''wind_speed'') }}km/h.'
-      target:
-      - '{{ states(''input_text.telegram_td'') }}'
-      - '{{ states(''input_text.telegram_ad'') }}'
-    service: telegram_bot.send_message
+    - entity_id: automation.washer_notify_done
+      service: automation.turn_off
+    - data:
+        message:
+          "Great! The forecast for today is: {{ state_attr('weather.millview',
+          'temperature') }}°C, {{ states('weather.millview')}}. Wind speed is {{
+          state_attr('weather.millview', 'wind_speed') }}km/h."
+        target:
+          - "{{ states('input_text.telegram_td') }}"
+          - "{{ states('input_text.telegram_ad') }}"
+      service: telegram_bot.send_message
   mode: single
-- id: '1582057191428'
+- id: "1582057191428"
   alias: Printer - Telegram command
   description: Respond to */print* Telegram command with stats about 3D printer
   trigger:
-  - event_data:
-      command: /printer
-    event_type: telegram_callback
-    platform: event
-  - event_data:
-      command: /printer
-    event_type: telegram_command
-    platform: event
+    - event_data:
+        command: /printer
+      event_type: telegram_callback
+      platform: event
+    - event_data:
+        command: /printer
+      event_type: telegram_command
+      platform: event
   condition: []
   action:
-  - data:
-      message: "Status: {{ states('sensor.printer_current_state') }}  \nElapsed: {%-\
-        \ if states('sensor.printer_time_elapsed') |int > 3600 -%} {{ states('sensor.printer_time_elapsed')\
-        \  | multiply(0.0002777778) | round(2)}}h {%- else %} {{ states('sensor.printer_time_elapsed')}}m\
-        \ {% endif %}\nRemaining: {%- if states('sensor.printer_time_remaining') |int\
-        \ > 3600 -%} {{ states('sensor.printer_time_remaining')  | multiply(0.0002777778)\
-        \ | round(2)}}h {%- else %} {{ states('sensor.printer_time_remaining')}}m\
-        \ {% endif %} \nProgress: {{ states('sensor.printer_job_percentage') }}%\n"
-    service: notify.telegram_td
-- id: '1582836882523'
+    - data:
+        message:
+          "Status: {{ states('sensor.printer_current_state') }}  \nElapsed: {%-\
+          \ if states('sensor.printer_time_elapsed') |int > 3600 -%} {{ states('sensor.printer_time_elapsed')\
+          \  | multiply(0.0002777778) | round(2)}}h {%- else %} {{ states('sensor.printer_time_elapsed')}}m\
+          \ {% endif %}\nRemaining: {%- if states('sensor.printer_time_remaining') |int\
+          \ > 3600 -%} {{ states('sensor.printer_time_remaining')  | multiply(0.0002777778)\
+          \ | round(2)}}h {%- else %} {{ states('sensor.printer_time_remaining')}}m\
+          \ {% endif %} \nProgress: {{ states('sensor.printer_job_percentage') }}%\n"
+      service: notify.telegram_td
+- id: "1582836882523"
   alias: Blanket - turn off TD after 15m
   description: Turn off Toms blanket 15m after it is turned on
   trigger:
-  - entity_id: switch.blanket_tom
-    for: 00:15:00
-    from: 'off'
-    platform: state
-    to: 'on'
+    - entity_id: switch.blanket_tom
+      for: 00:15:00
+      from: "off"
+      platform: state
+      to: "on"
   condition: []
   action:
-  - data: {}
-    entity_id: switch.blanket_tom
-    service: switch.turn_off
+    - data: {}
+      entity_id: switch.blanket_tom
+      service: switch.turn_off
   mode: single
-- id: '1583963701174'
+- id: "1583963701174"
   alias: Telegram - cam1
-  description: ''
+  description: ""
   trigger:
-  - event_data:
-      command: /cam1
-    event_type: telegram_callback
-    platform: event
-  - event_data:
-      command: /cam1
-    event_type: telegram_command
-    platform: event
+    - event_data:
+        command: /cam1
+      event_type: telegram_callback
+      platform: event
+    - event_data:
+        command: /cam1
+      event_type: telegram_command
+      platform: event
   condition: []
   action:
-  - data:
-      entity_id: camera.esp32cam_one
-      filename: /tmp/cam1.jpg
-    service: camera.snapshot
-  - delay: '5'
-  - data:
-      data:
-        photo:
-          caption: Camera 1
-          url: /tmp/cam1.jpg
-      message: Camera 1
-    service: notify.telegram_td
-- id: '1584977470639'
+    - data:
+        entity_id: camera.esp32cam_one
+        filename: /tmp/cam1.jpg
+      service: camera.snapshot
+    - delay: "5"
+    - data:
+        data:
+          photo:
+            caption: Camera 1
+            url: /tmp/cam1.jpg
+        message: Camera 1
+      service: notify.telegram_td
+- id: "1584977470639"
   alias: Telegram - Daily Image
   description: Every day send the latest image from a chosen RSS feed
   trigger:
-  - at: '14:00:00'
-    platform: time
+    - at: "14:00:00"
+      platform: time
   condition: []
   action:
-  - data: {}
-    entity_id: sensor.nasadaily
-    service: homeassistant.update_entity
-  - delay:
-      hours: 0
-      minutes: 0
-      seconds: 10
-      milliseconds: 0
-  - data:
-      data:
-        photo:
-          caption: '{{ state_attr(''sensor.nasadaily'',''entries'')[0].title }}'
-          url: '{{ (state_attr(''sensor.nasadaily'',''entries'')[0].links | selectattr(''rel'',
-            ''eq'',''enclosure'') | list)[0].href }}'
-      message: ''
-      title: NASA Daily
-    service: notify.telegram_td
-  - delay:
-      hours: 0
-      minutes: 0
-      seconds: 3
-      milliseconds: 0
-  - data:
-      title: ''
-      message: '{{ state_attr(''sensor.nasadaily'',''entries'')[0].summary }}'
-    service: notify.telegram_td
+    - data: {}
+      entity_id: sensor.nasadaily
+      service: homeassistant.update_entity
+    - delay:
+        hours: 0
+        minutes: 0
+        seconds: 10
+        milliseconds: 0
+    - data:
+        data:
+          photo:
+            caption: "{{ state_attr('sensor.nasadaily','entries')[0].title }}"
+            url:
+              "{{ (state_attr('sensor.nasadaily','entries')[0].links | selectattr('rel',
+              'eq','enclosure') | list)[0].href }}"
+        message: ""
+        title: NASA Daily
+      service: notify.telegram_td
+    - delay:
+        hours: 0
+        minutes: 0
+        seconds: 3
+        milliseconds: 0
+    - data:
+        title: ""
+        message: "{{ state_attr('sensor.nasadaily','entries')[0].summary }}"
+      service: notify.telegram_td
   mode: single
-- id: '1586469687141'
-  alias: 'Globe: turn off after 30m'
-  description: ''
+- id: "1586469687141"
+  alias: "Globe: turn off after 30m"
+  description: ""
   trigger:
-  - entity_id: switch.sonoff_1000d4baef_1
-    for: 00:30:00
-    from: 'off'
-    platform: state
-    to: 'on'
+    - entity_id: switch.sonoff_1000d4baef_1
+      for: 00:30:00
+      from: "off"
+      platform: state
+      to: "on"
   condition: []
   action:
-  - data: {}
-    entity_id: switch.sonoff_1000d4baef_1
-    service: switch.turn_off
-- id: '1588449990654'
-  alias: 'Garage: Notification (repeat)'
+    - data: {}
+      entity_id: switch.sonoff_1000d4baef_1
+      service: switch.turn_off
+- id: "1588449990654"
+  alias: "Garage: Notification (repeat)"
   description: At 15 min intervals play/send a reminder notification
   trigger:
-  - type: opened
-    platform: device
-    device_id: 95b859a2f9f711eaa43c6ba5d5c98dd1
-    entity_id: binary_sensor.garage_door
-    domain: binary_sensor
-    for:
-      hours: 0
-      minutes: 15
-      seconds: 0
-      milliseconds: 0
+    - type: opened
+      platform: device
+      device_id: 95b859a2f9f711eaa43c6ba5d5c98dd1
+      entity_id: binary_sensor.garage_door
+      domain: binary_sensor
+      for:
+        hours: 0
+        minutes: 15
+        seconds: 0
+        milliseconds: 0
   condition:
-  - condition: state
-    entity_id: input_boolean.do_not_disturb
-    state: 'off'
+    - condition: state
+      entity_id: input_boolean.do_not_disturb
+      state: "off"
   action:
-  - repeat:
-      sequence:
-      - service: tts.google_translate_say
+    - repeat:
+        sequence:
+          - service: tts.google_translate_say
+            data:
+              entity_id:
+                - media_player.living_room_display
+                - media_player.hallway_home
+              message:
+                The garage door was opened {{ relative_time(states.binary_sensor.garage_door.last_changed)
+                }} ago.
+          - service: notify.tom_and_anna
+            data:
+              title: Garage door
+              message:
+                The garage door was opened {{ relative_time(states.binary_sensor.garage_door.last_changed)
+                }} ago
+              data:
+                group: Garage
+                channel: Garage
+          - delay:
+              minutes: 15
+        until:
+          - condition: state
+            entity_id: binary_sensor.garage_door
+            state: "off"
+  mode: single
+- id: "1588450174191"
+  alias: "Garage: Open"
+  description: ""
+  trigger:
+    - type: opened
+      platform: device
+      device_id: 95b859a2f9f711eaa43c6ba5d5c98dd1
+      entity_id: binary_sensor.garage_door
+      domain: binary_sensor
+  condition: []
+  action:
+    - data:
+        title: Garage door
+        message: The garage door was opened
         data:
-          entity_id:
+          group: Garage
+          channel: Garage
+          vibrationPattern: 10, 100, 500, 100, 500, 500
+      service: notify.mobile_app_in2013
+    - data:
+        entity_id:
           - media_player.living_room_display
           - media_player.hallway_home
-          message: The garage door was opened {{ relative_time(states.binary_sensor.garage_door.last_changed)
-            }} ago.
-      - service: notify.tom_and_anna
+        message: The garage door was opened
+      service: tts.google_translate_say
+  mode: single
+- id: "1588450370943"
+  alias: "Garage: Closed"
+  description: ""
+  trigger:
+    - type: not_opened
+      platform: device
+      device_id: 95b859a2f9f711eaa43c6ba5d5c98dd1
+      entity_id: binary_sensor.garage_door
+      domain: binary_sensor
+  condition: []
+  action:
+    - service: notify.tom_and_anna
+      data:
+        title: Garage door
+        message: The garage door was closed
         data:
-          title: Garage door
-          message: The garage door was opened {{ relative_time(states.binary_sensor.garage_door.last_changed)
-            }} ago
-          data:
-            group: Garage
-            channel: Garage
-      - delay:
-          minutes: 15
-      until:
-      - condition: state
-        entity_id: binary_sensor.garage_door
-        state: 'off'
+          group: Garage
+          channel: Garage
+          vibrationPattern: 10, 100, 500, 100, 500, 500
+    - data:
+        entity_id:
+          - media_player.living_room_display
+          - media_player.hallway_home
+        message: The garage door was closed
+      service: tts.google_translate_say
   mode: single
-- id: '1588450174191'
-  alias: 'Garage: Open'
-  description: ''
+- id: "1589231983089"
+  alias: "Kodi: Turn off power after shutdown"
+  description: ""
   trigger:
-  - type: opened
-    platform: device
-    device_id: 95b859a2f9f711eaa43c6ba5d5c98dd1
-    entity_id: binary_sensor.garage_door
-    domain: binary_sensor
+    - entity_id: media_player.kodi
+      platform: state
+      to: "off"
+      for: 00:00:30
   condition: []
   action:
-  - data:
-      title: Garage door
-      message: The garage door was opened
-      data:
-        group: Garage
-        channel: Garage
-        vibrationPattern: 10, 100, 500, 100, 500, 500
-    service: notify.mobile_app_in2013
-  - data:
-      entity_id:
-      - media_player.living_room_display
-      - media_player.hallway_home
-      message: The garage door was opened
-    service: tts.google_translate_say
+    - delay: 00:00:15
+    - entity_id: switch.kodi
+      service: switch.turn_off
   mode: single
-- id: '1588450370943'
-  alias: 'Garage: Closed'
-  description: ''
+- id: "1604160427345"
+  alias: "Lights: Turn on boys' light when motion"
+  description: ""
   trigger:
-  - type: not_opened
-    platform: device
-    device_id: 95b859a2f9f711eaa43c6ba5d5c98dd1
-    entity_id: binary_sensor.garage_door
-    domain: binary_sensor
-  condition: []
-  action:
-  - service: notify.tom_and_anna
-    data:
-      title: Garage door
-      message: The garage door was closed
-      data:
-        group: Garage
-        channel: Garage
-        vibrationPattern: 10, 100, 500, 100, 500, 500
-  - data:
-      entity_id:
-      - media_player.living_room_display
-      - media_player.hallway_home
-      message: The garage door was closed
-    service: tts.google_translate_say
-  mode: single
-- id: '1589231983089'
-  alias: 'Kodi: Turn off power after shutdown'
-  description: ''
-  trigger:
-  - entity_id: media_player.kodi
-    platform: state
-    to: 'off'
-    for: 00:00:30
-  condition: []
-  action:
-  - delay: 00:00:15
-  - entity_id: switch.kodi
-    service: switch.turn_off
-  mode: single
-- id: '1604160427345'
-  alias: 'Lights: Turn on boys'' light when motion'
-  description: ''
-  trigger:
-  - type: motion
-    platform: device
-    device_id: b5a3bd7d5d4541f7962db7fbdce9a670
-    entity_id: binary_sensor.seb_d1_motion
-    domain: binary_sensor
-  - type: motion
-    platform: device
-    device_id: e8cd43fe0f2842bca71d1ee8b5adc5da
-    entity_id: binary_sensor.reu_d1_motion
-    domain: binary_sensor
+    - type: motion
+      platform: device
+      device_id: b5a3bd7d5d4541f7962db7fbdce9a670
+      entity_id: binary_sensor.seb_d1_motion
+      domain: binary_sensor
+    - type: motion
+      platform: device
+      device_id: e8cd43fe0f2842bca71d1ee8b5adc5da
+      entity_id: binary_sensor.reu_d1_motion
+      domain: binary_sensor
   condition:
-  - condition: or
-    conditions:
-    - condition: time
-      after: 07:30
-      before: 08:30
-    - condition: time
-      after: '17:00'
-      before: '20:00'
+    - condition: or
+      conditions:
+        - condition: time
+          after: 07:30
+          before: 08:30
+        - condition: time
+          after: "17:00"
+          before: "20:00"
   action:
-  - service: light.turn_on
-    data:
-      entity_id: '{{ light_map[trigger.entity_id] }}'
-      color_name: wheat
+    - service: light.turn_on
+      data:
+        entity_id: "{{ light_map[trigger.entity_id] }}"
+        color_name: wheat
   variables:
     light_map:
       binary_sensor.seb_d1_motion:
-      - light.sebs_ceiling
-      - light.sebs_lamp
+        - light.sebs_ceiling
+        - light.sebs_lamp
       binary_sensor.reu_d1_motion: light.reubens_ceiling
   mode: single
-- id: '1590597141876'
-  alias: 'Lights: Turn off boys'' light when no motion'
-  description: ''
+- id: "1590597141876"
+  alias: "Lights: Turn off boys' light when no motion"
+  description: ""
   trigger:
-  - entity_id: binary_sensor.seb_d1_motion
-    for: 00:10:00
-    from: 'on'
-    platform: state
-    to: 'off'
-  - entity_id: binary_sensor.reu_d1_motion
-    for: 00:10:00
-    from: 'on'
-    platform: state
-    to: 'off'
+    - entity_id: binary_sensor.seb_d1_motion
+      for: 00:10:00
+      from: "on"
+      platform: state
+      to: "off"
+    - entity_id: binary_sensor.reu_d1_motion
+      for: 00:10:00
+      from: "on"
+      platform: state
+      to: "off"
   condition:
-  - after: 07:30
-    condition: time
-    before: '19:30'
+    - after: 07:30
+      condition: time
+      before: "19:30"
   action:
-  - service: light.turn_off
-    data:
-      entity_id: '{{ light_map[trigger.entity_id] }}'
+    - service: light.turn_off
+      data:
+        entity_id: "{{ light_map[trigger.entity_id] }}"
   variables:
     light_map:
       binary_sensor.seb_d1_motion:
-      - light.sebs_ceiling
-      - light.sebs_lamp
+        - light.sebs_ceiling
+        - light.sebs_lamp
       binary_sensor.reu_d1_motion: light.reubens_ceiling
   mode: single
-- id: '1592899929119'
-  alias: 'Lights: Turn off the main bedroom lights at 8am'
-  description: ''
+- id: "1592899929119"
+  alias: "Lights: Turn off the main bedroom lights at 8am"
+  description: ""
   trigger:
-  - at: 08:00:00
-    platform: time
+    - at: 08:00:00
+      platform: time
   condition: []
   action:
-  - type: turn_off
-    device_id: dd0fc2584dec5826995ff2cd2247533c
-    entity_id: light.main_bedroom_ceiling
-    domain: light
-  - type: turn_off
-    device_id: b9c88a37811e285dc2b594f847e29cf1
-    entity_id: light.main_bedroom_bloom
-    domain: light
-  - type: turn_off
-    device_id: 61f89eb89fac9724606bb7e0ffc52c9b
-    entity_id: light.reubens_ceiling
-    domain: light
-  - type: turn_off
-    device_id: e04b748fc61f7ca1d9a4a202ddcefe7a
-    entity_id: light.rname
-    domain: light
-  - type: turn_off
-    device_id: a7042a8ceb408ac6488c43cad4549a82
-    entity_id: light.sebs_ceiling
-    domain: light
-  - type: turn_off
-    device_id: 4fcff377266e9e7d5f9b7098401120b6
-    entity_id: light.sebs_lamp
-    domain: light
-  - type: turn_off
-    device_id: 860920bf5b3374e4ea3344b553666bcf
-    entity_id: light.main_bedroom_ceiling
-    domain: light
+    - type: turn_off
+      device_id: dd0fc2584dec5826995ff2cd2247533c
+      entity_id: light.main_bedroom_ceiling
+      domain: light
+    - type: turn_off
+      device_id: b9c88a37811e285dc2b594f847e29cf1
+      entity_id: light.main_bedroom_bloom
+      domain: light
+    - type: turn_off
+      device_id: 61f89eb89fac9724606bb7e0ffc52c9b
+      entity_id: light.reubens_ceiling
+      domain: light
+    - type: turn_off
+      device_id: e04b748fc61f7ca1d9a4a202ddcefe7a
+      entity_id: light.rname
+      domain: light
+    - type: turn_off
+      device_id: a7042a8ceb408ac6488c43cad4549a82
+      entity_id: light.sebs_ceiling
+      domain: light
+    - type: turn_off
+      device_id: 4fcff377266e9e7d5f9b7098401120b6
+      entity_id: light.sebs_lamp
+      domain: light
+    - type: turn_off
+      device_id: 860920bf5b3374e4ea3344b553666bcf
+      entity_id: light.main_bedroom_ceiling
+      domain: light
   mode: single
-- id: '1600196508217'
+- id: "1600196508217"
   alias: Daily camera photo - Nexus
-  description: ''
+  description: ""
   trigger:
-  - at: '11:00:00'
-    platform: time
+    - at: "11:00:00"
+      platform: time
   condition: []
   action:
-  - data:
-      entity_id: camera.ip_webcam
-      filename: /config/www/cams/ipcam_{{ states('sensor.date') }}.jpg
-    service: camera.snapshot
+    - data:
+        entity_id: camera.ip_webcam
+        filename: /config/www/cams/ipcam_{{ states('sensor.date') }}.jpg
+      service: camera.snapshot
   mode: single
-- id: '1600335652412'
+- id: "1600335652412"
   alias: ESP32 Cam timelapse
-  description: ''
+  description: ""
   trigger:
-  - entity_id: switch.esp32cam_status
-    from: 'off'
-    platform: state
-    to: 'on'
+    - entity_id: switch.esp32cam_status
+      from: "off"
+      platform: state
+      to: "on"
   condition:
-  - after: sunrise
-    before: sunset
-    condition: sun
+    - after: sunrise
+      before: sunset
+      condition: sun
   action:
-  - data:
-      value: '{{ states(''sensor.date'') }}_{{ states(''sensor.time'') }}'
-    entity_id: input_text.image_timestamp
-    service: input_text.set_value
-  - data:
+    - data:
+        value: "{{ states('sensor.date') }}_{{ states('sensor.time') }}"
+      entity_id: input_text.image_timestamp
+      service: input_text.set_value
+    - data:
+        entity_id: camera.esp32cam_one
+        filename:
+          /config/www/cams/esp32cam_{{ states('input_text.image_timestamp')
+          }}.jpg
       entity_id: camera.esp32cam_one
-      filename: /config/www/cams/esp32cam_{{ states('input_text.image_timestamp')
-        }}.jpg
-    entity_id: camera.esp32cam_one
-    service: camera.snapshot
-  - delay: 00:00:02
-  - data:
-      entity_id: camera.esp32cam_lastimage
-      file_path: /config/www/cams/esp32cam_{{ states('input_text.image_timestamp')
-        }}.jpg
-    service: local_file.update_file_path
+      service: camera.snapshot
+    - delay: 00:00:02
+    - data:
+        entity_id: camera.esp32cam_lastimage
+        file_path:
+          /config/www/cams/esp32cam_{{ states('input_text.image_timestamp')
+          }}.jpg
+      service: local_file.update_file_path
   mode: single
 - id: handle_tag_scan
-  alias: 'NFC: Media Player'
+  alias: "NFC: Media Player"
   trigger:
-  - platform: event
-    event_type: tag_scanned
+    - platform: event
+      event_type: tag_scanned
   condition:
-  - condition: template
-    value_template: '{{ trigger.event.data.tag_id in tags }}'
-  - condition: template
-    value_template: '{{ trigger.event.data.device_id in media_players }}'
-  - condition: template
-    value_template: '{{ states(''sensor.time'') < states(''input_datetime.boys_bedtime'')
-      }}'
+    - condition: template
+      value_template: "{{ trigger.event.data.tag_id in tags }}"
+    - condition: template
+      value_template: "{{ trigger.event.data.device_id in media_players }}"
+    - condition: template
+      value_template:
+        "{{ states('sensor.time') < states('input_datetime.boys_bedtime')
+        }}"
   action:
-  - variables:
-      media_player_entity_id: '{{ media_players[trigger.event.data.device_id] }}'
-      media_content_id: '{{ tags[trigger.event.data.tag_id].media_content_id }}'
-      media_content_type: '{{ tags[trigger.event.data.tag_id].media_content_type }}'
-  - service: media_player.play_media
-    data:
-      entity_id: '{{ media_player_entity_id }}'
-      media_content_id: '{{ media_content_id }}'
-      media_content_type: '{{ media_content_type }}'
-  - delay: 5
+    - variables:
+        media_player_entity_id: "{{ media_players[trigger.event.data.device_id] }}"
+        media_content_id: "{{ tags[trigger.event.data.tag_id].media_content_id }}"
+        media_content_type: "{{ tags[trigger.event.data.tag_id].media_content_type }}"
+    - service: media_player.play_media
+      data:
+        entity_id: "{{ media_player_entity_id }}"
+        media_content_id: "{{ media_content_id }}"
+        media_content_type: "{{ media_content_type }}"
+    - delay: 5
   mode: single
   variables:
     media_players:
@@ -833,7 +850,7 @@
         media_content_id: https://tdroza.duckdns.org/local/bomb.mp3
         media_content_type: music
         title: Fact Bomb!
-      04-5C-6E-AA-ED-6C-80:
+      dd480ab0-5b4d-426e-8956-5c7736589bed:
         media_content_id: https://firebasestorage.googleapis.com/v0/b/storytime-7c623.appspot.com/o/stories%2F4Z0FQvDMnNyIOtJeBa93%2Frecordings%2FHzFp8GQRWwFEbkB4hSLw%2Frecordings%2Faudio.mp3?alt=media&token=b107fb98-e8af-4d60-908c-3be902cc76f6
         media_content_type: music
         title: Star Wars
@@ -849,6 +866,7 @@
       b8777c03-86f1-48cd-a844-d14bb6d0a59e:
         media_content_id: https://firebasestorage.googleapis.com/v0/b/storytime-7c623.appspot.com/o/stories%2F6WI5vrqc6snoccsxsUV2%2Frecordings%2FTdQPRZxJpMG8w6xA3asa%2Frecordings%2Faudio.mp3?alt=media&token=ee3e9093-f4b5-44c6-8571-f362cc2a884c
         media_content_type: music
+        titel: The Bear, The Piano, The Dog and the Fiddle
       B9-17-08-8E:
         media_content_id: https://chtbl.com/track/43774/traffic.megaphone.fm/SONY2917056284.mp3
         media_content_type: music
@@ -858,31 +876,31 @@
       04-0F-81-FA-90-49-81:
         media_content_id: https://firebasestorage.googleapis.com/v0/b/storytime-7c623.appspot.com/o/stories%2FGH4ZnxM7M8oxbVZEmV4T%2Frecordings%2FOZljR1hXy7orkCBrha9f%2Frecordings%2Faudio.mp3?alt=media&token=9d6f367f-4521-4e0b-9b7d-66500f2ef836
         media_content_type: music
-      04-1B-81-FA-90-49-81:
+      264fe312-b244-4631-8cc0-21e03a34c84c:
         media_content_id: https://firebasestorage.googleapis.com/v0/b/storytime-7c623.appspot.com/o/stories%2FZTe10kJMfXgNaiSCsStC%2Frecordings%2FKksLQS6LUXWLrBbtDusZ%2Frecordings%2Faudio.mp3?alt=media&token=46232d75-e430-4b11-a532-4185a96a34dd
         media_content_type: music
         title: What the Ladybird Heard
-      04-27-81-FA-90-49-81:
+      ce39e080-b2a6-41df-8118-bb13852196c3:
         media_content_id: https://firebasestorage.googleapis.com/v0/b/storytime-7c623.appspot.com/o/stories%2F0CSxJ7wAn8p7s6adeqAx%2Frecordings%2F82kgp14YF6iJtU77IaSd%2Frecordings%2Faudio.mp3?alt=media&token=68bdd707-2f64-47a6-9887-8b86dd6b73d4
         media_content_type: music
         title: Tiddler
-      04-21-81-FA-90-49-81:
+      e564ca77-ed6a-4de1-8f43-80406a252611:
         media_content_id: https://firebasestorage.googleapis.com/v0/b/storytime-7c623.appspot.com/o/stories%2FvGG2EXQ9sp2HOS9f74UB%2Frecordings%2FfKgkUvjMMQZYIM5XT2Wd%2Frecordings%2Faudio.mp3?alt=media&token=096ef499-c35d-44fa-a9eb-2c9ca5cb9ec0
         media_content_type: music
         title: Lady of Shallot
-      04-7E-6E-62-90-6B-80:
+      ef01de9a-495d-4c06-b0df-884b58f1da27:
         media_content_id: https://firebasestorage.googleapis.com/v0/b/storytime-7c623.appspot.com/o/stories%2FEfVUE7f9cD3ggPOJG3WG%2Frecordings%2F5YLWhtixOsEX4ju064js%2Frecordings%2Faudio.mp3?alt=media&token=60cd78ce-af61-4982-86b7-604a6ddf7985
         media_content_type: music
         title: Zog and the Flying Doctors
-      04-15-81-FA-90-49-81:
+      0f879ebc-f9be-48b9-baf3-2f9511f0b6c3:
         media_content_id: https://firebasestorage.googleapis.com/v0/b/storytime-7c623.appspot.com/o/stories%2FQkcZLdHAK2DgO8L8FDgG%2Frecordings%2FDGc9pUmUPbzHwhAvImCc%2Frecordings%2Faudio.mp3?alt=media&token=2e7a5558-c610-44d8-b03f-534e0b1f2a24
         media_content_type: music
         title: Monkey Puzzle
-      04-82-6E-62-90-6B-80:
+      7a45dacb-6a7b-450d-a445-1bc180e3b7d2:
         media_content_id: https://firebasestorage.googleapis.com/v0/b/storytime-7c623.appspot.com/o/stories%2F6aOQWFLcP8N40QSpBiVL%2Frecordings%2Frxu1QkpPKd9wYwX2094m%2Frecordings%2Faudio.mp3?alt=media&token=964f2092-cd0d-4f29-a0f9-cbd1cc3670a3
         media_content_type: music
         title: The Snail and the Whale
-      04-64-7F-62-EC-6B-81:
+      937e676e-9590-4ae2-87ed-e484525deffa:
         media_content_id: https://firebasestorage.googleapis.com/v0/b/storytime-7c623.appspot.com/o/stories%2FWAmgOrvRTRaoApufBwFJ%2Frecordings%2F8OwDv4WuCySO2j6tBAkd%2Frecordings%2Faudio.mp3?alt=media&token=b34ac6ea-9052-4a30-9f86-788f7a39e438
         media_content_type: music
         title: Peace at last
@@ -892,276 +910,281 @@
       04-7A-6E-62-90-6B-80:
         media_content_id: https://firebasestorage.googleapis.com/v0/b/storytime-7c623.appspot.com/o/stories%2F6WD7fy4W11bVKV2Gd8o9%2Frecordings%2FCToJUbTb6lN9gitTkCNd%2Frecordings%2Faudio.mp3?alt=media&token=065cf49f-b8bc-4ba3-9cb4-304d2ebd64ff
         media_content_type: music
-      04-76-6E-62-90-6B-80:
+      30eae54d-5266-4873-b9c9-c414a697431f:
         media_content_id: https://firebasestorage.googleapis.com/v0/b/storytime-7c623.appspot.com/o/stories%2Fo2FeQfUcl5rRgzEkitho%2Frecordings%2F6OgP7oT0UzA6O0OGZUYB%2Frecordings%2Faudio.mp3?alt=media&token=98a53f04-c488-408f-bf77-49c20fea70c8
         media_content_type: music
         title: Aussie Hokey Pokey
-      04-11-6F-AA-ED-6C-80:
+      3b3ff03f-2c30-44af-ad5f-4cbc383cfaf3:
         media_content_id: https://firebasestorage.googleapis.com/v0/b/storytime-7c623.appspot.com/o/stories%2Fr6uZZnI0groNWT5WZ7Q6%2Frecordings%2FtbH0tAPWPRNQwqERZPDV%2Frecordings%2Faudio.mp3?alt=media&token=59870357-8fa9-42ec-b3f2-427bd507aa59
         media_content_type: music
         title: The Very Hungry Bear
-      04-21-6F-AA-ED-6C-80:
+      38625930-d920-4390-b295-342e0f8d4981:
         media_content_id: https://firebasestorage.googleapis.com/v0/b/storytime-7c623.appspot.com/o/stories%2FxYIn8pzCyYeS10gdtQu2%2Frecordings%2FxcvKHkKYr9CAE4x92SNO%2Frecordings%2Faudio.mp3?alt=media&token=f76abe00-e319-442f-9005-a369c8beb3e1
         media_content_type: music
         title: Sugarlump & The Unicorn
-      04-15-6F-AA-ED-6C-80:
+      7724c172-0caf-4167-ac08-62214c32ce83:
         media_content_id: https://firebasestorage.googleapis.com/v0/b/storytime-7c623.appspot.com/o/stories%2FxSY7s30WsI7vekKXEKDb%2Frecordings%2FfdxzoTGrxO4ZkgCiMiVy%2Frecordings%2Faudio.mp3?alt=media&token=8d1fe17f-d124-4ab8-a553-5e5941b754ec
         media_content_type: music
         title: The Cave
-      04-19-6F-AA-ED-6C-80:
+      ef652d32-50b2-48e6-aed5-2315ea416fd7:
         media_content_id: https://firebasestorage.googleapis.com/v0/b/storytime-7c623.appspot.com/o/stories%2FtVyUc0pXJ2pyGYt9HXor%2Frecordings%2FDa0xO76KGBbbtC4TsrUG%2Frecordings%2Faudio.mp3?alt=media&token=ff9cc69d-ef39-4530-a29f-c681144f2c77
         media_content_type: music
         title: The Paper Dolls
-      04-1D-6F-AA-ED-6C-80:
+      75a5583b-7154-4b16-b0fd-13ec454f6e7b:
         media_content_id: https://firebasestorage.googleapis.com/v0/b/storytime-7c623.appspot.com/o/stories%2FiZ9ToRDmRaD9LjLDXNPf%2Frecordings%2F2CjY7QGcCibMzgbcSJP3%2Frecordings%2Faudio.mp3?alt=media&token=73b881c5-6ca7-4881-82f5-eec3169e2f3a
         media_content_type: music
         title: Snow Bears
-      04-6C-6E-AA-ED-6C-80:
+      83257e19-fda5-46b5-8156-75bcd4a520dc:
         media_content_id: https://firebasestorage.googleapis.com/v0/b/storytime-7c623.appspot.com/o/stories%2FqIPowPEK0tCVemQmpfwH%2Frecordings%2F3rwPo84uEi87pVZvA2cM%2Frecordings%2Faudio.mp3?alt=media&token=99739671-2b12-494a-bdf1-552678328217
         media_content_type: music
         title: Room on the broom
-      04-83-6F-AA-ED-6C-80:
+      6776354b-5d8f-4688-bb9a-de311bba9a2c:
         media_content_id: https://firebasestorage.googleapis.com/v0/b/storytime-7c623.appspot.com/o/stories%2F1kMvM6x73qpu5kTE1DBh%2Frecordings%2FIo2EfTtgUOuNZrFu8dXg%2Frecordings%2Faudio.mp3?alt=media&token=45db828b-657b-4f81-a586-bbc4b4dd85ec
         media_content_type: music
         title: Bringing down the moon
-      04-7F-6F-AA-ED-6C-80:
+      41ee608d-f633-4a10-b5be-df7f4cb5ee3f:
         media_content_id: https://firebasestorage.googleapis.com/v0/b/storytime-7c623.appspot.com/o/stories%2F9FurTGgHRm9ycvFjix6X%2Frecordings%2FIBfJxanebnWT8CZPRYTI%2Frecordings%2Faudio.mp3?alt=media&token=2af233f9-0bc9-46c1-af63-99017560556c
         media_content_type: music
         title: The Gruffalo
-      04-77-6F-AA-ED-6C-80:
+      f671b9cc-d462-4428-b3fd-e77dcd5480ed:
         media_content_id: https://firebasestorage.googleapis.com/v0/b/storytime-7c623.appspot.com/o/stories%2FXSe2PPsM5cZ1RGDyQQDg%2Frecordings%2Fb0oXZw8itwmUIw11vmRZ%2Frecordings%2Faudio.mp3?alt=media&token=9f0eb901-8a09-491a-ba2b-4b8a05587d1f
         media_content_type: music
         title: Alien Tea on Planet Zum-Zee
-      04-73-6F-AA-ED-6C-80:
+      4a81d599-ebe0-48b1-a0aa-486bdfb0f2d5:
         media_content_id: https://firebasestorage.googleapis.com/v0/b/storytime-7c623.appspot.com/o/stories%2FJmpqpkXqfCBjrTm5S67I%2Frecordings%2FbuNFPC9gGbIIkZQokx1g%2Frecordings%2Faudio.mp3?alt=media&token=3215cdfe-9add-464d-8f92-e69b7737bedc
         media_content_type: music
         title: Dinky Donkey
-      04-6C-7F-62-EC-6B-81:
+      1a91e48c-7757-4e8c-8cb2-988635c68fdc:
         media_content_id: https://firebasestorage.googleapis.com/v0/b/storytime-7c623.appspot.com/o/stories%2F68Dfu5tTDPPeCXmUWivB%2Frecordings%2FGz1udqevXgaGvPoonUq4%2Frecordings%2Faudio.mp3?alt=media&token=c4a3ccff-07e5-4dca-8f5b-7db9bb08797b
         media_content_type: music
         title: Monty and Milli
-- id: '1602617983905'
-  alias: 'Zoom: Notify start/end call'
-  description: ''
+- id: "1602617983905"
+  alias: "Zoom: Notify start/end call"
+  description: ""
   trigger:
-  - platform: state
-    entity_id:
-    - binary_sensor.zoom_tomBJSS
+    - platform: state
+      entity_id:
+        - binary_sensor.zoom_tomBJSS
   condition: []
   action:
-  - variables:
-      zoom_status: empty
-  - choose:
-    - conditions:
-      - condition: state
-        entity_id: binary_sensor.zoom_tomBJSS
-        state: 'on'
-      sequence:
-      - service: tts.google_translate_say
-        data:
-          message: Tom has started a zoom meeting
-        entity_id: media_player.bedroom_2_speaker
-    - conditions:
-      - condition: state
-        entity_id: binary_sensor.zoom_tomBJSS
-        state: 'off'
-      sequence:
-      - service: tts.google_translate_say
-        data:
-          message: Tom has ended a zoom meeting
-        entity_id: media_player.bedroom_2_speaker
-  - delay:
-      seconds: 10
+    - variables:
+        zoom_status: empty
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: binary_sensor.zoom_tomBJSS
+              state: "on"
+          sequence:
+            - service: tts.google_translate_say
+              data:
+                message: Tom has started a zoom meeting
+              entity_id: media_player.bedroom_2_speaker
+        - conditions:
+            - condition: state
+              entity_id: binary_sensor.zoom_tomBJSS
+              state: "off"
+          sequence:
+            - service: tts.google_translate_say
+              data:
+                message: Tom has ended a zoom meeting
+              entity_id: media_player.bedroom_2_speaker
+    - delay:
+        seconds: 10
   mode: single
-- id: '1603313648727'
+- id: "1603313648727"
   alias: Bedtime - phone charging
   description: Turn off light, turn on lamp, when phone starts charging
   trigger:
-  - type: plugged_in
-    platform: device
-    device_id: cf4ceb29a2e7464abe92c738f5983356
-    entity_id: binary_sensor.in2013_is_charging
-    domain: binary_sensor
+    - type: plugged_in
+      platform: device
+      device_id: cf4ceb29a2e7464abe92c738f5983356
+      entity_id: binary_sensor.in2013_is_charging
+      domain: binary_sensor
   condition:
-  - condition: time
-    after: '21:30'
+    - condition: time
+      after: "21:30"
   action:
-  - type: turn_off
-    device_id: 860920bf5b3374e4ea3344b553666bcf
-    entity_id: light.main_bedroom_ceiling
-    domain: light
-  - type: turn_on
-    device_id: b9c88a37811e285dc2b594f847e29cf1
-    entity_id: light.main_bedroom_bloom
-    domain: light
-    brightness_pct: 80
+    - type: turn_off
+      device_id: 860920bf5b3374e4ea3344b553666bcf
+      entity_id: light.main_bedroom_ceiling
+      domain: light
+    - type: turn_on
+      device_id: b9c88a37811e285dc2b594f847e29cf1
+      entity_id: light.main_bedroom_bloom
+      domain: light
+      brightness_pct: 80
   mode: single
-- id: '1603396218827'
+- id: "1603396218827"
   alias: Tom's phone - smart charging
-  description: ''
+  description: ""
   trigger:
-  - type: battery_level
-    platform: device
-    device_id: cf4ceb29a2e7464abe92c738f5983356
-    entity_id: sensor.in2013_battery_level
-    domain: sensor
-    above: 80
+    - type: battery_level
+      platform: device
+      device_id: cf4ceb29a2e7464abe92c738f5983356
+      entity_id: sensor.in2013_battery_level
+      domain: sensor
+      above: 80
   condition:
-  - condition: time
-    after: '22:00'
-  - condition: device
-    type: is_on
-    device_id: a45d69a5149f11eb984059712ae33449
-    entity_id: switch.toms_phone_charger
-    domain: switch
+    - condition: time
+      after: "22:00"
+    - condition: device
+      type: is_on
+      device_id: a45d69a5149f11eb984059712ae33449
+      entity_id: switch.toms_phone_charger
+      domain: switch
   action:
-  - type: turn_off
-    device_id: a45d69a5149f11eb984059712ae33449
-    entity_id: switch.toms_phone_charger
-    domain: switch
+    - type: turn_off
+      device_id: a45d69a5149f11eb984059712ae33449
+      entity_id: switch.toms_phone_charger
+      domain: switch
   mode: single
-- id: '1603396316886'
+- id: "1603396316886"
   alias: Tom's & Anna's phone - turn on charger AM and PM
-  description: ''
+  description: ""
   trigger:
-  - platform: time
-    at: '22:00:00'
-  - platform: time
-    at: 06:00:00
+    - platform: time
+      at: "22:00:00"
+    - platform: time
+      at: 06:00:00
   condition: []
   action:
-  - type: turn_on
-    device_id: a45d69a5149f11eb984059712ae33449
-    entity_id: switch.toms_phone_charger
-    domain: switch
-  - type: turn_on
-    device_id: c8e33d4fc2394e1995f48293761339f9
-    entity_id: switch.annas_phone_charger
-    domain: switch
+    - type: turn_on
+      device_id: a45d69a5149f11eb984059712ae33449
+      entity_id: switch.toms_phone_charger
+      domain: switch
+    - type: turn_on
+      device_id: c8e33d4fc2394e1995f48293761339f9
+      entity_id: switch.annas_phone_charger
+      domain: switch
   mode: single
-- id: '1603396482626'
+- id: "1603396482626"
   alias: Tom's phone - turn off charger
-  description: ''
+  description: ""
   trigger:
-  - platform: time
-    at: 08:30
-  - type: not_plugged_in
-    platform: device
-    device_id: cf4ceb29a2e7464abe92c738f5983356
-    entity_id: binary_sensor.in2013_is_charging
-    domain: binary_sensor
-  - type: battery_level
-    platform: device
-    device_id: cf4ceb29a2e7464abe92c738f5983356
-    entity_id: sensor.in2013_battery_level
-    domain: sensor
-    above: 99
+    - platform: time
+      at: 08:30
+    - type: not_plugged_in
+      platform: device
+      device_id: cf4ceb29a2e7464abe92c738f5983356
+      entity_id: binary_sensor.in2013_is_charging
+      domain: binary_sensor
+    - type: battery_level
+      platform: device
+      device_id: cf4ceb29a2e7464abe92c738f5983356
+      entity_id: sensor.in2013_battery_level
+      domain: sensor
+      above: 99
   condition:
-  - condition: device
-    type: is_on
-    device_id: a45d69a5149f11eb984059712ae33449
-    entity_id: switch.toms_phone_charger
-    domain: switch
+    - condition: device
+      type: is_on
+      device_id: a45d69a5149f11eb984059712ae33449
+      entity_id: switch.toms_phone_charger
+      domain: switch
   action:
-  - type: turn_off
-    device_id: a45d69a5149f11eb984059712ae33449
-    entity_id: switch.toms_phone_charger
-    domain: switch
+    - type: turn_off
+      device_id: a45d69a5149f11eb984059712ae33449
+      entity_id: switch.toms_phone_charger
+      domain: switch
   mode: single
-- id: '1603808684460'
+- id: "1603808684460"
   alias: Close the door
   description: Play a notification if door opened and not closed within 3 seconds
   trigger:
-  - type: opened
-    platform: device
-    device_id: 95b939ecf9f711eaa1fdcd4b4a1dccc0
-    entity_id: binary_sensor.living_room_door
-    domain: binary_sensor
-    for:
-      hours: 0
-      minutes: 0
-      seconds: 5
+    - type: opened
+      platform: device
+      device_id: 95b939ecf9f711eaa1fdcd4b4a1dccc0
+      entity_id: binary_sensor.living_room_door
+      domain: binary_sensor
+      for:
+        hours: 0
+        minutes: 0
+        seconds: 5
   condition:
-  - condition: state
-    state: 'off'
-    entity_id: input_boolean.do_not_disturb
+    - condition: state
+      state: "off"
+      entity_id: input_boolean.do_not_disturb
   action:
-  - service: media_player.play_media
-    data:
-      media_content_id: https://www.dropbox.com/s/mov0prp7j7ir437/Close.wav?dl=1
-      media_content_type: music
-    entity_id: media_player.living_room_display
-  mode: single
-- id: '1604341003387'
-  alias: 'NFC: Podcast Player'
-  trigger:
-  - platform: event
-    event_type: tag_scanned
-  condition:
-  - condition: template
-    value_template: '{{ trigger.event.data.tag_id in tags }}'
-  - condition: template
-    value_template: '{{ trigger.event.data.device_id in media_players }}'
-  - condition: template
-    value_template: '{{ states(''sensor.time'') < states(''input_datetime.boys_bedtime'')
-      }}'
-  action:
-  - variables:
-      number_of_podcasts: '{{ state_attr(tags[trigger.event.data.tag_id].sensor, ''entries'')
-        | length }}'
-      podcast_counter: '{{ tags[trigger.event.data.tag_id].podcast_counter }}'
-      podcast_sensor: '{{ tags[trigger.event.data.tag_id].sensor }}'
-      media_player_entity_id: '{{ media_players[trigger.event.data.device_id] }}'
-  - choose:
-    - conditions:
-      - condition: template
-        value_template: '{{ states(podcast_counter) | int >= number_of_podcasts |
-          int }}'
-      sequence:
-      - service: counter.configure
-        data:
-          value: '{{ number_of_podcasts - 1}}'
-          entity_id: '{{podcast_counter}}'
-    default: []
-  - service: tts.google_translate_say
-    data:
-      entity_id: '{{ media_player_entity_id }}'
-      message: '{{tags[trigger.event.data.tag_id].title}} {{state_attr(podcast_sensor,''entries'')[states(podcast_counter)
-        | int].title }}'
-  - delay: 00:00:02
-  - wait_template: '{{ states(media_player_entity_id) == ''idle'' }}'
-    continue_on_timeout: true
-    timeout: '10'
-  - service: media_player.play_media
-    data:
-      media_content_id: '{{ (state_attr(podcast_sensor,''entries'')[states(podcast_counter)
-        | int].links | selectattr(''rel'',''eq'',''enclosure'') | list)[0].href }}'
-      media_content_type: music
-      entity_id: '{{ media_player_entity_id }}'
-  - choose:
-    - conditions:
-      - condition: template
-        value_template: '{{ states(podcast_counter) | int == 0 }} '
-      sequence:
-      - service: counter.configure
-        data:
-          value: '{{ number_of_podcasts | int - 1 }}'
-          entity_id: '{{podcast_counter}}'
-    default:
-    - service: counter.decrement
+    - service: media_player.play_media
       data:
-        entity_id: '{{podcast_counter}}'
+        media_content_id: https://www.dropbox.com/s/mov0prp7j7ir437/Close.wav?dl=1
+        media_content_type: music
+      entity_id: media_player.living_room_display
+  mode: single
+- id: "1604341003387"
+  alias: "NFC: Podcast Player"
+  trigger:
+    - platform: event
+      event_type: tag_scanned
+  condition:
+    - condition: template
+      value_template: "{{ trigger.event.data.tag_id in tags }}"
+    - condition: template
+      value_template: "{{ trigger.event.data.device_id in media_players }}"
+    - condition: template
+      value_template:
+        "{{ states('sensor.time') < states('input_datetime.boys_bedtime')
+        }}"
+  action:
+    - variables:
+        number_of_podcasts:
+          "{{ state_attr(tags[trigger.event.data.tag_id].sensor, 'entries')
+          | length }}"
+        podcast_counter: "{{ tags[trigger.event.data.tag_id].podcast_counter }}"
+        podcast_sensor: "{{ tags[trigger.event.data.tag_id].sensor }}"
+        media_player_entity_id: "{{ media_players[trigger.event.data.device_id] }}"
+    - choose:
+        - conditions:
+            - condition: template
+              value_template:
+                "{{ states(podcast_counter) | int >= number_of_podcasts |
+                int }}"
+          sequence:
+            - service: counter.configure
+              data:
+                value: "{{ number_of_podcasts - 1}}"
+                entity_id: "{{podcast_counter}}"
+      default: []
+    - service: tts.google_translate_say
+      data:
+        entity_id: "{{ media_player_entity_id }}"
+        message:
+          "{{tags[trigger.event.data.tag_id].title}} {{state_attr(podcast_sensor,'entries')[states(podcast_counter)
+          | int].title }}"
+    - delay: 00:00:02
+    - wait_template: "{{ states(media_player_entity_id) == 'idle' }}"
+      continue_on_timeout: true
+      timeout: "10"
+    - service: media_player.play_media
+      data:
+        media_content_id:
+          "{{ (state_attr(podcast_sensor,'entries')[states(podcast_counter)
+          | int].links | selectattr('rel','eq','enclosure') | list)[0].href }}"
+        media_content_type: music
+        entity_id: "{{ media_player_entity_id }}"
+    - choose:
+        - conditions:
+            - condition: template
+              value_template: "{{ states(podcast_counter) | int == 0 }} "
+          sequence:
+            - service: counter.configure
+              data:
+                value: "{{ number_of_podcasts | int - 1 }}"
+                entity_id: "{{podcast_counter}}"
+      default:
+        - service: counter.decrement
+          data:
+            entity_id: "{{podcast_counter}}"
   mode: restart
   variables:
     media_players:
       4dd136882e204aec5b9809887714f25b: media_player.seb_s_home
       43ddd1e400d41d9d547f7bc24a95f86d: media_player.reuben_s_room_speaker
     tags:
-      04-35-6F-AA-ED-6C-80:
+      717acc7a-8373-4980-ab2e-d1713b5064cd:
         title: But Why
         podcast_counter: counter.podcast_but_why
         sensor: sensor.podcast_but_why
-      04-58-6E-AA-ED-6C-80:
+      45473a1e-68f7-437b-8dcc-e2cf822b8f15:
         title: Goodnight Stories for Rebel Girls
         podcast_counter: counter.podcast_goodnight_stories
         sensor: sensor.podcast_goodnight_stories
@@ -1169,11 +1192,11 @@
         title: Story Pirates
         podcast_counter: counter.podcast_story_pirates
         sensor: sensor.podcast_story_pirates
-      04-55-6F-AA-ED-6C-80:
+      aff51ea6-9373-4281-b5e7-b46c35bc78e3:
         title: Story Pirates
         podcast_counter: counter.podcast_story_pirates
         sensor: sensor.podcast_story_pirates
-      04-51-6F-AA-ED-6C-80:
+      b1b66f6b-4a5a-4150-9c1e-5a18b3ac6c0a:
         title: Maddie's Sound Explorers
         podcast_counter: counter.podcast_maddie_s_sound_explorers
         sensor: sensor.podcast_sound_explorers
@@ -1181,536 +1204,543 @@
         title: Marvellous Musical
         podcast_counter: counter.podcast_marvellous_musical
         sensor: sensor.podcast_marvellous_musical
-      04-4D-6F-AA-ED-6C-80:
+      e564ca77-ed6a-4de1-8f43-80406a252611:
         title: Peace Out
         podcast_counter: counter.podcast_peace_out
         sensor: sensor.podcast_peace_out
-- id: '1604656539815'
+- id: "1604656539815"
   alias: Turn on living room lights when door opened
-  description: ''
+  description: ""
   trigger:
-  - type: opened
-    platform: device
-    device_id: 95b939ecf9f711eaa1fdcd4b4a1dccc0
-    entity_id: binary_sensor.living_room_door
-    domain: binary_sensor
+    - type: opened
+      platform: device
+      device_id: 95b939ecf9f711eaa1fdcd4b4a1dccc0
+      entity_id: binary_sensor.living_room_door
+      domain: binary_sensor
   condition:
-  - condition: sun
-    after: sunset
-  - condition: time
-    before: '22:00'
-  - condition: state
-    entity_id: light.living_room
-    state: 'off'
+    - condition: sun
+      after: sunset
+    - condition: time
+      before: "22:00"
+    - condition: state
+      entity_id: light.living_room
+      state: "off"
   action:
-  - service: light.turn_on
-    data: {}
-    entity_id: light.living_room
+    - service: light.turn_on
+      data: {}
+      entity_id: light.living_room
   mode: single
-- id: '1605894548414'
+- id: "1605894548414"
   alias: Tag Reuben's Name is scanned
-  description: ''
+  description: ""
   trigger:
-  - platform: tag
-    tag_id: D0-50-B3-32
-  - platform: tag
-    tag_id: 04-70-6E-AA-ED-6C-80
-  - platform: tag
-    tag_id: 04-B5-04-3A-25-6D-84
+    - platform: tag
+      tag_id: D0-50-B3-32
+    - platform: tag
+      tag_id: 04-70-6E-AA-ED-6C-80
+    - platform: tag
+      tag_id: 04-B5-04-3A-25-6D-84
   condition: []
   action:
-  - type: toggle
-    device_id: e04b748fc61f7ca1d9a4a202ddcefe7a
-    entity_id: light.rname
-    domain: light
+    - type: toggle
+      device_id: e04b748fc61f7ca1d9a4a202ddcefe7a
+      entity_id: light.rname
+      domain: light
   mode: single
-- id: '1608917499387'
+- id: "1608917499387"
   alias: Low battery level detection & notification for all battery sensors
-  description: ''
+  description: ""
   use_blueprint:
     path: sbyx/low-battery-level-detection-notification-for-all-battery-sensors.yaml
     input:
-      day: '0'
+      day: "0"
       threshold: 15
       exclude0: sensor.moto_g_5_plus_battery_state
       actions:
-      - service: notify.mobile_app_in2013
-        data:
-          message: Low battery alert for {{sensors}}
-- id: '1609885331052'
-  alias: 'Lights: Turn off boys'' light at bedtime'
-  description: ''
+        - service: notify.mobile_app_in2013
+          data:
+            message: Low battery alert for {{sensors}}
+- id: "1609885331052"
+  alias: "Lights: Turn off boys' light at bedtime"
+  description: ""
   trigger:
-  - platform: time
-    at: '20:30'
+    - platform: time
+      at: "20:30"
   condition: []
   action:
-  - service: light.turn_on
-    data:
-      flash: short
-    target:
-      entity_id:
-      - light.sebs_ceiling
-      - light.reubens_ceiling
-  - delay:
-      hours: 0
-      minutes: 0
-      seconds: 5
-      milliseconds: 0
-  - service: light.turn_on
-    target:
-      entity_id:
-      - light.sebs_ceiling
-      - light.reubens_ceiling
-    data:
-      brightness: 25
-      color_name: purple
-  - delay:
-      hours: 0
-      minutes: 15
-      seconds: 0
-      milliseconds: 0
-  - service: light.turn_off
-    data: {}
-    target:
-      entity_id:
-      - light.sebs_lamp
-      - light.reubens_ceiling
-      - light.sebs_ceiling
-      - light.rname
+    - service: light.turn_on
+      data:
+        flash: short
+      target:
+        entity_id:
+          - light.sebs_ceiling
+          - light.reubens_ceiling
+    - delay:
+        hours: 0
+        minutes: 0
+        seconds: 5
+        milliseconds: 0
+    - service: light.turn_on
+      target:
+        entity_id:
+          - light.sebs_ceiling
+          - light.reubens_ceiling
+      data:
+        brightness: 25
+        color_name: purple
+    - delay:
+        hours: 0
+        minutes: 15
+        seconds: 0
+        milliseconds: 0
+    - service: light.turn_off
+      data: {}
+      target:
+        entity_id:
+          - light.sebs_lamp
+          - light.reubens_ceiling
+          - light.sebs_ceiling
+          - light.rname
   mode: restart
-- id: '1611402292310'
-  alias: 'Lights: turn on main bedroom light for 5 minutes when door opens'
-  description: ''
+- id: "1611402292310"
+  alias: "Lights: turn on main bedroom light for 5 minutes when door opens"
+  description: ""
   trigger:
-  - type: opened
-    platform: device
-    device_id: 95b8d0def9f711eaa7bd15994734a55a
-    entity_id: binary_sensor.main_bedroom_door
-    domain: binary_sensor
+    - type: opened
+      platform: device
+      device_id: 95b8d0def9f711eaa7bd15994734a55a
+      entity_id: binary_sensor.main_bedroom_door
+      domain: binary_sensor
   condition:
-  - condition: sun
-    after: sunset
-  - condition: time
-    before: '22:30'
+    - condition: sun
+      after: sunset
+    - condition: time
+      before: "22:30"
   action:
-  - type: turn_on
-    device_id: 860920bf5b3374e4ea3344b553666bcf
-    entity_id: light.main_bedroom_ceiling
-    domain: light
-    brightness_pct: 80
-  - delay: 00:05:00
-  - type: turn_off
-    device_id: 860920bf5b3374e4ea3344b553666bcf
-    entity_id: light.main_bedroom_ceiling
-    domain: light
+    - type: turn_on
+      device_id: 860920bf5b3374e4ea3344b553666bcf
+      entity_id: light.main_bedroom_ceiling
+      domain: light
+      brightness_pct: 80
+    - delay: 00:05:00
+    - type: turn_off
+      device_id: 860920bf5b3374e4ea3344b553666bcf
+      entity_id: light.main_bedroom_ceiling
+      domain: light
   mode: restart
-- id: '1611525664637'
-  alias: 'Lights: turn off house button'
-  description: ''
+- id: "1611525664637"
+  alias: "Lights: turn off house button"
+  description: ""
   trigger:
-  - device_id: 0f3089187d04d66ad82ae402722e0942
-    domain: zha
-    platform: device
-    type: remote_button_double_press
-    subtype: remote_button_double_press
-  - device_id: a98335e1b775a3c92d83494f43ab2647
-    domain: zha
-    platform: device
-    type: remote_button_double_press
-    subtype: remote_button_double_press
-  - platform: tag
-    tag_id: 57749803-d2b7-415d-a6fa-78f44205d0cc
+    - device_id: 0f3089187d04d66ad82ae402722e0942
+      domain: zha
+      platform: device
+      type: remote_button_double_press
+      subtype: remote_button_double_press
+    - device_id: a98335e1b775a3c92d83494f43ab2647
+      domain: zha
+      platform: device
+      type: remote_button_double_press
+      subtype: remote_button_double_press
+    - platform: tag
+      tag_id: 57749803-d2b7-415d-a6fa-78f44205d0cc
   condition: []
   action:
-  - service: light.turn_off
-    data:
-      transition: 1
-    target:
-      entity_id: all
+    - service: light.turn_off
+      data:
+        transition: 1
+      target:
+        entity_id: all
   mode: single
-- id: '1611774100909'
-  alias: 'Lights: Toggle Reuben''s light with Zigbee button'
-  description: ''
+- id: "1611774100909"
+  alias: "Lights: Toggle Reuben's light with Zigbee button"
+  description: ""
   use_blueprint:
     path: SeanM/zha-aqara-wireless-mini-switch.yaml
     input:
       aqara_mini_switch: 2a892df040e90ca799578d576ddcc6ae
       button_single_press:
-      - service: light.toggle
-        data: {}
-        entity_id: light.reubens_ceiling
+        - service: light.toggle
+          data: {}
+          entity_id: light.reubens_ceiling
       button_double_press:
-      - service: light.toggle
-        data: {}
-        entity_id: light.rname
+        - service: light.toggle
+          data: {}
+          entity_id: light.rname
       button_long_press:
-      - service: light.turn_on
-        target:
-          device_id: 61f89eb89fac9724606bb7e0ffc52c9b
-        data:
-          brightness_pct: 5
-- id: '1613133024887'
+        - service: light.turn_on
+          target:
+            device_id: 61f89eb89fac9724606bb7e0ffc52c9b
+          data:
+            brightness_pct: 5
+- id: "1613133024887"
   alias: Fact Bomb!
-  description: ''
+  description: ""
   trigger:
-  - device_id: 0f3089187d04d66ad82ae402722e0942
-    domain: zha
-    platform: device
-    type: remote_button_short_press
-    subtype: remote_button_short_press
+    - device_id: 0f3089187d04d66ad82ae402722e0942
+      domain: zha
+      platform: device
+      type: remote_button_short_press
+      subtype: remote_button_short_press
   condition:
-  - condition: state
-    entity_id: input_boolean.do_not_disturb
-    state: 'off'
+    - condition: state
+      entity_id: input_boolean.do_not_disturb
+      state: "off"
   action:
-  - service: media_player.play_media
-    data:
-      media_content_id: https://tdroza.duckdns.org/local/bomb.mp3
-      media_content_type: music
-    entity_id: media_player.living_room_display
+    - service: media_player.play_media
+      data:
+        media_content_id: https://tdroza.duckdns.org/local/bomb.mp3
+        media_content_type: music
+      entity_id: media_player.living_room_display
   mode: single
-- id: '1613401682862'
+- id: "1613401682862"
   alias: Aqara Magic Cube actions
-  description: ''
+  description: ""
   use_blueprint:
     path: Mikkelmoeller/aqara-magic-cube-zha-51-actions.yaml
     input:
       remote: 9f50d49473ecd72dad9e827acb4e6f60
       rotate_right:
-      - service: input_select.select_next
-        data: {}
-        entity_id: input_select.wled_effects
-      - service: light.turn_on
-        data:
-          effect: '{{ states(''input_select.wled_effects'') }}'
-        entity_id: light.desk
+        - service: input_select.select_next
+          data: {}
+          entity_id: input_select.wled_effects
+        - service: light.turn_on
+          data:
+            effect: "{{ states('input_select.wled_effects') }}"
+          entity_id: light.desk
       rotate_left:
-      - service: input_select.select_previous
-        data: {}
-        entity_id: input_select.wled_effects
-      - service: light.turn_on
-        data:
-          effect: '{{ states(''input_select.wled_effects'') }}'
+        - service: input_select.select_previous
+          data: {}
+          entity_id: input_select.wled_effects
+        - service: light.turn_on
+          data:
+            effect: "{{ states('input_select.wled_effects') }}"
       flip_180: true
       cube_flip_180:
-      - service: light.toggle
-        data: {}
-        target:
-          entity_id: light.desk
+        - service: light.toggle
+          data: {}
+          target:
+            entity_id: light.desk
       cube_shake:
-      - service: light.turn_off
-        data:
-          transition: 1
-        target:
-          entity_id: all
+        - service: light.turn_off
+          data:
+            transition: 1
+          target:
+            entity_id: all
       knock_any_side: true
       cube_knock_any:
-      - service: light.turn_off
-        target:
-          area_id: 4ff1e165afb84885be26f9e1add47e4f
-        data:
-          transition: 5
-- id: '1616499915162'
+        - service: light.turn_off
+          target:
+            area_id: 4ff1e165afb84885be26f9e1add47e4f
+          data:
+            transition: 5
+- id: "1616499915162"
   alias: Anna's phone - smart charging
-  description: ''
+  description: ""
   trigger:
-  - type: battery_level
-    platform: device
-    device_id: 5fe5c0fe0b3111eb8c0681a6c5c84147
-    entity_id: sensor.moto_g_5g_plus_battery_level
-    domain: sensor
-    above: 80
+    - type: battery_level
+      platform: device
+      device_id: 5fe5c0fe0b3111eb8c0681a6c5c84147
+      entity_id: sensor.moto_g_5g_plus_battery_level
+      domain: sensor
+      above: 80
   condition:
-  - condition: time
-    after: '22:00'
-  - condition: device
-    type: is_on
-    device_id: c8e33d4fc2394e1995f48293761339f9
-    entity_id: switch.annas_phone_charger
-    domain: switch
+    - condition: time
+      after: "22:00"
+    - condition: device
+      type: is_on
+      device_id: c8e33d4fc2394e1995f48293761339f9
+      entity_id: switch.annas_phone_charger
+      domain: switch
   action:
-  - type: turn_off
-    device_id: c8e33d4fc2394e1995f48293761339f9
-    entity_id: switch.annas_phone_charger
-    domain: switch
+    - type: turn_off
+      device_id: c8e33d4fc2394e1995f48293761339f9
+      entity_id: switch.annas_phone_charger
+      domain: switch
   mode: single
-- id: '1616500250252'
+- id: "1616500250252"
   alias: Anna's phone - turn off charger
-  description: ''
+  description: ""
   trigger:
-  - type: not_plugged_in
-    platform: device
-    device_id: 5fe5c0fe0b3111eb8c0681a6c5c84147
-    entity_id: binary_sensor.moto_g_5g_plus_is_charging
-    domain: binary_sensor
-  - type: battery_level
-    platform: device
-    device_id: 5fe5c0fe0b3111eb8c0681a6c5c84147
-    entity_id: sensor.moto_g_5g_plus_battery_level
-    domain: sensor
-    above: 99
+    - type: not_plugged_in
+      platform: device
+      device_id: 5fe5c0fe0b3111eb8c0681a6c5c84147
+      entity_id: binary_sensor.moto_g_5g_plus_is_charging
+      domain: binary_sensor
+    - type: battery_level
+      platform: device
+      device_id: 5fe5c0fe0b3111eb8c0681a6c5c84147
+      entity_id: sensor.moto_g_5g_plus_battery_level
+      domain: sensor
+      above: 99
   condition:
-  - condition: device
-    type: is_on
-    device_id: c8e33d4fc2394e1995f48293761339f9
-    entity_id: switch.annas_phone_charger
-    domain: switch
+    - condition: device
+      type: is_on
+      device_id: c8e33d4fc2394e1995f48293761339f9
+      entity_id: switch.annas_phone_charger
+      domain: switch
   action:
-  - type: turn_off
-    device_id: c8e33d4fc2394e1995f48293761339f9
-    entity_id: switch.annas_phone_charger
-    domain: switch
+    - type: turn_off
+      device_id: c8e33d4fc2394e1995f48293761339f9
+      entity_id: switch.annas_phone_charger
+      domain: switch
   mode: single
-- id: '1616588148819'
-  alias: 'Lights: Fix living room 2 randomly turning on'
-  description: ''
+- id: "1616588148819"
+  alias: "Lights: Fix living room 2 randomly turning on"
+  description: ""
   trigger:
-  - platform: state
-    entity_id: light.living_room_2
-    from: 'off'
-    to: 'on'
-    for: 00:00:03
-  condition:
-  - condition: state
-    entity_id: light.living_room_1
-    state: 'off'
-  action:
-  - service: light.turn_off
-    target:
+    - platform: state
       entity_id: light.living_room_2
+      from: "off"
+      to: "on"
+      for: 00:00:03
+  condition:
+    - condition: state
+      entity_id: light.living_room_1
+      state: "off"
+  action:
+    - service: light.turn_off
+      target:
+        entity_id: light.living_room_2
   mode: single
-- id: '1618222807946'
-  alias: 'NFC: Tag scanned after 20:30 plays bedtime message'
+- id: "1618222807946"
+  alias: "NFC: Tag scanned after 20:30 plays bedtime message"
   description: Time cut-off is set by `input_datetime.boys_bedtime`
   trigger:
-  - platform: event
-    event_type: tag_scanned
+    - platform: event
+      event_type: tag_scanned
   condition:
-  - condition: template
-    value_template: '{{ states(''sensor.time'') > states(''input_datetime.boys_bedtime'')
-      }}'
-  - condition: template
-    value_template: '{{ trigger.event.data.device_id in media_players }}'
+    - condition: template
+      value_template:
+        "{{ states('sensor.time') > states('input_datetime.boys_bedtime')
+        }}"
+    - condition: template
+      value_template: "{{ trigger.event.data.device_id in media_players }}"
   action:
-  - service: tts.google_translate_say
-    data:
-      entity_id: '{{ media_players[trigger.event.data.device_id] }}'
-      message: Sorry, I can't play that for you because it's time to go to sleep
+    - service: tts.google_translate_say
+      data:
+        entity_id: "{{ media_players[trigger.event.data.device_id] }}"
+        message: Sorry, I can't play that for you because it's time to go to sleep
   mode: single
   variables:
     media_players:
       4dd136882e204aec5b9809887714f25b: media_player.seb_s_home
       43ddd1e400d41d9d547f7bc24a95f86d: media_player.reuben_s_room_speaker
-- id: '1619433471864'
-  alias: 'Lights: Boys'' wakeup light'
+- id: "1619433471864"
+  alias: "Lights: Boys' wakeup light"
   description: Fade in ceiling lights 10min before wakeup time
   trigger:
-  - platform: template
-    value_template: '{{ now().hour * 3600 + now().minute * 60 >= state_attr(''input_datetime.boys_wakeup'',''timestamp'')
-      - 600 }}'
+    - platform: template
+      value_template:
+        "{{ now().hour * 3600 + now().minute * 60 >= state_attr('input_datetime.boys_wakeup','timestamp')
+        - 600 }}"
   condition:
-  - condition: state
-    entity_id: binary_sensor.workday_sensor
-    state: 'on'
+    - condition: state
+      entity_id: binary_sensor.workday_sensor
+      state: "on"
   action:
-  - service: light.turn_on
-    data:
-      transition: 600
-      brightness_pct: 100
-      color_name: wheat
-    target:
-      entity_id:
-      - light.reubens_ceiling
-      - light.sebs_ceiling
-  mode: single
-- id: '1621850581589'
-  alias: Close the fridge door
-  description: ''
-  trigger:
-  - type: opened
-    platform: device
-    device_id: fbe90b70595bca42e7368c42573a812c
-    entity_id: binary_sensor.fridge_door
-    domain: binary_sensor
-    for:
-      hours: 0
-      minutes: 1
-      seconds: 0
-      milliseconds: 0
-  condition: []
-  action:
-  - repeat:
-      sequence:
-      - service: tts.google_translate_say
-        target:
-          entity_id:
-          - media_player.kitchen_chromecast
-          - media_player.living_room_display
-        data:
-          message: Please close the fridge door
-          entity_id: media_player.kitchen_chromecast
-      - service: notify.tom_and_anna
-        data:
-          title: Fridge freezer door
-          message: 🧊 The fridge or freezer door has been open for more than 1 minute
-      - delay:
-          seconds: 30
-      until:
-      - condition: state
-        entity_id: binary_sensor.fridge_door
-        state: 'off'
-  mode: single
-- id: '1622117441450'
-  alias: 'Light: turn on desk light'
-  description: ''
-  trigger:
-  - type: vibration
-    platform: device
-    device_id: 5c533a8c95dc1742f198061c002cc8da
-    entity_id: binary_sensor.coffee_table
-    domain: binary_sensor
-  condition: []
-  action:
-  - service: light.turn_on
-    target:
-      entity_id: light.desk
-  mode: single
-- id: '1622117496609'
-  alias: 'Light: turn off desk light'
-  description: ''
-  trigger:
-  - type: no_vibration
-    platform: device
-    device_id: 5c533a8c95dc1742f198061c002cc8da
-    entity_id: binary_sensor.coffee_table
-    domain: binary_sensor
-    for:
-      hours: 0
-      minutes: 20
-      seconds: 0
-      milliseconds: 0
-  condition: []
-  action:
-  - service: light.turn_off
-    target:
-      entity_id: light.desk
-  mode: single
-- id: '1625066107430'
-  alias: 'Bins: Recycling notification'
-  description: ''
-  trigger:
-  - platform: template
-    value_template: '{{ ((as_timestamp(state_attr(''calendar.recycling'', ''start_time''))
-      - as_timestamp(now())) | int /3600 ) | round(0) < 13}}'
-  - platform: template
-    value_template: '{{ ((as_timestamp(state_attr(''calendar.regular'', ''start_time''))
-      - as_timestamp(now())) | int /3600 ) | round(0) < 13}}'
-  condition: []
-  action:
-  - choose:
-    - conditions:
-      - condition: template
-        value_template: '{{ as_timestamp(state_attr(''calendar.recycling'', ''start_time''))
-          <  as_timestamp(state_attr(''calendar.regular'', ''start_time'')) }}'
-      sequence:
-      - service: notify.tom_and_anna
-        data:
-          message: Recycling collection is due tomorrow. Don't forget to put the bin
-            out!
-          title: Bin Collection
-    default:
-    - service: notify.tom_and_anna
+    - service: light.turn_on
       data:
-        title: Bin Collection
-        message: Regular bin collection is due tomorrow. Don't forget to put the bin
-          out!
+        transition: 600
+        brightness_pct: 100
+        color_name: wheat
+      target:
+        entity_id:
+          - light.reubens_ceiling
+          - light.sebs_ceiling
   mode: single
-- id: '1626116356389'
-  alias: 'Lights: Turn on TV Backlight'
-  description: ''
+- id: "1621850581589"
+  alias: Close the fridge door
+  description: ""
   trigger:
-  - platform: state
-    entity_id: light.living_room_lights
-    for: 0:00:05
-    from: 'off'
-    to: 'on'
-  - platform: state
-    entity_id: switch.living_room_watch_tv
-    from: 'off'
-    to: 'on'
-  - platform: state
-    entity_id: switch.living_room_watch_tv
-    from: 'off'
-    to: 'on'
+    - type: opened
+      platform: device
+      device_id: fbe90b70595bca42e7368c42573a812c
+      entity_id: binary_sensor.fridge_door
+      domain: binary_sensor
+      for:
+        hours: 0
+        minutes: 1
+        seconds: 0
+        milliseconds: 0
   condition: []
   action:
-  - service: light.turn_on
-    target:
-      device_id: 3e6c31ee1302701c6ed52132c128c57d
+    - repeat:
+        sequence:
+          - service: tts.google_translate_say
+            target:
+              entity_id:
+                - media_player.kitchen_chromecast
+                - media_player.living_room_display
+            data:
+              message: Please close the fridge door
+              entity_id: media_player.kitchen_chromecast
+          - service: notify.tom_and_anna
+            data:
+              title: Fridge freezer door
+              message: 🧊 The fridge or freezer door has been open for more than 1 minute
+          - delay:
+              seconds: 30
+        until:
+          - condition: state
+            entity_id: binary_sensor.fridge_door
+            state: "off"
   mode: single
-- id: '1626117606618'
-  alias: 'Lights: Turn off TV Backlight'
-  description: ''
+- id: "1622117441450"
+  alias: "Light: turn on desk light"
+  description: ""
   trigger:
-  - platform: state
-    entity_id: switch.living_room_watch_a_movie
-    from: 'on'
-    to: 'off'
-  - platform: state
-    entity_id: switch.living_room_watch_tv
-    from: 'on'
-    to: 'off'
-  - platform: state
-    entity_id: light.living_room_lights
-    from: 'on'
-    to: 'off'
-  condition:
-  - condition: state
-    entity_id: switch.living_room_watch_a_movie
-    state: 'off'
-  - condition: state
-    entity_id: switch.living_room_watch_tv
-    state: 'off'
-  - condition: state
-    entity_id: light.living_room_lights
-    state: 'off'
+    - type: vibration
+      platform: device
+      device_id: 5c533a8c95dc1742f198061c002cc8da
+      entity_id: binary_sensor.coffee_table
+      domain: binary_sensor
+  condition: []
   action:
-  - service: light.turn_off
-    target:
-      device_id: 3e6c31ee1302701c6ed52132c128c57d
+    - service: light.turn_on
+      target:
+        entity_id: light.desk
   mode: single
-- id: '1627329816479'
-  alias: 'Lights: Hallway motion sensor'
-  description: ''
+- id: "1622117496609"
+  alias: "Light: turn off desk light"
+  description: ""
   trigger:
-  - platform: state
-    entity_id: binary_sensor.hue_motion_sensor_motion
-    from: 'off'
-    to: 'on'
-  condition:
-  - condition: state
-    entity_id: sensor.hue_motion_sensor_light_level
-    state: true
-    attribute: dark
+    - type: no_vibration
+      platform: device
+      device_id: 5c533a8c95dc1742f198061c002cc8da
+      entity_id: binary_sensor.coffee_table
+      domain: binary_sensor
+      for:
+        hours: 0
+        minutes: 20
+        seconds: 0
+        milliseconds: 0
+  condition: []
   action:
-  - service: light.turn_on
-    target:
-      area_id: b3e17bb69aba419bacc48dbbb6fa5f73
-    data:
-      brightness: 57
-  - delay:
-      hours: 0
-      minutes: 3
-      seconds: 0
-      milliseconds: 0
-  - service: light.turn_off
-    target:
-      area_id: b3e17bb69aba419bacc48dbbb6fa5f73
+    - service: light.turn_off
+      target:
+        entity_id: light.desk
+  mode: single
+- id: "1625066107430"
+  alias: "Bins: Recycling notification"
+  description: ""
+  trigger:
+    - platform: template
+      value_template:
+        "{{ ((as_timestamp(state_attr('calendar.recycling', 'start_time'))
+        - as_timestamp(now())) | int /3600 ) | round(0) < 13}}"
+    - platform: template
+      value_template:
+        "{{ ((as_timestamp(state_attr('calendar.regular', 'start_time'))
+        - as_timestamp(now())) | int /3600 ) | round(0) < 13}}"
+  condition: []
+  action:
+    - choose:
+        - conditions:
+            - condition: template
+              value_template:
+                "{{ as_timestamp(state_attr('calendar.recycling', 'start_time'))
+                <  as_timestamp(state_attr('calendar.regular', 'start_time')) }}"
+          sequence:
+            - service: notify.tom_and_anna
+              data:
+                message:
+                  Recycling collection is due tomorrow. Don't forget to put the bin
+                  out!
+                title: Bin Collection
+      default:
+        - service: notify.tom_and_anna
+          data:
+            title: Bin Collection
+            message:
+              Regular bin collection is due tomorrow. Don't forget to put the bin
+              out!
+  mode: single
+- id: "1626116356389"
+  alias: "Lights: Turn on TV Backlight"
+  description: ""
+  trigger:
+    - platform: state
+      entity_id: light.living_room_lights
+      for: 0:00:05
+      from: "off"
+      to: "on"
+    - platform: state
+      entity_id: switch.living_room_watch_tv
+      from: "off"
+      to: "on"
+    - platform: state
+      entity_id: switch.living_room_watch_tv
+      from: "off"
+      to: "on"
+  condition: []
+  action:
+    - service: light.turn_on
+      target:
+        device_id: 3e6c31ee1302701c6ed52132c128c57d
+  mode: single
+- id: "1626117606618"
+  alias: "Lights: Turn off TV Backlight"
+  description: ""
+  trigger:
+    - platform: state
+      entity_id: switch.living_room_watch_a_movie
+      from: "on"
+      to: "off"
+    - platform: state
+      entity_id: switch.living_room_watch_tv
+      from: "on"
+      to: "off"
+    - platform: state
+      entity_id: light.living_room_lights
+      from: "on"
+      to: "off"
+  condition:
+    - condition: state
+      entity_id: switch.living_room_watch_a_movie
+      state: "off"
+    - condition: state
+      entity_id: switch.living_room_watch_tv
+      state: "off"
+    - condition: state
+      entity_id: light.living_room_lights
+      state: "off"
+  action:
+    - service: light.turn_off
+      target:
+        device_id: 3e6c31ee1302701c6ed52132c128c57d
+  mode: single
+- id: "1627329816479"
+  alias: "Lights: Hallway motion sensor"
+  description: ""
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.hue_motion_sensor_motion
+      from: "off"
+      to: "on"
+  condition:
+    - condition: state
+      entity_id: sensor.hue_motion_sensor_light_level
+      state: true
+      attribute: dark
+  action:
+    - service: light.turn_on
+      target:
+        area_id: b3e17bb69aba419bacc48dbbb6fa5f73
+      data:
+        brightness: 57
+    - delay:
+        hours: 0
+        minutes: 3
+        seconds: 0
+        milliseconds: 0
+    - service: light.turn_off
+      target:
+        area_id: b3e17bb69aba419bacc48dbbb6fa5f73
   mode: restart
-- id: '1627654587843'
+- id: "1627654587843"
   alias: Lights - Vacation Lighting
-  description: ''
+  description: ""
   use_blueprint:
     path: VacationLights/vacation_lights.yaml
     input:
@@ -1735,75 +1765,77 @@
       light_target_9: sensor.do_nothing
       replay_sensor_10: sensor.do_nothing
       light_target_10: sensor.do_nothing
-- id: '1636562395777'
-  alias: 'Light: Anna''s desk light percentage'
-  description: Illuminate a percentage of the light bar according to elapsed minutes
+- id: "1636562395777"
+  alias: "Light: Anna's desk light percentage"
+  description:
+    Illuminate a percentage of the light bar according to elapsed minutes
     of the day
   trigger:
-  - platform: time_pattern
-    minutes: /5
-  - platform: device
-    type: turned_on
-    device_id: 15c7c1209eca0c917609946d19b62db6
-    entity_id: light.anna_s_desk
-    domain: light
-  condition:
-  - condition: device
-    type: is_off
-    device_id: 15c7c1209eca0c917609946d19b62db6
-    entity_id: switch.anna_s_desk_nightlight
-    domain: switch
-  action:
-  - service: wled.effect
-    target:
+    - platform: time_pattern
+      minutes: /5
+    - platform: device
+      type: turned_on
+      device_id: 15c7c1209eca0c917609946d19b62db6
       entity_id: light.anna_s_desk
-    data:
-      effect: percent
-      palette: temperature
-      intensity: '{{ (100 * ((as_timestamp(now()) | timestamp_custom("%-H") | int
-        * 60) + as_timestamp(now()) | timestamp_custom("%-M") | int) / 1440 )| round
-        }}'
+      domain: light
+  condition:
+    - condition: device
+      type: is_off
+      device_id: 15c7c1209eca0c917609946d19b62db6
+      entity_id: switch.anna_s_desk_nightlight
+      domain: switch
+  action:
+    - service: wled.effect
+      target:
+        entity_id: light.anna_s_desk
+      data:
+        effect: percent
+        palette: temperature
+        intensity:
+          '{{ (100 * ((as_timestamp(now()) | timestamp_custom("%-H") | int
+          * 60) + as_timestamp(now()) | timestamp_custom("%-M") | int) / 1440 )| round
+          }}'
   mode: single
-- id: '1637928927711'
-  alias: 'Office: Turn on'
+- id: "1637928927711"
+  alias: "Office: Turn on"
   description: Turn on desk, and lights
   trigger:
-  - platform: time
-    at: 08:30
+    - platform: time
+      at: 08:30
   condition:
-  - condition: state
-    entity_id: binary_sensor.workday_sensor
-    state: 'on'
+    - condition: state
+      entity_id: binary_sensor.workday_sensor
+      state: "on"
   action:
-  - type: turn_on
-    device_id: b1e67ae9d70423911cd751c767cce4fa
-    entity_id: switch.toms_desk
-    domain: switch
-  - delay:
-      hours: 0
-      minutes: 0
-      seconds: 30
-      milliseconds: 0
-  - service: light.turn_on
-    target:
-      entity_id: light.anna_s_desk
+    - type: turn_on
+      device_id: b1e67ae9d70423911cd751c767cce4fa
+      entity_id: switch.toms_desk
+      domain: switch
+    - delay:
+        hours: 0
+        minutes: 0
+        seconds: 30
+        milliseconds: 0
+    - service: light.turn_on
+      target:
+        entity_id: light.anna_s_desk
   mode: single
-- id: '1637929014156'
-  alias: 'Office: Turn off'
+- id: "1637929014156"
+  alias: "Office: Turn off"
   description: Turn off lights and desk
   trigger:
-  - platform: time
-    at: '18:00'
+    - platform: time
+      at: "18:00"
   condition:
-  - condition: state
-    entity_id: binary_sensor.workday_sensor
-    state: 'on'
+    - condition: state
+      entity_id: binary_sensor.workday_sensor
+      state: "on"
   action:
-  - service: light.turn_off
-    target:
-      entity_id: light.anna_s_desk
-  - type: turn_off
-    device_id: b1e67ae9d70423911cd751c767cce4fa
-    entity_id: switch.toms_desk
-    domain: switch
+    - service: light.turn_off
+      target:
+        entity_id: light.anna_s_desk
+    - type: turn_off
+      device_id: b1e67ae9d70423911cd751c767cce4fa
+      entity_id: switch.toms_desk
+      domain: switch
   mode: single
