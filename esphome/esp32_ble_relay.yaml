@@ -1,5 +1,9 @@
+substitutions:
+  device_name: "esp32_ble_relay"
+  friendly_name: "ESP32 BLE Relay"
+  
 esphome:
-  name: esp32_ble_relay
+  name: ${device_name}
   platform: ESP32
   board: esp-wrover-kit
 
@@ -74,3 +78,18 @@ sensor:
       name: "Rose Soil Conductivity"
     battery_level:
       name: "Rose Battery Level"
+
+text_sensor:
+  - platform: version
+    hide_timestamp: true
+    name: "${friendly_name} ESPHome Version"
+    entity_category: diagnostic
+  - platform: wifi_info
+    ip_address:
+      name: "${friendly_name} IP Address"
+      icon: mdi:wifi
+      entity_category: diagnostic
+    ssid:
+      name: "${friendly_name} Connected SSID"
+      icon: mdi:wifi-strength-2
+      entity_category: diagnostic

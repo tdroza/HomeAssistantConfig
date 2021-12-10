@@ -1,5 +1,9 @@
-esphome:
-  name: esp32-epaper
+substitutions:
+  device_name: "esp32-epaper"
+  friendly_name: "ESP32 ePaper"
+  
+  esphome:
+  name: ${device_name}
   platform: ESP32
   board: esp32dev
   on_boot:
@@ -39,7 +43,7 @@ wifi:
   ssid: !secret wifi_iot_ssid
   password: !secret wifi_password
   domain: ".lan"
-  use_address: esp32_epaper
+
   manual_ip:
     static_ip: 192.168.1.195
     gateway: 192.168.1.254
@@ -226,7 +230,22 @@ sensor:
     id: weather_day0_windspeed
     entity_id: sensor.weather_windspeed
     internal: true
-    
+
+text_sensor:
+  - platform: version
+    hide_timestamp: true
+    name: "${friendly_name} ESPHome Version"
+    entity_category: diagnostic
+  - platform: wifi_info
+    ip_address:
+      name: "${friendly_name} IP Address"
+      icon: mdi:wifi
+      entity_category: diagnostic
+    ssid:
+      name: "${friendly_name} Connected SSID"
+      icon: mdi:wifi-strength-2
+      entity_category: diagnostic
+
 image:
   - file: "images/tom.png"
     id: tom

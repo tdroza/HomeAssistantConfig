@@ -21,6 +21,7 @@ ota:
 substitutions:
   device_name: "sensor_d1mini_dht22_green"
   friendly_name: "Living Room"
+  
 sensor:
   - platform: dht
     pin: D1
@@ -38,3 +39,18 @@ sensor:
 binary_sensor:
   - platform: status
     name: "${friendly_name} Status"
+
+text_sensor:
+  - platform: version
+    hide_timestamp: true
+    name: "${friendly_name} ESPHome Version"
+    entity_category: diagnostic
+  - platform: wifi_info
+    ip_address:
+      name: "${friendly_name} IP Address"
+      icon: mdi:wifi
+      entity_category: diagnostic
+    ssid:
+      name: "${friendly_name} Connected SSID"
+      icon: mdi:wifi-strength-2
+      entity_category: diagnostic
