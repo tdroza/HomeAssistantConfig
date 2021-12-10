@@ -12,6 +12,11 @@ wifi:
 # Enable the captive portal for inital WiFi setup
 captive_portal:
 
+dashboard_import:
+  package_import_url: github://adonno/tagreader/tagreader.yaml
+
+improv_serial:
+
 substitutions:
   devicename: tagreader-seb
   friendly_name: TagReaderSeb
@@ -20,7 +25,11 @@ esphome:
   name: $devicename
   platform: ESP8266
   board: d1_mini
- 
+
+  project:
+    name: adonno.tag_reader
+    version: "1.4"
+
 # If buzzer is enabled, notify on api connection success
   on_boot:
     priority: -10
@@ -43,19 +52,25 @@ esphome:
         
 # Define switches to control LED and buzzer from HA
 switch:
-- platform: template
-  name: "${friendly_name} Buzzer Enabled"
-  id: buzzer_enabled
-  icon: mdi:volume-high
-  optimistic: true
-- platform: template
-  name: "${friendly_name} LED enabled"
-  id: led_enabled
-  icon: mdi:alarm-light-outline
-  optimistic: true
+  - platform: template
+    name: "${friendly_name} Buzzer Enabled"
+    id: buzzer_enabled
+    icon: mdi:volume-high
+    optimistic: true
+    restore_state: true
+    entity_category: config
+  - platform: template
+    name: "${friendly_name} LED enabled"
+    id: led_enabled
+    icon: mdi:alarm-light-outline
+    optimistic: true
+    restore_state: true
+    entity_category: config
 
 # Enable logging
 logger:
+  # level: VERY_VERBOSE
+  # level: VERBOSE
 
 # Enable Home Assistant API
 api:
@@ -74,6 +89,68 @@ api:
     then:
     - rtttl.play: !lambda 'return song_str;'
 
+
+  - service: write_tag_random
+    then:
+    - lambda: |-
+        static const char alphanum[] = "0123456789abcdef";
+        std::string uri = "https://www.home-assistant.io/tag/";
+        for (int i = 0; i < 8; i++)
+          uri += alphanum[random_uint32() % (sizeof(alphanum) - 1)];
+        uri += "-";
+        for (int j = 0; j < 3; j++) {
+          for (int i = 0; i < 4; i++)
+            uri += alphanum[random_uint32() % (sizeof(alphanum) - 1)];
+          uri += "-";
+        }
+        for (int i = 0; i < 12; i++)
+          uri += alphanum[random_uint32() % (sizeof(alphanum) - 1)];
+        auto message = new nfc::NdefMessage();
+        message->add_uri_record(uri);
+        ESP_LOGD("tagreader", "Writing payload: %s", uri.c_str());
+        id(pn532_board).write_mode(message);
+
+  - service: write_tag_id
+    variables:
+      tag_id: string
+    then:
+    - light.turn_on:
+        id: activity_led
+        brightness: 100%
+        red: 100%
+        green: 0%
+        blue: 0%    
+    - lambda: |-
+        auto message = new nfc::NdefMessage();
+        std::string uri = "https://www.home-assistant.io/tag/";
+        uri += tag_id;
+        message->add_uri_record(uri);
+        id(pn532_board).write_mode(message);
+    - wait_until:
+        not:
+          pn532.is_writing:
+    - light.turn_off:
+        id: activity_led
+
+  - service: clean_tag
+    then:
+    - light.turn_on:
+        id: activity_led
+        brightness: 100%
+        red: 100%
+        green: 64.7%
+        blue: 0%    
+    - lambda: 'id(pn532_board).clean_mode();'
+    - wait_until:
+        not:
+          pn532.is_writing:
+    - light.turn_off:
+        id: activity_led
+
+  - service: cancel_writing
+    then:
+    - lambda: 'id(pn532_board).read_mode();'
+    
 # Enable OTA upgrade
 ota:
 
@@ -83,9 +160,25 @@ i2c:
   frequency: 400kHz
 
 pn532_i2c:
+  id: pn532_board
   on_tag:
     then:
-    - homeassistant.tag_scanned: !lambda 'return x;'
+    - homeassistant.tag_scanned: !lambda |
+        if (!tag.has_ndef_message()) {
+          ESP_LOGD("tagreader", "No NDEF");
+          return x;
+        }
+        auto message = tag.get_ndef_message();
+        auto records = message->get_records();
+        for (auto &record : records) {
+          std::string payload = record->get_payload();
+          size_t pos = payload.find("https://www.home-assistant.io/tag/");
+          if (pos != std::string::npos) {
+            return payload.substr(pos + 34);
+          }
+        }
+        ESP_LOGD("tagreader", "Bad NDEF, fallback to uid");
+        return x;
     - if:
         condition:
           switch.is_on: buzzer_enabled
@@ -112,7 +205,22 @@ output:
 binary_sensor:
   - platform: status
     name: "${friendly_name} Status"
-    
+
+text_sensor:
+  - platform: version
+    hide_timestamp: true
+    name: "${friendly_name} ESPHome Version"
+    entity_category: diagnostic
+  - platform: wifi_info
+    ip_address:
+      name: "${friendly_name} IP Address"
+      icon: mdi:wifi
+      entity_category: diagnostic
+    ssid:
+      name: "${friendly_name} Connected SSID"
+      icon: mdi:wifi-strength-2
+      entity_category: diagnostic
+
 # Define buzzer as output for RTTTL
 rtttl:
   output: buzzer
