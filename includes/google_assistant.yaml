@@ -57,7 +57,7 @@ entity_config:
       name: "Tom's Desk light"
       room: "Second Bedroom"
       expose: true
-    light.anna_s_desk:
+    light.anna:
       name: "Anna's Desk light"
       room: "Second Bedroom"
       expose: true

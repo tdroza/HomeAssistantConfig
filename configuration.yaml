@@ -25,6 +25,7 @@ nest: !include includes/nest.yaml
 notify: !include includes/notify.yaml
 plant: !include includes/plant.yaml
 recorder: !include includes/recorder.yaml
+rest_command: !include includes/rest.yaml
 script: !include scripts.yaml
 sensor: !include includes/sensors.yaml
 zone: !include zones.yaml
