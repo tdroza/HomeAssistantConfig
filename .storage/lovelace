@@ -2090,6 +2090,11 @@
                                         {
                                             "entity": "light.christmas_star",
                                             "type": "entity-button"
+                                        },
+                                        {
+                                            "entity": "light.advent",
+                                            "type": "entity-button",
+                                            "icon": "mdi:greenhouse"
                                         }
                                     ],
                                     "type": "horizontal-stack"
