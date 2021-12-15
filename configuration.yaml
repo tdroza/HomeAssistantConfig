@@ -62,11 +62,6 @@ ifttt:
     tom: !secret tom_ifttt
     anna: !secret anna_ifttt
 
-zoom: 
-    client_id: !secret zoom_client_id
-    client_secret: !secret zoom_client_secret
-    verification_token: !secret zoom_verification_token
-
 camera:
   - platform: mjpeg
     name: OctoPrint
