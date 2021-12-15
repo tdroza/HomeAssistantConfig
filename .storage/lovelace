@@ -1,5 +1,6 @@
 {
     "version": 1,
+    "minor_version": 1,
     "key": "lovelace",
     "data": {
         "config": {
@@ -1034,7 +1035,7 @@
                                         },
                                         {
                                             "type": "light",
-                                            "entity": "light.anna_s_desk",
+                                            "entity": "light.anna",
                                             "icon": "mdi:desk-lamp"
                                         }
                                     ],
@@ -1376,21 +1377,21 @@
                                             "name": "Location"
                                         },
                                         {
-                                            "entity": "sensor.in2013_wifi_connection",
+                                            "entity": "sensor.toms_phone_wifi_connection",
                                             "name": "SSID"
                                         },
                                         {
-                                            "entity": "sensor.in2013_wifi_connection",
+                                            "entity": "sensor.toms_phone_wifi_connection",
                                             "icon": true,
                                             "name": false
                                         },
                                         {
-                                            "entity": "sensor.in2013_battery_level",
+                                            "entity": "sensor.toms_phone_battery_level",
                                             "icon": true,
                                             "name": false
                                         }
                                     ],
-                                    "entity": "device_tracker.in2013",
+                                    "entity": "device_tracker.toms_phone",
                                     "icon": "mdi:human-male",
                                     "image": "/local/tom.jpg",
                                     "name": "Tom",
@@ -1405,21 +1406,21 @@
                                             "name": "Location"
                                         },
                                         {
-                                            "entity": "sensor.moto_g_5g_plus_wifi_connection",
+                                            "entity": "sensor.annas_phone_wifi_connection",
                                             "name": "Wifi"
                                         },
                                         {
-                                            "entity": "sensor.moto_g_5g_plus_wifi_connection",
+                                            "entity": "sensor.annas_phone_wifi_connection",
                                             "icon": true,
                                             "name": false
                                         },
                                         {
-                                            "entity": "sensor.moto_g_5g_plus_battery_level",
+                                            "entity": "sensor.annas_phone_battery_level",
                                             "icon": true,
                                             "name": false
                                         }
                                     ],
-                                    "entity": "device_tracker.moto_g_5g_plus",
+                                    "entity": "device_tracker.annas_phone",
                                     "icon": "mdi:human-female",
                                     "image": "/local/anna.jpg",
                                     "name": "Anna",
@@ -2082,21 +2083,13 @@
                                 {
                                     "cards": [
                                         {
-                                            "entity": "switch.sonoff_10001f5fa0",
-                                            "type": "entity-button"
+                                            "entity": "light.xmas_tree",
+                                            "type": "entity-button",
+                                            "icon": "mdi:pine-tree"
                                         },
                                         {
                                             "entity": "light.christmas_star",
                                             "type": "entity-button"
-                                        }
-                                    ],
-                                    "type": "horizontal-stack"
-                                },
-                                {
-                                    "cards": [
-                                        {
-                                            "entity": "light.xmas",
-                                            "type": "light"
                                         }
                                     ],
                                     "type": "horizontal-stack"
