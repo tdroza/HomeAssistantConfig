@@ -1750,7 +1750,10 @@
     device_id: 15c7c1209eca0c917609946d19b62db6
     entity_id: light.anna
     domain: light
-  condition: []
+  condition:
+  - condition: state
+    entity_id: light.anna
+    state: 'on'
   action:
   - service: light.turn_on
     target:
