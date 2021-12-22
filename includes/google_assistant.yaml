@@ -74,14 +74,19 @@ entity_config:
       aliases:
         - Sebs lightstick
       expose: true
-    light.xmas:
+    light.xmas_tree:
       name: "Christmas Tree Lights"
       aliases:
         - Xmas
         - Christmas
         - Christmas tree
         - Tree
-      expose: false
+      expose: true
+    light.christmas_star:
+     name: "Star"
+     aliases:
+       - Christmas star
+     expose: true
     input_boolean.do_not_disturb:
       expose: true
 

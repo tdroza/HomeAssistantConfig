@@ -105,6 +105,26 @@
                                                         "icon": "mdi:lightbulb-group-outline"
                                                     },
                                                     "type": "custom:fold-entity-row"
+                                                },
+                                                {
+                                                    "entities": [
+                                                        {
+                                                            "entity": "light.window"
+                                                        },
+                                                        {
+                                                            "entity": "light.xmas_tree"
+                                                        },
+                                                        "light.christmas_star",
+                                                        {
+                                                            "entity": "light.advent"
+                                                        }
+                                                    ],
+                                                    "head": {
+                                                        "entity": "group.xmas",
+                                                        "icon": "mdi:string-lights",
+                                                        "name": "Christmas Lights"
+                                                    },
+                                                    "type": "custom:fold-entity-row"
                                                 }
                                             ]
                                         },
@@ -664,8 +684,23 @@
                                             "tap_action": {
                                                 "action": "toggle"
                                             },
-                                            "entity": "binary_sensor.living_room_door",
-                                            "show_name": false
+                                            "entity": "light.xmas_tree"
+                                        },
+                                        {
+                                            "entity": "light.christmas_star",
+                                            "type": "button"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "horizontal-stack",
+                                    "cards": [
+                                        {
+                                            "type": "button",
+                                            "tap_action": {
+                                                "action": "toggle"
+                                            },
+                                            "entity": "light.window"
                                         },
                                         {
                                             "type": "custom:card-templater",

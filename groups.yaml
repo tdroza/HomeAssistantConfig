@@ -49,3 +49,10 @@ room_bed2:
     - light.second_bedroom_light
     - light.desk
     
+xmas:
+  name: 'Xmas'
+  entities:
+    - light.xmas_tree
+    - light.advent
+    - light.window
+    - light.christmas_star
