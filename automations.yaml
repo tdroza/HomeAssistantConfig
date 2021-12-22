@@ -1158,6 +1158,9 @@
       4dd136882e204aec5b9809887714f25b: media_player.seb_s_home
       43ddd1e400d41d9d547f7bc24a95f86d: media_player.reuben_s_room_speaker
     tags:
+      2011897b-e41a-4d94-8bbb-a51004899ad8:
+        title: But Why (Seb Ring)
+        podcast_counter: counter.podcast_but_why      
       717acc7a-8373-4980-ab2e-d1713b5064cd:
         title: But Why
         podcast_counter: counter.podcast_but_why
@@ -1166,8 +1169,8 @@
         title: Goodnight Stories for Rebel Girls
         podcast_counter: counter.podcast_goodnight_stories
         sensor: sensor.podcast_goodnight_stories
-      04-7B-FC-EA-83-6B-80:
-        title: Story Pirates
+      b4320308-9efc-4c66-abca-9f9119dd71e3:
+        title: Story Pirates (Reu Ring)
         podcast_counter: counter.podcast_story_pirates
         sensor: sensor.podcast_story_pirates
       aff51ea6-9373-4281-b5e7-b46c35bc78e3:
