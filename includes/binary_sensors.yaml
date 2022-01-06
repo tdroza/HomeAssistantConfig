@@ -28,4 +28,8 @@
       value_template: >
          {{ 16 <= now().hour < 18 }}
 - platform: workday
-  country: GB
+  country: England
+- platform: workday
+  name: workday_anna
+  excludes: [sat, sun, mon, wed, holiday]
+  country: England
