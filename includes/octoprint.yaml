@@ -1,7 +1,0 @@
-host: octopi.lan
-api_key: !secret octoprint_api_key
-name: 'Printer'
-bed: true
-number_of_tools: 1
-
-# For camera config, see configuration.yaml
