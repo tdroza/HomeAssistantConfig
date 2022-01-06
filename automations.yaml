@@ -1012,7 +1012,7 @@
     after: '22:00'
   - condition: device
     type: is_on
-    device_id: a45d69a5149f11eb984059712ae33449
+    device_id: 993ecd7f96f07829da56b80a49a85b81
     entity_id: switch.toms_phone_charger
     domain: switch
   action:
@@ -1060,7 +1060,7 @@
   condition:
   - condition: device
     type: is_on
-    device_id: a45d69a5149f11eb984059712ae33449
+    device_id: 993ecd7f96f07829da56b80a49a85b81
     entity_id: switch.toms_phone_charger
     domain: switch
   action:
@@ -1160,7 +1160,7 @@
     tags:
       2011897b-e41a-4d94-8bbb-a51004899ad8:
         title: But Why (Seb Ring)
-        podcast_counter: counter.podcast_but_why      
+        podcast_counter: counter.podcast_but_why
       717acc7a-8373-4980-ab2e-d1713b5064cd:
         title: But Why
         podcast_counter: counter.podcast_but_why
@@ -1430,7 +1430,7 @@
     after: '22:00'
   - condition: device
     type: is_on
-    device_id: c8e33d4fc2394e1995f48293761339f9
+    device_id: e7ce59b383ed38fc1f32573de8a29c4a
     entity_id: switch.annas_phone_charger
     domain: switch
   action:
@@ -1459,7 +1459,7 @@
   condition:
   - condition: device
     type: is_on
-    device_id: c8e33d4fc2394e1995f48293761339f9
+    device_id: e7ce59b383ed38fc1f32573de8a29c4a
     entity_id: switch.annas_phone_charger
     domain: switch
   action:
