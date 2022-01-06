@@ -17,6 +17,8 @@
       entity_id: 
         - light.advent
         - light.xmas_tree
+        - light.christmas_star
+        - light.window
     service: light.turn_on
 - id: '1575123574346'
   alias: Turn off the Xmas lights at 09:30 and 22:30
@@ -26,16 +28,12 @@
     at: '09:30'
   - platform: time
     at: '22:30'
-  condition:
-  - condition: state
-    entity_id: 
-      - light.advent
-      - light.xmas_tree
-    state: 'on'
   action:
   - alias: ''
     data:
       entity_id:
         - light.advent
         - light.xmas_tree
+        - light.christmas_star
+        - light.window
     service: light.turn_off
