@@ -318,26 +318,33 @@
     service: switch.turn_off
 - id: '1581757504089'
   alias: Printer - Notify when complete
-  description: Send a telegram and broadcast to Google Home when Printer is done
+  description: Send an app notification with photo and broadcast to Google Home when
+    Printer is done
   trigger:
-  - entity_id: binary_sensor.printer_printing
+  - entity_id: binary_sensor.octoprint_printing
     from: 'on'
     platform: state
     to: 'off'
   condition:
   - condition: numeric_state
-    entity_id: sensor.printer_job_percentage
+    entity_id: sensor.octoprint_job_percentage
     above: '95'
   - condition: state
     entity_id: input_boolean.do_not_disturb
     state: 'off'
   action:
-  - data:
+  - service: notify.mobile_app_in2013
+    data:
       message: The 3D Printer has finished
-    service: notify.telegram_td
+      data:
+        image: /api/camera_proxy/camera.octoprint
+        actions:
+        - action: URI
+          title: View live camera
+          uri: lovelace/printer
   - data:
       entity_id: media_player.living_room_display
-      message: The printer has finished
+      message: The 3D printer has finished
     service: tts.google_translate_say
   mode: single
 - id: '1581776307274'

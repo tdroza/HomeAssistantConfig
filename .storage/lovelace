@@ -2311,11 +2311,7 @@
                     "title": "Smart Mirror"
                 },
                 {
-                    "badges": [
-                        {
-                            "entity": "sensor.printer_current_state"
-                        }
-                    ],
+                    "views": null,
                     "cards": [
                         {
                             "cards": null,
@@ -2325,50 +2321,15 @@
                                     "name": "Status"
                                 },
                                 {
-                                    "entity": "sensor.octoprint_actual_bed_temp",
-                                    "name": "Bed"
+                                    "entity": "sensor.octoprint_start_time",
+                                    "name": "Started"
                                 },
                                 {
-                                    "entity": "sensor.octoprint_actual_tool0_temp",
-                                    "name": "Tool"
+                                    "entity": "sensor.octoprint_estimated_finish_time",
+                                    "name": "ETA"
                                 }
                             ],
                             "type": "glance"
-                        },
-                        {
-                            "entities": [
-                                {
-                                    "entity": "sensor.octoprint_start_time"
-                                },
-                                {
-                                    "entity": "sensor.octoprint_estimated_finish_time"
-                                }
-                            ],
-                            "type": "glance"
-                        },
-                        {
-                            "cards": null,
-                            "entities": [
-                                {
-                                    "entity": "sensor.printer_target_bed_temp",
-                                    "index": 0
-                                },
-                                {
-                                    "entity": "sensor.printer_actual_bed_temp",
-                                    "index": 1
-                                },
-                                {
-                                    "entity": "sensor.printer_target_tool0_temp",
-                                    "index": 2
-                                },
-                                {
-                                    "entity": "sensor.printer_actual_tool0_temp",
-                                    "index": 3
-                                }
-                            ],
-                            "hours_to_show": 2,
-                            "points_per_hour": 12,
-                            "type": "custom:mini-graph-card"
                         },
                         {
                             "type": "picture-entity",
