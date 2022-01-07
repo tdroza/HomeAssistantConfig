@@ -76,6 +76,45 @@
                                 {
                                     "entities": [
                                         {
+                                            "type": "conditional",
+                                            "conditions": [
+                                                {
+                                                    "entity": "input_boolean.xmas_mode",
+                                                    "state": "on"
+                                                }
+                                            ],
+                                            "row": {
+                                                "type": "custom:fold-entity-row",
+                                                "head": {
+                                                    "type": "section",
+                                                    "label": "Xmas"
+                                                },
+                                                "open": true,
+                                                "entities": [
+                                                    {
+                                                        "entities": [
+                                                            {
+                                                                "entity": "light.window"
+                                                            },
+                                                            {
+                                                                "entity": "light.xmas_tree"
+                                                            },
+                                                            "light.christmas_star",
+                                                            {
+                                                                "entity": "light.advent"
+                                                            }
+                                                        ],
+                                                        "head": {
+                                                            "entity": "group.xmas",
+                                                            "icon": "mdi:string-lights",
+                                                            "name": "Christmas Lights"
+                                                        },
+                                                        "type": "custom:fold-entity-row"
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
                                             "type": "custom:fold-entity-row",
                                             "head": {
                                                 "type": "section",
@@ -103,26 +142,6 @@
                                                     "head": {
                                                         "entity": "group.room_living",
                                                         "icon": "mdi:lightbulb-group-outline"
-                                                    },
-                                                    "type": "custom:fold-entity-row"
-                                                },
-                                                {
-                                                    "entities": [
-                                                        {
-                                                            "entity": "light.window"
-                                                        },
-                                                        {
-                                                            "entity": "light.xmas_tree"
-                                                        },
-                                                        "light.christmas_star",
-                                                        {
-                                                            "entity": "light.advent"
-                                                        }
-                                                    ],
-                                                    "head": {
-                                                        "entity": "group.xmas",
-                                                        "icon": "mdi:string-lights",
-                                                        "name": "Christmas Lights"
                                                     },
                                                     "type": "custom:fold-entity-row"
                                                 }
@@ -677,30 +696,48 @@
                                     ]
                                 },
                                 {
-                                    "type": "horizontal-stack",
-                                    "cards": [
+                                    "type": "conditional",
+                                    "conditions": [
                                         {
-                                            "type": "button",
-                                            "tap_action": {
-                                                "action": "toggle"
-                                            },
-                                            "entity": "light.xmas_tree"
-                                        },
-                                        {
-                                            "entity": "light.christmas_star",
-                                            "type": "button"
+                                            "entity": "input_boolean.xmas_mode",
+                                            "state": "on"
                                         }
-                                    ]
+                                    ],
+                                    "card": {
+                                        "type": "horizontal-stack",
+                                        "cards": [
+                                            {
+                                                "type": "button",
+                                                "tap_action": {
+                                                    "action": "toggle"
+                                                },
+                                                "entity": "light.xmas_tree"
+                                            },
+                                            {
+                                                "entity": "light.christmas_star",
+                                                "type": "button"
+                                            }
+                                        ]
+                                    }
                                 },
                                 {
                                     "type": "horizontal-stack",
                                     "cards": [
                                         {
-                                            "type": "button",
-                                            "tap_action": {
-                                                "action": "toggle"
-                                            },
-                                            "entity": "light.window"
+                                            "type": "conditional",
+                                            "conditions": [
+                                                {
+                                                    "entity": "input_boolean.xmas_mode",
+                                                    "state": "on"
+                                                }
+                                            ],
+                                            "card": {
+                                                "type": "button",
+                                                "tap_action": {
+                                                    "action": "toggle"
+                                                },
+                                                "entity": "light.window"
+                                            }
                                         },
                                         {
                                             "type": "custom:card-templater",
