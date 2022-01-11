@@ -124,17 +124,32 @@ font:
       "\U000F0510",
       "\U000F058E"
     ]
-      
+  
 time:
   - platform: homeassistant
     id: esptime
-    
+    on_state:
+      then:
+        - script.execute: all_data_received 
+        
 text_sensor:
   - platform: homeassistant
     id: weather_day0_condition
     entity_id: sensor.weather_condition
     internal: true
-    
+  - platform: version
+    hide_timestamp: true
+    name: "${friendly_name} ESPHome Version"
+    entity_category: diagnostic
+  - platform: wifi_info
+    ip_address:
+      name: "${friendly_name} IP Address"
+      icon: mdi:wifi
+      entity_category: diagnostic
+    ssid:
+      name: "${friendly_name} Connected SSID"
+      icon: mdi:wifi-strength-2
+      entity_category: diagnostic
 binary_sensor:
   - platform: homeassistant
     id: garage_door
@@ -230,21 +245,6 @@ sensor:
     id: weather_day0_windspeed
     entity_id: sensor.weather_windspeed
     internal: true
-
-text_sensor:
-  - platform: version
-    hide_timestamp: true
-    name: "${friendly_name} ESPHome Version"
-    entity_category: diagnostic
-  - platform: wifi_info
-    ip_address:
-      name: "${friendly_name} IP Address"
-      icon: mdi:wifi
-      entity_category: diagnostic
-    ssid:
-      name: "${friendly_name} Connected SSID"
-      icon: mdi:wifi-strength-2
-      entity_category: diagnostic
 
 image:
   - file: "images/tom.png"
