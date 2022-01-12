@@ -170,20 +170,6 @@ pn532_i2c:
   on_tag:
     then:
     - homeassistant.tag_scanned: !lambda |
-        if (!tag.has_ndef_message()) {
-          ESP_LOGD("tagreader", "No NDEF");
-          return x;
-        }
-        auto message = tag.get_ndef_message();
-        auto records = message->get_records();
-        for (auto &record : records) {
-          std::string payload = record->get_payload();
-          size_t pos = payload.find("https://www.home-assistant.io/tag/");
-          if (pos != std::string::npos) {
-            return payload.substr(pos + 34);
-          }
-        }
-        ESP_LOGD("tagreader", "Bad NDEF, fallback to uid");
         return x;
     - if:
         condition:
