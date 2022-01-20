@@ -10,6 +10,10 @@ globals:
     restore_value: yes
     initial_value: "1"
     type: int
+  - id: updates_since_refresh
+    restore_value: yes
+    initial_value: "0"
+    type: int
     
 esphome:
   name: "${device_name}"
@@ -41,6 +45,10 @@ captive_portal:
 time:
   - platform: homeassistant
     id: ntp
+    on_time_sync:
+      - then:
+        - component.update: sunrise
+        - component.update: sunset
 
 external_components:
   - source:
@@ -50,6 +58,10 @@ external_components:
     components:
       - lilygo_t5_47_battery 
       - lilygo_t5_47_display
+ 
+sun:
+  latitude: 53.839696824370925°
+  longitude: -1.7784009354721835°  
   
 font:
   - file: "fonts/OpenSans-Bold.ttf"
@@ -107,8 +119,28 @@ font:
         - "\U000F0CE1" # up
         - "\U000F0047" # down 
         - "\U000F0FE1" # horizontal
+        - "\U000F059B" # sunset
+        - "\U000F059C" # sunrise
+  - file: 'fonts/materialdesignicons-webfont.ttf'
+    id: font_icons_smaller
+    size: 40
+    glyphs:
+        - "\U000F0510" # temp
+        - "\U000F059D" # wind
+        - "\U000F059B" # sunset
+        - "\U000F059C" # sunrise
 
 script:
+  - id: refresh_display
+    then:
+      - repeat:
+          count: 1
+          then:
+          - display.page.show: page_black
+          - component.update: t5_display
+          - display.page.show: page_white
+          - component.update: t5_display
+      - lambda: id(updates_since_refresh) = 0;
   - id: all_data_received
     then:
       - script.execute: show_page
@@ -116,16 +148,22 @@ script:
  
   - id: show_page
     then:
+      - if: 
+          condition:
+            lambda: return id(updates_since_refresh) >= 20;
+          then:
+            - script.execute: refresh_display
       - if:
           condition:
-            lambda: 'return id(current_page)==1;'
+            lambda: return id(current_page)==1;
           then:
             - display.page.show: page_temps
           else:
             - display.page.show: page_crypto
     
       - component.update: t5_display
-      
+      - lambda: |-
+          id(updates_since_refresh)++;
   - id: enter_sleep
     then:
       - if:
@@ -170,6 +208,22 @@ script:
           else:
             - logger.log: "Prevent deep sleep enabled."
 text_sensor:
+  - platform: sun
+    id: sunrise
+    name: Sun Next Sunrise
+    type: sunrise
+    format: "%H:%M"
+    internal: true
+    update_interval: never
+  
+  - platform: sun
+    id: sunset
+    name: Sun Next Sunset
+    type: sunset
+    format: "%H:%M"    
+    internal: true
+    update_interval: never
+    
   - platform: homeassistant
     id: crypto_doge
     entity_id: 'sensor.coinbase_doge_wallet'
@@ -362,12 +416,19 @@ display:
     power_off_delay_enabled: true
     update_interval: never
     pages:
+    
       - id: page_white
         lambda: |-
-          it.filled_rectangle(0, 0, 960, 540, COLOR_OFF);
+          #define xres 960 
+          #define yres 540
+          it.filled_rectangle(0, 0, xres, yres, COLOR_OFF);
+          it.print(xres/2, yres/2, id(font_name), COLOR_ON, TextAlign::CENTER, "Refreshing...");    
       - id: page_black
         lambda: |-
-          it.filled_rectangle(0, 0, 960, 540, COLOR_ON);        
+          #define xres 960 
+          #define yres 540
+          it.filled_rectangle(0, 0, xres, yres, COLOR_ON);
+          it.print(xres/2, yres/2, id(font_name), COLOR_OFF, TextAlign::CENTER, "Refreshing...");     
       - id: page_sleep
         lambda: |-
           it.printf(10, 40, id(font_value), TextAlign::TOP_LEFT, "ZZZ zzz...");
@@ -380,9 +441,9 @@ display:
           #define y_pad 10 // border padding      
           
           #define y1 0
-          #define y2 250
-          #define y3 400
-          #define val_pad 70 // padding before value
+          #define y2 285
+          #define y3 425
+          #define val_pad 60 // padding before value
           #define x1 x_pad // x position 1st column name
           #define x2 ((xres/3) * 1) // x position 2nd column name
           #define x3 ((xres/3) * 2) // x position 3rd column name
@@ -448,13 +509,21 @@ display:
           //it.printf(xres-150, y1+135, id(font_name), TextAlign::TOP_CENTER, id(weather_day0_condition).state.c_str());
           
           // weather - wind
-          it.printf(xres-275, y_pad+165, id(font_icons_small), COLOR_ON, TextAlign::CENTER_RIGHT, "\U000F059D");
+          it.printf(xres-275, y_pad+165, id(font_icons_smaller), COLOR_ON, TextAlign::CENTER_RIGHT, "\U000F059D");
           it.printf(xres-275, y_pad+165, id(font_footer), COLOR_ON, TextAlign::CENTER_LEFT, "%.1fkmh", id(weather_day0_windspeed).state);
     
           // weather - temp
-          it.printf(xres-100, y_pad+165, id(font_icons_small), COLOR_ON, TextAlign::CENTER_RIGHT, "\U000F0510");
+          it.printf(xres-100, y_pad+165, id(font_icons_smaller), COLOR_ON, TextAlign::CENTER_RIGHT, "\U000F0510");
           it.printf(xres-100, y_pad+165, id(font_footer), COLOR_ON, TextAlign::CENTER_LEFT, "%.1f°C", id(weather_day0_temperature).state);
+
+          // sunrise
+          it.printf(xres-275, y_pad+210, id(font_icons_smaller), TextAlign::CENTER_RIGHT, "\U000F059C");
+          it.printf(xres-275, y_pad+210, id(font_footer), TextAlign::CENTER_LEFT, "%s", id(sunrise).state.c_str());      
     
+          // sunset
+          it.printf(xres-100, y_pad+210, id(font_icons_smaller), TextAlign::CENTER_RIGHT, "\U000F059B");
+          it.printf(xres-100, y_pad+210, id(font_footer), TextAlign::CENTER_LEFT, "%s", id(sunset).state.c_str());   
+          
           // weather - icon
           if (id(weather_day0_condition).has_state()) {
             std::map<std::string, std::string> weather_map { 
