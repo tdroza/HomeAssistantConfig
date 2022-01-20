@@ -14,19 +14,41 @@
       value_template: '{{ states.weather.millview.attributes.wind_bearing }}'
     coinbase_portfolio_balance:
       value_template: >
-        {%- set btc = state_attr('sensor.coinbase_btc_wallet','Balance in native currency')[:-4] | int -%}
-        {%- set eth = state_attr('sensor.coinbase_eth_wallet','Balance in native currency')[:-4] | int %}
-        {%- set ltc = state_attr('sensor.coinbase_ltc_wallet','Balance in native currency')[:-4] | int %}
-        {%- set xlm = state_attr('sensor.coinbase_xlm_wallet','Balance in native currency')[:-4] | int %}
-        {%- set doge = state_attr('sensor.coinbase_doge_wallet','Balance in native currency')[:-4] | int %}
-        {%- set sol = state_attr('sensor.coinbase_sol_wallet','Balance in native currency')[:-4] | int %}
-        {{ "£%.2f" | format (btc + eth + ltc + xlm + doge + sol)}} GBP
+        {%- set btc = state_attr('sensor.coinbase_btc_wallet','Balance in native currency')[:-4] | float -%}
+        {%- set eth = state_attr('sensor.coinbase_eth_wallet','Balance in native currency')[:-4] | float %}
+        {%- set ltc = state_attr('sensor.coinbase_ltc_wallet','Balance in native currency')[:-4] | float %}
+        {%- set xlm = state_attr('sensor.coinbase_xlm_wallet','Balance in native currency')[:-4] | float %}
+        {%- set doge = state_attr('sensor.coinbase_doge_wallet','Balance in native currency')[:-4] | float %}
+        {%- set sol = state_attr('sensor.coinbase_sol_wallet','Balance in native currency')[:-4] | float %}
+        {{ btc + eth + ltc + xlm + doge + sol}}
     calendar_family_next_title: 
       value_template: '{{ states.calendar.family.attributes.message}}'
     calendar_family_next_start: 
       value_template: '{{ as_timestamp(states.calendar.family.attributes.start_time) | timestamp_custom("%A %H:%M") }}'
-- platform: template
-  sensors:
+    youtube_music_artist:
+      value_template: >
+        {% if (state_attr("media_player.youtube_music", "media_artist")==None) %}
+          {{""}}
+        {% else %}
+          {{state_attr("media_player.youtube_music", "media_artist") }}
+        {% endif %}
+    youtube_music_title:
+      value_template: >
+        {% if (state_attr("media_player.youtube_music", "media_title")==None) %}
+          {{""}}
+        {% else %}
+          {{state_attr("media_player.youtube_music", "media_title") }}
+        {% endif %}
+    teams_status: 
+      friendly_name: "Microsoft Teams status"
+      value_template: "{{states('input_text.teams_status')}}"
+      icon_template: "{{state_attr('input_text.teams_status','icon')}}"
+      unique_id: sensor.teams_status
+    teams_activity:
+      friendly_name: "Microsoft Teams activity"
+      value_template: "{{states('input_text.teams_activity')}}"
+      unique_id: sensor.teams_activity  
+
     vacuum_state:
       value_template: 'Ditto: {{ states.vacuum.ditto.attributes.status }}'
     vacuum_last_run:
@@ -45,38 +67,21 @@
     hallway_motion_sensor_temperature_rounded:
       friendly_name: 'Hall Temp'
       value_template: '{{states.sensor.hue_motion_sensor_temperature.state |round(0)}}'
-- platform: template
-  sensors:
-    white_temperature_rounded:
-      friendly_name: 'Kitchen Temp'
-      value_template: '{{states.sensor.white_temperature.state |round(0)}}'
-- platform: template
-  sensors:
     bed1_temperature_rounded:
       friendly_name: 'Bed1 Temp'
       value_template: '{{states.sensor.bed1_temperature.state |round(0)}}'
-- platform: template
-  sensors:
     bed2_temperature_rounded:
       friendly_name: 'Bed 2 Temp'
       value_template: '{{states.sensor.bed2_temperature.state |round(0)}}'
-- platform: template
-  sensors:
     seb_temperature_rounded:
       friendly_name: 'Seb Temp'
       value_template: '{{states.sensor.seb_d1_temperature.state |round(0)}}'
-- platform: template
-  sensors:
     reuben_temperature_rounded:
       friendly_name: 'Reuben Temp'
       value_template: '{{states.sensor.reu_d1_temperature.state |round(0)}}'
-- platform: template
-  sensors:
     bathroom_temperature_rounded:
       friendly_name: 'Bathroom Temp'
       value_template: '{{states.sensor.bathroom_temperature.state |round(0)}}'
-- platform: template
-  sensors:
     ensuite_temperature_rounded:
       friendly_name: 'Ensuite Temp'
       value_template: '{{states.sensor.ensuite_temperature.state |round(0)}}'
@@ -203,7 +208,7 @@
   duration:
     days: 7
   end: "{{ now() }}"
-
+ 
 # Sensors for the holiday mode lighting automation
 # All sensors will have naming convention "sensor.replay_xxxxx"
 - platform: history_stats
@@ -329,5 +334,12 @@
   max_age:
     hours: 24
   name: pm2_5_max
-  entity_id: sensor.air_quality_pm2_5  
-  
+  entity_id: sensor.air_quality_pm2_5
+- platform: statistics
+  name: crypto_portfolio_change
+  state_characteristic: change
+  entity_id: sensor.coinbase_portfolio_balance
+  sampling_size: 5000
+  max_age:
+    hours: 12
+   
