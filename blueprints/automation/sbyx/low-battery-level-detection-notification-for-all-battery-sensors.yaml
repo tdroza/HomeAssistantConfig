@@ -117,10 +117,10 @@ variables:
     \ exclude2, exclude3, exclude4, exclude5, exclude6, exclude7, exclude8, exclude9]\
     \ %} {% for state in states.sensor | selectattr('attributes.device_class', '==',\
     \ 'battery') %}\n  {% if 0 < state.state | int < threshold | int and not state.entity_id\
-    \ in exclude %}\n    {% set result.sensors = result.sensors + [state.name] %}\n\
+    \ in exclude %}\n    {% set result.sensors = result.sensors + [state.name + ' (%s%%)'|format(state.state)] %}\n\
     \  {% endif %}\n{% endfor %} {% for state in states.binary_sensor | selectattr('attributes.device_class',\
     \ '==', 'battery') | selectattr('state', '==', 'on') %}\n  {% if not state.entity_id\
-    \ in exclude %}\n    {% set result.sensors = result.sensors + [state.name] %}\n\
+    \ in exclude %}\n    {% set result.sensors = result.sensors + [state.name + ' (%s%%)'|format(state.state)] %}\n\
     \  {% endif %}\n{% endfor %} {{result.sensors|join(', ')}}"
 trigger:
 - platform: time
