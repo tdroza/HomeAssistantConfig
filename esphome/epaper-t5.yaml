@@ -1,6 +1,16 @@
 substitutions:
   device_name: "epaper-t5"
   friendly_name: "ePaper T5"
+  run_time: 24h
+  sleep_time: 13min # normal sleep time
+  night_sleep_time: 7h
+
+globals:
+  - id: current_page
+    restore_value: yes
+    initial_value: "1"
+    type: int
+    
 esphome:
   name: "${device_name}"
 
@@ -20,7 +30,7 @@ ota:
 wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_password
-
+  
   # Enable fallback hotspot (captive portal) in case wifi connection fails
   ap:
     ssid: "Epaper T5 Fallback Hotspot"
@@ -51,7 +61,8 @@ font:
     id: font_value
     size: 56    
     glyphs: |-
-      !"%()+=,-_.:°0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz'éèàòùç/&ôœìïöñ
+      £!"%()+=,-_.:°0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz'éèàòùç/&ôœìïöñ
+  
   - file: "fonts/OpenSans-Medium.ttf"
     id: font_footer
     size: 28    
@@ -81,26 +92,131 @@ font:
     id: font_icons_small
     size: 56
     glyphs:
-      - "\U000F02E3" # Bed
-      - "\U000F09A1" # Shower
-      - "\U000F09A0" # Bath
-      - "\U000F1104" # Monitor
-      - "\U000F0510" # temp
-      - "\U000F059D" # wind
+        - "\U000F02E3" # Bed
+        - "\U000F09A1" # Shower
+        - "\U000F09A0" # Bath
+        - "\U000F1104" # Monitor
+        - "\U000F0510" # temp
+        - "\U000F059D" # wind
+        - "\U000F0813" # btc
+        - "\U000F086A" # eth
+        - "\U000F116B" # sol
+        - "\U000F0A61" # ltc
+        - "\U000F0A43" # doge
+        - "\U000F0178" # xlm
+        - "\U000F0CE1" # up
+        - "\U000F0047" # down 
+        - "\U000F0FE1" # horizontal
 
 script:
   - id: all_data_received
     then:
+      - script.execute: show_page
+      - script.execute: enter_sleep
+ 
+  - id: show_page
+    then:
+      - if:
+          condition:
+            lambda: 'return id(current_page)==1;'
+          then:
+            - display.page.show: page_temps
+          else:
+            - display.page.show: page_crypto
+    
       - component.update: t5_display
-
+      
+  - id: enter_sleep
+    then:
+      - if:
+          condition:
+            binary_sensor.is_off: prevent_sleep
+          then:
+            
+            - if:
+                condition:
+                  lambda: |-
+                    if (id(crypto_portfolio).has_state() &&
+                      id(crypto_btc).has_state() &&
+                      strlen(id(weather_day0_condition).state.c_str())>0 &&
+                      id(bed1_temp).has_state()) {
+                        return true;
+                    }
+                    return false;
+                then:
+                  - logger.log: "All data received. Calculating sleep duration..."
+                  - if:
+                      condition:
+                        lambda: |- 
+                          auto time = id(ntp).now();
+                          if (!time.is_valid()) { 
+                            return false;
+                          }
+                          return (time.hour < 6) || (time.hour > 23); 
+                      then:
+                        - logger.log: "It's nighttime, entering long sleep for ${night_sleep_time}"       
+                        - display.page.show: page_sleep
+                        - component.update: t5_display
+                        - deep_sleep.enter: 
+                            id: deep_sleep_1 
+                            sleep_duration: ${night_sleep_time}
+                      else:
+                        - logger.log: "It's daytime, entering short sleep for ${sleep_time}"             
+                        - deep_sleep.enter: 
+                            id: deep_sleep_1 
+                            sleep_duration: ${sleep_time}      
+                else:
+                  - logger.log: "Staying awake to wait for data..."
+          else:
+            - logger.log: "Prevent deep sleep enabled."
 text_sensor:
+  - platform: homeassistant
+    id: crypto_doge
+    entity_id: 'sensor.coinbase_doge_wallet'
+    attribute: 'Balance in native currency'
+    filters:
+      - substitute:
+        - "GBP -> "
+  - platform: homeassistant
+    id: crypto_eth
+    entity_id: 'sensor.coinbase_eth_wallet'
+    attribute: 'Balance in native currency'
+    filters:
+      - substitute:
+        - ' GBP -> '
+  - platform: homeassistant
+    id: crypto_ltc
+    entity_id: 'sensor.coinbase_ltc_wallet'
+    attribute: 'Balance in native currency'
+    filters:
+      - substitute:
+        - ' GBP -> '
+  - platform: homeassistant
+    id: crypto_xlm
+    entity_id: 'sensor.coinbase_xlm_wallet'
+    attribute: 'Balance in native currency'
+    filters:
+      - substitute:
+        - ' GBP -> '
+  - platform: homeassistant
+    id: crypto_sol
+    entity_id: 'sensor.coinbase_sol_wallet'
+    attribute: 'Balance in native currency'
+    filters:
+      - substitute:
+        - ' GBP -> '
+  - platform: homeassistant
+    id: crypto_btc
+    entity_id: 'sensor.coinbase_btc_wallet'
+    attribute: 'Balance in native currency'
+    filters:
+      - substitute:
+        - ' GBP -> '
   - platform: homeassistant
     id: weather_day0_condition
     entity_id: sensor.weather_condition
     internal: true
-    on_value: # Actions to perform once data for the last sensor has been received
-      then:
-        - script.execute: all_data_received  
+
   - platform: homeassistant
     id: calendar_next_title
     entity_id: sensor.calendar_family_next_title
@@ -109,7 +225,18 @@ text_sensor:
     id: calendar_next_start
     entity_id: sensor.calendar_family_next_start
     internal: true
-    
+  - platform: homeassistant
+    id: music_title
+    entity_id: sensor.youtube_music_title
+    internal: true
+  - platform: homeassistant
+    id: music_artist
+    entity_id: sensor.youtube_music_artist
+    internal: true
+    on_value: # Redraw every time music data changes
+      then:
+        - script.execute: all_data_received  
+        
   - platform: version
     hide_timestamp: true
     name: "${friendly_name} ESPHome Version"
@@ -123,20 +250,42 @@ text_sensor:
       name: "${friendly_name} Connected SSID"
       icon: mdi:wifi-strength-2
       entity_category: diagnostic
-  
-sensor:
-  - platform: adc
-    pin: GPIO36
-    name: "${friendly_name} Battery Voltage"
-    id: batt_volt
-    attenuation: auto
-    update_interval: never
-    filters:
-      - multiply: 2
-    on_value: # Actions to perform once data for the last sensor has been received
+
+binary_sensor:
+  - platform: gpio
+    pin: GPIO34
+    name: "Temps Page"
+    on_press:
       then:
-        - script.execute: all_data_received 
-        
+        - lambda: 'id(current_page) = 1;'
+  - platform: gpio
+    pin: GPIO35
+    name: "Crypto Page"
+    on_press:
+      then:
+        - lambda: 'id(current_page) = 2;'
+        - script.execute: show_page
+
+  - platform: homeassistant
+    id: prevent_sleep
+    entity_id: input_boolean.prevent_deep_sleep
+    on_state:
+      - if:
+          condition:
+            - binary_sensor.is_on: prevent_sleep
+          then:
+            - logger.log: "Automatic deep sleep disabled"
+            - deep_sleep.prevent: deep_sleep_1
+      
+switch:
+  - platform: restart
+    name: "${friendly_name} Restart"
+
+sensor:
+  - platform: lilygo_t5_47_battery
+    id: batt_volt
+    voltage:
+      name: "Battery Voltage"
   - platform: template
     name: "${friendly_name} Battery"
     id: batt
@@ -144,10 +293,18 @@ sensor:
     accuracy_decimals: 0
     device_class: battery
     lambda: |-
-      int y = (1-(4.1-id(batt_volt).state)/(4.1-3.3))*100;
+      int y = (1-(4.1-id(batt_volt).voltage->state)/(4.1-3.3))*100;
       if (y < 100) {return y;} else {return 100;};
-    update_interval: never
     
+  - platform: homeassistant
+    id: crypto_change
+    entity_id: 'sensor.crypto_portfolio_change'
+  - platform: homeassistant
+    id: crypto_portfolio
+    entity_id: 'sensor.coinbase_portfolio_balance'
+    on_value:
+      then:
+        - script.execute: all_data_received 
   - platform: homeassistant
     id: weather_day0_temperature
     entity_id: sensor.weather_temperature
@@ -189,100 +346,169 @@ sensor:
         - script.execute: all_data_received 
 
 graph:
-  # Show bare-minimum auto-ranged graph
-  - id: bed1_graph
-    sensor: bed1_temp
-    duration: 1h
-    width: 150
-    height: 50
+  - id: crypto_graph
+    duration: 8h
+    width: 300
+    height: 150
+    traces:
+      - sensor: crypto_portfolio
+        line_thickness: 5
     
 display:
   - platform: lilygo_t5_47_display
     id: t5_display
     rotation: 180
-    update_interval: 60s
-    lambda: |-
-      #define xres 960 
-      #define yres 540
-      #define x_pad 10 // border padding
-      #define y_pad 10 // border padding      
-      
-      int y1 = 0;
-      int y2 = 250;
-      int y3 = 400;
-      #define val_pad 70 // padding before value
-      #define x1n 20 //x position 1st column name
-      #define x1v 25 //x position 1st column value
-      #define x1i 50 //x position 1st column icon
-      #define x2n ((xres/3) * 1) //x position 2nd column name
-      #define x2v ((xres/3) * 1) //x position 2nd column value
-      #define x2i ((xres/3) * 1) //x position 2nd column icon
-      #define x3n ((xres/3) * 2) //x position 3rd column name
-      #define x3v ((xres/3) * 2) //x position 3rd column value
-      #define x3i ((xres/3) * 2) //x position 3rd column icon
-
-      // Calendar
-      it.printf(x_pad, y_pad+35, id(font_value), TextAlign::TOP_LEFT, id(calendar_next_title).state.c_str());
-      it.printf(x_pad,y_pad+100, id(font_footer), TextAlign::TOP_LEFT, id(calendar_next_start).state.c_str());
-      
-      //it.printf(xres-150, y1+135, id(font_name), TextAlign::TOP_CENTER, id(weather_day0_condition).state.c_str());
-      
-      // weather - temp
-      it.printf(xres-275, y_pad+160, id(font_icons_small), COLOR_ON, TextAlign::CENTER_RIGHT, "\U000F0510");
-      it.printf(xres-275, y_pad+160, id(font_footer), COLOR_ON, TextAlign::CENTER_LEFT, "%.1f°C", id(weather_day0_temperature).state);
-      
-      // weather - wind
-      it.printf(xres-115, y_pad+160, id(font_icons_small), COLOR_ON, TextAlign::CENTER_RIGHT, "\U000F059D");
-      it.printf(xres-115, y_pad+160, id(font_footer), COLOR_ON, TextAlign::CENTER_LEFT, "%.1fkmh", id(weather_day0_windspeed).state);
-
-      // weather - icon
-      if (id(weather_day0_condition).has_state()) {
-        std::map<std::string, std::string> weather_map { 
-          { "cloudy", "\U000F0590" },              
-          { "exceptional", "\U000F0F2F" },          
-          { "fog", "\U000F0591" },                 
-          { "hail", "\U000F0592" },                
-          { "lightning", "\U000F0593" },            
-          { "lightning_rainy", "\U000F067E" },      
-          { "clearnight", "\U000F0594" },         
-          { "partlycloudy", "\U000F0595" },         
-          { "pouring", "\U000F0596"},             
-          { "rainy", "\U000F0597" },                
-          { "snowy", "\U000F0598" },               
-          { "snowyrainy", "\U000F067F" },           
-          { "sunny", "\U000F0599" },                  
-          { "windy", "\U000F059D" },               
-          { "windyvariant", "\U000F059E" }         
-        };   
-        it.printf(xres-180, y1+80, id(weather_font), COLOR_ON, TextAlign::CENTER, weather_map[id(weather_day0_condition).state.c_str()].c_str());
-      };
+    full_update_every: 10
+    power_off_delay_enabled: true
+    update_interval: never
+    pages:
+      - id: page_white
+        lambda: |-
+          it.filled_rectangle(0, 0, 960, 540, COLOR_OFF);
+      - id: page_black
+        lambda: |-
+          it.filled_rectangle(0, 0, 960, 540, COLOR_ON);        
+      - id: page_sleep
+        lambda: |-
+          it.printf(10, 40, id(font_value), TextAlign::TOP_LEFT, "ZZZ zzz...");
           
-      it.print(x1n, y2, id(font_name), TextAlign::BASELINE_LEFT, "Bedroom 1");
-      it.print(x2n, y2, id(font_name), TextAlign::BASELINE_LEFT, "Office");
-      it.print(x3n, y2, id(font_name), TextAlign::BASELINE_LEFT, "Seb's bedroom");
-      y2+= val_pad;      
-      it.printf(x1n, y2, id(font_icons_small), TextAlign::BASELINE_LEFT, "\U000F02E3"); 
-      it.printf(x1v + 60, y2, id(font_value), TextAlign::BASELINE_LEFT, "%.1f °C", id(bed1_temp).state);
-      it.graph(x1v + 60, y2, id(bed1_graph));
-      it.printf(x2n, y2, id(font_icons_small), TextAlign::BASELINE_LEFT, "\U000F1104"); 
-      it.printf(x2v + 60, y2, id(font_value), TextAlign::BASELINE_LEFT, "%.1f °C", id(bed2_temp).state);
-      it.printf(x3n, y2, id(font_icons_small), TextAlign::BASELINE_LEFT, "\U000F02E3"); 
-      it.printf(x3v + 60, y2, id(font_value), TextAlign::BASELINE_LEFT, "%.1f °C", id(seb_temp).state);      
+      - id: page_crypto
+        lambda: |-
+          #define xres 960 
+          #define yres 540
+          #define x_pad 10 // border padding
+          #define y_pad 10 // border padding      
+          
+          #define y1 0
+          #define y2 250
+          #define y3 400
+          #define val_pad 70 // padding before value
+          #define x1 x_pad // x position 1st column name
+          #define x2 ((xres/3) * 1) // x position 2nd column name
+          #define x3 ((xres/3) * 2) // x position 3rd column name
+          
+          
+          it.printf(x_pad, 40, id(font_value), TextAlign::TOP_LEFT, "Balance £%.2f", id(crypto_portfolio).state);
+          std::string changeIcon = "\000F0FE1";
+          std::string change = "";
+          if (id(crypto_change).state > 0) {
+            changeIcon = "\U000F0CE1";
+            change = "%.2f";
+          } else if (id(crypto_change).state < 0) {
+            changeIcon = "\U000F0047";
+            change = "(%.2f)";
+          }
+          it.printf(60, 150, id(font_icons_small), TextAlign::CENTER_RIGHT, changeIcon.c_str());
+          it.printf(60, 150, id(font_footer), TextAlign::CENTER_LEFT, change.c_str(), id(crypto_change).state);
+          it.graph(x3, 40, id(crypto_graph));
+           
+          it.print(x1, y2, id(font_name), TextAlign::BASELINE_LEFT, "Bitcoin");
+          it.print(x2, y2, id(font_name), TextAlign::BASELINE_LEFT, "Ethereum");
+          it.print(x3, y2, id(font_name), TextAlign::BASELINE_LEFT, "Solana");
+    
+          it.printf(x1, y2+val_pad, id(font_icons_small), TextAlign::BASELINE_LEFT, "\U000F0813"); 
+          it.printf(x1 + 65, y2+val_pad, id(font_value), TextAlign::BASELINE_LEFT, "£%s", id(crypto_btc).state.c_str());
+          it.printf(x2, y2+val_pad, id(font_icons_small), TextAlign::BASELINE_LEFT, "\U000F086A"); 
+          it.printf(x2 + 65, y2+val_pad, id(font_value), TextAlign::BASELINE_LEFT, "£%s", id(crypto_eth).state.c_str());
+          it.printf(x3, y2+val_pad, id(font_icons_small), TextAlign::BASELINE_LEFT, "\U000F116B"); 
+          it.printf(x3 + 65, y2+val_pad, id(font_value), TextAlign::BASELINE_LEFT, "£%s", id(crypto_sol).state.c_str());      
+    
+          it.print(x1, y3, id(font_name), TextAlign::BASELINE_LEFT, "Litecoin");
+          it.print(x2, y3, id(font_name), TextAlign::BASELINE_LEFT, "Doge");
+          it.print(x3, y3, id(font_name), TextAlign::BASELINE_LEFT, "Stellar");
+                
+          it.printf(x1, y3+val_pad, id(font_icons_small), TextAlign::BASELINE_LEFT, "\U000F0A61"); 
+          it.printf(x1 + 65, y3+val_pad, id(font_value), TextAlign::BASELINE_LEFT, "£%s", id(crypto_ltc).state.c_str());    
+          it.printf(x2, y3+val_pad, id(font_icons_small), TextAlign::BASELINE_LEFT, "\U000F0A43"); 
+          it.printf(x2 + 65, y3+val_pad, id(font_value), TextAlign::BASELINE_LEFT, "£%s", id(crypto_doge).state.c_str());
+          it.printf(x3, y3+val_pad, id(font_icons_small), TextAlign::BASELINE_LEFT, "\U000F0178"); 
+          it.printf(x3 + 65, y3+val_pad, id(font_value), TextAlign::BASELINE_LEFT, "£%s", id(crypto_xlm).state.c_str());
+          
+          // Footer
+          it.filled_rectangle(0, yres-30, xres, yres);
+          it.strftime(x_pad, yres-y_pad/2, id(font_footer), COLOR_OFF, TextAlign::BASELINE_LEFT, "%A %d/%b/%Y", id(ntp).now());
+          it.strftime(xres/2, yres-y_pad/2, id(font_footer), COLOR_OFF, TextAlign::BASELINE_CENTER, "Updated %H:%M", id(ntp).now());
+          it.printf(xres-x_pad, yres-y_pad/2, id(font_footer), COLOR_OFF, TextAlign::BASELINE_RIGHT, "%.2fV/%.0f%%", id(batt_volt).voltage->state, id(batt).state);
+          
+      - id: page_temps
+        lambda: |-
 
+          // Music - Now Playing
+          if (strlen(id(music_title).state.c_str())>0) {
+    
+     
+            it.printf(x_pad, y_pad+30, id(font_value), TextAlign::TOP_LEFT, id(music_title).state.c_str());
+            it.printf(x_pad,y_pad+100, id(font_footer), TextAlign::TOP_LEFT, id(music_artist).state.c_str());          
+          } else {
+            // Calendar
+            it.printf(x_pad, y_pad+30, id(font_value), TextAlign::TOP_LEFT, id(calendar_next_title).state.c_str());
+            it.printf(x_pad,y_pad+100, id(font_footer), TextAlign::TOP_LEFT, id(calendar_next_start).state.c_str());  
+          }
+          
+          //it.printf(xres-150, y1+135, id(font_name), TextAlign::TOP_CENTER, id(weather_day0_condition).state.c_str());
+          
+          // weather - wind
+          it.printf(xres-275, y_pad+165, id(font_icons_small), COLOR_ON, TextAlign::CENTER_RIGHT, "\U000F059D");
+          it.printf(xres-275, y_pad+165, id(font_footer), COLOR_ON, TextAlign::CENTER_LEFT, "%.1fkmh", id(weather_day0_windspeed).state);
+    
+          // weather - temp
+          it.printf(xres-100, y_pad+165, id(font_icons_small), COLOR_ON, TextAlign::CENTER_RIGHT, "\U000F0510");
+          it.printf(xres-100, y_pad+165, id(font_footer), COLOR_ON, TextAlign::CENTER_LEFT, "%.1f°C", id(weather_day0_temperature).state);
+    
+          // weather - icon
+          if (id(weather_day0_condition).has_state()) {
+            std::map<std::string, std::string> weather_map { 
+              { "cloudy", "\U000F0590" },              
+              { "exceptional", "\U000F0F2F" },          
+              { "fog", "\U000F0591" },                 
+              { "hail", "\U000F0592" },                
+              { "lightning", "\U000F0593" },            
+              { "lightning_rainy", "\U000F067E" },      
+              { "clearnight", "\U000F0594" },         
+              { "partlycloudy", "\U000F0595" },         
+              { "pouring", "\U000F0596"},             
+              { "rainy", "\U000F0597" },                
+              { "snowy", "\U000F0598" },               
+              { "snowyrainy", "\U000F067F" },           
+              { "sunny", "\U000F0599" },                  
+              { "windy", "\U000F059D" },               
+              { "windyvariant", "\U000F059E" }         
+            };   
+            it.printf(xres-180, y1+80, id(weather_font), COLOR_ON, TextAlign::CENTER, weather_map[id(weather_day0_condition).state.c_str()].c_str());
+          };
+              
+          it.print(x1, y2, id(font_name), TextAlign::BASELINE_LEFT, "Bedroom 1");
+          it.print(x2, y2, id(font_name), TextAlign::BASELINE_LEFT, "Office");
+          it.print(x3, y2, id(font_name), TextAlign::BASELINE_LEFT, "Seb's bedroom");
+               
+          it.printf(x1, y2+val_pad, id(font_icons_small), TextAlign::BASELINE_LEFT, "\U000F02E3"); 
+          it.printf(x1 + 85, y2+val_pad, id(font_value), TextAlign::BASELINE_LEFT, "%.1f °C", id(bed1_temp).state);
+          it.printf(x2, y2+val_pad, id(font_icons_small), TextAlign::BASELINE_LEFT, "\U000F1104"); 
+          it.printf(x2 + 85, y2+val_pad, id(font_value), TextAlign::BASELINE_LEFT, "%.1f °C", id(bed2_temp).state);
+          it.printf(x3, y2+val_pad, id(font_icons_small), TextAlign::BASELINE_LEFT, "\U000F02E3"); 
+          it.printf(x3 + 85, y2+val_pad, id(font_value), TextAlign::BASELINE_LEFT, "%.1f °C", id(seb_temp).state);      
+    
+          it.print(x1, y3, id(font_name), TextAlign::BASELINE_LEFT, "Ensuite");
+          it.print(x2, y3, id(font_name), TextAlign::BASELINE_LEFT, "Bathroom");
+          it.print(x3, y3, id(font_name), TextAlign::BASELINE_LEFT, "Reu's bedroom");
+               
+          it.printf(x1, y3+val_pad, id(font_icons_small), TextAlign::BASELINE_LEFT, "\U000F09A1"); 
+          it.printf(x1 + 85, y3+val_pad, id(font_value), TextAlign::BASELINE_LEFT, "%.1f °C", id(ensuite_temp).state);    
+          it.printf(x2, y3+val_pad, id(font_icons_small), TextAlign::BASELINE_LEFT, "\U000F09A0"); 
+          it.printf(x2 + 85, y3+val_pad, id(font_value), TextAlign::BASELINE_LEFT, "%.1f °C", id(bath_temp).state);
+          it.printf(x3, y3+val_pad, id(font_icons_small), TextAlign::BASELINE_LEFT, "\U000F02E3"); 
+          it.printf(x3 + 85, y3+val_pad, id(font_value), TextAlign::BASELINE_LEFT, "%.1f °C", id(reu_temp).state);
+          
+          // Footer
+          it.filled_rectangle(0, yres-30, xres, yres);
+          it.strftime(x_pad, yres-y_pad/2, id(font_footer), COLOR_OFF, TextAlign::BASELINE_LEFT, "%A %d/%b/%Y", id(ntp).now());
+          it.strftime(xres/2, yres-y_pad/2, id(font_footer), COLOR_OFF, TextAlign::BASELINE_CENTER, "Updated %H:%M", id(ntp).now());
+          it.printf(xres-x_pad, yres-y_pad/2, id(font_footer), COLOR_OFF, TextAlign::BASELINE_RIGHT, "%.2fV/%.0f%%", id(batt_volt).voltage->state, id(batt).state);
 
-
-      it.print(x1n, y3, id(font_name), TextAlign::BASELINE_LEFT, "Ensuite");
-      it.print(x2n, y3, id(font_name), TextAlign::BASELINE_LEFT, "Bathroom");
-      it.print(x3n, y3, id(font_name), TextAlign::BASELINE_LEFT, "Reu's bedroom");
-      y3+= val_pad;      
-      it.printf(x1n, y3, id(font_icons_small), TextAlign::BASELINE_LEFT, "\U000F09A1"); 
-      it.printf(x1v + 60, y3, id(font_value), TextAlign::BASELINE_LEFT, "%.1f °C", id(ensuite_temp).state);    
-      it.printf(x2n, y3, id(font_icons_small), TextAlign::BASELINE_LEFT, "\U000F09A0"); 
-      it.printf(x2v + 60, y3, id(font_value), TextAlign::BASELINE_LEFT, "%.1f °C", id(bath_temp).state);
-      it.printf(x3n, y3, id(font_icons_small), TextAlign::BASELINE_LEFT, "\U000F02E3"); 
-      it.printf(x3v + 60, y3, id(font_value), TextAlign::BASELINE_LEFT, "%.1f °C", id(reu_temp).state);
-      
-      // Footer
-      it.strftime(x_pad, yres-y_pad/2, id(font_footer), TextAlign::BASELINE_LEFT, "%A %d/%b/%Y", id(ntp).now());
-      it.strftime(xres/2, yres-y_pad/2, id(font_footer), TextAlign::BASELINE_CENTER, "Updated %H:%M", id(ntp).now());
-      it.printf(xres-x_pad, yres-y_pad/2, id(font_footer), TextAlign::BASELINE_RIGHT, "%.2fV/%.0f%%", id(batt_volt).state*2, id(batt).state);
+deep_sleep:
+  run_duration: ${run_time} 
+  sleep_duration: ${sleep_time}
+  id: deep_sleep_1
+  esp32_ext1_wakeup:
+    pins: GPIO39
+    mode: ALL_LOW          

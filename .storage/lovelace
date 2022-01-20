@@ -2652,7 +2652,7 @@
                                         "attributes": {
                                             "device_class": "battery"
                                         },
-                                        "state": "< 25"
+                                        "state": "< 15"
                                     }
                                 ]
                             }
@@ -2662,6 +2662,9 @@
                             "entities": [
                                 {
                                     "entity": "input_boolean.prevent_deep_sleep"
+                                },
+                                {
+                                    "entity": "switch.epaper_t5_restart"
                                 }
                             ]
                         },

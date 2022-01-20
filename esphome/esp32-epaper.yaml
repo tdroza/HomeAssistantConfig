@@ -2,8 +2,8 @@ substitutions:
   device_name: "esp32-epaper"
   friendly_name: "ESP32 ePaper"
   
-  esphome:
-  name: ${device_name}
+esphome:
+  name: "${device_name}"
   platform: ESP32
   board: esp32dev
   on_boot:
@@ -38,7 +38,7 @@ substitutions:
           then:
             - logger.log: "Deep sleep: Disabled"
             - deep_sleep.prevent: deep_sleep_1
-
+      - display.page.show: page_crypto
 wifi:
   ssid: !secret wifi_iot_ssid
   password: !secret wifi_password
@@ -81,6 +81,14 @@ font:
   - file: 'fonts/Roboto-Regular.ttf'
     id: roboto_m
     size: 20
+  - file: 'fonts/OpenSans-Bold.ttf'
+    id: sans_xl
+    glyphs: '£+-.0123456789'
+    size: 36   
+  - file: 'fonts/OpenSans-Medium.ttf'
+    id: sans_m
+    glyphs: '£+-.0123456789()'
+    size: 20   
   - file: 'fonts/Roboto-Regular.ttf'
     id: roboto_l
     glyphs: '!/"%()+,-_.:°0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz'''
@@ -90,7 +98,7 @@ font:
     glyphs: 'Update :0123456789'
     size: 16
   - file: 'fonts/materialdesignicons-webfont.ttf'
-    id: weather_font
+    id: icon_font_l
     size: 75
     glyphs: [
       "\U000F0590",
@@ -107,7 +115,10 @@ font:
       "\U000F067F",
       "\U000F0599",
       "\U000F059D",
-      "\U000F059E"
+      "\U000F059E",
+      "\U000F0CE1", # up
+      "\U000F0047", # down 
+      "\U000F0FE1"  # horizontal
     ]
   - file: 'fonts/materialdesignicons-webfont.ttf'
     id: icon_font
@@ -128,10 +139,11 @@ font:
 time:
   - platform: homeassistant
     id: esptime
-    on_state:
-      then:
-        - script.execute: all_data_received 
         
+script:
+  - id: all_data_received
+    then:
+      - component.update: epaper
 text_sensor:
   - platform: homeassistant
     id: weather_day0_condition
@@ -181,6 +193,15 @@ binary_sensor:
             - deep_sleep.enter: deep_sleep_1
             
 sensor:
+  - platform: homeassistant
+    id: crypto_change
+    entity_id: 'sensor.crypto_portfolio_change'
+  - platform: homeassistant
+    id: crypto_portfolio
+    entity_id: 'sensor.coinbase_portfolio_balance'
+    on_value:
+      then:
+        - script.execute: all_data_received 
   - platform: homeassistant
     id: bed1_temp
     entity_id: sensor.bed1_temperature
@@ -258,12 +279,27 @@ display:
     busy_pin: 4
     reset_pin: 16
     model: 2.13in-ttgo-b73
-    rotation: 270°
+    rotation: 90°
     full_update_every: 10
     update_interval: 15s
     id: epaper
 
     pages:
+      - id: page_crypto
+        lambda: |-
+          std::string changeIcon = "\000F0FE1";
+          std::string change = "";
+          if (id(crypto_change).state > 0) {
+            changeIcon = "\U000F0CE1";
+            change = "+%.2f";
+          } else if (id(crypto_change).state < 0) {
+            changeIcon = "\U000F0047";
+            change = "(%.2f)";
+          }
+          it.printf(80, 61, id(icon_font_l), TextAlign::CENTER_RIGHT, changeIcon.c_str());
+          it.printf(80, 70, id(sans_xl), TextAlign::BOTTOM_LEFT, "£%.2f", id(crypto_portfolio).state);
+          it.printf(80, 70, id(sans_m), TextAlign::TOP_LEFT, change.c_str(), id(crypto_change).state);
+          it.strftime(250, 125, id(roboto_bold_xs), COLOR_ON, TextAlign::BOTTOM_RIGHT , "Updated: %H:%M", id(esptime).now());
       - id: page_image
         lambda: |-
           it.image(5, 20, id(tom));
@@ -342,7 +378,7 @@ display:
                   { "windy", "\U000F059D" },               
                   { "windyvariant", "\U000F059E" }         
             };   
-            it.printf(190, 60, id(weather_font), COLOR_ON, TextAlign::CENTER, weather_map[id(weather_day0_condition).state.c_str()].c_str());
+            it.printf(190, 60, id(icon_font_l), COLOR_ON, TextAlign::CENTER, weather_map[id(weather_day0_condition).state.c_str()].c_str());
           };
                   
           char* weather_state = strdup(id(weather_day0_condition).state.c_str());
@@ -352,7 +388,7 @@ display:
           it.strftime(250, 125, id(roboto_bold_xs), COLOR_ON, TextAlign::BOTTOM_RIGHT , "Updated: %H:%M", id(esptime).now());
           
 deep_sleep:
-  run_duration: 1min
+  run_duration: 90sec
   sleep_duration: 5min
   id: deep_sleep_1
   
