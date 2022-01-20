@@ -1223,8 +1223,6 @@
   description: ''
   trigger:
   - platform: tag
-    tag_id: D0-50-B3-32
-  - platform: tag
     tag_id: 04-70-6E-AA-ED-6C-80
   - platform: tag
     tag_id: 04-B5-04-3A-25-6D-84
@@ -1241,13 +1239,14 @@
   use_blueprint:
     path: sbyx/low-battery-level-detection-notification-for-all-battery-sensors.yaml
     input:
-      day: '0'
+      day: 0
       threshold: 15
-      exclude0: sensor.moto_g_5_plus_battery_state
+      exclude0: sensor.annas_phone_battery_level
       actions:
       - service: notify.mobile_app_in2013
         data:
           message: Low battery alert for {{sensors}}
+      exclude1: sensor.toms_phone_battery_level
 - id: '1609885331052'
   alias: 'Lights: Turn off boys'' light at bedtime'
   description: ''
@@ -1819,3 +1818,45 @@
     entity_id: switch.toms_desk
     domain: switch
   mode: single
+- id: '1641984337744'
+  alias: 'NFC: Music player'
+  description: Play music from YouTube Music when a tag is scanned
+  mode: single
+  trigger:
+  - platform: event
+    event_type: tag_scanned
+  condition:
+  - condition: template
+    value_template: '{{ trigger.event.data.tag_id in tags }}'
+  - condition: template
+    value_template: '{{ trigger.event.data.device_id in media_players }}'
+  - condition: template
+    value_template: '{{ states(''sensor.time'') < states(''input_datetime.boys_bedtime'')
+      }}'
+  action:
+  - variables:
+      media_player_entity_id: '{{ media_players[trigger.event.data.device_id] }}'
+      media_content_id: '{{ tags[trigger.event.data.tag_id].media_content_id }}'
+      media_content_type: '{{ tags[trigger.event.data.tag_id].media_content_type }}'
+  - service: media_player.select_source
+    data:
+      source: '{{ media_player_entity_id }}'
+      entity_id: media_player.youtube_music
+  - service: media_player.play_media
+    data:
+      entity_id: media_player.youtube_music
+      media_content_id: '{{ media_content_id }}'
+      media_content_type: '{{ media_content_type }}'
+  variables:
+    media_players:
+      43ddd1e400d41d9d547f7bc24a95f86d: media_player.reuben_s_room_speaker
+      4dd136882e204aec5b9809887714f25b: media_player.seb_s_home
+    tags:
+      D0-50-B3-32:
+        media_content_id: PLbNmRtwuOMuihM4wbhdfbhyvnoHt5Rs0P
+        media_content_type: playlist
+        title: Reubens Favourite Music
+      8A-CB-65-85:
+        media_content_id: PLbNmRtwuOMuijrqEgfJowKcaKiqeBATG2
+        media_content_type: playlist
+        title: Sebs Favourite Music
