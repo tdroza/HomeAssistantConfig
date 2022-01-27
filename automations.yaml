@@ -1252,21 +1252,9 @@
   description: ''
   trigger:
   - platform: time
-    at: '20:30'
+    at: input_datetime.boys_bedtime
   condition: []
   action:
-  - service: light.turn_on
-    data:
-      flash: short
-    target:
-      entity_id:
-      - light.sebs_ceiling
-      - light.reubens_ceiling
-  - delay:
-      hours: 0
-      minutes: 0
-      seconds: 5
-      milliseconds: 0
   - service: light.turn_on
     target:
       entity_id:
@@ -1762,6 +1750,9 @@
   condition:
   - condition: state
     entity_id: light.anna
+    state: 'on'
+  - condition: state
+    entity_id: binary_sensor.workday_anna
     state: 'on'
   action:
   - service: light.turn_on
