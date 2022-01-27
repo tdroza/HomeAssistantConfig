@@ -2664,10 +2664,13 @@
                                     "entity": "input_boolean.prevent_deep_sleep"
                                 },
                                 {
+                                    "entity": "button.esp32_epaper_restart"
+                                },
+                                {
                                     "entity": "button.epaper_t5_restart"
                                 },
                                 {
-                                    "entity": "button.esp32_epaper_restart"
+                                    "entity": "input_select.epaper_page"
                                 }
                             ]
                         },
