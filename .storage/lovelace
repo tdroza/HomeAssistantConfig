@@ -2664,7 +2664,10 @@
                                     "entity": "input_boolean.prevent_deep_sleep"
                                 },
                                 {
-                                    "entity": "switch.epaper_t5_restart"
+                                    "entity": "button.epaper_t5_restart"
+                                },
+                                {
+                                    "entity": "button.esp32_epaper_restart"
                                 }
                             ]
                         },

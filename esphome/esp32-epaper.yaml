@@ -136,6 +136,10 @@ font:
       "\U000F058E"
     ]
   
+button:
+  - platform: restart
+    name: "${friendly_name} Restart"
+    
 time:
   - platform: homeassistant
     id: esptime
@@ -297,7 +301,9 @@ display:
             change = "(%.2f)";
           }
           it.printf(80, 61, id(icon_font_l), TextAlign::CENTER_RIGHT, changeIcon.c_str());
-          it.printf(80, 70, id(sans_xl), TextAlign::BOTTOM_LEFT, "£%.2f", id(crypto_portfolio).state);
+          if (id(crypto_portfolio).has_state()) {
+            it.printf(80, 70, id(sans_xl), TextAlign::BOTTOM_LEFT, "£%.2f", id(crypto_portfolio).state);
+          }
           it.printf(80, 70, id(sans_m), TextAlign::TOP_LEFT, change.c_str(), id(crypto_change).state);
           it.strftime(250, 125, id(roboto_bold_xs), COLOR_ON, TextAlign::BOTTOM_RIGHT , "Updated: %H:%M", id(esptime).now());
       - id: page_image

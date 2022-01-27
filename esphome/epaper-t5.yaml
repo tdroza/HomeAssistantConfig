@@ -331,7 +331,7 @@ binary_sensor:
             - logger.log: "Automatic deep sleep disabled"
             - deep_sleep.prevent: deep_sleep_1
       
-switch:
+button:
   - platform: restart
     name: "${friendly_name} Restart"
 
