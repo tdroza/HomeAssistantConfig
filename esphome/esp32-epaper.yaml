@@ -291,7 +291,7 @@ display:
     pages:
       - id: page_crypto
         lambda: |-
-          std::string changeIcon = "\000F0FE1";
+          std::string changeIcon = "\U000F0FE1";
           std::string change = "";
           if (id(crypto_change).state > 0) {
             changeIcon = "\U000F0CE1";
