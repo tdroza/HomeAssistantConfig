@@ -137,7 +137,9 @@ script:
           count: 1
           then:
           - display.page.show: page_black
+          - component.update: t5_display
           - display.page.show: page_white
+          - component.update: t5_display
       - lambda: id(updates_since_refresh) = 0;
   - id: all_data_received
     then:
@@ -151,13 +153,18 @@ script:
             lambda: return id(updates_since_refresh) >= 20;
           then:
             - script.execute: refresh_display
-      - if:
-          condition:
-            lambda: return id(current_page)==1;
-          then:
-            - display.page.show: page_temps
-          else:
-            - display.page.show: page_crypto
+      - display.page.show: !lambda |-
+          switch(id(current_page)) {
+            case 1:
+              return id(page_temps);
+              break;
+            case 2:
+             return id(page_crypto);
+              break;
+            case 3:
+            default:
+              return id(page_crypto_graph);
+          }
     
       - component.update: t5_display
       - lambda: |-
@@ -226,6 +233,8 @@ text_sensor:
               id(current_page) = 1;
             } else if (id(current_page_select).state == "Crypto") {
               id(current_page) = 2;
+            } else { // if (id(current_page_select).state == "Graph") {
+              id(current_page) = 3;
             }
         - script.execute: show_page
         
@@ -431,8 +440,9 @@ sensor:
 graph:
   - id: crypto_graph
     duration: 8h
-    width: 300
-    height: 150
+    width: 960
+    height: 510
+    x_grid: 1h
     traces:
       - sensor: crypto_portfolio
         line_thickness: 5
@@ -479,7 +489,7 @@ display:
           
           
           it.printf(x_pad, 40, id(font_value), TextAlign::TOP_LEFT, "Balance £%.2f", id(crypto_portfolio).state);
-          std::string changeIcon = "\000F0FE1";
+          std::string changeIcon = "\U000F0FE1";
           std::string change = "";
           if (id(crypto_change).state > 0) {
             changeIcon = "\U000F0CE1";
@@ -490,7 +500,6 @@ display:
           }
           it.printf(60, 150, id(font_icons_small), TextAlign::CENTER_RIGHT, changeIcon.c_str());
           it.printf(60, 150, id(font_footer), TextAlign::CENTER_LEFT, change.c_str(), id(crypto_change).state);
-          it.graph(x3, 40, id(crypto_graph));
            
           it.print(x1, y2, id(font_name), TextAlign::BASELINE_LEFT, "Bitcoin");
           it.print(x2, y2, id(font_name), TextAlign::BASELINE_LEFT, "Ethereum");
@@ -602,7 +611,17 @@ display:
           it.strftime(x_pad, yres-y_pad/2, id(font_footer), COLOR_OFF, TextAlign::BASELINE_LEFT, "%A %d/%b/%Y", id(ntp).now());
           it.strftime(xres/2, yres-y_pad/2, id(font_footer), COLOR_OFF, TextAlign::BASELINE_CENTER, "Updated %H:%M", id(ntp).now());
           it.printf(xres-x_pad, yres-y_pad/2, id(font_footer), COLOR_OFF, TextAlign::BASELINE_RIGHT, "%.2fV/%.0f%%", id(batt_volt).voltage->state, id(batt).state);
-
+          
+      - id: page_crypto_graph
+        lambda: |-
+          it.graph(0, 0, id(crypto_graph));         
+          
+          // Footer
+          //it.line(0, yres-30, xres, yres-30);
+          it.strftime(x_pad, yres-y_pad/2, id(font_footer), COLOR_ON, TextAlign::BASELINE_LEFT, "%A %d/%b/%Y", id(ntp).now());
+          it.strftime(xres/2, yres-y_pad/2, id(font_footer), COLOR_ON, TextAlign::BASELINE_CENTER, "Updated %H:%M", id(ntp).now());
+          it.printf(xres-x_pad, yres-y_pad/2, id(font_footer), COLOR_ON, TextAlign::BASELINE_RIGHT, "%.2fV/%.0f%%", id(batt_volt).voltage->state, id(batt).state);
+          
 deep_sleep:
   run_duration: ${run_time} 
   sleep_duration: ${sleep_time}
