@@ -90,7 +90,7 @@ globals:
     type: int
   - id: rect_w
     restore_value: no
-    initial_value: "16"
+    initial_value: "32"
     type: int
   - id: rect_h
     restore_value: no
@@ -126,7 +126,7 @@ light:
   - platform: fastled_clockless
     chipset: WS2812
     pin: D4
-    num_leds: 128
+    num_leds: 256
     rgb_order: GRB
     name: "led_matrix"
     id: led_matrix_light
@@ -139,66 +139,6 @@ light:
       - addressable_random_twinkle:
       - addressable_fireworks:
           use_random_color: true
-      - addressable_lambda:
-          name: "Fire"
-          update_interval: 16ms
-          lambda: |-
-            // You may adjust the following two variables as well as the update_interval to fit your needs
-            const uint8_t Cooling  = 55;
-            const uint8_t Sparking = 110;
-            const uint8_t width = 16;
-            const uint8_t height = 8;
-            
-            // Use byte* instead of byte[] to allow dynamic allocation based on number of pixels
-            static byte *heat = (byte*) calloc(height, sizeof(byte));
-            int cooldown;
-            
-            for (uint8_t x = 0; x < width; x++) {
-              // Step 1.  Cool down every cell a little
-              for (uint8_t i = 0; i < height; i++) {
-                cooldown = random(0, ((Cooling * 10) / height) + 2);
-                if (cooldown > heat[i]) {
-                  heat[i] = 0;
-                } else {
-                  heat[i] = heat[i] - cooldown;
-                }
-              }
-              // Step 2.  Heat from each cell drifts 'up' and diffuses a little
-              for (uint16_t k = height - 1; k >= 2; k--) {
-                heat[k] = (heat[k - 1] + heat[k - 2] + heat[k - 2]) / 3;
-              }
-              // Step 3.  Randomly ignite new 'sparks' near the bottom
-              if (random(255) < Sparking) {
-                int y = random(min(height / 10, 7));
-                heat[y] = heat[y] + random(160, 255);
-              }
-              // Step 4.  Convert heat to LED colors
-              for (uint16_t y = 0; y < height; y++) {
-                uint16_t Pixel;
-                if (y%2==0) {
-                  Pixel=y*width+x;
-                } else {
-                  Pixel = ((y+1)*16) - (x+1);
-                }
-                // Scale 'heat' down from 0-255 to 0-191
-                byte t192 = round((heat[Pixel] / 255.0) * 191);
-                // calculate ramp up from
-                byte heatramp = t192 & 0x3F; // 0..63
-                heatramp <<= 2; // scale up to 0..252
-                // figure out which third of the spectrum we're in:
-                //this is where you can reverse the effect by switching the commented out lines in all 3 places.
-                if (t192 > 0x80) {                     // hottest
-                  //it[it.size() - Pixel - 1] = ESPColor(255, 255, heatramp);
-                  it[Pixel] = ESPColor(255, 255, heatramp);
-                } else if (t192 > 0x40 ) {             // middle
-                  //it[it.size() - Pixel - 1] = ESPColor(255, heatramp, 0);
-                  it[Pixel] = ESPColor(255, heatramp, 0);
-                } else {                               // coolest
-                  //it[it.size() - Pixel - 1] = ESPColor(heatramp, 0, 0);
-                  it[Pixel] = ESPColor(heatramp, 0, 0);
-                }
-              }
-            }
 font:
   - id: tinier_font
     file: "fonts/5by7.ttf"
@@ -212,11 +152,11 @@ font:
 image:
   - file: "images/cool.png"
     id: cool
-    resize: 16x16
+    resize: 32x16
     type: RGB24
-  - file: "images/tom32x32.jpg"
+  - file: "images/8bitTom.png"
     id: tom
-    resize: 16x16
+    resize: 32x44
     type: RGB24
 
 time:
@@ -227,17 +167,16 @@ display:
   - platform: addressable_light
     id: led_matrix_display
     addressable_light_id: led_matrix_light
-    width: 16
+    width: 32
     height: 8
     rotation: 0°
     update_interval: 100ms
     pixel_mapper: |-
-      if ((y%2) == 0)  {
-        return (y*16) + x;
-      } else {
-        return ((y+1)*16) - (x+1);
+      if (x % 2 == 0) {
+        return (x * 8) + y;
       }
-
+      return (x * 8) + (7 - y);
+      
     pages:
       - id: page_image
         lambda: |-
@@ -290,9 +229,9 @@ display:
         lambda: |-
           Color red = Color(0xFF0000);
           Color green = Color(0x00FF00);
-          it.filled_rectangle(0, 0, 16, 8, red);
-          it.rectangle(1, 1, 14, 6, green);
-          it.rectangle(3, 3, 12, 2, green);
+          it.filled_rectangle(0, 0, 32, 8, red);
+          it.rectangle(1, 1, 30, 6, green);
+          it.rectangle(3, 3, 28, 2, green);
       - id: text_page
         lambda: |-
           Color green = Color(0x00FF00);
