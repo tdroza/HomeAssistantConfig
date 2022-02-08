@@ -615,6 +615,17 @@ display:
       - id: page_crypto_graph
         lambda: |-
           it.graph(0, 0, id(crypto_graph));         
+          std::string changeIcon = "\U000F0FE1";
+          std::string change = "";
+          if (id(crypto_change).state > 0) {
+            changeIcon = "\U000F0CE1";
+            change = "%.2f";
+          } else if (id(crypto_change).state < 0) {
+            changeIcon = "\U000F0047";
+            change = "(%.2f)";
+          }
+          it.printf(x_pad+50, 40, id(font_icons_small), TextAlign::CENTER_RIGHT, changeIcon.c_str());
+          it.printf(x_pad+50, 40, id(font_footer), TextAlign::CENTER_LEFT, change.c_str(), id(crypto_change).state); 
           
           // Footer
           //it.line(0, yres-30, xres, yres-30);
