@@ -278,7 +278,12 @@
                                                             "type": "custom:slider-entity-row"
                                                         },
                                                         {
-                                                            "entity": "light.anna",
+                                                            "entity": "light.office_lightstick",
+                                                            "toggle": true,
+                                                            "type": "custom:slider-entity-row"
+                                                        },
+                                                        {
+                                                            "entity": "light.annas_desk",
                                                             "toggle": true,
                                                             "type": "custom:slider-entity-row"
                                                         }
@@ -1104,13 +1109,22 @@
                                             "entity": "light.desk",
                                             "type": "light",
                                             "name": " "
-                                        },
-                                        {
-                                            "type": "light",
-                                            "entity": "light.anna"
                                         }
                                     ],
                                     "type": "horizontal-stack"
+                                },
+                                {
+                                    "type": "horizontal-stack",
+                                    "cards": [
+                                        {
+                                            "type": "light",
+                                            "entity": "light.annas_desk"
+                                        },
+                                        {
+                                            "type": "light",
+                                            "entity": "light.office_lightstick"
+                                        }
+                                    ]
                                 },
                                 {
                                     "cards": [
@@ -2372,7 +2386,9 @@
                             "type": "picture-entity",
                             "entity": "camera.octoprint",
                             "camera_image": "camera.octoprint",
-                            "camera_view": "live"
+                            "camera_view": "live",
+                            "show_state": false,
+                            "show_name": false
                         }
                     ],
                     "icon": "mdi:printer-3d",
@@ -2671,6 +2687,9 @@
                                 },
                                 {
                                     "entity": "input_select.epaper_page"
+                                },
+                                {
+                                    "entity": "automation.washer_notify_done"
                                 }
                             ]
                         },
