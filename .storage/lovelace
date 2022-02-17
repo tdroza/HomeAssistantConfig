@@ -1229,13 +1229,13 @@
                                             }
                                         ]
                                     },
-                                    "actions": [
+                                    "shortcuts": [
                                         {
                                             "name": "Clean living room",
                                             "service": "neato.custom_cleaning",
                                             "service_data": {
                                                 "entity_id": "vacuum.ditto",
-                                                "zone": "Lounge"
+                                                "zone": "Living room"
                                             },
                                             "icon": "mdi:sofa"
                                         },
@@ -1244,7 +1244,7 @@
                                             "service": "neato.custom_cleaning",
                                             "service_data": {
                                                 "entity_id": "vacuum.ditto",
-                                                "zone": "Whole Room"
+                                                "zone": "Whole room"
                                             },
                                             "icon": "mdi:silverware-fork-knife"
                                         },
