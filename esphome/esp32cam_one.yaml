@@ -1,5 +1,5 @@
 esphome:
-  name: esp32cam_one
+  name: ${device_name}
   platform: ESP32
   board: esp-wrover-kit
   on_boot:
@@ -11,6 +11,9 @@ esphome:
         id: esp32_status
         state: OFF
       
+substitutions:
+  device_name: esp32cam_one
+  friendly_name: ESP32Cam-One
 wifi:
   ssid: !secret wifi_iot_ssid
   password: !secret wifi_password
@@ -50,6 +53,22 @@ switch:
   - platform: template
     name: "ESP32Cam Status"
     id: esp32_status
+    optimistic: true
+
+text_sensor:
+- platform: version
+  hide_timestamp: true
+  name: "${friendly_name} ESPHome Version"
+  entity_category: diagnostic
+- platform: wifi_info
+  ip_address:
+    name: "${friendly_name} IP Address"
+    icon: mdi:wifi
+    entity_category: diagnostic
+  ssid:
+    name: "${friendly_name} Connected SSID"
+    icon: mdi:wifi-strength-2
+    entity_category: diagnostic
     
 esp32_camera:
   name: esp32cam_one
