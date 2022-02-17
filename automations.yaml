@@ -1348,26 +1348,6 @@
           device_id: 61f89eb89fac9724606bb7e0ffc52c9b
         data:
           brightness_pct: 5
-- id: '1613133024887'
-  alias: Fact Bomb!
-  description: ''
-  trigger:
-  - device_id: 0f3089187d04d66ad82ae402722e0942
-    domain: zha
-    platform: device
-    type: remote_button_short_press
-    subtype: remote_button_short_press
-  condition:
-  - condition: state
-    entity_id: input_boolean.do_not_disturb
-    state: 'off'
-  action:
-  - service: media_player.play_media
-    data:
-      media_content_id: https://tdroza.duckdns.org/local/bomb.mp3
-      media_content_type: music
-    entity_id: media_player.living_room_display
-  mode: single
 - id: '1613401682862'
   alias: Aqara Magic Cube actions
   description: ''
@@ -1859,3 +1839,18 @@
         media_content_id: PLbNmRtwuOMuijrqEgfJowKcaKiqeBATG2
         media_content_type: playlist
         title: Sebs Favourite Music
+- id: '1645116168862'
+  alias: 'ZHA: Anna''s Desk'
+  description: ''
+  use_blueprint:
+    path: SeanM/zha-aqara-wireless-mini-switch.yaml
+    input:
+      aqara_mini_switch: 0f3089187d04d66ad82ae402722e0942
+      button_single_press:
+      - service: light.toggle
+        data: {}
+        target:
+          entity_id: light.annas_desk
+      button_double_press:
+      - service: light.turn_off
+        entity_id: all
