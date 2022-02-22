@@ -1307,11 +1307,6 @@
   alias: 'Lights: turn off house button'
   description: ''
   trigger:
-  - device_id: 0f3089187d04d66ad82ae402722e0942
-    domain: zha
-    platform: device
-    type: remote_button_double_press
-    subtype: remote_button_double_press
   - device_id: a98335e1b775a3c92d83494f43ab2647
     domain: zha
     platform: device
@@ -1322,10 +1317,7 @@
   condition: []
   action:
   - service: light.turn_off
-    data:
-      transition: 1
-    target:
-      entity_id: all
+    entity_id: all
   mode: single
 - id: '1611774100909'
   alias: 'Lights: Toggle Reuben''s light with Zigbee button'
