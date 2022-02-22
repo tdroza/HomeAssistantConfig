@@ -28,6 +28,7 @@ recorder: !include includes/recorder.yaml
 rest_command: !include includes/rest.yaml
 script: !include scripts.yaml
 sensor: !include includes/sensors.yaml
+utility_meter: !include includes/utility.yaml
 zone: !include zones.yaml
 
 sonoff:

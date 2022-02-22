@@ -1,0 +1,5 @@
+crypto_daily_change:
+  source: sensor.coinbase_portfolio_balance
+  name: Crypto Daily Change
+  net_consumption: true
+  cycle: daily
