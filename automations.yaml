@@ -1165,9 +1165,14 @@
       4dd136882e204aec5b9809887714f25b: media_player.seb_s_home
       43ddd1e400d41d9d547f7bc24a95f86d: media_player.reuben_s_room_speaker
     tags:
+      04-72-6E-62-90-6B-80:
+        title: Finn Caspian
+        podcast_counter: counter.podcast_finn_caspian
+        sensor: sensor.podcast_finn_caspian
       2011897b-e41a-4d94-8bbb-a51004899ad8:
         title: But Why (Seb Ring)
         podcast_counter: counter.podcast_but_why
+        sensor: sensor.podcast_but_why
       04-35-6F-AA-ED-6C-80:
         title: But Why
         podcast_counter: counter.podcast_but_why

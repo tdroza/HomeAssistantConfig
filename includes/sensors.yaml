@@ -87,6 +87,14 @@
       value_template: '{{states.sensor.ensuite_temperature.state |round(0)}}'
 - platform: feedparser
   scan_interval: 43200
+  name: podcast_finn_caspian
+  feed_url: https://rss.art19.com/the-alien-adventures-of-finn-caspian
+  inclusions: 
+    - title
+    - links
+    - published
+- platform: feedparser
+  scan_interval: 43200
   name: podcast_but_why
   feed_url: https://podcasts.vpr.net/but-why
   inclusions: 
