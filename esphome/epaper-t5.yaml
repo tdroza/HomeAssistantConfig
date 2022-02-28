@@ -393,7 +393,7 @@ sensor:
 
   - platform: homeassistant
     id: crypto_change
-    entity_id: 'sensor.crypto_portfolio_change'
+    entity_id: 'sensor.crypto_daily_change'
   - platform: homeassistant
     id: crypto_portfolio
     entity_id: 'sensor.coinbase_portfolio_balance'
@@ -454,7 +454,7 @@ display:
   - platform: lilygo_t5_47
     id: t5_display
     rotation: 180
-    full_update_every: 10
+    full_update_every: 1
     update_interval: never
     pages:
       - id: page_white
@@ -490,7 +490,8 @@ display:
           #define x2 ((xres/3) * 1) // x position 2nd column name
           #define x3 ((xres/3) * 2) // x position 3rd column name
 
-
+          id(t5_display).power_on();
+          
           it.printf(x_pad, 40, id(font_value), TextAlign::TOP_LEFT, "Balance £%.2f", id(crypto_portfolio).state);
           std::string changeIcon = "\U000F0FE1";
           std::string change = "";
@@ -536,7 +537,7 @@ display:
           double_t percentage = (1-(4.2-battery_voltage)/(4.2-2.9))*100;
           uint8_t battery_percentage = percentage < 0 ? 0 : percentage > 100 ? 100 : percentage;
         
-          it.printf(xres-x_pad, yres-y_pad/2, id(font_footer), COLOR_OFF, TextAlign::BASELINE_RIGHT, "%.2fV/%.0f%%", battery_voltage, percentage);
+          it.printf(xres-x_pad, yres-y_pad/2, id(font_footer), COLOR_OFF, TextAlign::BASELINE_RIGHT, "%.2fV/%3d%%%", battery_voltage, battery_percentage);
           
       - id: page_temps
         lambda: |-
