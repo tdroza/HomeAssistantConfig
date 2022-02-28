@@ -199,7 +199,7 @@ binary_sensor:
 sensor:
   - platform: homeassistant
     id: crypto_change
-    entity_id: 'sensor.crypto_portfolio_change'
+    entity_id: 'sensor.crypto_daily_change'
   - platform: homeassistant
     id: crypto_portfolio
     entity_id: 'sensor.coinbase_portfolio_balance'
