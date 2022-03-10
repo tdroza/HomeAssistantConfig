@@ -326,28 +326,24 @@
     - sensor.ensuite_temperature
     - sensor.living_room_temp
 - platform: statistics
+  state_characteristic: mean
   name: temps_min_stats
   entity_id: sensor.all_temps_min
   sampling_size: 1000
   max_age:
     hours: 24
 - platform: statistics
+  state_characteristic: mean
   name: temps_max_stats
   entity_id: sensor.all_temps_max
   sampling_size: 1000
   max_age:
     hours: 24
 - platform: statistics
+  state_characteristic: mean
   sampling_size: 2000
   max_age:
     hours: 24
   name: pm2_5_max
   entity_id: sensor.air_quality_pm2_5
-- platform: statistics
-  name: crypto_portfolio_change
-  state_characteristic: change
-  entity_id: sensor.coinbase_portfolio_balance
-  sampling_size: 5000
-  max_age:
-    hours: 12
    
