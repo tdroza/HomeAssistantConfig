@@ -63,9 +63,3 @@ ifttt:
   key:
     tom: !secret tom_ifttt
     anna: !secret anna_ifttt
-
-camera:
-  - platform: mjpeg
-    name: OctoPrint
-    still_image_url: http://octopi.lan/webcam/?action=snapshot
-    mjpeg_url: http://octopi.lan/webcam/?action=stream
