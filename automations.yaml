@@ -1345,47 +1345,6 @@
           device_id: 61f89eb89fac9724606bb7e0ffc52c9b
         data:
           brightness_pct: 5
-- id: '1613401682862'
-  alias: Aqara Magic Cube actions
-  description: ''
-  use_blueprint:
-    path: Mikkelmoeller/aqara-magic-cube-zha-51-actions.yaml
-    input:
-      remote: 9f50d49473ecd72dad9e827acb4e6f60
-      rotate_right:
-      - service: input_select.select_next
-        data: {}
-        entity_id: input_select.wled_effects
-      - service: light.turn_on
-        data:
-          effect: '{{ states(''input_select.wled_effects'') }}'
-        entity_id: light.desk
-      rotate_left:
-      - service: input_select.select_previous
-        data: {}
-        entity_id: input_select.wled_effects
-      - service: light.turn_on
-        data:
-          effect: '{{ states(''input_select.wled_effects'') }}'
-      flip_180: true
-      cube_flip_180:
-      - service: light.toggle
-        data: {}
-        target:
-          entity_id: light.desk
-      cube_shake:
-      - service: light.turn_off
-        data:
-          transition: 1
-        target:
-          entity_id: all
-      knock_any_side: true
-      cube_knock_any:
-      - service: light.turn_off
-        target:
-          area_id: 4ff1e165afb84885be26f9e1add47e4f
-        data:
-          transition: 5
 - id: '1616499915162'
   alias: Anna's phone - smart charging
   description: ''
@@ -1851,3 +1810,110 @@
       button_double_press:
       - service: light.turn_off
         entity_id: all
+- id: '1646231230823'
+  alias: Office Cube
+  description: ''
+  use_blueprint:
+    path: EdwardTFN/aqara-cube-zha-simplified-face-based-device-control.yaml
+    input:
+      last_face_input: input_number.office_cube_current_face
+      cube: 9f50d49473ecd72dad9e827acb4e6f60
+      face_1_flip:
+      - service: notify.mobile_app_in2013
+        data:
+          message: Side 1
+      face_2_flip:
+      - service: notify.mobile_app_in2013
+        data:
+          message: Side 2
+      face_3_flip:
+      - service: notify.mobile_app_in2013
+        data:
+          message: Side 3
+      face_4_flip:
+      - service: notify.mobile_app_in2013
+        data:
+          message: Side 4
+      face_5_flip:
+      - service: notify.mobile_app_in2013
+        data:
+          message: Side 5
+      face_6_flip:
+      - service: notify.mobile_app_in2013
+        data:
+          message: Side 6
+      face_1_knock:
+      - service: light.toggle
+        data: {}
+        target:
+          entity_id: light.desk
+      face_1_rotate_counter_clockwise:
+      - service: input_select.select_previous
+        data: {}
+        target:
+          entity_id: input_select.wled_effects
+      - service: light.turn_on
+        entity_id: light.desk
+        data:
+          effect: '{{states(''input_select.wled_effects'')}}'
+      face_2_knock:
+      - service: light.toggle
+        data: {}
+        target:
+          entity_id:
+          - light.second_bedroom_light
+      face_5_knock:
+      - service: light.toggle
+        data: {}
+        target:
+          entity_id: light.annas_desk
+      face_5_rotate_counter_clockwise:
+      - service: light.turn_on
+        data:
+          brightness_step_pct: -10
+        target:
+          entity_id: light.annas_desk
+      face_5_rotate_clockwise:
+      - service: light.turn_on
+        data:
+          brightness_step_pct: 10
+        target:
+          entity_id: light.annas_desk
+      face_2_rotate_counter_clockwise:
+      - service: light.turn_on
+        data:
+          brightness_step_pct: -10
+        target:
+          entity_id: light.second_bedroom_light
+      face_2_rotate_clockwise:
+      - service: light.turn_on
+        data:
+          brightness_step_pct: 10
+        target:
+          entity_id: light.second_bedroom_light
+      face_1_rotate_clockwise:
+      - service: input_select.select_previous
+        data: {}
+        target:
+          entity_id: input_select.wled_effects
+      - service: light.turn_on
+        entity_id: light.desk
+        data:
+          effect: '{{states(''input_select.wled_effects'')}}'
+      face_4_knock:
+      - service: light.toggle
+        data: {}
+        target:
+          area_id: 4ff1e165afb84885be26f9e1add47e4f
+      face_4_rotate_counter_clockwise:
+      - service: light.turn_on
+        data:
+          brightness_step_pct: -10
+        target:
+          area_id: 4ff1e165afb84885be26f9e1add47e4f
+      face_4_rotate_clockwise:
+      - service: light.turn_on
+        data:
+          brightness_step_pct: 10
+        target:
+          area_id: 4ff1e165afb84885be26f9e1add47e4f
