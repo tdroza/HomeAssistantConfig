@@ -390,7 +390,8 @@ button:
     name: "${friendly_name} Restart"
 
 sensor:
-
+  - id: battery
+    platform: lilygo_t5_47
   - platform: homeassistant
     id: crypto_change
     entity_id: 'sensor.crypto_daily_change'
@@ -533,11 +534,10 @@ display:
           it.strftime(xres/2, yres-y_pad/2, id(font_footer), COLOR_OFF, TextAlign::BASELINE_CENTER, "Updated %H:%M", id(ntp).now());
   
           // Now we're ready to read the battery
-          double_t battery_voltage = id(t5_display).get_battery_voltage();
-          double_t percentage = (1-(4.2-battery_voltage)/(4.2-2.9))*100;
+          double_t percentage = (1-(BATTERY_MAX- id(battery).state)/(BATTERY_MAX-BATTERY_MIN))*100;
           uint8_t battery_percentage = percentage < 0 ? 0 : percentage > 100 ? 100 : percentage;
         
-          it.printf(xres-x_pad, yres-y_pad/2, id(font_footer), COLOR_OFF, TextAlign::BASELINE_RIGHT, "%.2fV/%3d%%", battery_voltage, battery_percentage);
+          it.printf(xres-x_pad, yres-y_pad/2, id(font_footer), COLOR_OFF, TextAlign::BASELINE_RIGHT, "%.2fV/%3d%%", id(battery).state, battery_percentage);
           
       - id: page_temps
         lambda: |-
