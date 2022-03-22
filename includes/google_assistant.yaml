@@ -74,6 +74,9 @@ entity_config:
       aliases:
         - Sebs lightstick
       expose: true
+    light.upstairs_light_group:
+      name: "Upstairs lights"
+      expose: true
     light.xmas_tree:
       name: "Christmas Tree Lights"
       aliases:

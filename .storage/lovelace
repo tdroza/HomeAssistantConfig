@@ -140,7 +140,8 @@
                                                         "light.tv_backlight"
                                                     ],
                                                     "head": {
-                                                        "entity": "group.room_living",
+                                                        "entity": "light.living_room_light_group",
+                                                        "name": "Living Room",
                                                         "icon": "mdi:lightbulb-group-outline"
                                                     },
                                                     "type": "custom:fold-entity-row"
@@ -158,7 +159,8 @@
                                                 {
                                                     "type": "custom:fold-entity-row",
                                                     "head": {
-                                                        "entity": "light.main_bedroom",
+                                                        "entity": "light.main_bedroom_light_group",
+                                                        "name": "Main bedroom",
                                                         "icon": "mdi:lightbulb-group-outline"
                                                     },
                                                     "entities": [
@@ -261,7 +263,7 @@
                                                 {
                                                     "type": "custom:fold-entity-row",
                                                     "head": {
-                                                        "entity": "light.second_bedroom_lights",
+                                                        "entity": "light.second_bedroom_light_group",
                                                         "name": "Office",
                                                         "icon": "mdi:lightbulb-group-outline"
                                                     },
@@ -273,7 +275,7 @@
                                                             "type": "custom:slider-entity-row"
                                                         },
                                                         {
-                                                            "entity": "light.desk",
+                                                            "entity": "light.toms_desk_master",
                                                             "toggle": true,
                                                             "type": "custom:slider-entity-row"
                                                         },
@@ -292,7 +294,7 @@
                                                 {
                                                     "type": "custom:fold-entity-row",
                                                     "head": {
-                                                        "entity": "group.room_seb",
+                                                        "entity": "light.sebs_bedroom_light_group",
                                                         "name": "Seb's bedroom",
                                                         "icon": "mdi:lightbulb-group-outline"
                                                     },
@@ -365,7 +367,7 @@
                                                 {
                                                     "type": "custom:fold-entity-row",
                                                     "head": {
-                                                        "entity": "group.room_reu",
+                                                        "entity": "light.reubens_bedroom_light_group",
                                                         "name": "Reuben's bedroom",
                                                         "icon": "mdi:lightbulb-group-outline"
                                                     },
@@ -1106,9 +1108,10 @@
                                             "name": " "
                                         },
                                         {
-                                            "entity": "light.desk",
+                                            "entity": "light.toms_desk_master",
                                             "type": "light",
-                                            "name": " "
+                                            "name": " ",
+                                            "icon": "mdi:desk"
                                         }
                                     ],
                                     "type": "horizontal-stack"
@@ -1556,36 +1559,45 @@
                             "type": "vertical-stack"
                         },
                         {
-                            "cards": [
+                            "type": "conditional",
+                            "conditions": [
                                 {
-                                    "name": "Sourdough",
-                                    "template": "button-card-headers",
-                                    "type": "custom:button-card"
-                                },
-                                {
-                                    "entities": [
-                                        "sensor.sourdough_height",
-                                        "sensor.sourdough_temperature"
-                                    ],
-                                    "type": "entities"
-                                },
-                                {
-                                    "entities": [
-                                        {
-                                            "entity": "sensor.sourdough_height",
-                                            "y_axis": "secondary"
-                                        },
-                                        "sensor.sourdough_temperature"
-                                    ],
-                                    "points_per_hour": 20,
-                                    "show": {
-                                        "icon": false,
-                                        "name": false
-                                    },
-                                    "type": "custom:mini-graph-card"
+                                    "entity": "sensor.sourdough_height",
+                                    "state": "Unavailable"
                                 }
                             ],
-                            "type": "vertical-stack"
+                            "card": {
+                                "type": "vertical-stack",
+                                "cards": [
+                                    {
+                                        "name": "Sourdough",
+                                        "template": "button-card-headers",
+                                        "type": "custom:button-card"
+                                    },
+                                    {
+                                        "entities": [
+                                            "sensor.sourdough_height",
+                                            "sensor.sourdough_temperature"
+                                        ],
+                                        "type": "entities"
+                                    },
+                                    {
+                                        "entities": [
+                                            {
+                                                "entity": "sensor.sourdough_height",
+                                                "y_axis": "secondary"
+                                            },
+                                            "sensor.sourdough_temperature"
+                                        ],
+                                        "points_per_hour": 20,
+                                        "show": {
+                                            "icon": false,
+                                            "name": false
+                                        },
+                                        "type": "custom:mini-graph-card"
+                                    }
+                                ]
+                            }
                         },
                         {
                             "type": "entities",
