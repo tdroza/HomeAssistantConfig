@@ -1879,25 +1879,25 @@
       face_5_rotate_counter_clockwise:
       - service: light.turn_on
         data:
-          brightness_step_pct: -10
+          brightness_step_pct: -25
         target:
           entity_id: light.annas_desk
       face_5_rotate_clockwise:
       - service: light.turn_on
         data:
-          brightness_step_pct: 10
+          brightness_step_pct: 25
         target:
           entity_id: light.annas_desk
       face_2_rotate_counter_clockwise:
       - service: light.turn_on
         data:
-          brightness_step_pct: -10
+          brightness_step_pct: -25
         target:
           entity_id: light.second_bedroom_light
       face_2_rotate_clockwise:
       - service: light.turn_on
         data:
-          brightness_step_pct: 10
+          brightness_step_pct: 25
         target:
           entity_id: light.second_bedroom_light
       face_1_rotate_clockwise:
@@ -1917,12 +1917,12 @@
       face_4_rotate_counter_clockwise:
       - service: light.turn_on
         data:
-          brightness_step_pct: -10
+          brightness_step_pct: -26
         target:
           area_id: 4ff1e165afb84885be26f9e1add47e4f
       face_4_rotate_clockwise:
       - service: light.turn_on
         data:
-          brightness_step_pct: 10
+          brightness_step_pct: 25
         target:
           area_id: 4ff1e165afb84885be26f9e1add47e4f
