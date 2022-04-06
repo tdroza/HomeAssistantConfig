@@ -1735,7 +1735,7 @@
                                     "type": "state-icon"
                                 },
                                 {
-                                    "entity": "light.lightstrip",
+                                    "entity": "light.tv_backlight",
                                     "hold_action": {
                                         "action": "more-info"
                                     },
@@ -1755,9 +1755,10 @@
                                         "action": "more-info"
                                     },
                                     "style": {
+                                        "transform": "scale(2,2)",
                                         "font-size": "12px",
-                                        "left": "65%",
-                                        "top": "90%"
+                                        "left": "60%",
+                                        "top": "85%"
                                     },
                                     "tap_action": {
                                         "action": "toggle"
@@ -1770,9 +1771,10 @@
                                         "action": "more-info"
                                     },
                                     "style": {
+                                        "transform": "scale(2,2)",
                                         "font-size": "12px",
-                                        "left": "90%",
-                                        "top": "90%"
+                                        "left": "85%",
+                                        "top": "85%"
                                     },
                                     "tap_action": {
                                         "action": "toggle"
@@ -1865,7 +1867,22 @@
                                     "type": "state-icon"
                                 },
                                 {
-                                    "entity": "light.desk",
+                                    "entity": "light.annas_desk",
+                                    "hold_action": {
+                                        "action": "more-info"
+                                    },
+                                    "style": {
+                                        "transform": "scale(1.5,1.5)",
+                                        "left": "66%",
+                                        "top": "5%"
+                                    },
+                                    "tap_action": {
+                                        "action": "toggle"
+                                    },
+                                    "type": "state-icon"
+                                },
+                                {
+                                    "entity": "light.toms_desk",
                                     "hold_action": {
                                         "action": "more-info"
                                     },
@@ -1877,11 +1894,10 @@
                                     "tap_action": {
                                         "action": "toggle"
                                     },
-                                    "icon": "mdi:desk",
                                     "type": "state-icon"
                                 },
                                 {
-                                    "entity": "sensor.bed2_temperature_rounded",
+                                    "entity": "sensor.office_temperature_rounded",
                                     "style": {
                                         "background": "center / contain no-repeat url(\"/local/nest.png\")",
                                         "font-size": "12px",
