@@ -1398,24 +1398,6 @@
     entity_id: switch.annas_phone_charger
     domain: switch
   mode: single
-- id: '1616588148819'
-  alias: 'Lights: Fix living room 2 randomly turning on'
-  description: ''
-  trigger:
-  - platform: state
-    entity_id: light.living_room_2
-    from: 'off'
-    to: 'on'
-    for: 00:00:03
-  condition:
-  - condition: state
-    entity_id: light.living_room_1
-    state: 'off'
-  action:
-  - service: light.turn_off
-    target:
-      entity_id: light.living_room_2
-  mode: single
 - id: '1618222807946'
   alias: 'NFC: Tag scanned after 20:30 plays bedtime message'
   description: Time cut-off is set by `input_datetime.boys_bedtime`
@@ -1926,3 +1908,39 @@
           brightness_step_pct: 25
         target:
           area_id: 4ff1e165afb84885be26f9e1add47e4f
+- id: '1648486249768'
+  alias: Tag Office off is scanned
+  description: ''
+  trigger:
+  - platform: tag
+    tag_id: 1b679f1c-77ce-4875-93d0-18d058e268e6
+  condition: []
+  action:
+  - service: light.turn_off
+    data: {}
+    target:
+      area_id: 4ff1e165afb84885be26f9e1add47e4f
+  - service: switch.turn_off
+    data: {}
+    target:
+      entity_id: switch.toms_desk
+  mode: single
+- id: '1649170956033'
+  alias: ESPresense test- Tom
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: sensor.toms_phone_ble
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 0
+  condition:
+  - condition: template
+    value_template: '{{trigger.from_state.state != trigger.to_state.state}}'
+  action:
+  - service: notify.mobile_app_in2013
+    data:
+      title: ESPresense
+      message: Tom is now in the {{states('sensor.toms_phone_ble')}}
+  mode: single

@@ -70,9 +70,9 @@
     bed1_temperature_rounded:
       friendly_name: 'Bed1 Temp'
       value_template: '{{states.sensor.bed1_temperature.state |round(0)}}'
-    bed2_temperature_rounded:
+    office_temperature_rounded:
       friendly_name: 'Bed 2 Temp'
-      value_template: '{{states.sensor.bed2_temperature.state |round(0)}}'
+      value_template: '{{states.sensor.office_temperature.state |round(0)}}'
     seb_temperature_rounded:
       friendly_name: 'Seb Temp'
       value_template: '{{states.sensor.seb_d1_temperature.state |round(0)}}'
@@ -346,4 +346,21 @@
     hours: 24
   name: pm2_5_max
   entity_id: sensor.air_quality_pm2_5
-   
+- platform: mqtt_room
+  name: "Toms Phone BLE"
+  device_id: "iBeacon:add4883f-65b3-4004-b3dc-3e73d12100ec-100-1"
+  state_topic: "espresense/rooms"
+  timeout: 5
+  away_timeout: 120
+- platform: mqtt_room
+  name: "Annas MiBand"
+  device_id: "mifit:c0125c9784a2"
+  state_topic: "espresense/rooms"
+  timeout: 5
+  away_timeout: 120
+- platform: mqtt_room
+  name: "Rebens MiBand"
+  device_id: "mifit:ca53200f684b"
+  state_topic: "espresense/rooms"
+  timeout: 5
+  away_timeout: 120
