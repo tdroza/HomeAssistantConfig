@@ -1,3 +1,36 @@
 set_desk_percent:
   url: 'http://192.168.1.137/winIX={{percent}}'
   method: GET
+  
+pixel_it:
+  url: 'http://192.168.1.163/api/screen'
+  method: POST
+  content_type: 'application/json'
+  payload: '{
+    "switchAnimation": {
+        "aktiv": true,
+        "animation": "{{transition}}"
+    },
+    "bitmap": {
+        "data": {{icon}},
+        "position": {
+            "x": 0,
+            "y": 0
+        },
+        "size": {
+            "width": 8,
+            "height": 8
+        }
+    },
+    "text": {
+        "textString": "{{message}}",
+        "bigFont": false,
+        "scrollText": "auto", 
+        "scrollTextDelay": 80,
+        "centerText": false, 
+        "position": {
+            "x": 8,
+            "y": 1
+        },
+        "hexColor": "{{hexColor}}"
+    }}'

@@ -1,0 +1,62 @@
+- id: '234523410987346' 
+  alias: PixelIt Crypto
+  description: ''
+  variables:
+    color:
+      crypto: "#2b0eaf"
+    icon:
+      up: !secret arrow_up
+      down: !secret arrow_down
+      updown: !secret arrow_updown
+  trigger:
+  - platform: time_pattern
+    seconds: '15'
+  action:
+
+  - service: rest_command.pixel_it
+    data:
+      hexColor: "{{color['crypto']}}"
+      message: "{{ states('sensor.coinbase_portfolio_balance') | int }}"
+      transition: "coloredBarWipe"
+      icon: >
+        {% if (states('sensor.crypto_daily_change') | float < 0) %}
+          {{icon['down']}}
+        {% elif (states('sensor.crypto_daily_change') | float > 0) %}
+          {{icon['up']}}
+        {% else %}
+          {{icon['updown']}}
+        {% endif %}
+  - delay:
+      seconds: 5
+  - service: rest_command.pixel_it
+    data:
+      hexColor: "{{color['crypto']}}"
+      message: "{{ states('sensor.crypto_daily_change') | float | abs}}"
+      transition: "fade"
+      icon: >
+        {% if (states('sensor.crypto_daily_change') | float < 0) %}
+          {{icon['down']}}
+        {% elif (states('sensor.crypto_daily_change') | float > 0) %}
+          {{icon['up']}}
+        {% else %}
+          {{icon['updown']}}
+        {% endif %}
+            
+- id: '234523410317346' 
+  alias: PixelIt Weather Temperature
+  description: ''
+  variables:
+    color:
+      weather: "#00ff00"
+  trigger:
+  - platform: time_pattern
+    seconds: '45'
+  action:
+  - service: rest_command.pixel_it
+    data:
+      hexColor: "{{color['weather']}}"
+      message: "{{ states('sensor.weather_temperature') }}"
+      transition: "coloredBarWipe"
+      icon: !secret temperature      
+
+
