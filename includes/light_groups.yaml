@@ -12,7 +12,7 @@
   name: Reubens Bedroom Light Group
   entities:
     - light.rname
-    - light.reuben_ceiling
+    - light.reubens_ceiling
 - platform: group
   name: Sebs Bedroom Light Group
   entities:
