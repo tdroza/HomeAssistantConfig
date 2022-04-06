@@ -351,16 +351,22 @@
   device_id: "iBeacon:add4883f-65b3-4004-b3dc-3e73d12100ec-100-1"
   state_topic: "espresense/rooms"
   timeout: 5
-  away_timeout: 120
+  away_timeout: 150
 - platform: mqtt_room
   name: "Annas MiBand"
   device_id: "mifit:c0125c9784a2"
   state_topic: "espresense/rooms"
   timeout: 5
-  away_timeout: 120
+  away_timeout: 150
 - platform: mqtt_room
-  name: "Rebens MiBand"
+  name: "Reubens MiBand"
   device_id: "mifit:ca53200f684b"
   state_topic: "espresense/rooms"
   timeout: 5
-  away_timeout: 120
+  away_timeout: 150
+- platform: mqtt_room
+  name: "Sebs MiBand"
+  device_id: "mifit:ca53200f684b"
+  state_topic: "espresense/rooms"
+  timeout: 5
+  away_timeout: 150
