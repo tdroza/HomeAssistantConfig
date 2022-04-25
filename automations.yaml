@@ -378,6 +378,7 @@
           title: Washer emptied
         group: Washing machine
         channel: WashingMachine
+        tag: washer-repeat
     service: notify.tom_and_anna
   mode: single
 - id: '1581777155699'
@@ -1703,6 +1704,9 @@
   - condition: state
     entity_id: binary_sensor.workday_sensor
     state: 'on'
+  - condition: state
+    entity_id: input_boolean.holiday_mode
+    state: 'off'
   action:
   - type: turn_on
     device_id: b1e67ae9d70423911cd751c767cce4fa
@@ -1716,6 +1720,7 @@
   - service: light.turn_on
     target:
       entity_id: light.anna
+    data: {}
   mode: single
 - id: '1637929014156'
   alias: 'Office: Turn off'
@@ -1727,10 +1732,14 @@
   - condition: state
     entity_id: binary_sensor.workday_sensor
     state: 'on'
+  - condition: state
+    entity_id: input_boolean.holiday_mode
+    state: 'off'
   action:
   - service: light.turn_off
     target:
       entity_id: light.anna
+    data: {}
   - type: turn_off
     device_id: b1e67ae9d70423911cd751c767cce4fa
     entity_id: switch.toms_desk
@@ -1943,4 +1952,23 @@
     data:
       title: ESPresense
       message: Tom is now in the {{states('sensor.toms_phone_ble')}}
+  mode: single
+- id: '1650886318156'
+  alias: Fade speakers at boys' bedtime
+  description: ''
+  trigger:
+  - platform: time
+    at: input_datetime.boys_bedtime
+  condition: []
+  action:
+  - service: script.fade_volume
+    data:
+      target_player: media_player.reuben_s_room_speaker
+      target_volume: 0
+      duration: 3600
+  - service: script.fade_volume
+    data:
+      target_player: media_player.seb_s_home
+      duration: 3600
+      target_volume: 0
   mode: single
