@@ -1124,8 +1124,14 @@
                                             "entity": "light.annas_desk"
                                         },
                                         {
-                                            "type": "light",
-                                            "entity": "light.office_lightstick"
+                                            "show_name": false,
+                                            "show_icon": true,
+                                            "type": "button",
+                                            "tap_action": {
+                                                "action": "toggle"
+                                            },
+                                            "entity": "switch.toms_desk",
+                                            "show_state": false
                                         }
                                     ]
                                 },
@@ -2194,50 +2200,6 @@
                         {
                             "cards": [
                                 {
-                                    "cards": [
-                                        {
-                                            "entity": "light.xmas_tree",
-                                            "type": "entity-button",
-                                            "icon": "mdi:pine-tree"
-                                        },
-                                        {
-                                            "entity": "light.christmas_star",
-                                            "type": "entity-button"
-                                        },
-                                        {
-                                            "entity": "light.advent",
-                                            "type": "entity-button",
-                                            "icon": "mdi:greenhouse"
-                                        }
-                                    ],
-                                    "type": "horizontal-stack"
-                                }
-                            ],
-                            "type": "vertical-stack"
-                        },
-                        {
-                            "entities": [
-                                "sensor.shipley_to_bradford",
-                                "sensor.shipley_to_leeds"
-                            ],
-                            "title": "Commute",
-                            "type": "custom:travel-time-card"
-                        },
-                        {
-                            "entity": "input_number.diffuser_delay",
-                            "type": "entity"
-                        }
-                    ],
-                    "icon": "mdi:archive",
-                    "path": "archived",
-                    "title": "Archived"
-                },
-                {
-                    "badges": [],
-                    "cards": [
-                        {
-                            "cards": [
-                                {
                                     "content": "{{ as_timestamp(states('sensor.date')) | timestamp_custom(\"%A, %d %B %Y\", True)}}\n{{ states('sensor.time') }}\n===",
                                     "type": "markdown"
                                 },
@@ -2388,6 +2350,50 @@
                     "path": "kiosk",
                     "theme": "Google Dark Theme",
                     "title": "Smart Mirror"
+                },
+                {
+                    "badges": [],
+                    "cards": [
+                        {
+                            "cards": [
+                                {
+                                    "cards": [
+                                        {
+                                            "entity": "light.xmas_tree",
+                                            "type": "entity-button",
+                                            "icon": "mdi:pine-tree"
+                                        },
+                                        {
+                                            "entity": "light.christmas_star",
+                                            "type": "entity-button"
+                                        },
+                                        {
+                                            "entity": "light.advent",
+                                            "type": "entity-button",
+                                            "icon": "mdi:greenhouse"
+                                        }
+                                    ],
+                                    "type": "horizontal-stack"
+                                }
+                            ],
+                            "type": "vertical-stack"
+                        },
+                        {
+                            "entities": [
+                                "sensor.shipley_to_bradford",
+                                "sensor.shipley_to_leeds"
+                            ],
+                            "title": "Commute",
+                            "type": "custom:travel-time-card"
+                        },
+                        {
+                            "entity": "input_number.diffuser_delay",
+                            "type": "entity"
+                        }
+                    ],
+                    "icon": "mdi:archive",
+                    "path": "archived",
+                    "title": "Archived"
                 },
                 {
                     "views": null,
