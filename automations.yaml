@@ -1958,17 +1958,43 @@
   description: ''
   trigger:
   - platform: time
-    at: input_datetime.boys_bedtime
+    at: '21:30:00'
   condition: []
   action:
   - service: script.fade_volume
     data:
       target_player: media_player.reuben_s_room_speaker
       target_volume: 0
-      duration: 3600
+      duration: 300
   - service: script.fade_volume
     data:
       target_player: media_player.seb_s_home
-      duration: 3600
+      duration: 300
       target_volume: 0
+  - wait_for_trigger:
+    - platform: state
+      entity_id: media_player.reuben_s_room_speaker
+      attribute: volume_level
+      to: '0'
+    - platform: state
+      entity_id: media_player.seb_s_home
+      attribute: volume_level
+      to: '0'
+  - service: media_player.media_stop
+    data:
+      entity_id: media_player.seb_s_home
+  - service: media_player.media_stop
+    data:
+      entity_id: media_player.reuben_s_room_speaker
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 5
+      milliseconds: 0
+  - service: media_player.media_stop
+    data:
+      entity_id: media_player.seb_s_home
+  - service: media_player.media_stop
+    data:
+      entity_id: media_player.reuben_s_room_speaker
   mode: single

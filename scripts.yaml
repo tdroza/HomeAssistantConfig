@@ -19,7 +19,7 @@ toggle_dnd:
   icon: mdi:volume-off
 fade_volume:
   alias: Fade the volume of a media player
-  mode: restart
+  mode: parallel
   fields:
     target_player:
       name: Target media player
