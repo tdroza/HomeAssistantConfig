@@ -280,11 +280,6 @@
                                                             "type": "custom:slider-entity-row"
                                                         },
                                                         {
-                                                            "entity": "light.office_lightstick",
-                                                            "toggle": true,
-                                                            "type": "custom:slider-entity-row"
-                                                        },
-                                                        {
                                                             "entity": "light.annas_desk",
                                                             "toggle": true,
                                                             "type": "custom:slider-entity-row"
@@ -929,6 +924,19 @@
                                     "type": "custom:button-card"
                                 },
                                 {
+                                    "type": "conditional",
+                                    "conditions": [
+                                        {
+                                            "entity": "media_player.seb_s_home",
+                                            "state": "playing"
+                                        }
+                                    ],
+                                    "card": {
+                                        "type": "media-control",
+                                        "entity": "media_player.seb_s_home"
+                                    }
+                                },
+                                {
                                     "cards": [
                                         {
                                             "entity": "light.sebs_ceiling",
@@ -1015,6 +1023,19 @@
                                     "name": "Reuben's Bedroom",
                                     "template": "button-card-headers",
                                     "type": "custom:button-card"
+                                },
+                                {
+                                    "type": "conditional",
+                                    "conditions": [
+                                        {
+                                            "entity": "media_player.reuben_s_room_speaker",
+                                            "state": "playing"
+                                        }
+                                    ],
+                                    "card": {
+                                        "type": "media-control",
+                                        "entity": "media_player.reuben_s_room_speaker"
+                                    }
                                 },
                                 {
                                     "cards": [
@@ -1425,6 +1446,19 @@
                                             "name": false
                                         },
                                         "type": "custom:mini-graph-card"
+                                    }
+                                },
+                                {
+                                    "type": "conditional",
+                                    "conditions": [
+                                        {
+                                            "entity": "media_player.kitchen_and_dining_room_2",
+                                            "state": "playing"
+                                        }
+                                    ],
+                                    "card": {
+                                        "type": "media-control",
+                                        "entity": "media_player.kitchen_and_dining_room_2"
                                     }
                                 }
                             ],
