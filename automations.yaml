@@ -1954,18 +1954,16 @@
       message: Tom is now in the {{states('sensor.toms_phone_ble')}}
   mode: single
 - id: '1650886318156'
-  alias: Fade speakers at boys' bedtime
+  alias: Fade Seb's speaker at bedtime
   description: ''
   trigger:
   - platform: time
     at: '21:30:00'
-  condition: []
+  condition:
+  - condition: state
+    entity_id: media_player.seb_s_home
+    state: playing
   action:
-  - service: script.fade_volume
-    data:
-      target_player: media_player.reuben_s_room_speaker
-      target_volume: 0
-      duration: 300
   - service: script.fade_volume
     data:
       target_player: media_player.seb_s_home
@@ -1973,19 +1971,13 @@
       target_volume: 0
   - wait_for_trigger:
     - platform: state
-      entity_id: media_player.reuben_s_room_speaker
-      attribute: volume_level
-      to: '0'
-    - platform: state
       entity_id: media_player.seb_s_home
       attribute: volume_level
       to: '0'
+    timeout: '305'
   - service: media_player.media_stop
     data:
       entity_id: media_player.seb_s_home
-  - service: media_player.media_stop
-    data:
-      entity_id: media_player.reuben_s_room_speaker
   - delay:
       hours: 0
       minutes: 0
@@ -1994,6 +1986,37 @@
   - service: media_player.media_stop
     data:
       entity_id: media_player.seb_s_home
+  mode: single
+- id: '1651247435420'
+  alias: Fade Reu's speaker at bedtime
+  description: ''
+  trigger:
+  - platform: time
+    at: '21:30:00'
+  condition:
+  - condition: state
+    entity_id: media_player.reuben_s_room_speaker
+    state: playing
+  action:
+  - service: script.fade_volume
+    data:
+      target_player: media_player.reuben_s_room_speaker
+      target_volume: 0
+      duration: 300
+  - wait_for_trigger:
+    - platform: state
+      entity_id: media_player.reuben_s_room_speaker
+      attribute: volume_level
+      to: '0'
+    timeout: '305'
+  - service: media_player.media_stop
+    data:
+      entity_id: media_player.reuben_s_room_speaker
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 5
+      milliseconds: 0
   - service: media_player.media_stop
     data:
       entity_id: media_player.reuben_s_room_speaker
