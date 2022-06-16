@@ -1,0 +1,31 @@
+all_persons:
+  name: All Persons
+  entities:
+    - person.tom
+    - person.anna
+    
+all_my_lights:
+  name: All My Lights
+  entities: 
+    - light.advent
+    - light.hallway
+    - light.lightstick
+    - light.tv_backlight
+    - light.living_room
+    - light.main_bedroom
+    - light.reubens_ceiling
+    - light.rname
+    - light.bloom
+    - light.sebs_ceiling
+    - light.sebs_lamp
+    - light.second_bedroom_light
+    - light.desk
+    - light.anna
+    
+xmas:
+  name: 'Xmas'
+  entities:
+    - light.xmas_tree
+    - light.advent
+    - light.window
+    - light.christmas_star
