@@ -14,6 +14,7 @@ tts:
 automation: !include automations.yaml
 automation old: !include_dir_merge_list automations
 binary_sensor: !include includes/binary_sensors.yaml
+cover: !include includes/covers.yaml
 device_tracker: !include includes/device_trackers.yaml
 downloader: !include includes/downloader.yaml
 google_assistant: !include includes/google_assistant.yaml
