@@ -254,9 +254,16 @@
   - entity_id: media_player.kodi
     platform: state
     to: playing
+  - platform: state
+    entity_id:
+    - media_player.living_room_tv
+    to: playing
   condition:
   - condition: state
     entity_id: light.living_room
+    state: 'on'
+  - condition: state
+    entity_id: switch.living_room_watch_a_movie
     state: 'on'
   action:
   - data:
@@ -267,21 +274,30 @@
   alias: 'Kodi: Brighten lights when stop playing'
   description: ''
   trigger:
-  - entity_id: media_player.kodi
+  - entity_id:
+    - media_player.kodi
+    - media_player.living_room_tv
     from: playing
     platform: state
     to: paused
-  - entity_id: media_player.kodi
+  - entity_id:
+    - media_player.kodi
+    - media_player.living_room_tv
     from: playing
     platform: state
     to: idle
-  - entity_id: media_player.kodi
+  - entity_id:
+    - media_player.kodi
+    - media_player.living_room_tv
     from: paused
     platform: state
     to: idle
   condition:
   - condition: state
     entity_id: light.living_room
+    state: 'on'
+  - condition: state
+    entity_id: switch.living_room_watch_a_movie
     state: 'on'
   action:
   - data:
@@ -590,6 +606,7 @@
           data:
             group: Garage
             channel: Garage
+            tag: garage-repeat
       - delay:
           minutes: 15
       until:
