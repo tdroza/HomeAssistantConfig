@@ -85,6 +85,7 @@
       - service: notify.tom_and_anna
         data:
           data:
+            tag: lights-repeat
             actions:
             - action: LIGHTS_OFF
               title: Turn off lights
