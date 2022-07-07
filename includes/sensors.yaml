@@ -85,6 +85,15 @@
     ensuite_temperature_rounded:
       friendly_name: 'Ensuite Temp'
       value_template: '{{states.sensor.ensuite_temperature.state |round(0)}}'
+    nest_temperature_rounded:
+      friendly_name: 'Living Room Temp'
+      value_template: '{{states.sensor.nest_thermostat_temperature.state |round(0)}}'
+    air_quality_temperature_rounded:
+      friendly_name: 'Air Quality Temp'
+      value_template: '{{states.sensor.air_quality_temperature.state |round(0)}}'
+    kitchen_temperature_rounded:
+      friendly_name: 'Kitchen temperature'
+      value_template: '{{states.sensor.kitchen_temperature.state |round(0)}}'
 - platform: feedparser
   scan_interval: 43200
   name: podcast_finn_caspian

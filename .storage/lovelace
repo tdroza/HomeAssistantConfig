@@ -42,6 +42,74 @@
                     ],
                     "cards": [
                         {
+                            "cards": [
+                                {
+                                    "name": "Phones",
+                                    "template": "button-card-headers",
+                                    "type": "custom:button-card"
+                                },
+                                {
+                                    "entities": [
+                                        {
+                                            "entity": "person.tom",
+                                            "name": "Location"
+                                        },
+                                        {
+                                            "entity": "sensor.toms_phone_wifi_connection",
+                                            "name": "SSID"
+                                        },
+                                        {
+                                            "entity": "sensor.toms_phone_wifi_connection",
+                                            "icon": true,
+                                            "name": false
+                                        },
+                                        {
+                                            "entity": "sensor.toms_phone_battery_level",
+                                            "icon": true,
+                                            "name": false
+                                        }
+                                    ],
+                                    "entity": "device_tracker.toms_phone",
+                                    "icon": "mdi:human-male",
+                                    "image": "/local/tom.jpg",
+                                    "name": "Tom",
+                                    "secondary_info": "last-changed",
+                                    "show_state": false,
+                                    "type": "custom:multiple-entity-row"
+                                },
+                                {
+                                    "entities": [
+                                        {
+                                            "entity": "person.anna",
+                                            "name": "Location"
+                                        },
+                                        {
+                                            "entity": "sensor.annas_phone_wifi_connection",
+                                            "name": "Wifi"
+                                        },
+                                        {
+                                            "entity": "sensor.annas_phone_wifi_connection",
+                                            "icon": true,
+                                            "name": false
+                                        },
+                                        {
+                                            "entity": "sensor.annas_phone_battery_level",
+                                            "icon": true,
+                                            "name": false
+                                        }
+                                    ],
+                                    "entity": "device_tracker.annas_phone",
+                                    "icon": "mdi:human-female",
+                                    "image": "/local/anna.jpg",
+                                    "name": "Anna",
+                                    "secondary_info": "last-changed",
+                                    "show_state": false,
+                                    "type": "custom:multiple-entity-row"
+                                }
+                            ],
+                            "type": "vertical-stack"
+                        },
+                        {
                             "card": {
                                 "icon": "mdi:light-switch",
                                 "name": "Turn everything off",
@@ -1494,74 +1562,6 @@
                         {
                             "cards": [
                                 {
-                                    "name": "Phones",
-                                    "template": "button-card-headers",
-                                    "type": "custom:button-card"
-                                },
-                                {
-                                    "entities": [
-                                        {
-                                            "entity": "person.tom",
-                                            "name": "Location"
-                                        },
-                                        {
-                                            "entity": "sensor.toms_phone_wifi_connection",
-                                            "name": "SSID"
-                                        },
-                                        {
-                                            "entity": "sensor.toms_phone_wifi_connection",
-                                            "icon": true,
-                                            "name": false
-                                        },
-                                        {
-                                            "entity": "sensor.toms_phone_battery_level",
-                                            "icon": true,
-                                            "name": false
-                                        }
-                                    ],
-                                    "entity": "device_tracker.toms_phone",
-                                    "icon": "mdi:human-male",
-                                    "image": "/local/tom.jpg",
-                                    "name": "Tom",
-                                    "secondary_info": "last-changed",
-                                    "show_state": false,
-                                    "type": "custom:multiple-entity-row"
-                                },
-                                {
-                                    "entities": [
-                                        {
-                                            "entity": "person.anna",
-                                            "name": "Location"
-                                        },
-                                        {
-                                            "entity": "sensor.annas_phone_wifi_connection",
-                                            "name": "Wifi"
-                                        },
-                                        {
-                                            "entity": "sensor.annas_phone_wifi_connection",
-                                            "icon": true,
-                                            "name": false
-                                        },
-                                        {
-                                            "entity": "sensor.annas_phone_battery_level",
-                                            "icon": true,
-                                            "name": false
-                                        }
-                                    ],
-                                    "entity": "device_tracker.annas_phone",
-                                    "icon": "mdi:human-female",
-                                    "image": "/local/anna.jpg",
-                                    "name": "Anna",
-                                    "secondary_info": "last-changed",
-                                    "show_state": false,
-                                    "type": "custom:multiple-entity-row"
-                                }
-                            ],
-                            "type": "vertical-stack"
-                        },
-                        {
-                            "cards": [
-                                {
                                     "name": "Garage",
                                     "template": "button-card-headers",
                                     "type": "custom:button-card"
@@ -1675,12 +1675,32 @@
                                     "type": "state-icon"
                                 },
                                 {
-                                    "entity": "sensor.white_temperature_rounded",
+                                    "entity": "sensor.kitchen_temperature_rounded",
                                     "style": {
                                         "background": "center / contain no-repeat url(\"/local/nest.png\")",
                                         "font-size": "13px",
-                                        "left": "80%",
-                                        "top": "39%"
+                                        "left": "36%",
+                                        "top": "10%"
+                                    },
+                                    "type": "state-label"
+                                },
+                                {
+                                    "entity": "sensor.air_quality_temperature_rounded",
+                                    "style": {
+                                        "background": "center / contain no-repeat url(\"/local/nest.png\")",
+                                        "font-size": "13px",
+                                        "left": "56%",
+                                        "top": "25%"
+                                    },
+                                    "type": "state-label"
+                                },
+                                {
+                                    "entity": "sensor.nest_temperature_rounded",
+                                    "style": {
+                                        "background": "center / contain no-repeat url(\"/local/nest.png\")",
+                                        "font-size": "13px",
+                                        "left": "87%",
+                                        "top": "45%"
                                     },
                                     "type": "state-label"
                                 },
