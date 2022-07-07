@@ -13,7 +13,7 @@
     washer:
       friendly_name: "Washing machine"
       value_template: >-
-        {{ state_attr('switch.sonoff_10003a0e20', 'power')|float > 10 }}
+        {{ states('sensor.sonoff_10003a0e20_power')|float > 10 }}
       icon_template: >
         {% if is_state("binary_sensor.washer", "on") %}
           mdi:washing-machine
