@@ -21,7 +21,6 @@ google_assistant: !include includes/google_assistant.yaml
 group: !include includes/groups.yaml
 http: !include includes/http.yaml
 light: !include includes/light_groups.yaml
-neato: !include includes/neato.yaml
 nest: !include includes/nest.yaml
 notify: !include includes/notify.yaml
 plant: !include includes/plant.yaml
