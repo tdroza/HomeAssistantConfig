@@ -1225,6 +1225,10 @@
                                     ]
                                 },
                                 {
+                                    "type": "custom:slider-entity-row",
+                                    "entity": "cover.office_blind"
+                                },
+                                {
                                     "cards": [
                                         {
                                             "type": "custom:card-templater",
