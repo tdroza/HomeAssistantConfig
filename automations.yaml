@@ -1043,7 +1043,7 @@
     domain: switch
   action:
   - type: turn_off
-    device_id: a45d69a5149f11eb984059712ae33449
+    device_id: 993ecd7f96f07829da56b80a49a85b81
     entity_id: switch.toms_phone_charger
     domain: switch
   mode: single
@@ -1058,11 +1058,11 @@
   condition: []
   action:
   - type: turn_on
-    device_id: a45d69a5149f11eb984059712ae33449
+    device_id: 993ecd7f96f07829da56b80a49a85b81
     entity_id: switch.toms_phone_charger
     domain: switch
   - type: turn_on
-    device_id: c8e33d4fc2394e1995f48293761339f9
+    device_id: e7ce59b383ed38fc1f32573de8a29c4a
     entity_id: switch.annas_phone_charger
     domain: switch
   mode: single
@@ -1091,7 +1091,7 @@
     domain: switch
   action:
   - type: turn_off
-    device_id: a45d69a5149f11eb984059712ae33449
+    device_id: 993ecd7f96f07829da56b80a49a85b81
     entity_id: switch.toms_phone_charger
     domain: switch
   mode: single
@@ -1384,7 +1384,7 @@
     domain: switch
   action:
   - type: turn_off
-    device_id: c8e33d4fc2394e1995f48293761339f9
+    device_id: e7ce59b383ed38fc1f32573de8a29c4a
     entity_id: switch.annas_phone_charger
     domain: switch
   mode: single
@@ -1413,7 +1413,7 @@
     domain: switch
   action:
   - type: turn_off
-    device_id: c8e33d4fc2394e1995f48293761339f9
+    device_id: e7ce59b383ed38fc1f32573de8a29c4a
     entity_id: switch.annas_phone_charger
     domain: switch
   mode: single
