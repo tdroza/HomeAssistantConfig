@@ -90,8 +90,8 @@
             - action: LIGHTS_OFF
               title: Turn off lights
           title: Lights are on
-          message: 💡 Nobody is home but lights have been left on . I'll remind you
-            every 15 minutes.
+          message: "\U0001F4A1 Nobody is home but lights have been left on . I'll
+            remind you every 15 minutes."
       - delay:
           minutes: 15
       until:
@@ -110,9 +110,9 @@
   condition: []
   action:
   - data:
-      message: "{%- for person in states.group.all_persons.attributes.entity_id -%}\n\
-        \  {%- if is_state(person, 'home') -%} \n    {{ state_attr(person, 'friendly_name')\
-        \ }} just arrived home\n  {%- endif -%}\n{%- endfor -%} \n"
+      message: "{%- for person in states.group.all_persons.attributes.entity_id -%}\n
+        \ {%- if is_state(person, 'home') -%} \n    {{ state_attr(person, 'friendly_name')
+        }} just arrived home\n  {%- endif -%}\n{%- endfor -%} \n"
     service: notify.telegram_td
   mode: single
 - id: '1576773914306'
@@ -263,9 +263,6 @@
   - condition: state
     entity_id: light.living_room
     state: 'on'
-  - condition: state
-    entity_id: switch.living_room_watch_a_movie
-    state: 'on'
   action:
   - data:
       brightness: 5
@@ -296,9 +293,6 @@
   condition:
   - condition: state
     entity_id: light.living_room
-    state: 'on'
-  - condition: state
-    entity_id: switch.living_room_watch_a_movie
     state: 'on'
   action:
   - data:
@@ -387,8 +381,8 @@
     service: tts.google_translate_say
   - data:
       title: Washing Machine
-      message: 🧺 The washing machine finished {{ relative_time(states.binary_sensor.washer.last_changed)
-        }} ago, please hang out the washing
+      message: "\U0001F9FA The washing machine finished {{ relative_time(states.binary_sensor.washer.last_changed)
+        }} ago, please hang out the washing"
       data:
         actions:
         - action: WASHER_EMPTIED
@@ -420,7 +414,7 @@
   - service: notify.tom_and_anna
     data:
       title: Washing Machine
-      message: 🧺 The washing machine has finished, please hang out the washing
+      message: "\U0001F9FA The washing machine has finished, please hang out the washing"
       data:
         actions:
         - action: WASHER_EMPTIED
@@ -473,13 +467,13 @@
   condition: []
   action:
   - data:
-      message: "Status: {{ states('sensor.printer_current_state') }}  \nElapsed: {%-\
-        \ if states('sensor.printer_time_elapsed') |int > 3600 -%} {{ states('sensor.printer_time_elapsed')\
-        \  | multiply(0.0002777778) | round(2)}}h {%- else %} {{ states('sensor.printer_time_elapsed')}}m\
-        \ {% endif %}\nRemaining: {%- if states('sensor.printer_time_remaining') |int\
-        \ > 3600 -%} {{ states('sensor.printer_time_remaining')  | multiply(0.0002777778)\
-        \ | round(2)}}h {%- else %} {{ states('sensor.printer_time_remaining')}}m\
-        \ {% endif %} \nProgress: {{ states('sensor.printer_job_percentage') }}%\n"
+      message: "Status: {{ states('sensor.printer_current_state') }}  \nElapsed: {%-
+        if states('sensor.printer_time_elapsed') |int > 3600 -%} {{ states('sensor.printer_time_elapsed')
+        \ | multiply(0.0002777778) | round(2)}}h {%- else %} {{ states('sensor.printer_time_elapsed')}}m
+        {% endif %}\nRemaining: {%- if states('sensor.printer_time_remaining') |int
+        > 3600 -%} {{ states('sensor.printer_time_remaining')  | multiply(0.0002777778)
+        | round(2)}}h {%- else %} {{ states('sensor.printer_time_remaining')}}m {%
+        endif %} \nProgress: {{ states('sensor.printer_job_percentage') }}%\n"
     service: notify.telegram_td
 - id: '1582836882523'
   alias: Blanket - turn off TD after 15m
@@ -1490,7 +1484,8 @@
       - service: notify.tom_and_anna
         data:
           title: Fridge freezer door
-          message: 🧊 The fridge or freezer door has been open for more than 1 minute
+          message: "\U0001F9CA The fridge or freezer door has been open for more than
+            1 minute"
       - delay:
           seconds: 30
       until:
