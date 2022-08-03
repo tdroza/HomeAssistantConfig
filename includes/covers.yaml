@@ -3,23 +3,23 @@
     office_blind:
       device_class: blind
       friendly_name: "Office Blind"
-      value_template: "{{ states.number.lumi_lumi_curtain_acn002_analog_output.state | float == 0.0}}"
+      value_template: "{{ states.number.office_blind_analog_output.state | float == 0.0}}"
       open_cover:
         service: number.set_value
         target:
-          entity_id: number.lumi_lumi_curtain_acn002_analog_output
+          entity_id: number.office_blind_analog_output
         data:
           value: '100'
       close_cover:
         service: number.set_value
         target:
-          entity_id: number.lumi_lumi_curtain_acn002_analog_output
+          entity_id: number.office_blind_analog_output
         data:
           value: '0'
-      position_template: "{{ states.number.lumi_lumi_curtain_acn002_analog_output.state | float }}"
+      position_template: "{{ states.number.office_blind_analog_output.state | float }}"
       set_cover_position:
         service: number.set_value
         target:
-            entity_id: number.lumi_lumi_curtain_acn002_analog_output
+            entity_id: number.office_blind_analog_output
         data_template:
           value: "{{ position }}"

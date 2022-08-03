@@ -1007,10 +1007,12 @@
   - condition: time
     after: '21:30'
   action:
-  - type: turn_off
-    device_id: 860920bf5b3374e4ea3344b553666bcf
-    entity_id: light.main_bedroom_ceiling
-    domain: light
+  - service: light.turn_off
+    data: {}
+    target:
+      entity_id:
+      - light.main_bedroom_ceiling
+      - light.test_bulb
   - type: turn_on
     device_id: b9c88a37811e285dc2b594f847e29cf1
     entity_id: light.main_bedroom_bloom
@@ -1052,12 +1054,12 @@
   condition: []
   action:
   - type: turn_on
-    device_id: 993ecd7f96f07829da56b80a49a85b81
-    entity_id: switch.toms_phone_charger
-    domain: switch
-  - type: turn_on
     device_id: e7ce59b383ed38fc1f32573de8a29c4a
     entity_id: switch.annas_phone_charger
+    domain: switch
+  - type: turn_on
+    device_id: 993ecd7f96f07829da56b80a49a85b81
+    entity_id: switch.toms_phone_charger
     domain: switch
   mode: single
 - id: '1603396482626'
@@ -1310,16 +1312,20 @@
   - condition: time
     before: '22:30'
   action:
-  - type: turn_on
-    device_id: 860920bf5b3374e4ea3344b553666bcf
-    entity_id: light.main_bedroom_ceiling
-    domain: light
-    brightness_pct: 80
+  - service: light.turn_on
+    data:
+      brightness_pct: 80
+    target:
+      entity_id:
+      - light.main_bedroom_ceiling
+      - light.test_bulb
   - delay: 00:05:00
-  - type: turn_off
-    device_id: 860920bf5b3374e4ea3344b553666bcf
-    entity_id: light.main_bedroom_ceiling
-    domain: light
+  - service: light.turn_off
+    data: {}
+    target:
+      entity_id:
+      - light.main_bedroom_ceiling
+      - light.test_bulb
   mode: restart
 - id: '1611525664637'
   alias: 'Lights: turn off house button'
@@ -1492,41 +1498,6 @@
       - condition: state
         entity_id: binary_sensor.fridge_door
         state: 'off'
-  mode: single
-- id: '1622117441450'
-  alias: 'Light: turn on desk light'
-  description: ''
-  trigger:
-  - type: vibration
-    platform: device
-    device_id: 5c533a8c95dc1742f198061c002cc8da
-    entity_id: binary_sensor.coffee_table
-    domain: binary_sensor
-  condition: []
-  action:
-  - service: light.turn_on
-    target:
-      entity_id: light.desk
-  mode: single
-- id: '1622117496609'
-  alias: 'Light: turn off desk light'
-  description: ''
-  trigger:
-  - type: no_vibration
-    platform: device
-    device_id: 5c533a8c95dc1742f198061c002cc8da
-    entity_id: binary_sensor.coffee_table
-    domain: binary_sensor
-    for:
-      hours: 0
-      minutes: 20
-      seconds: 0
-      milliseconds: 0
-  condition: []
-  action:
-  - service: light.turn_off
-    target:
-      entity_id: light.desk
   mode: single
 - id: '1625066107430'
   alias: 'Bins: Recycling notification'
@@ -2033,4 +2004,20 @@
   - service: media_player.media_stop
     data:
       entity_id: media_player.reuben_s_room_speaker
+  mode: single
+- id: '1659533681253'
+  alias: Open office blind in the morning
+  description: ''
+  trigger:
+  - platform: time
+    at: 08:00:00
+  condition:
+  - condition: numeric_state
+    entity_id: number.office_blind_analog_output
+    below: '100'
+  action:
+  - service: cover.open_cover
+    data: {}
+    target:
+      entity_id: cover.office_blind
   mode: single
