@@ -344,7 +344,7 @@
     entity_id: input_boolean.do_not_disturb
     state: 'off'
   action:
-  - service: notify.mobile_app_in2013
+  - service: notify.mobile_app_tom_s_phone
     data:
       message: The 3D Printer has finished
       data:
@@ -627,7 +627,7 @@
         group: Garage
         channel: Garage
         vibrationPattern: 10, 100, 500, 100, 500, 500
-    service: notify.mobile_app_in2013
+    service: notify.mobile_app_tom_s_phone
   - data:
       entity_id:
       - media_player.living_room_display
@@ -1263,7 +1263,7 @@
       threshold: 15
       exclude0: sensor.annas_phone_battery_level
       actions:
-      - service: notify.mobile_app_in2013
+      - service: notify.mobile_app_tom_s_phone
         data:
           message: Low battery alert for {{sensors}}
       exclude1: sensor.toms_phone_battery_level
@@ -1803,27 +1803,27 @@
       last_face_input: input_number.office_cube_current_face
       cube: 9f50d49473ecd72dad9e827acb4e6f60
       face_1_flip:
-      - service: notify.mobile_app_in2013
+      - service: notify.mobile_app_tom_s_phone
         data:
           message: Side 1
       face_2_flip:
-      - service: notify.mobile_app_in2013
+      - service: notify.mobile_app_tom_s_phone
         data:
           message: Side 2
       face_3_flip:
-      - service: notify.mobile_app_in2013
+      - service: notify.mobile_app_tom_s_phone
         data:
           message: Side 3
       face_4_flip:
-      - service: notify.mobile_app_in2013
+      - service: notify.mobile_app_tom_s_phone
         data:
           message: Side 4
       face_5_flip:
-      - service: notify.mobile_app_in2013
+      - service: notify.mobile_app_tom_s_phone
         data:
           message: Side 5
       face_6_flip:
-      - service: notify.mobile_app_in2013
+      - service: notify.mobile_app_tom_s_phone
         data:
           message: Side 6
       face_1_knock:
@@ -1932,7 +1932,7 @@
   - condition: template
     value_template: '{{trigger.from_state.state != trigger.to_state.state}}'
   action:
-  - service: notify.mobile_app_in2013
+  - service: notify.mobile_app_tom_s_phone
     data:
       title: ESPresense
       message: Tom is now in the {{states('sensor.toms_phone_ble')}}

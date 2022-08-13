@@ -8,4 +8,4 @@
   platform: group
   services:
     - service: mobile_app_anna_s_phone
-    - service: mobile_app_in2013
+    - service: mobile_app_tom_s_phone
