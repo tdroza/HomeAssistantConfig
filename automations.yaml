@@ -249,25 +249,43 @@
   - entity_id: sensor.next_train_to_lds
     service: homeassistant.update_entity
 - id: '1580937267396'
-  alias: 'Kodi: Dim lights when playing'
+  alias: 'TV: Dim lights when playing'
   description: ''
   trigger:
   - entity_id: media_player.kodi
     platform: state
     to: playing
+    id: kodi
   - platform: state
     entity_id:
     - media_player.living_room_tv
     to: playing
+    id: chromecast
   condition:
   - condition: state
     entity_id: light.living_room
     state: 'on'
   action:
-  - data:
-      brightness: 5
-    entity_id: light.living_room_1, light.living_room_2
-    service: light.turn_on
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: kodi
+      sequence:
+      - service: light.turn_on
+        data:
+          brightness_pct: 15
+        target:
+          entity_id: light.living_room
+    - conditions:
+      - condition: trigger
+        id: chromecast
+      sequence:
+      - service: light.turn_on
+        data:
+          brightness_pct: 40
+        target:
+          entity_id: light.living_room
+    default: []
 - id: '1580937548623'
   alias: 'Kodi: Brighten lights when stop playing'
   description: ''
