@@ -1650,15 +1650,6 @@
                   "entity": "input_boolean.do_not_disturb"
                 }
               ]
-            },
-            {
-              "type": "entities",
-              "entities": [
-                {
-                  "entity": "light.test_bulb"
-                }
-              ],
-              "title": "TRADFRI bulb "
             }
           ],
           "icon": "mdi:home-assistant",

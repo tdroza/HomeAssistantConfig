@@ -3,6 +3,9 @@ service_account: !include google_service_account.json
 report_state: true
 expose_by_default: false
 entity_config:
+    light.main_bedroom_ceiling:
+      name: "Main bedroom ceiling"
+      expose: true
     cover.office_blind:
       name: "Office Blind"
       expose: true
