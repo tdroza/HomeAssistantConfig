@@ -21,7 +21,6 @@ google_assistant: !include includes/google_assistant.yaml
 group: !include includes/groups.yaml
 http: !include includes/http.yaml
 light: !include includes/light_groups.yaml
-nest: !include includes/nest.yaml
 notify: !include includes/notify.yaml
 plant: !include includes/plant.yaml
 recorder: !include includes/recorder.yaml
@@ -49,9 +48,6 @@ input_text:
     initial: !secret telegram_bot_chat_id_td
   telegram_ad: 
     initial: !secret telegram_bot_chat_id_ad
-google: 
-  client_id: !secret google_client_id
-  client_secret: !secret google_client_secret
 
 homeassistant:
   customize: !include customize.yaml
