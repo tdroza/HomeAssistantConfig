@@ -1300,7 +1300,7 @@
       - light.reubens_ceiling
     data:
       brightness: 25
-      color_name: purple
+      color_name: green
   - delay:
       hours: 0
       minutes: 15
@@ -2038,4 +2038,19 @@
     data: {}
     target:
       entity_id: cover.office_blind
+  mode: single
+- id: '1661876070774'
+  alias: Update all_my_lights group
+  description: ''
+  trigger:
+  - platform: homeassistant
+    event: start
+  condition: []
+  action:
+  - service: group.set
+    data:
+      object_id: all_my_lights
+      entities: '{{ states.light |  map(attribute=''entity_id'') | join('','') }}
+
+        '
   mode: single
