@@ -1197,22 +1197,6 @@
                       "name": " "
                     },
                     {
-                      "entity": "light.toms_desk_master",
-                      "type": "light",
-                      "name": " ",
-                      "icon": "mdi:desk"
-                    }
-                  ],
-                  "type": "horizontal-stack"
-                },
-                {
-                  "type": "horizontal-stack",
-                  "cards": [
-                    {
-                      "type": "light",
-                      "entity": "light.annas_desk"
-                    },
-                    {
                       "show_name": false,
                       "show_icon": true,
                       "type": "button",
@@ -1221,6 +1205,32 @@
                       },
                       "entity": "switch.toms_desk",
                       "show_state": false
+                    }
+                  ],
+                  "type": "horizontal-stack"
+                },
+                {
+                  "type": "horizontal-stack",
+                  "cards": [
+                    {
+                      "entity": "light.toms_desk_master",
+                      "type": "light",
+                      "name": " ",
+                      "icon": "mdi:desk"
+                    },
+                    {
+                      "show_name": false,
+                      "show_icon": true,
+                      "type": "button",
+                      "tap_action": {
+                        "action": "toggle"
+                      },
+                      "entity": "switch.toms_monitor_light"
+                    },
+                    {
+                      "type": "light",
+                      "entity": "light.annas_desk",
+                      "name": ""
                     }
                   ]
                 },
