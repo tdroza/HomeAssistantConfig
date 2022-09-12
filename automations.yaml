@@ -1701,7 +1701,7 @@
   description: Turn on desk, and lights
   trigger:
   - platform: time
-    at: 08:30
+    at: input_datetime.work_start
   condition:
   - condition: state
     entity_id: binary_sensor.workday_sensor
@@ -1716,9 +1716,16 @@
     domain: switch
   - delay:
       hours: 0
-      minutes: 0
-      seconds: 30
+      minutes: 15
+      seconds: 0
       milliseconds: 0
+  - service: switch.turn_on
+    data: {}
+    target:
+      entity_id: switch.toms_monitor_light
+  - condition: state
+    entity_id: binary_sensor.workday_anna
+    state: 'on'
   - service: light.turn_on
     target:
       entity_id: light.anna
