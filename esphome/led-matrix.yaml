@@ -123,11 +123,11 @@ switch:
       - lambda: id(led_matrix_display).set_enabled(false);
 
 light:
-  - platform: fastled_clockless
-    chipset: WS2812
+  - platform: neopixelbus
+    variant: WS2812
     pin: D4
     num_leds: 256
-    rgb_order: GRB
+    type: GRB
     name: "led_matrix"
     id: led_matrix_light
     default_transition_length: 0s
