@@ -2888,6 +2888,27 @@
                 }
               ],
               "title": "Cast"
+            },
+            {
+              "camera_view": "auto",
+              "type": "picture-glance",
+              "title": "Octoprint",
+              "entities": [
+                {
+                  "entity": "sensor.octoprint_current_state"
+                },
+                {
+                  "entity": "sensor.octoprint_job_percentage"
+                },
+                {
+                  "entity": "sensor.octoprint_estimated_finish_time"
+                },
+                {
+                  "entity": "binary_sensor.octoprint_printing"
+                }
+              ],
+              "camera_image": "camera.octoprint",
+              "style": "hui-image {\n  transform: rotate(270deg);\n}\n"
             }
           ],
           "icon": "mdi:cctv",
