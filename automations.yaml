@@ -1345,7 +1345,7 @@
       - light.rname
   mode: restart
 - id: '1611402292310'
-  alias: 'Lights: turn on main bedroom light for 5 minutes when door opens'
+  alias: 'Lights: turn on main bedroom light when door opens'
   description: ''
   trigger:
   - type: opened
@@ -1355,7 +1355,8 @@
     domain: binary_sensor
   condition:
   - condition: time
-    before: '22:30'
+    before: '22:45:00'
+    after: '15:00:00'
   - condition: numeric_state
     entity_id: sun.sun
     attribute: elevation
