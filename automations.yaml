@@ -2019,7 +2019,11 @@
       entity_id: media_player.seb_s_home
       attribute: volume_level
       to: '0'
-    timeout: '305'
+    timeout:
+      hours: 0
+      minutes: 5
+      seconds: 5
+      milliseconds: 0
   - service: media_player.media_stop
     data:
       entity_id: media_player.seb_s_home
@@ -2053,7 +2057,11 @@
       entity_id: media_player.reuben_s_room_speaker
       attribute: volume_level
       to: '0'
-    timeout: '305'
+    timeout:
+      hours: 0
+      minutes: 5
+      seconds: 5
+      milliseconds: 0
   - service: media_player.media_stop
     data:
       entity_id: media_player.reuben_s_room_speaker
