@@ -522,9 +522,43 @@
             {
               "cards": [
                 {
+                  "card": null,
+                  "name": "Living Room",
+                  "template": "button-card-headers",
+                  "type": "custom:button-card",
+                  "icon": "mdi:sofa",
+                  "tap_action": {
+                    "action": "navigate",
+                    "navigation_path": "/lovelace/living-room"
+                  }
+                },
+                {
+                  "cards": [
+                    {
+                      "entity": "light.living_room_1",
+                      "type": "light"
+                    },
+                    {
+                      "entity": "light.living_room_2",
+                      "type": "light"
+                    }
+                  ],
+                  "type": "horizontal-stack"
+                }
+              ],
+              "type": "vertical-stack"
+            },
+            {
+              "cards": [
+                {
                   "name": "Master Bedroom",
                   "template": "button-card-headers",
-                  "type": "custom:button-card"
+                  "type": "custom:button-card",
+                  "icon": "mdi:bed-king",
+                  "tap_action": {
+                    "action": "navigate",
+                    "navigation_path": "/lovelace/main-bedroom"
+                  }
                 },
                 {
                   "cards": [
@@ -540,120 +574,41 @@
                     }
                   ],
                   "type": "horizontal-stack"
+                }
+              ],
+              "type": "vertical-stack"
+            },
+            {
+              "cards": [
+                {
+                  "name": "Office",
+                  "template": "button-card-headers",
+                  "type": "custom:button-card",
+                  "icon": "mdi:desk",
+                  "tap_action": {
+                    "action": "navigate",
+                    "navigation_path": "/lovelace/office"
+                  }
                 },
                 {
                   "cards": [
                     {
-                      "entity": "cover.large_blind",
-                      "type": "custom:slider-entity-row"
+                      "entity": "light.second_bedroom_light",
+                      "type": "light",
+                      "name": " "
                     },
                     {
-                      "entity": "cover.small_blind",
-                      "type": "custom:slider-entity-row"
-                    }
-                  ],
-                  "type": "vertical-stack"
-                },
-                {
-                  "type": "horizontal-stack",
-                  "cards": [
-                    {
+                      "show_name": false,
+                      "show_icon": true,
                       "type": "button",
                       "tap_action": {
                         "action": "toggle"
                       },
-                      "entity": "switch.toms_phone_charger",
-                      "icon": "mdi:cellphone-charging",
-                      "name": "Tom's Charger"
-                    },
-                    {
-                      "type": "button",
-                      "tap_action": {
-                        "action": "toggle"
-                      },
-                      "entity": "switch.annas_phone_charger",
-                      "icon": "mdi:cellphone-charging",
-                      "name": "Anna's Charger"
-                    }
-                  ]
-                },
-                {
-                  "cards": [
-                    {
-                      "entity": "switch.blanket_tom",
-                      "type": "button"
-                    },
-                    {
-                      "entity": "switch.blanket_anna",
-                      "type": "button"
+                      "entity": "switch.toms_desk",
+                      "show_state": false
                     }
                   ],
                   "type": "horizontal-stack"
-                },
-                {
-                  "type": "horizontal-stack",
-                  "cards": [
-                    {
-                      "type": "button",
-                      "tap_action": {
-                        "action": "toggle"
-                      },
-                      "entity": "binary_sensor.main_bedroom_door"
-                    },
-                    {
-                      "type": "custom:card-templater",
-                      "entities": [
-                        "sensor.temps_min_stats",
-                        "sensor.temps_max_stats"
-                      ],
-                      "card": {
-                        "color_thresholds": [
-                          {
-                            "value_template": "{{ state_attr(\"sensor.temps_min_stats\", \"min_value\") - state_attr(\"sensor.temps_min_stats\", \"standard_deviation\") }}",
-                            "color_template": "{{ states(\"input_text.colour_low\")}}"
-                          },
-                          {
-                            "value_template": "{{ state_attr(\"sensor.temps_min_stats\", \"mean\") }}",
-                            "color_template": "{{ states(\"input_text.colour_medium_low\")}}"
-                          },
-                          {
-                            "value_template": "{{ (state_attr(\"sensor.temps_min_stats\", \"mean\") +  state_attr(\"sensor.temps_max_stats\", \"mean\"))/2 }}",
-                            "color_template": "{{ states(\"input_text.colour_medium\")}}"
-                          },
-                          {
-                            "value_template": "{{ {{ state_attr(\"sensor.temps_max_stats\", \"mean\") }} }}",
-                            "color_template": "{{ states(\"input_text.colour_medium_high\")}}"
-                          },
-                          {
-                            "value_template": "{{ state_attr(\"sensor.temps_max_stats\", \"max_value\") - state_attr(\"sensor.temps_max_stats\", \"standard_deviation\") }}",
-                            "color_template": "{{ states(\"input_text.colour_high\")}}"
-                          }
-                        ],
-                        "entities": [
-                          {
-                            "entity": "sensor.bed1_temperature",
-                            "index": 0,
-                            "name": "Temp"
-                          },
-                          {
-                            "color": "var(--humidity)",
-                            "entity": "sensor.bed1_humidity",
-                            "index": 1,
-                            "name": "Humidity",
-                            "y_axis": "secondary"
-                          }
-                        ],
-                        "name": "Living room",
-                        "points_per_hour": 1,
-                        "show": {
-                          "icon": false,
-                          "labels": true,
-                          "name": false
-                        },
-                        "type": "custom:mini-graph-card"
-                      }
-                    }
-                  ]
                 }
               ],
               "type": "vertical-stack"
@@ -727,145 +682,6 @@
                     },
                     "type": "custom:mini-graph-card"
                   }
-                }
-              ],
-              "type": "vertical-stack"
-            },
-            {
-              "cards": [
-                {
-                  "card": null,
-                  "name": "Living Room",
-                  "template": "button-card-headers",
-                  "type": "custom:button-card"
-                },
-                {
-                  "cards": [
-                    {
-                      "entity": "light.living_room_1",
-                      "type": "light"
-                    },
-                    {
-                      "entity": "light.living_room_2",
-                      "type": "light"
-                    }
-                  ],
-                  "type": "horizontal-stack"
-                },
-                {
-                  "type": "horizontal-stack",
-                  "cards": [
-                    {
-                      "type": "button",
-                      "tap_action": {
-                        "action": "toggle"
-                      },
-                      "entity": "light.tv_backlight"
-                    },
-                    {
-                      "entity": "switch.kodi",
-                      "type": "button"
-                    }
-                  ]
-                },
-                {
-                  "type": "conditional",
-                  "conditions": [
-                    {
-                      "entity": "input_boolean.xmas_mode",
-                      "state": "on"
-                    }
-                  ],
-                  "card": {
-                    "type": "horizontal-stack",
-                    "cards": [
-                      {
-                        "type": "button",
-                        "tap_action": {
-                          "action": "toggle"
-                        },
-                        "entity": "light.xmas_tree"
-                      },
-                      {
-                        "entity": "light.christmas_star",
-                        "type": "button"
-                      }
-                    ]
-                  }
-                },
-                {
-                  "type": "horizontal-stack",
-                  "cards": [
-                    {
-                      "type": "conditional",
-                      "conditions": [
-                        {
-                          "entity": "input_boolean.xmas_mode",
-                          "state": "on"
-                        }
-                      ],
-                      "card": {
-                        "type": "button",
-                        "tap_action": {
-                          "action": "toggle"
-                        },
-                        "entity": "light.window"
-                      }
-                    },
-                    {
-                      "type": "custom:card-templater",
-                      "entities": [
-                        "sensor.temps_min_stats",
-                        "sensor.temps_max_stats"
-                      ],
-                      "card": {
-                        "color_thresholds": [
-                          {
-                            "value_template": "{{ state_attr(\"sensor.temps_min_stats\", \"min_value\") - state_attr(\"sensor.temps_min_stats\", \"standard_deviation\") }}",
-                            "color_template": "{{ states(\"input_text.colour_low\")}}"
-                          },
-                          {
-                            "value_template": "{{ state_attr(\"sensor.temps_min_stats\", \"mean\") }}",
-                            "color_template": "{{ states(\"input_text.colour_medium_low\")}}"
-                          },
-                          {
-                            "value_template": "{{ (state_attr(\"sensor.temps_min_stats\", \"mean\") +  state_attr(\"sensor.temps_max_stats\", \"mean\"))/2 }}",
-                            "color_template": "{{ states(\"input_text.colour_medium\")}}"
-                          },
-                          {
-                            "value_template": "{{ {{ state_attr(\"sensor.temps_max_stats\", \"mean\") }} }}",
-                            "color_template": "{{ states(\"input_text.colour_medium_high\")}}"
-                          },
-                          {
-                            "value_template": "{{ state_attr(\"sensor.temps_max_stats\", \"max_value\") - state_attr(\"sensor.temps_max_stats\", \"standard_deviation\") }}",
-                            "color_template": "{{ states(\"input_text.colour_high\")}}"
-                          }
-                        ],
-                        "entities": [
-                          {
-                            "entity": "sensor.living_room_temp",
-                            "index": 0,
-                            "name": "Temp"
-                          },
-                          {
-                            "color": "var(--humidity)",
-                            "entity": "sensor.living_room_humidity",
-                            "index": 1,
-                            "name": "Humidity",
-                            "y_axis": "secondary"
-                          }
-                        ],
-                        "name": "Living room",
-                        "points_per_hour": 1,
-                        "show": {
-                          "icon": false,
-                          "labels": true,
-                          "name": false
-                        },
-                        "type": "custom:mini-graph-card"
-                      }
-                    }
-                  ]
                 }
               ],
               "type": "vertical-stack"
@@ -1188,144 +1004,14 @@
             {
               "cards": [
                 {
-                  "name": "Office",
-                  "template": "button-card-headers",
-                  "type": "custom:button-card"
-                },
-                {
-                  "cards": [
-                    {
-                      "entity": "light.second_bedroom_light",
-                      "type": "light",
-                      "name": " "
-                    },
-                    {
-                      "show_name": false,
-                      "show_icon": true,
-                      "type": "button",
-                      "tap_action": {
-                        "action": "toggle"
-                      },
-                      "entity": "switch.toms_desk",
-                      "show_state": false
-                    }
-                  ],
-                  "type": "horizontal-stack"
-                },
-                {
-                  "type": "horizontal-stack",
-                  "cards": [
-                    {
-                      "entity": "light.toms_desk_master",
-                      "type": "light",
-                      "name": " ",
-                      "icon": "mdi:desk"
-                    },
-                    {
-                      "show_name": false,
-                      "show_icon": true,
-                      "type": "button",
-                      "tap_action": {
-                        "action": "toggle"
-                      },
-                      "entity": "switch.toms_monitor_light"
-                    },
-                    {
-                      "type": "light",
-                      "entity": "light.annas_desk",
-                      "name": ""
-                    }
-                  ]
-                },
-                {
-                  "type": "custom:slider-entity-row",
-                  "entity": "cover.office_blind"
-                },
-                {
-                  "cards": [
-                    {
-                      "type": "custom:card-templater",
-                      "entities": [
-                        "sensor.temps_min_stats",
-                        "sensor.temps_max_stats"
-                      ],
-                      "card": {
-                        "color_thresholds": [
-                          {
-                            "value_template": "{{ state_attr(\"sensor.temps_min_stats\", \"min_value\") - state_attr(\"sensor.temps_min_stats\", \"standard_deviation\") }}",
-                            "color_template": "{{ states(\"input_text.colour_low\")}}"
-                          },
-                          {
-                            "value_template": "{{ state_attr(\"sensor.temps_min_stats\", \"mean\") }}",
-                            "color_template": "{{ states(\"input_text.colour_medium_low\")}}"
-                          },
-                          {
-                            "value_template": "{{ (state_attr(\"sensor.temps_min_stats\", \"mean\") +  state_attr(\"sensor.temps_max_stats\", \"mean\"))/2 }}",
-                            "color_template": "{{ states(\"input_text.colour_medium\")}}"
-                          },
-                          {
-                            "value_template": "{{ {{ state_attr(\"sensor.temps_max_stats\", \"mean\") }} }}",
-                            "color_template": "{{ states(\"input_text.colour_medium_high\")}}"
-                          },
-                          {
-                            "value_template": "{{ state_attr(\"sensor.temps_max_stats\", \"max_value\") - state_attr(\"sensor.temps_max_stats\", \"standard_deviation\") }}",
-                            "color_template": "{{ states(\"input_text.colour_high\")}}"
-                          }
-                        ],
-                        "entities": [
-                          {
-                            "entity": "sensor.office_climate_temperature",
-                            "index": 0,
-                            "name": "Temp"
-                          },
-                          {
-                            "color": "var(--humidity)",
-                            "entity": "sensor.office_climate_humidity",
-                            "index": 1,
-                            "name": "Humidity",
-                            "y_axis": "secondary"
-                          }
-                        ],
-                        "name": "Living room",
-                        "points_per_hour": 1,
-                        "show": {
-                          "icon": false,
-                          "labels": true,
-                          "name": false
-                        },
-                        "type": "custom:mini-graph-card"
-                      }
-                    }
-                  ],
-                  "type": "horizontal-stack"
-                }
-              ],
-              "type": "vertical-stack"
-            },
-            {
-              "cards": [
-                {
                   "name": "Kitchen/Dining room",
                   "template": "button-card-headers",
-                  "type": "custom:button-card"
-                },
-                {
-                  "type": "horizontal-stack",
-                  "cards": [
-                    {
-                      "type": "light",
-                      "entity": "light.kitchen_corner",
-                      "name": " "
-                    },
-                    {
-                      "type": "button",
-                      "entity": "binary_sensor.fridge_door",
-                      "tap_action": {
-                        "action": "more-info"
-                      },
-                      "show_name": false
-                    }
-                  ]
+                  "type": "custom:button-card",
+                  "icon": "mdi:stove",
+                  "tap_action": {
+                    "action": "navigate",
+                    "navigation_path": "/lovelace/kitchen"
+                  }
                 },
                 {
                   "type": "custom:vacuum-card",
@@ -1386,165 +1072,6 @@
                   "show_name": true,
                   "show_status": true,
                   "show_toolbar": true
-                },
-                {
-                  "type": "custom:card-templater",
-                  "entities": [
-                    "sensor.temps_min_stats",
-                    "sensor.temps_max_stats"
-                  ],
-                  "card": {
-                    "color_thresholds": [
-                      {
-                        "value_template": "{{ state_attr(\"sensor.temps_min_stats\", \"min_value\") - state_attr(\"sensor.temps_min_stats\", \"standard_deviation\") }}",
-                        "color_template": "{{ states(\"input_text.colour_low\")}}"
-                      },
-                      {
-                        "value_template": "{{ state_attr(\"sensor.temps_min_stats\", \"mean\") }}",
-                        "color_template": "{{ states(\"input_text.colour_medium_low\")}}"
-                      },
-                      {
-                        "value_template": "{{ (state_attr(\"sensor.temps_min_stats\", \"mean\") +  state_attr(\"sensor.temps_max_stats\", \"mean\"))/2 }}",
-                        "color_template": "{{ states(\"input_text.colour_medium\")}}"
-                      },
-                      {
-                        "value_template": "{{ {{ state_attr(\"sensor.temps_max_stats\", \"mean\") }} }}",
-                        "color_template": "{{ states(\"input_text.colour_medium_high\")}}"
-                      },
-                      {
-                        "value_template": "{{ state_attr(\"sensor.temps_max_stats\", \"max_value\") - state_attr(\"sensor.temps_max_stats\", \"standard_deviation\") }}",
-                        "color_template": "{{ states(\"input_text.colour_high\")}}"
-                      }
-                    ],
-                    "entities": [
-                      {
-                        "entity": "sensor.kitchen_climate_temperature",
-                        "index": 0,
-                        "name": "Temp"
-                      },
-                      {
-                        "color": "var(--humidity)",
-                        "entity": "sensor.kitchen_climate_humidity",
-                        "index": 1,
-                        "name": "Humidity",
-                        "y_axis": "secondary"
-                      }
-                    ],
-                    "name": "Litchen",
-                    "points_per_hour": 1,
-                    "show": {
-                      "icon": false,
-                      "labels": true,
-                      "name": false
-                    },
-                    "type": "custom:mini-graph-card"
-                  }
-                },
-                {
-                  "type": "custom:card-templater",
-                  "entities": [
-                    "sensor.pm2_5_max"
-                  ],
-                  "card": {
-                    "color_thresholds": [
-                      {
-                        "value": 1,
-                        "color": "#00bb00"
-                      },
-                      {
-                        "value": 36,
-                        "color": "#ffbf00"
-                      },
-                      {
-                        "value": 86,
-                        "color": "#ff0000"
-                      }
-                    ],
-                    "entities": [
-                      {
-                        "entity": "sensor.air_quality_pm2_5",
-                        "index": 0,
-                        "name": "PM2.5"
-                      }
-                    ],
-                    "name": "Air Quality",
-                    "aggregate_func": "avg",
-                    "points_per_hour": 60,
-                    "color_thresholds_transition": "hard",
-                    "upper_bound_template": "{{ [state_attr(\"sensor.pm2_5_max\",\"max_value\"), 300] | min }}",
-                    "show": {
-                      "icon": true,
-                      "labels": true,
-                      "name": true
-                    },
-                    "type": "custom:mini-graph-card"
-                  }
-                },
-                {
-                  "type": "custom:card-templater",
-                  "entities": [
-                    "sensor.temps_min_stats",
-                    "sensor.temps_max_stats"
-                  ],
-                  "card": {
-                    "color_thresholds": [
-                      {
-                        "value_template": "{{ state_attr(\"sensor.temps_min_stats\", \"min_value\") - state_attr(\"sensor.temps_min_stats\", \"standard_deviation\") }}",
-                        "color_template": "{{ states(\"input_text.colour_low\")}}"
-                      },
-                      {
-                        "value_template": "{{ state_attr(\"sensor.temps_min_stats\", \"mean\") }}",
-                        "color_template": "{{ states(\"input_text.colour_medium_low\")}}"
-                      },
-                      {
-                        "value_template": "{{ (state_attr(\"sensor.temps_min_stats\", \"mean\") +  state_attr(\"sensor.temps_max_stats\", \"mean\"))/2 }}",
-                        "color_template": "{{ states(\"input_text.colour_medium\")}}"
-                      },
-                      {
-                        "value_template": "{{ {{ state_attr(\"sensor.temps_max_stats\", \"mean\") }} }}",
-                        "color_template": "{{ states(\"input_text.colour_medium_high\")}}"
-                      },
-                      {
-                        "value_template": "{{ state_attr(\"sensor.temps_max_stats\", \"max_value\") - state_attr(\"sensor.temps_max_stats\", \"standard_deviation\") }}",
-                        "color_template": "{{ states(\"input_text.colour_high\")}}"
-                      }
-                    ],
-                    "entities": [
-                      {
-                        "entity": "sensor.air_quality_temperature",
-                        "index": 0,
-                        "name": "Temp"
-                      },
-                      {
-                        "color": "var(--humidity)",
-                        "entity": "sensor.air_quality_pressure",
-                        "index": 1,
-                        "name": "Pressure",
-                        "y_axis": "secondary"
-                      }
-                    ],
-                    "name": "Litchen",
-                    "points_per_hour": 1,
-                    "show": {
-                      "icon": false,
-                      "labels": true,
-                      "name": false
-                    },
-                    "type": "custom:mini-graph-card"
-                  }
-                },
-                {
-                  "type": "conditional",
-                  "conditions": [
-                    {
-                      "entity": "media_player.kitchen_and_dining_room_2",
-                      "state": "playing"
-                    }
-                  ],
-                  "card": {
-                    "type": "media-control",
-                    "entity": "media_player.kitchen_and_dining_room_2"
-                  }
                 }
               ],
               "type": "vertical-stack"
@@ -3184,6 +2711,689 @@
                   ]
                 }
               ]
+            }
+          ]
+        },
+        {
+          "theme": "Backend-selected",
+          "title": "Office",
+          "path": "office",
+          "icon": "mdi:desk",
+          "subview": true,
+          "badges": [],
+          "cards": [
+            {
+              "cards": [
+                {
+                  "name": "Office",
+                  "template": "button-card-headers",
+                  "type": "custom:button-card"
+                },
+                {
+                  "cards": [
+                    {
+                      "entity": "light.second_bedroom_light",
+                      "type": "light",
+                      "name": " "
+                    },
+                    {
+                      "show_name": false,
+                      "show_icon": true,
+                      "type": "button",
+                      "tap_action": {
+                        "action": "toggle"
+                      },
+                      "entity": "switch.toms_desk",
+                      "show_state": false
+                    }
+                  ],
+                  "type": "horizontal-stack"
+                },
+                {
+                  "type": "horizontal-stack",
+                  "cards": [
+                    {
+                      "entity": "light.toms_desk_master",
+                      "type": "light",
+                      "name": " ",
+                      "icon": "mdi:desk"
+                    },
+                    {
+                      "show_name": false,
+                      "show_icon": true,
+                      "type": "button",
+                      "tap_action": {
+                        "action": "toggle"
+                      },
+                      "entity": "switch.toms_monitor_light"
+                    },
+                    {
+                      "type": "light",
+                      "entity": "light.annas_desk",
+                      "name": ""
+                    }
+                  ]
+                },
+                {
+                  "type": "custom:slider-entity-row",
+                  "entity": "cover.office_blind"
+                },
+                {
+                  "cards": [
+                    {
+                      "type": "custom:card-templater",
+                      "entities": [
+                        "sensor.temps_min_stats",
+                        "sensor.temps_max_stats"
+                      ],
+                      "card": {
+                        "color_thresholds": [
+                          {
+                            "value_template": "{{ state_attr(\"sensor.temps_min_stats\", \"min_value\") - state_attr(\"sensor.temps_min_stats\", \"standard_deviation\") }}",
+                            "color_template": "{{ states(\"input_text.colour_low\")}}"
+                          },
+                          {
+                            "value_template": "{{ state_attr(\"sensor.temps_min_stats\", \"mean\") }}",
+                            "color_template": "{{ states(\"input_text.colour_medium_low\")}}"
+                          },
+                          {
+                            "value_template": "{{ (state_attr(\"sensor.temps_min_stats\", \"mean\") +  state_attr(\"sensor.temps_max_stats\", \"mean\"))/2 }}",
+                            "color_template": "{{ states(\"input_text.colour_medium\")}}"
+                          },
+                          {
+                            "value_template": "{{ {{ state_attr(\"sensor.temps_max_stats\", \"mean\") }} }}",
+                            "color_template": "{{ states(\"input_text.colour_medium_high\")}}"
+                          },
+                          {
+                            "value_template": "{{ state_attr(\"sensor.temps_max_stats\", \"max_value\") - state_attr(\"sensor.temps_max_stats\", \"standard_deviation\") }}",
+                            "color_template": "{{ states(\"input_text.colour_high\")}}"
+                          }
+                        ],
+                        "entities": [
+                          {
+                            "entity": "sensor.office_climate_temperature",
+                            "index": 0,
+                            "name": "Temp"
+                          },
+                          {
+                            "color": "var(--humidity)",
+                            "entity": "sensor.office_climate_humidity",
+                            "index": 1,
+                            "name": "Humidity",
+                            "y_axis": "secondary"
+                          }
+                        ],
+                        "name": "Living room",
+                        "points_per_hour": 1,
+                        "show": {
+                          "icon": false,
+                          "labels": true,
+                          "name": false
+                        },
+                        "type": "custom:mini-graph-card"
+                      }
+                    }
+                  ],
+                  "type": "horizontal-stack"
+                }
+              ],
+              "type": "vertical-stack"
+            }
+          ]
+        },
+        {
+          "theme": "Backend-selected",
+          "title": "Living room",
+          "path": "living-room",
+          "subview": true,
+          "badges": [],
+          "cards": [
+            {
+              "cards": [
+                {
+                  "card": null,
+                  "name": "Living Room",
+                  "template": "button-card-headers",
+                  "type": "custom:button-card"
+                },
+                {
+                  "cards": [
+                    {
+                      "entity": "light.living_room_1",
+                      "type": "light"
+                    },
+                    {
+                      "entity": "light.living_room_2",
+                      "type": "light"
+                    }
+                  ],
+                  "type": "horizontal-stack"
+                },
+                {
+                  "type": "horizontal-stack",
+                  "cards": [
+                    {
+                      "type": "button",
+                      "tap_action": {
+                        "action": "toggle"
+                      },
+                      "entity": "light.tv_backlight"
+                    },
+                    {
+                      "entity": "switch.kodi",
+                      "type": "button"
+                    }
+                  ]
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "entity": "input_boolean.xmas_mode",
+                      "state": "on"
+                    }
+                  ],
+                  "card": {
+                    "type": "horizontal-stack",
+                    "cards": [
+                      {
+                        "type": "button",
+                        "tap_action": {
+                          "action": "toggle"
+                        },
+                        "entity": "light.xmas_tree"
+                      },
+                      {
+                        "entity": "light.christmas_star",
+                        "type": "button"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "horizontal-stack",
+                  "cards": [
+                    {
+                      "type": "conditional",
+                      "conditions": [
+                        {
+                          "entity": "input_boolean.xmas_mode",
+                          "state": "on"
+                        }
+                      ],
+                      "card": {
+                        "type": "button",
+                        "tap_action": {
+                          "action": "toggle"
+                        },
+                        "entity": "light.window"
+                      }
+                    },
+                    {
+                      "type": "custom:card-templater",
+                      "entities": [
+                        "sensor.temps_min_stats",
+                        "sensor.temps_max_stats"
+                      ],
+                      "card": {
+                        "color_thresholds": [
+                          {
+                            "value_template": "{{ state_attr(\"sensor.temps_min_stats\", \"min_value\") - state_attr(\"sensor.temps_min_stats\", \"standard_deviation\") }}",
+                            "color_template": "{{ states(\"input_text.colour_low\")}}"
+                          },
+                          {
+                            "value_template": "{{ state_attr(\"sensor.temps_min_stats\", \"mean\") }}",
+                            "color_template": "{{ states(\"input_text.colour_medium_low\")}}"
+                          },
+                          {
+                            "value_template": "{{ (state_attr(\"sensor.temps_min_stats\", \"mean\") +  state_attr(\"sensor.temps_max_stats\", \"mean\"))/2 }}",
+                            "color_template": "{{ states(\"input_text.colour_medium\")}}"
+                          },
+                          {
+                            "value_template": "{{ {{ state_attr(\"sensor.temps_max_stats\", \"mean\") }} }}",
+                            "color_template": "{{ states(\"input_text.colour_medium_high\")}}"
+                          },
+                          {
+                            "value_template": "{{ state_attr(\"sensor.temps_max_stats\", \"max_value\") - state_attr(\"sensor.temps_max_stats\", \"standard_deviation\") }}",
+                            "color_template": "{{ states(\"input_text.colour_high\")}}"
+                          }
+                        ],
+                        "entities": [
+                          {
+                            "entity": "sensor.living_room_temp",
+                            "index": 0,
+                            "name": "Temp"
+                          },
+                          {
+                            "color": "var(--humidity)",
+                            "entity": "sensor.living_room_humidity",
+                            "index": 1,
+                            "name": "Humidity",
+                            "y_axis": "secondary"
+                          }
+                        ],
+                        "name": "Living room",
+                        "points_per_hour": 1,
+                        "show": {
+                          "icon": false,
+                          "labels": true,
+                          "name": false
+                        },
+                        "type": "custom:mini-graph-card"
+                      }
+                    }
+                  ]
+                }
+              ],
+              "type": "vertical-stack"
+            }
+          ]
+        },
+        {
+          "theme": "Backend-selected",
+          "subview": true,
+          "title": "Main bedroom",
+          "path": "main-bedroom",
+          "badges": [],
+          "cards": [
+            {
+              "cards": [
+                {
+                  "name": "Master Bedroom",
+                  "template": "button-card-headers",
+                  "type": "custom:button-card"
+                },
+                {
+                  "cards": [
+                    {
+                      "entity": "light.main_bedroom_ceiling",
+                      "name": " ",
+                      "type": "light"
+                    },
+                    {
+                      "entity": "light.main_bedroom_bloom",
+                      "name": " ",
+                      "type": "light"
+                    }
+                  ],
+                  "type": "horizontal-stack"
+                },
+                {
+                  "cards": [
+                    {
+                      "entity": "cover.large_blind",
+                      "type": "custom:slider-entity-row"
+                    },
+                    {
+                      "entity": "cover.small_blind",
+                      "type": "custom:slider-entity-row"
+                    }
+                  ],
+                  "type": "vertical-stack"
+                },
+                {
+                  "type": "horizontal-stack",
+                  "cards": [
+                    {
+                      "type": "button",
+                      "tap_action": {
+                        "action": "toggle"
+                      },
+                      "entity": "switch.toms_phone_charger",
+                      "icon": "mdi:cellphone-charging",
+                      "name": "Tom's Charger"
+                    },
+                    {
+                      "type": "button",
+                      "tap_action": {
+                        "action": "toggle"
+                      },
+                      "entity": "switch.annas_phone_charger",
+                      "icon": "mdi:cellphone-charging",
+                      "name": "Anna's Charger"
+                    }
+                  ]
+                },
+                {
+                  "cards": [
+                    {
+                      "entity": "switch.blanket_tom",
+                      "type": "button"
+                    },
+                    {
+                      "entity": "switch.blanket_anna",
+                      "type": "button"
+                    }
+                  ],
+                  "type": "horizontal-stack"
+                },
+                {
+                  "type": "horizontal-stack",
+                  "cards": [
+                    {
+                      "type": "button",
+                      "tap_action": {
+                        "action": "toggle"
+                      },
+                      "entity": "binary_sensor.main_bedroom_door"
+                    },
+                    {
+                      "type": "custom:card-templater",
+                      "entities": [
+                        "sensor.temps_min_stats",
+                        "sensor.temps_max_stats"
+                      ],
+                      "card": {
+                        "color_thresholds": [
+                          {
+                            "value_template": "{{ state_attr(\"sensor.temps_min_stats\", \"min_value\") - state_attr(\"sensor.temps_min_stats\", \"standard_deviation\") }}",
+                            "color_template": "{{ states(\"input_text.colour_low\")}}"
+                          },
+                          {
+                            "value_template": "{{ state_attr(\"sensor.temps_min_stats\", \"mean\") }}",
+                            "color_template": "{{ states(\"input_text.colour_medium_low\")}}"
+                          },
+                          {
+                            "value_template": "{{ (state_attr(\"sensor.temps_min_stats\", \"mean\") +  state_attr(\"sensor.temps_max_stats\", \"mean\"))/2 }}",
+                            "color_template": "{{ states(\"input_text.colour_medium\")}}"
+                          },
+                          {
+                            "value_template": "{{ {{ state_attr(\"sensor.temps_max_stats\", \"mean\") }} }}",
+                            "color_template": "{{ states(\"input_text.colour_medium_high\")}}"
+                          },
+                          {
+                            "value_template": "{{ state_attr(\"sensor.temps_max_stats\", \"max_value\") - state_attr(\"sensor.temps_max_stats\", \"standard_deviation\") }}",
+                            "color_template": "{{ states(\"input_text.colour_high\")}}"
+                          }
+                        ],
+                        "entities": [
+                          {
+                            "entity": "sensor.bed1_temperature",
+                            "index": 0,
+                            "name": "Temp"
+                          },
+                          {
+                            "color": "var(--humidity)",
+                            "entity": "sensor.bed1_humidity",
+                            "index": 1,
+                            "name": "Humidity",
+                            "y_axis": "secondary"
+                          }
+                        ],
+                        "name": "Living room",
+                        "points_per_hour": 1,
+                        "show": {
+                          "icon": false,
+                          "labels": true,
+                          "name": false
+                        },
+                        "type": "custom:mini-graph-card"
+                      }
+                    }
+                  ]
+                }
+              ],
+              "type": "vertical-stack"
+            }
+          ]
+        },
+        {
+          "theme": "Backend-selected",
+          "title": "Kitchen",
+          "path": "kitchen",
+          "subview": true,
+          "badges": [],
+          "cards": [
+            {
+              "cards": [
+                {
+                  "name": "Kitchen/Dining room",
+                  "template": "button-card-headers",
+                  "type": "custom:button-card",
+                  "tap_action": {
+                    "action": "navigate",
+                    "navigation_path": "/lovelace/kitchen"
+                  }
+                },
+                {
+                  "type": "horizontal-stack",
+                  "cards": [
+                    {
+                      "type": "light",
+                      "entity": "light.kitchen_corner",
+                      "name": " "
+                    },
+                    {
+                      "type": "button",
+                      "entity": "binary_sensor.fridge_door",
+                      "tap_action": {
+                        "action": "more-info"
+                      },
+                      "show_name": false
+                    }
+                  ]
+                },
+                {
+                  "type": "custom:vacuum-card",
+                  "entity": "vacuum.ditto",
+                  "image": "default",
+                  "stats": {
+                    "default": [
+                      {
+                        "entity_id": "sensor.vacuum_last_qm",
+                        "subtitle": "Last clean area"
+                      },
+                      {
+                        "entity_id": "sensor.vacuum_last_run",
+                        "attribute": "clean_stop",
+                        "subtitle": "Last clean date"
+                      }
+                    ]
+                  },
+                  "shortcuts": [
+                    {
+                      "name": "Clean living room",
+                      "service": "neato.custom_cleaning",
+                      "service_data": {
+                        "entity_id": "vacuum.ditto",
+                        "zone": "Living room"
+                      },
+                      "icon": "mdi:sofa"
+                    },
+                    {
+                      "name": "Clean Whole Room",
+                      "service": "neato.custom_cleaning",
+                      "service_data": {
+                        "entity_id": "vacuum.ditto",
+                        "zone": "Whole room"
+                      },
+                      "icon": "mdi:silverware-fork-knife"
+                    },
+                    {
+                      "name": "Clean Kitchen",
+                      "service": "neato.custom_cleaning",
+                      "service_data": {
+                        "entity_id": "vacuum.ditto",
+                        "zone": "Kitchen"
+                      },
+                      "icon": "mdi:fridge-variant"
+                    },
+                    {
+                      "name": "Clean Hallway",
+                      "service": "neato.custom_cleaning",
+                      "service_data": {
+                        "entity_id": "vacuum.ditto",
+                        "zone": "Hallway"
+                      },
+                      "icon": "mdi:coat-rack"
+                    }
+                  ],
+                  "compact_view": false,
+                  "show_name": true,
+                  "show_status": true,
+                  "show_toolbar": true
+                },
+                {
+                  "type": "custom:card-templater",
+                  "entities": [
+                    "sensor.temps_min_stats",
+                    "sensor.temps_max_stats"
+                  ],
+                  "card": {
+                    "color_thresholds": [
+                      {
+                        "value_template": "{{ state_attr(\"sensor.temps_min_stats\", \"min_value\") - state_attr(\"sensor.temps_min_stats\", \"standard_deviation\") }}",
+                        "color_template": "{{ states(\"input_text.colour_low\")}}"
+                      },
+                      {
+                        "value_template": "{{ state_attr(\"sensor.temps_min_stats\", \"mean\") }}",
+                        "color_template": "{{ states(\"input_text.colour_medium_low\")}}"
+                      },
+                      {
+                        "value_template": "{{ (state_attr(\"sensor.temps_min_stats\", \"mean\") +  state_attr(\"sensor.temps_max_stats\", \"mean\"))/2 }}",
+                        "color_template": "{{ states(\"input_text.colour_medium\")}}"
+                      },
+                      {
+                        "value_template": "{{ {{ state_attr(\"sensor.temps_max_stats\", \"mean\") }} }}",
+                        "color_template": "{{ states(\"input_text.colour_medium_high\")}}"
+                      },
+                      {
+                        "value_template": "{{ state_attr(\"sensor.temps_max_stats\", \"max_value\") - state_attr(\"sensor.temps_max_stats\", \"standard_deviation\") }}",
+                        "color_template": "{{ states(\"input_text.colour_high\")}}"
+                      }
+                    ],
+                    "entities": [
+                      {
+                        "entity": "sensor.kitchen_climate_temperature",
+                        "index": 0,
+                        "name": "Temp"
+                      },
+                      {
+                        "color": "var(--humidity)",
+                        "entity": "sensor.kitchen_climate_humidity",
+                        "index": 1,
+                        "name": "Humidity",
+                        "y_axis": "secondary"
+                      }
+                    ],
+                    "name": "Litchen",
+                    "points_per_hour": 1,
+                    "show": {
+                      "icon": false,
+                      "labels": true,
+                      "name": false
+                    },
+                    "type": "custom:mini-graph-card"
+                  }
+                },
+                {
+                  "type": "custom:card-templater",
+                  "entities": [
+                    "sensor.pm2_5_max"
+                  ],
+                  "card": {
+                    "color_thresholds": [
+                      {
+                        "value": 1,
+                        "color": "#00bb00"
+                      },
+                      {
+                        "value": 36,
+                        "color": "#ffbf00"
+                      },
+                      {
+                        "value": 86,
+                        "color": "#ff0000"
+                      }
+                    ],
+                    "entities": [
+                      {
+                        "entity": "sensor.air_quality_pm2_5",
+                        "index": 0,
+                        "name": "PM2.5"
+                      }
+                    ],
+                    "name": "Air Quality",
+                    "aggregate_func": "avg",
+                    "points_per_hour": 60,
+                    "color_thresholds_transition": "hard",
+                    "upper_bound_template": "{{ [state_attr(\"sensor.pm2_5_max\",\"max_value\"), 300] | min }}",
+                    "show": {
+                      "icon": true,
+                      "labels": true,
+                      "name": true
+                    },
+                    "type": "custom:mini-graph-card"
+                  }
+                },
+                {
+                  "type": "custom:card-templater",
+                  "entities": [
+                    "sensor.temps_min_stats",
+                    "sensor.temps_max_stats"
+                  ],
+                  "card": {
+                    "color_thresholds": [
+                      {
+                        "value_template": "{{ state_attr(\"sensor.temps_min_stats\", \"min_value\") - state_attr(\"sensor.temps_min_stats\", \"standard_deviation\") }}",
+                        "color_template": "{{ states(\"input_text.colour_low\")}}"
+                      },
+                      {
+                        "value_template": "{{ state_attr(\"sensor.temps_min_stats\", \"mean\") }}",
+                        "color_template": "{{ states(\"input_text.colour_medium_low\")}}"
+                      },
+                      {
+                        "value_template": "{{ (state_attr(\"sensor.temps_min_stats\", \"mean\") +  state_attr(\"sensor.temps_max_stats\", \"mean\"))/2 }}",
+                        "color_template": "{{ states(\"input_text.colour_medium\")}}"
+                      },
+                      {
+                        "value_template": "{{ {{ state_attr(\"sensor.temps_max_stats\", \"mean\") }} }}",
+                        "color_template": "{{ states(\"input_text.colour_medium_high\")}}"
+                      },
+                      {
+                        "value_template": "{{ state_attr(\"sensor.temps_max_stats\", \"max_value\") - state_attr(\"sensor.temps_max_stats\", \"standard_deviation\") }}",
+                        "color_template": "{{ states(\"input_text.colour_high\")}}"
+                      }
+                    ],
+                    "entities": [
+                      {
+                        "entity": "sensor.air_quality_temperature",
+                        "index": 0,
+                        "name": "Temp"
+                      },
+                      {
+                        "color": "var(--humidity)",
+                        "entity": "sensor.air_quality_pressure",
+                        "index": 1,
+                        "name": "Pressure",
+                        "y_axis": "secondary"
+                      }
+                    ],
+                    "name": "Litchen",
+                    "points_per_hour": 1,
+                    "show": {
+                      "icon": false,
+                      "labels": true,
+                      "name": false
+                    },
+                    "type": "custom:mini-graph-card"
+                  }
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "entity": "media_player.kitchen_and_dining_room_2",
+                      "state": "playing"
+                    }
+                  ],
+                  "card": {
+                    "type": "media-control",
+                    "entity": "media_player.kitchen_and_dining_room_2"
+                  }
+                }
+              ],
+              "type": "vertical-stack"
             }
           ]
         }
