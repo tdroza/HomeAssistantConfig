@@ -910,13 +910,13 @@
                         ],
                         "entities": [
                           {
-                            "entity": "sensor.bathroom_temperature",
+                            "entity": "sensor.bathroom_climate_temperature",
                             "index": 0,
                             "name": "Temp"
                           },
                           {
                             "color": "var(--humidity)",
-                            "entity": "sensor.bathroom_humidity",
+                            "entity": "sensor.bathroom_climate_humidity",
                             "index": 1,
                             "name": "Humidity",
                             "y_axis": "secondary"
@@ -961,13 +961,13 @@
                         ],
                         "entities": [
                           {
-                            "entity": "sensor.ensuite_temperature",
+                            "entity": "sensor.ensuite_climate_temperature",
                             "index": 0,
                             "name": "Temp"
                           },
                           {
                             "color": "var(--humidity)",
-                            "entity": "sensor.ensuite_humidity",
+                            "entity": "sensor.ensuite_climate_humidity",
                             "index": 1,
                             "name": "Humidity",
                             "y_axis": "secondary"
@@ -1274,13 +1274,13 @@
                         ],
                         "entities": [
                           {
-                            "entity": "sensor.office_temperature",
+                            "entity": "sensor.office_climate_temperature",
                             "index": 0,
                             "name": "Temp"
                           },
                           {
                             "color": "var(--humidity)",
-                            "entity": "sensor.office_humidity",
+                            "entity": "sensor.office_climate_humidity",
                             "index": 1,
                             "name": "Humidity",
                             "y_axis": "secondary"
@@ -1418,13 +1418,13 @@
                     ],
                     "entities": [
                       {
-                        "entity": "sensor.kitchen_temperature",
+                        "entity": "sensor.kitchen_climate_temperature",
                         "index": 0,
                         "name": "Temp"
                       },
                       {
                         "color": "var(--humidity)",
-                        "entity": "sensor.kitchen_humidity",
+                        "entity": "sensor.kitchen_climate_humidity",
                         "index": 1,
                         "name": "Humidity",
                         "y_axis": "secondary"
@@ -2809,13 +2809,8 @@
             },
             {
               "type": "plant-status",
-              "entity": "plant.basil",
-              "name": "Basil"
-            },
-            {
-              "type": "plant-status",
-              "entity": "plant.rose",
-              "name": "Rose"
+              "entity": "plant.cactus",
+              "name": "Office Cactus"
             },
             {
               "type": "custom:slider-entity-row",

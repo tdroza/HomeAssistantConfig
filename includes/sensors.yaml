@@ -72,7 +72,7 @@
       value_template: '{{states.sensor.bed1_temperature.state |round(0)}}'
     office_temperature_rounded:
       friendly_name: 'Bed 2 Temp'
-      value_template: '{{states.sensor.office_temperature.state |round(0)}}'
+      value_template: '{{states.sensor.office_climate_temperature.state |round(0)}}'
     seb_temperature_rounded:
       friendly_name: 'Seb Temp'
       value_template: '{{states.sensor.seb_d1_temperature.state |round(0)}}'
@@ -81,10 +81,10 @@
       value_template: '{{states.sensor.reu_d1_temperature.state |round(0)}}'
     bathroom_temperature_rounded:
       friendly_name: 'Bathroom Temp'
-      value_template: '{{states.sensor.bathroom_temperature.state |round(0)}}'
+      value_template: '{{states.sensor.bathroom_climate_temperature.state |round(0)}}'
     ensuite_temperature_rounded:
       friendly_name: 'Ensuite Temp'
-      value_template: '{{states.sensor.ensuite_temperature.state |round(0)}}'
+      value_template: '{{states.sensor.ensuite_climate_temperature.state |round(0)}}'
     nest_temperature_rounded:
       friendly_name: 'Living Room Temp'
       value_template: '{{states.sensor.nest_thermostat_temperature.state |round(0)}}'
@@ -93,7 +93,7 @@
       value_template: '{{states.sensor.air_quality_temperature.state |round(0)}}'
     kitchen_temperature_rounded:
       friendly_name: 'Kitchen temperature'
-      value_template: '{{states.sensor.kitchen_temperature.state |round(0)}}'
+      value_template: '{{states.sensor.kitchen_climate_temperature.state |round(0)}}'
 - platform: feedparser
   scan_interval: 43200
   name: podcast_finn_caspian

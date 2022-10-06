@@ -1,16 +1,8 @@
-basil:
+cactus:
   sensors:
-    moisture: sensor.basil_moisture
-    battery: sensor.basil_battery_level
-    temperature: sensor.basil_temperature
-    conductivity: sensor.basil_soil_conductivity
-    brightness: sensor.basil_illuminance
-  min_moisture: 30
-rose:
-  sensors:
-    moisture: sensor.rose_moisture
-    battery: sensor.rose_battery_level
-    temperature: sensor.rose_temperature
-    conductivity: sensor.rose_soil_conductivity
-    brightness: sensor.rose_illuminance
-  min_moisture: 30
+    moisture: sensor.cactus_moisture
+    battery: sensor.cactus_battery_level
+    temperature: sensor.cactus_temperature
+    conductivity: sensor.cactus_soil_conductivity
+    brightness: sensor.cactus_illuminance
+  min_moisture: 10
