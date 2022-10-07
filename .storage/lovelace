@@ -523,621 +523,205 @@
               "cards": [
                 {
                   "card": null,
-                  "name": "Living Room",
+                  "name": "Rooms",
                   "template": "button-card-headers",
                   "type": "custom:button-card",
-                  "icon": "mdi:sofa",
-                  "tap_action": {
-                    "action": "navigate",
-                    "navigation_path": "/lovelace/living-room"
-                  }
-                },
-                {
-                  "cards": [
-                    {
-                      "entity": "light.living_room_1",
-                      "type": "light"
-                    },
-                    {
-                      "entity": "light.living_room_2",
-                      "type": "light"
-                    }
-                  ],
-                  "type": "horizontal-stack"
-                }
-              ],
-              "type": "vertical-stack"
-            },
-            {
-              "cards": [
-                {
-                  "name": "Master Bedroom",
-                  "template": "button-card-headers",
-                  "type": "custom:button-card",
-                  "icon": "mdi:bed-king",
-                  "tap_action": {
-                    "action": "navigate",
-                    "navigation_path": "/lovelace/main-bedroom"
-                  }
-                },
-                {
-                  "cards": [
-                    {
-                      "entity": "light.main_bedroom_ceiling",
-                      "name": " ",
-                      "type": "light"
-                    },
-                    {
-                      "entity": "light.main_bedroom_bloom",
-                      "name": " ",
-                      "type": "light"
-                    }
-                  ],
-                  "type": "horizontal-stack"
-                }
-              ],
-              "type": "vertical-stack"
-            },
-            {
-              "cards": [
-                {
-                  "name": "Office",
-                  "template": "button-card-headers",
-                  "type": "custom:button-card",
-                  "icon": "mdi:desk",
-                  "tap_action": {
-                    "action": "navigate",
-                    "navigation_path": "/lovelace/office"
-                  }
-                },
-                {
-                  "cards": [
-                    {
-                      "entity": "light.second_bedroom_light",
-                      "type": "light",
-                      "name": " "
-                    },
-                    {
-                      "show_name": false,
-                      "show_icon": true,
-                      "type": "button",
-                      "tap_action": {
-                        "action": "toggle"
-                      },
-                      "entity": "switch.toms_desk",
-                      "show_state": false
-                    }
-                  ],
-                  "type": "horizontal-stack"
-                }
-              ],
-              "type": "vertical-stack"
-            },
-            {
-              "cards": [
-                {
-                  "name": "Hallway",
-                  "template": "button-card-headers",
-                  "type": "custom:button-card"
-                },
-                {
-                  "cards": [
-                    {
-                      "entity": "light.hallway",
-                      "name": " ",
-                      "type": "light"
-                    },
-                    {
-                      "aspect_ratio": "1/1.25",
-                      "entity": "binary_sensor.hue_motion_sensor_motion",
-                      "icon": "mdi:motion-sensor",
-                      "show_name": false,
-                      "type": "custom:button-card"
-                    }
-                  ],
-                  "type": "horizontal-stack"
-                },
-                {
-                  "type": "custom:card-templater",
-                  "entities": [
-                    "sensor.temps_min_stats",
-                    "sensor.temps_max_stats"
-                  ],
-                  "card": {
-                    "color_thresholds": [
-                      {
-                        "value_template": "{{ state_attr(\"sensor.temps_min_stats\", \"min_value\") - state_attr(\"sensor.temps_min_stats\", \"standard_deviation\") }}",
-                        "color_template": "{{ states(\"input_text.colour_low\")}}"
-                      },
-                      {
-                        "value_template": "{{ state_attr(\"sensor.temps_min_stats\", \"mean\") }}",
-                        "color_template": "{{ states(\"input_text.colour_medium_low\")}}"
-                      },
-                      {
-                        "value_template": "{{ (state_attr(\"sensor.temps_min_stats\", \"mean\") +  state_attr(\"sensor.temps_max_stats\", \"mean\"))/2 }}",
-                        "color_template": "{{ states(\"input_text.colour_medium\")}}"
-                      },
-                      {
-                        "value_template": "{{ {{ state_attr(\"sensor.temps_max_stats\", \"mean\") }} }}",
-                        "color_template": "{{ states(\"input_text.colour_medium_high\")}}"
-                      },
-                      {
-                        "value_template": "{{ state_attr(\"sensor.temps_max_stats\", \"max_value\") - state_attr(\"sensor.temps_max_stats\", \"standard_deviation\") }}",
-                        "color_template": "{{ states(\"input_text.colour_high\")}}"
-                      }
-                    ],
-                    "entities": [
-                      {
-                        "entity": "sensor.hue_motion_sensor_temperature",
-                        "index": 0,
-                        "name": "Temp"
-                      }
-                    ],
-                    "name": "Living room",
-                    "points_per_hour": 1,
-                    "show": {
-                      "icon": false,
-                      "labels": true,
-                      "name": false
-                    },
-                    "type": "custom:mini-graph-card"
-                  }
-                }
-              ],
-              "type": "vertical-stack"
-            },
-            {
-              "cards": [
-                {
-                  "name": "Bathrooms",
-                  "template": "button-card-headers",
-                  "type": "custom:button-card"
-                },
-                {
-                  "cards": [
-                    {
-                      "type": "custom:card-templater",
-                      "entities": [
-                        "sensor.temps_min_stats",
-                        "sensor.temps_max_stats"
-                      ],
-                      "card": {
-                        "color_thresholds": [
-                          {
-                            "value_template": "{{ state_attr(\"sensor.temps_min_stats\", \"min_value\") - state_attr(\"sensor.temps_min_stats\", \"standard_deviation\") }}",
-                            "color_template": "{{ states(\"input_text.colour_low\")}}"
-                          },
-                          {
-                            "value_template": "{{ state_attr(\"sensor.temps_min_stats\", \"mean\") }}",
-                            "color_template": "{{ states(\"input_text.colour_medium_low\")}}"
-                          },
-                          {
-                            "value_template": "{{ (state_attr(\"sensor.temps_min_stats\", \"mean\") +  state_attr(\"sensor.temps_max_stats\", \"mean\"))/2 }}",
-                            "color_template": "{{ states(\"input_text.colour_medium\")}}"
-                          },
-                          {
-                            "value_template": "{{ {{ state_attr(\"sensor.temps_max_stats\", \"mean\") }} }}",
-                            "color_template": "{{ states(\"input_text.colour_medium_high\")}}"
-                          },
-                          {
-                            "value_template": "{{ state_attr(\"sensor.temps_max_stats\", \"max_value\") - state_attr(\"sensor.temps_max_stats\", \"standard_deviation\") }}",
-                            "color_template": "{{ states(\"input_text.colour_high\")}}"
-                          }
-                        ],
-                        "entities": [
-                          {
-                            "entity": "sensor.bathroom_climate_temperature",
-                            "index": 0,
-                            "name": "Temp"
-                          },
-                          {
-                            "color": "var(--humidity)",
-                            "entity": "sensor.bathroom_climate_humidity",
-                            "index": 1,
-                            "name": "Humidity",
-                            "y_axis": "secondary"
-                          }
-                        ],
-                        "name": "Main Bathroom",
-                        "points_per_hour": 1,
-                        "show": {
-                          "labels": true
-                        },
-                        "type": "custom:mini-graph-card"
-                      }
-                    },
-                    {
-                      "type": "custom:card-templater",
-                      "entities": [
-                        "sensor.temps_min_stats",
-                        "sensor.temps_max_stats"
-                      ],
-                      "card": {
-                        "color_thresholds": [
-                          {
-                            "value_template": "{{ state_attr(\"sensor.temps_min_stats\", \"min_value\") - state_attr(\"sensor.temps_min_stats\", \"standard_deviation\") }}",
-                            "color_template": "{{ states(\"input_text.colour_low\")}}"
-                          },
-                          {
-                            "value_template": "{{ state_attr(\"sensor.temps_min_stats\", \"mean\") }}",
-                            "color_template": "{{ states(\"input_text.colour_medium_low\")}}"
-                          },
-                          {
-                            "value_template": "{{ (state_attr(\"sensor.temps_min_stats\", \"mean\") +  state_attr(\"sensor.temps_max_stats\", \"mean\"))/2 }}",
-                            "color_template": "{{ states(\"input_text.colour_medium\")}}"
-                          },
-                          {
-                            "value_template": "{{ {{ state_attr(\"sensor.temps_max_stats\", \"mean\") }} }}",
-                            "color_template": "{{ states(\"input_text.colour_medium_high\")}}"
-                          },
-                          {
-                            "value_template": "{{ state_attr(\"sensor.temps_max_stats\", \"max_value\") - state_attr(\"sensor.temps_max_stats\", \"standard_deviation\") }}",
-                            "color_template": "{{ states(\"input_text.colour_high\")}}"
-                          }
-                        ],
-                        "entities": [
-                          {
-                            "entity": "sensor.ensuite_climate_temperature",
-                            "index": 0,
-                            "name": "Temp"
-                          },
-                          {
-                            "color": "var(--humidity)",
-                            "entity": "sensor.ensuite_climate_humidity",
-                            "index": 1,
-                            "name": "Humidity",
-                            "y_axis": "secondary"
-                          }
-                        ],
-                        "name": "Ensuite",
-                        "points_per_hour": 1,
-                        "show": {
-                          "labels": true
-                        },
-                        "type": "custom:mini-graph-card"
-                      }
-                    }
-                  ],
-                  "type": "horizontal-stack"
-                }
-              ],
-              "type": "vertical-stack"
-            },
-            {
-              "cards": [
-                {
-                  "name": "Seb's Bedroom",
-                  "template": "button-card-headers",
-                  "type": "custom:button-card"
-                },
-                {
-                  "type": "conditional",
-                  "conditions": [
-                    {
-                      "entity": "media_player.seb_s_home",
-                      "state": "playing"
-                    }
-                  ],
-                  "card": {
-                    "type": "media-control",
-                    "entity": "media_player.seb_s_home"
-                  }
-                },
-                {
-                  "cards": [
-                    {
-                      "entity": "light.sebs_ceiling",
-                      "type": "light",
-                      "name": " "
-                    },
-                    {
-                      "aspect_ratio": "1/1.5",
-                      "entity": "switch.sonoff_1000d4baef_1",
-                      "show_name": false,
-                      "type": "button"
-                    }
-                  ],
-                  "type": "horizontal-stack"
+                  "icon": "mdi:floor-plan"
                 },
                 {
                   "type": "horizontal-stack",
                   "cards": [
                     {
-                      "type": "button",
+                      "type": "custom:mushroom-template-card",
+                      "primary": "Living Room",
+                      "secondary": "{{ states('sensor.living_room_temp') }}°C",
+                      "icon": "mdi:sofa",
+                      "entity": "light.living_room_light_group",
                       "tap_action": {
+                        "action": "navigate",
+                        "navigation_path": "/lovelace/living-room"
+                      },
+                      "hold_action": {
                         "action": "toggle"
                       },
-                      "entity": "light.sebs_lamp"
+                      "icon_color": "{% if is_state('light.living_room_light_group','on') %}\n{{ '#%02x%02x%02x' % state_attr('light.living_room_1','rgb_color') }}\n{% endif %}"
                     },
                     {
-                      "type": "button",
-                      "entity": "binary_sensor.seb_d1_motion"
+                      "type": "custom:mushroom-template-card",
+                      "primary": "Kitchen",
+                      "secondary": "{{ states('sensor.kitchen_climate_temperature') }}°C",
+                      "icon": "mdi:fridge",
+                      "entity": "binary_sensor.fridge_door",
+                      "tap_action": {
+                        "action": "navigate",
+                        "navigation_path": "/lovelace/kitchen"
+                      },
+                      "hold_action": {
+                        "action": "toggle"
+                      },
+                      "icon_color": "{% if is_state('binary_sensor.fridge_door','on') %}\nred\n{% endif %}"
                     }
                   ]
                 },
                 {
-                  "type": "custom:card-templater",
-                  "entities": [
-                    "sensor.temps_min_stats",
-                    "sensor.temps_max_stats"
-                  ],
-                  "card": {
-                    "color_thresholds": [
-                      {
-                        "value_template": "{{ state_attr(\"sensor.temps_min_stats\", \"min_value\") - state_attr(\"sensor.temps_min_stats\", \"standard_deviation\") }}",
-                        "color_template": "{{ states(\"input_text.colour_low\")}}"
-                      },
-                      {
-                        "value_template": "{{ state_attr(\"sensor.temps_min_stats\", \"mean\") }}",
-                        "color_template": "{{ states(\"input_text.colour_medium_low\")}}"
-                      },
-                      {
-                        "value_template": "{{ (state_attr(\"sensor.temps_min_stats\", \"mean\") +  state_attr(\"sensor.temps_max_stats\", \"mean\"))/2 }}",
-                        "color_template": "{{ states(\"input_text.colour_medium\")}}"
-                      },
-                      {
-                        "value_template": "{{ {{ state_attr(\"sensor.temps_max_stats\", \"mean\") }} }}",
-                        "color_template": "{{ states(\"input_text.colour_medium_high\")}}"
-                      },
-                      {
-                        "value_template": "{{ state_attr(\"sensor.temps_max_stats\", \"max_value\") - state_attr(\"sensor.temps_max_stats\", \"standard_deviation\") }}",
-                        "color_template": "{{ states(\"input_text.colour_high\")}}"
-                      }
-                    ],
-                    "entities": [
-                      {
-                        "entity": "sensor.seb_d1_temperature",
-                        "index": 0,
-                        "name": "Temp"
-                      }
-                    ],
-                    "name": "Living room",
-                    "points_per_hour": 1,
-                    "show": {
-                      "icon": false,
-                      "labels": true,
-                      "name": false
-                    },
-                    "type": "custom:mini-graph-card"
-                  }
-                }
-              ],
-              "type": "vertical-stack"
-            },
-            {
-              "cards": [
-                {
-                  "name": "Reuben's Bedroom",
-                  "template": "button-card-headers",
-                  "type": "custom:button-card"
-                },
-                {
-                  "type": "conditional",
-                  "conditions": [
-                    {
-                      "entity": "media_player.reuben_s_room_speaker",
-                      "state": "playing"
-                    }
-                  ],
-                  "card": {
-                    "type": "media-control",
-                    "entity": "media_player.reuben_s_room_speaker"
-                  }
-                },
-                {
+                  "type": "horizontal-stack",
                   "cards": [
                     {
-                      "entity": "light.reubens_ceiling",
-                      "name": " ",
-                      "type": "light"
+                      "type": "custom:mushroom-template-card",
+                      "primary": "Hallway",
+                      "secondary": "{{ states('sensor.hue_motion_sensor_temperature') }}°C",
+                      "icon": "mdi:coat-rack",
+                      "entity": "light.living_room_light_group",
+                      "tap_action": {
+                        "action": "navigate",
+                        "navigation_path": "/lovelace/hallway"
+                      },
+                      "hold_action": {
+                        "action": "toggle"
+                      },
+                      "icon_color": "{% if is_state('light.hallway','on') %}\norange\n{% endif %}"
                     },
                     {
-                      "entity": "light.rname",
-                      "name": " ",
-                      "type": "light"
-                    }
-                  ],
-                  "type": "horizontal-stack"
-                },
-                {
-                  "cards": [
-                    {
-                      "type": "custom:card-templater",
-                      "entities": [
-                        "sensor.temps_min_stats",
-                        "sensor.temps_max_stats"
-                      ],
-                      "card": {
-                        "color_thresholds": [
-                          {
-                            "value_template": "{{ state_attr(\"sensor.temps_min_stats\", \"min_value\") - state_attr(\"sensor.temps_min_stats\", \"standard_deviation\") }}",
-                            "color_template": "{{ states(\"input_text.colour_low\")}}"
-                          },
-                          {
-                            "value_template": "{{ state_attr(\"sensor.temps_min_stats\", \"mean\") }}",
-                            "color_template": "{{ states(\"input_text.colour_medium_low\")}}"
-                          },
-                          {
-                            "value_template": "{{ (state_attr(\"sensor.temps_min_stats\", \"mean\") +  state_attr(\"sensor.temps_max_stats\", \"mean\"))/2 }}",
-                            "color_template": "{{ states(\"input_text.colour_medium\")}}"
-                          },
-                          {
-                            "value_template": "{{ {{ state_attr(\"sensor.temps_max_stats\", \"mean\") }} }}",
-                            "color_template": "{{ states(\"input_text.colour_medium_high\")}}"
-                          },
-                          {
-                            "value_template": "{{ state_attr(\"sensor.temps_max_stats\", \"max_value\") - state_attr(\"sensor.temps_max_stats\", \"standard_deviation\") }}",
-                            "color_template": "{{ states(\"input_text.colour_high\")}}"
-                          }
-                        ],
-                        "entities": [
-                          {
-                            "entity": "sensor.reu_d1_temperature",
-                            "index": 0,
-                            "name": "Temp"
-                          }
-                        ],
-                        "name": "Reuben's Room",
-                        "points_per_hour": 1,
-                        "align_icon": "state",
-                        "show": {
-                          "icon": true,
-                          "labels": true,
-                          "name": false
-                        },
-                        "type": "custom:mini-graph-card"
-                      }
-                    },
-                    {
-                      "entity": "binary_sensor.reu_d1_motion",
-                      "aspect_ratio": "1/0.7",
-                      "icon": "mdi:motion-sensor",
-                      "show_name": false,
-                      "type": "custom:button-card"
-                    }
-                  ],
-                  "type": "horizontal-stack"
-                }
-              ],
-              "type": "vertical-stack"
-            },
-            {
-              "cards": [
-                {
-                  "name": "Kitchen/Dining room",
-                  "template": "button-card-headers",
-                  "type": "custom:button-card",
-                  "icon": "mdi:stove",
-                  "tap_action": {
-                    "action": "navigate",
-                    "navigation_path": "/lovelace/kitchen"
-                  }
-                },
-                {
-                  "type": "custom:vacuum-card",
-                  "entity": "vacuum.ditto",
-                  "image": "default",
-                  "stats": {
-                    "default": [
-                      {
-                        "entity_id": "sensor.vacuum_last_qm",
-                        "subtitle": "Last clean area"
-                      },
-                      {
-                        "entity_id": "sensor.vacuum_last_run",
-                        "attribute": "clean_stop",
-                        "subtitle": "Last clean date"
-                      }
-                    ]
-                  },
-                  "shortcuts": [
-                    {
-                      "name": "Clean living room",
-                      "service": "neato.custom_cleaning",
-                      "service_data": {
-                        "entity_id": "vacuum.ditto",
-                        "zone": "Living room"
-                      },
-                      "icon": "mdi:sofa"
-                    },
-                    {
-                      "name": "Clean Whole Room",
-                      "service": "neato.custom_cleaning",
-                      "service_data": {
-                        "entity_id": "vacuum.ditto",
-                        "zone": "Whole room"
-                      },
-                      "icon": "mdi:silverware-fork-knife"
-                    },
-                    {
-                      "name": "Clean Kitchen",
-                      "service": "neato.custom_cleaning",
-                      "service_data": {
-                        "entity_id": "vacuum.ditto",
-                        "zone": "Kitchen"
-                      },
-                      "icon": "mdi:fridge-variant"
-                    },
-                    {
-                      "name": "Clean Hallway",
-                      "service": "neato.custom_cleaning",
-                      "service_data": {
-                        "entity_id": "vacuum.ditto",
-                        "zone": "Hallway"
-                      },
-                      "icon": "mdi:coat-rack"
-                    }
-                  ],
-                  "compact_view": false,
-                  "show_name": true,
-                  "show_status": true,
-                  "show_toolbar": true
-                }
-              ],
-              "type": "vertical-stack"
-            },
-            {
-              "cards": [
-                {
-                  "name": "Utility",
-                  "template": "button-card-headers",
-                  "type": "custom:button-card"
-                },
-                {
-                  "entities": [
-                    {
-                      "entities": [
-                        {
-                          "entity": "sensor.washing_machine_count",
-                          "name": "Washes in 7d"
-                        }
-                      ],
+                      "type": "custom:mushroom-template-card",
+                      "primary": "Utility",
+                      "secondary": "{{states('sensor.washing_machine_count')}} washes this week",
+                      "icon": "mdi:washing-machine",
                       "entity": "binary_sensor.washer",
-                      "secondary_info": "last-changed",
-                      "state_color": true,
-                      "type": "custom:multiple-entity-row"
+                      "tap_action": {
+                        "action": "navigate",
+                        "navigation_path": "/lovelace/utility"
+                      },
+                      "hold_action": {
+                        "action": "toggle"
+                      },
+                      "icon_color": "{% if is_state('binary_sensor.washer','on') %}\ngreen\n{% endif %}"
                     }
-                  ],
-                  "type": "entities"
-                }
-              ],
-              "type": "vertical-stack"
-            },
-            {
-              "cards": [
-                {
-                  "name": "Garage",
-                  "template": "button-card-headers",
-                  "type": "custom:button-card"
+                  ]
                 },
                 {
-                  "entity": "binary_sensor.garage_door",
-                  "icon": "mdi:garage",
-                  "name": "Garage Door",
-                  "show_last_changed": true,
-                  "state": [
+                  "type": "horizontal-stack",
+                  "cards": [
                     {
-                      "color": "#EF4F1A",
-                      "icon": "mdi:garage-open",
-                      "value": "on"
+                      "type": "custom:mushroom-template-card",
+                      "primary": "Main Bedroom",
+                      "secondary": "{{ states('sensor.bed1_temperature') }}°C",
+                      "icon": "mdi:bed-king",
+                      "entity": "light.main_bedroom_light_group",
+                      "tap_action": {
+                        "action": "navigate",
+                        "navigation_path": "/lovelace/main-bedroom"
+                      },
+                      "hold_action": {
+                        "action": "toggle"
+                      },
+                      "icon_color": "{% if is_state('light.main_bedroom_light_group','on') %}\n{{ '#%02x%02x%02x' % state_attr('light.main_bedroom_light_group','rgb_color') }}\n{% endif %}"
                     },
                     {
-                      "color": "#000000",
-                      "icon": "mdi:garage",
-                      "value": "off"
+                      "type": "custom:mushroom-template-card",
+                      "primary": "Office",
+                      "secondary": "{{ states('sensor.office_climate_temperature') }}°C",
+                      "icon": "mdi:desk",
+                      "entity": "light.second_bedroom_light_group",
+                      "tap_action": {
+                        "action": "navigate",
+                        "navigation_path": "/lovelace/office"
+                      },
+                      "hold_action": {
+                        "action": "toggle"
+                      },
+                      "icon_color": "{% if is_state('light.second_bedroom_light_group','on') %}\norange\n{% endif %}"
                     }
-                  ],
-                  "type": "custom:button-card"
+                  ]
                 },
                 {
-                  "entities": [
+                  "type": "horizontal-stack",
+                  "cards": [
                     {
-                      "entity": "binary_sensor.garage_door"
+                      "type": "custom:mushroom-template-card",
+                      "primary": "Seb's Room",
+                      "secondary": "{{ states('sensor.seb_d1_temperature') }}°C",
+                      "icon": "mdi:rocket-launch",
+                      "entity": "light.sebs_bedroom_light_group",
+                      "tap_action": {
+                        "action": "navigate",
+                        "navigation_path": "/lovelace/seb"
+                      },
+                      "hold_action": {
+                        "action": "toggle"
+                      },
+                      "icon_color": "{% if is_state('light.sebs_bedroom_light_group','on') %}\n{{ '#%02x%02x%02x' % state_attr('light.sebs_ceiling','rgb_color') }}\n{% endif %}"
+                    },
+                    {
+                      "type": "custom:mushroom-template-card",
+                      "primary": "Reu's Room",
+                      "secondary": "{{ states('sensor.reu_d1_temperature') }}°C",
+                      "icon": "mdi:dolphin",
+                      "entity": "light.reubens_bedroom_light_group",
+                      "tap_action": {
+                        "action": "navigate",
+                        "navigation_path": "/lovelace/reu"
+                      },
+                      "hold_action": {
+                        "action": "toggle"
+                      },
+                      "icon_color": "{% if is_state('light.reubens_bedroom_light_group','on') %}\n{{ '#%02x%02x%02x' % state_attr('light.reubens_ceiling','rgb_color') }}\n{% endif %}"
                     }
-                  ],
-                  "hours_to_show": 24,
-                  "refresh_interval": 0,
-                  "type": "history-graph"
+                  ]
+                },
+                {
+                  "type": "horizontal-stack",
+                  "cards": [
+                    {
+                      "type": "custom:mushroom-template-card",
+                      "primary": "Bathroom",
+                      "secondary": "{{ states('sensor.bathroom_climate_temperature') }}°C",
+                      "icon": "mdi:bathtub",
+                      "entity": "sensor.bathroom_climate_temperature",
+                      "tap_action": {
+                        "action": "navigate",
+                        "navigation_path": "/lovelace/bathrooms"
+                      },
+                      "hold_action": {
+                        "action": "none"
+                      },
+                      "icon_color": ""
+                    },
+                    {
+                      "type": "custom:mushroom-template-card",
+                      "primary": "Ensuite",
+                      "secondary": "{{ states('sensor.ensuite_climate_temperature') }}°C",
+                      "icon": "mdi:shower-head",
+                      "entity": "sensor.bathroom_climate_temperature",
+                      "tap_action": {
+                        "action": "navigate",
+                        "navigation_path": "/lovelace/bathrooms"
+                      },
+                      "hold_action": {
+                        "action": "none"
+                      },
+                      "icon_color": ""
+                    }
+                  ]
+                },
+                {
+                  "type": "horizontal-stack",
+                  "cards": [
+                    {
+                      "type": "custom:mushroom-template-card",
+                      "primary": "Garage",
+                      "secondary": "{{ relative_time(states.binary_sensor.garage_door.last_changed) }} ago",
+                      "icon": "{% if is_state('binary_sensor.garage_door','open')  %}\n  {{'mdi:garage-open'}}\n{% else %}\n  {{'mdi:garage'}}\n{% endif %}",
+                      "entity": "binary_sensor.garage_door",
+                      "tap_action": {
+                        "action": "navigate",
+                        "navigation_path": "/lovelace/main-bedroom"
+                      },
+                      "hold_action": {
+                        "action": "toggle"
+                      },
+                      "icon_color": "{% if is_state('light.main_bedroom_light_group','on') %}\n{{ '#%02x%02x%02x' % state_attr('light.main_bedroom_light_group','rgb_color') }}\n{% endif %}"
+                    }
+                  ]
                 }
               ],
               "type": "vertical-stack"
@@ -1147,7 +731,7 @@
               "conditions": [
                 {
                   "entity": "sensor.sourdough_height",
-                  "state": "Unavailable"
+                  "state_not": "unavailable"
                 }
               ],
               "card": {
@@ -2846,6 +2430,7 @@
           "title": "Living room",
           "path": "living-room",
           "subview": true,
+          "icon": "mdi:sofa",
           "badges": [],
           "cards": [
             {
@@ -2994,6 +2579,7 @@
           "subview": true,
           "title": "Main bedroom",
           "path": "main-bedroom",
+          "icon": "mdi:bed-king",
           "badges": [],
           "cards": [
             {
@@ -3142,6 +2728,7 @@
           "title": "Kitchen",
           "path": "kitchen",
           "subview": true,
+          "icon": "mdi:stove",
           "badges": [],
           "cards": [
             {
@@ -3391,6 +2978,461 @@
                     "type": "media-control",
                     "entity": "media_player.kitchen_and_dining_room_2"
                   }
+                }
+              ],
+              "type": "vertical-stack"
+            }
+          ]
+        },
+        {
+          "theme": "Backend-selected",
+          "title": "Hallway",
+          "path": "hallway",
+          "icon": "mdi:coat-rack",
+          "subview": true,
+          "badges": [],
+          "cards": [
+            {
+              "cards": [
+                {
+                  "name": "Hallway",
+                  "template": "button-card-headers",
+                  "type": "custom:button-card"
+                },
+                {
+                  "cards": [
+                    {
+                      "entity": "light.hallway",
+                      "name": " ",
+                      "type": "light"
+                    },
+                    {
+                      "aspect_ratio": "1/1.25",
+                      "entity": "binary_sensor.hue_motion_sensor_motion",
+                      "icon": "mdi:motion-sensor",
+                      "show_name": false,
+                      "type": "custom:button-card"
+                    }
+                  ],
+                  "type": "horizontal-stack"
+                },
+                {
+                  "type": "custom:card-templater",
+                  "entities": [
+                    "sensor.temps_min_stats",
+                    "sensor.temps_max_stats"
+                  ],
+                  "card": {
+                    "color_thresholds": [
+                      {
+                        "value_template": "{{ state_attr(\"sensor.temps_min_stats\", \"min_value\") - state_attr(\"sensor.temps_min_stats\", \"standard_deviation\") }}",
+                        "color_template": "{{ states(\"input_text.colour_low\")}}"
+                      },
+                      {
+                        "value_template": "{{ state_attr(\"sensor.temps_min_stats\", \"mean\") }}",
+                        "color_template": "{{ states(\"input_text.colour_medium_low\")}}"
+                      },
+                      {
+                        "value_template": "{{ (state_attr(\"sensor.temps_min_stats\", \"mean\") +  state_attr(\"sensor.temps_max_stats\", \"mean\"))/2 }}",
+                        "color_template": "{{ states(\"input_text.colour_medium\")}}"
+                      },
+                      {
+                        "value_template": "{{ {{ state_attr(\"sensor.temps_max_stats\", \"mean\") }} }}",
+                        "color_template": "{{ states(\"input_text.colour_medium_high\")}}"
+                      },
+                      {
+                        "value_template": "{{ state_attr(\"sensor.temps_max_stats\", \"max_value\") - state_attr(\"sensor.temps_max_stats\", \"standard_deviation\") }}",
+                        "color_template": "{{ states(\"input_text.colour_high\")}}"
+                      }
+                    ],
+                    "entities": [
+                      {
+                        "entity": "sensor.hue_motion_sensor_temperature",
+                        "index": 0,
+                        "name": "Temp"
+                      }
+                    ],
+                    "name": "Living room",
+                    "points_per_hour": 1,
+                    "show": {
+                      "icon": false,
+                      "labels": true,
+                      "name": false
+                    },
+                    "type": "custom:mini-graph-card"
+                  }
+                }
+              ],
+              "type": "vertical-stack"
+            }
+          ]
+        },
+        {
+          "theme": "Backend-selected",
+          "title": "Utility",
+          "path": "utility",
+          "icon": "mdi:washing-machine",
+          "subview": true,
+          "badges": [],
+          "cards": [
+            {
+              "entities": [
+                {
+                  "entities": [
+                    {
+                      "entity": "sensor.washing_machine_count",
+                      "name": "Washes in 7d"
+                    }
+                  ],
+                  "entity": "binary_sensor.washer",
+                  "secondary_info": "last-changed",
+                  "state_color": true,
+                  "type": "custom:multiple-entity-row"
+                }
+              ],
+              "type": "entities"
+            }
+          ]
+        },
+        {
+          "theme": "Backend-selected",
+          "title": "Bathrooms",
+          "path": "bathrooms",
+          "icon": "mdi:bathtub",
+          "subview": true,
+          "badges": [],
+          "cards": [
+            {
+              "cards": [
+                {
+                  "name": "Bathrooms",
+                  "template": "button-card-headers",
+                  "type": "custom:button-card"
+                },
+                {
+                  "cards": [
+                    {
+                      "type": "custom:card-templater",
+                      "entities": [
+                        "sensor.temps_min_stats",
+                        "sensor.temps_max_stats"
+                      ],
+                      "card": {
+                        "color_thresholds": [
+                          {
+                            "value_template": "{{ state_attr(\"sensor.temps_min_stats\", \"min_value\") - state_attr(\"sensor.temps_min_stats\", \"standard_deviation\") }}",
+                            "color_template": "{{ states(\"input_text.colour_low\")}}"
+                          },
+                          {
+                            "value_template": "{{ state_attr(\"sensor.temps_min_stats\", \"mean\") }}",
+                            "color_template": "{{ states(\"input_text.colour_medium_low\")}}"
+                          },
+                          {
+                            "value_template": "{{ (state_attr(\"sensor.temps_min_stats\", \"mean\") +  state_attr(\"sensor.temps_max_stats\", \"mean\"))/2 }}",
+                            "color_template": "{{ states(\"input_text.colour_medium\")}}"
+                          },
+                          {
+                            "value_template": "{{ {{ state_attr(\"sensor.temps_max_stats\", \"mean\") }} }}",
+                            "color_template": "{{ states(\"input_text.colour_medium_high\")}}"
+                          },
+                          {
+                            "value_template": "{{ state_attr(\"sensor.temps_max_stats\", \"max_value\") - state_attr(\"sensor.temps_max_stats\", \"standard_deviation\") }}",
+                            "color_template": "{{ states(\"input_text.colour_high\")}}"
+                          }
+                        ],
+                        "entities": [
+                          {
+                            "entity": "sensor.bathroom_climate_temperature",
+                            "index": 0,
+                            "name": "Temp"
+                          },
+                          {
+                            "color": "var(--humidity)",
+                            "entity": "sensor.bathroom_climate_humidity",
+                            "index": 1,
+                            "name": "Humidity",
+                            "y_axis": "secondary"
+                          }
+                        ],
+                        "name": "Main Bathroom",
+                        "points_per_hour": 1,
+                        "show": {
+                          "labels": true
+                        },
+                        "type": "custom:mini-graph-card"
+                      }
+                    },
+                    {
+                      "type": "custom:card-templater",
+                      "entities": [
+                        "sensor.temps_min_stats",
+                        "sensor.temps_max_stats"
+                      ],
+                      "card": {
+                        "color_thresholds": [
+                          {
+                            "value_template": "{{ state_attr(\"sensor.temps_min_stats\", \"min_value\") - state_attr(\"sensor.temps_min_stats\", \"standard_deviation\") }}",
+                            "color_template": "{{ states(\"input_text.colour_low\")}}"
+                          },
+                          {
+                            "value_template": "{{ state_attr(\"sensor.temps_min_stats\", \"mean\") }}",
+                            "color_template": "{{ states(\"input_text.colour_medium_low\")}}"
+                          },
+                          {
+                            "value_template": "{{ (state_attr(\"sensor.temps_min_stats\", \"mean\") +  state_attr(\"sensor.temps_max_stats\", \"mean\"))/2 }}",
+                            "color_template": "{{ states(\"input_text.colour_medium\")}}"
+                          },
+                          {
+                            "value_template": "{{ {{ state_attr(\"sensor.temps_max_stats\", \"mean\") }} }}",
+                            "color_template": "{{ states(\"input_text.colour_medium_high\")}}"
+                          },
+                          {
+                            "value_template": "{{ state_attr(\"sensor.temps_max_stats\", \"max_value\") - state_attr(\"sensor.temps_max_stats\", \"standard_deviation\") }}",
+                            "color_template": "{{ states(\"input_text.colour_high\")}}"
+                          }
+                        ],
+                        "entities": [
+                          {
+                            "entity": "sensor.ensuite_climate_temperature",
+                            "index": 0,
+                            "name": "Temp"
+                          },
+                          {
+                            "color": "var(--humidity)",
+                            "entity": "sensor.ensuite_climate_humidity",
+                            "index": 1,
+                            "name": "Humidity",
+                            "y_axis": "secondary"
+                          }
+                        ],
+                        "name": "Ensuite",
+                        "points_per_hour": 1,
+                        "show": {
+                          "labels": true
+                        },
+                        "type": "custom:mini-graph-card"
+                      }
+                    }
+                  ],
+                  "type": "horizontal-stack"
+                }
+              ],
+              "type": "vertical-stack"
+            }
+          ]
+        },
+        {
+          "theme": "Backend-selected",
+          "title": "Seb",
+          "path": "seb",
+          "icon": "mdi:rocket-launch",
+          "subview": true,
+          "badges": [],
+          "cards": [
+            {
+              "cards": [
+                {
+                  "name": "Seb's Bedroom",
+                  "template": "button-card-headers",
+                  "type": "custom:button-card"
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "entity": "media_player.seb_s_home",
+                      "state": "playing"
+                    }
+                  ],
+                  "card": {
+                    "type": "media-control",
+                    "entity": "media_player.seb_s_home"
+                  }
+                },
+                {
+                  "cards": [
+                    {
+                      "entity": "light.sebs_ceiling",
+                      "type": "light",
+                      "name": " "
+                    },
+                    {
+                      "aspect_ratio": "1/1.5",
+                      "entity": "switch.sonoff_1000d4baef_1",
+                      "show_name": false,
+                      "type": "button"
+                    }
+                  ],
+                  "type": "horizontal-stack"
+                },
+                {
+                  "type": "horizontal-stack",
+                  "cards": [
+                    {
+                      "type": "button",
+                      "tap_action": {
+                        "action": "toggle"
+                      },
+                      "entity": "light.sebs_lamp"
+                    },
+                    {
+                      "type": "button",
+                      "entity": "binary_sensor.seb_d1_motion"
+                    }
+                  ]
+                },
+                {
+                  "type": "custom:card-templater",
+                  "entities": [
+                    "sensor.temps_min_stats",
+                    "sensor.temps_max_stats"
+                  ],
+                  "card": {
+                    "color_thresholds": [
+                      {
+                        "value_template": "{{ state_attr(\"sensor.temps_min_stats\", \"min_value\") - state_attr(\"sensor.temps_min_stats\", \"standard_deviation\") }}",
+                        "color_template": "{{ states(\"input_text.colour_low\")}}"
+                      },
+                      {
+                        "value_template": "{{ state_attr(\"sensor.temps_min_stats\", \"mean\") }}",
+                        "color_template": "{{ states(\"input_text.colour_medium_low\")}}"
+                      },
+                      {
+                        "value_template": "{{ (state_attr(\"sensor.temps_min_stats\", \"mean\") +  state_attr(\"sensor.temps_max_stats\", \"mean\"))/2 }}",
+                        "color_template": "{{ states(\"input_text.colour_medium\")}}"
+                      },
+                      {
+                        "value_template": "{{ {{ state_attr(\"sensor.temps_max_stats\", \"mean\") }} }}",
+                        "color_template": "{{ states(\"input_text.colour_medium_high\")}}"
+                      },
+                      {
+                        "value_template": "{{ state_attr(\"sensor.temps_max_stats\", \"max_value\") - state_attr(\"sensor.temps_max_stats\", \"standard_deviation\") }}",
+                        "color_template": "{{ states(\"input_text.colour_high\")}}"
+                      }
+                    ],
+                    "entities": [
+                      {
+                        "entity": "sensor.seb_d1_temperature",
+                        "index": 0,
+                        "name": "Temp"
+                      }
+                    ],
+                    "name": "Living room",
+                    "points_per_hour": 1,
+                    "show": {
+                      "icon": false,
+                      "labels": true,
+                      "name": false
+                    },
+                    "type": "custom:mini-graph-card"
+                  }
+                }
+              ],
+              "type": "vertical-stack"
+            }
+          ]
+        },
+        {
+          "theme": "Backend-selected",
+          "title": "Reu",
+          "path": "reu",
+          "icon": "mdi:dolphin",
+          "subview": true,
+          "badges": [],
+          "cards": [
+            {
+              "cards": [
+                {
+                  "name": "Reuben's Bedroom",
+                  "template": "button-card-headers",
+                  "type": "custom:button-card"
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "entity": "media_player.reuben_s_room_speaker",
+                      "state": "playing"
+                    }
+                  ],
+                  "card": {
+                    "type": "media-control",
+                    "entity": "media_player.reuben_s_room_speaker"
+                  }
+                },
+                {
+                  "cards": [
+                    {
+                      "entity": "light.reubens_ceiling",
+                      "name": " ",
+                      "type": "light"
+                    },
+                    {
+                      "entity": "light.rname",
+                      "name": " ",
+                      "type": "light"
+                    }
+                  ],
+                  "type": "horizontal-stack"
+                },
+                {
+                  "cards": [
+                    {
+                      "type": "custom:card-templater",
+                      "entities": [
+                        "sensor.temps_min_stats",
+                        "sensor.temps_max_stats"
+                      ],
+                      "card": {
+                        "color_thresholds": [
+                          {
+                            "value_template": "{{ state_attr(\"sensor.temps_min_stats\", \"min_value\") - state_attr(\"sensor.temps_min_stats\", \"standard_deviation\") }}",
+                            "color_template": "{{ states(\"input_text.colour_low\")}}"
+                          },
+                          {
+                            "value_template": "{{ state_attr(\"sensor.temps_min_stats\", \"mean\") }}",
+                            "color_template": "{{ states(\"input_text.colour_medium_low\")}}"
+                          },
+                          {
+                            "value_template": "{{ (state_attr(\"sensor.temps_min_stats\", \"mean\") +  state_attr(\"sensor.temps_max_stats\", \"mean\"))/2 }}",
+                            "color_template": "{{ states(\"input_text.colour_medium\")}}"
+                          },
+                          {
+                            "value_template": "{{ {{ state_attr(\"sensor.temps_max_stats\", \"mean\") }} }}",
+                            "color_template": "{{ states(\"input_text.colour_medium_high\")}}"
+                          },
+                          {
+                            "value_template": "{{ state_attr(\"sensor.temps_max_stats\", \"max_value\") - state_attr(\"sensor.temps_max_stats\", \"standard_deviation\") }}",
+                            "color_template": "{{ states(\"input_text.colour_high\")}}"
+                          }
+                        ],
+                        "entities": [
+                          {
+                            "entity": "sensor.reu_d1_temperature",
+                            "index": 0,
+                            "name": "Temp"
+                          }
+                        ],
+                        "name": "Reuben's Room",
+                        "points_per_hour": 1,
+                        "align_icon": "state",
+                        "show": {
+                          "icon": true,
+                          "labels": true,
+                          "name": false
+                        },
+                        "type": "custom:mini-graph-card"
+                      }
+                    },
+                    {
+                      "entity": "binary_sensor.reu_d1_motion",
+                      "aspect_ratio": "1/0.7",
+                      "icon": "mdi:motion-sensor",
+                      "show_name": false,
+                      "type": "custom:button-card"
+                    }
+                  ],
+                  "type": "horizontal-stack"
                 }
               ],
               "type": "vertical-stack"
