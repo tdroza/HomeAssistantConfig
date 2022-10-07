@@ -69,7 +69,7 @@
                       "name": false
                     }
                   ],
-                  "entity": "device_tracker.toms_phone",
+                  "entity": "person.tom",
                   "icon": "mdi:human-male",
                   "image": "/local/tom.jpg",
                   "name": "Tom",
@@ -98,7 +98,7 @@
                       "name": false
                     }
                   ],
-                  "entity": "device_tracker.annas_phone",
+                  "entity": "person.anna",
                   "icon": "mdi:human-female",
                   "image": "/local/anna.jpg",
                   "name": "Anna",
@@ -544,7 +544,8 @@
                       "hold_action": {
                         "action": "toggle"
                       },
-                      "icon_color": "{% if is_state('light.living_room_light_group','on') %}\n{{ '#%02x%02x%02x' % state_attr('light.living_room_1','rgb_color') }}\n{% endif %}"
+                      "icon_color": "{% if is_state('light.living_room_light_group','on') %}\n{{ '#%02x%02x%02x' % state_attr('light.living_room_1','rgb_color') }}\n{% endif %}",
+                      "multiline_secondary": false
                     },
                     {
                       "type": "custom:mushroom-template-card",
@@ -719,7 +720,8 @@
                       "hold_action": {
                         "action": "toggle"
                       },
-                      "icon_color": "{% if is_state('light.main_bedroom_light_group','on') %}\n{{ '#%02x%02x%02x' % state_attr('light.main_bedroom_light_group','rgb_color') }}\n{% endif %}"
+                      "icon_color": "{% if is_state('light.main_bedroom_light_group','on') %}\n{{ '#%02x%02x%02x' % state_attr('light.main_bedroom_light_group','rgb_color') }}\n{% endif %}",
+                      "fill_container": false
                     }
                   ]
                 }
@@ -2359,8 +2361,10 @@
                   ]
                 },
                 {
-                  "type": "custom:slider-entity-row",
-                  "entity": "cover.office_blind"
+                  "type": "custom:mushroom-cover-card",
+                  "entity": "cover.office_blind",
+                  "show_position_control": true,
+                  "show_buttons_control": false
                 },
                 {
                   "cards": [
@@ -2442,31 +2446,44 @@
                   "type": "custom:button-card"
                 },
                 {
+                  "type": "horizontal-stack",
                   "cards": [
                     {
+                      "type": "custom:mushroom-light-card",
                       "entity": "light.living_room_1",
-                      "type": "light"
+                      "use_light_color": true,
+                      "show_brightness_control": true,
+                      "show_color_temp_control": true,
+                      "show_color_control": true,
+                      "collapsible_controls": true
                     },
                     {
+                      "type": "custom:mushroom-light-card",
                       "entity": "light.living_room_2",
-                      "type": "light"
+                      "use_light_color": true,
+                      "show_brightness_control": true,
+                      "show_color_temp_control": true,
+                      "show_color_control": true,
+                      "collapsible_controls": true
                     }
-                  ],
-                  "type": "horizontal-stack"
+                  ]
                 },
                 {
                   "type": "horizontal-stack",
                   "cards": [
                     {
-                      "type": "button",
-                      "tap_action": {
-                        "action": "toggle"
-                      },
-                      "entity": "light.tv_backlight"
+                      "type": "custom:mushroom-light-card",
+                      "entity": "light.tv_backlight",
+                      "use_light_color": true,
+                      "show_brightness_control": true,
+                      "show_color_temp_control": true,
+                      "show_color_control": true,
+                      "collapsible_controls": true
                     },
                     {
+                      "type": "custom:mushroom-entity-card",
                       "entity": "switch.kodi",
-                      "type": "button"
+                      "name": "Kodi"
                     }
                   ]
                 },
@@ -2590,53 +2607,68 @@
                   "type": "custom:button-card"
                 },
                 {
+                  "type": "horizontal-stack",
                   "cards": [
                     {
+                      "type": "custom:mushroom-light-card",
                       "entity": "light.main_bedroom_ceiling",
-                      "name": " ",
-                      "type": "light"
+                      "use_light_color": true,
+                      "show_brightness_control": true,
+                      "show_color_temp_control": true,
+                      "show_color_control": false,
+                      "collapsible_controls": false
                     },
                     {
+                      "type": "custom:mushroom-light-card",
                       "entity": "light.main_bedroom_bloom",
-                      "name": " ",
-                      "type": "light"
+                      "use_light_color": true,
+                      "show_brightness_control": true,
+                      "show_color_temp_control": true,
+                      "show_color_control": true,
+                      "collapsible_controls": false
                     }
-                  ],
-                  "type": "horizontal-stack"
+                  ]
                 },
                 {
+                  "type": "vertical-stack",
                   "cards": [
                     {
+                      "type": "custom:mushroom-cover-card",
                       "entity": "cover.large_blind",
-                      "type": "custom:slider-entity-row"
+                      "show_position_control": true,
+                      "show_buttons_control": false
                     },
                     {
+                      "type": "custom:mushroom-cover-card",
                       "entity": "cover.small_blind",
-                      "type": "custom:slider-entity-row"
+                      "show_position_control": true
                     }
-                  ],
-                  "type": "vertical-stack"
+                  ]
                 },
                 {
                   "type": "horizontal-stack",
                   "cards": [
                     {
-                      "type": "button",
+                      "type": "custom:mushroom-template-card",
+                      "entity": "switch.toms_phone_charger",
+                      "icon": "{% if is_state('switch.toms_phone_charger','on')  %}\n  {{'mdi:cellphone-charging'}}\n{% else %}\n  {{'mdi:cellphone'}}\n{% endif %}",
                       "tap_action": {
                         "action": "toggle"
                       },
-                      "entity": "switch.toms_phone_charger",
-                      "icon": "mdi:cellphone-charging",
-                      "name": "Tom's Charger"
+                      "primary": "Tom's Charger",
+                      "secondary": "{{relative_time(states.switch.toms_phone_charger.last_changed)}} ago",
+                      "icon_color": "{% if is_state('switch.toms_phone_charger','on')  %}\n  {{'green'}}\n{% endif %}"
                     },
                     {
-                      "type": "button",
+                      "type": "custom:mushroom-template-card",
+                      "entity": "switch.annas_phone_charger",
+                      "icon": "{% if is_state('switch.annas_phone_charger','on')  %}\n  {{'mdi:cellphone-charging'}}\n{% else %}\n  {{'mdi:cellphone'}}\n{% endif %}",
                       "tap_action": {
                         "action": "toggle"
                       },
-                      "entity": "switch.annas_phone_charger",
-                      "icon": "mdi:cellphone-charging",
-                      "name": "Anna's Charger"
+                      "primary": "Anna's Charger",
+                      "secondary": "{{relative_time(states.switch.annas_phone_charger.last_changed)}} ago",
+                      "icon_color": "{% if is_state('switch.annas_phone_charger','on')  %}\n  {{'green'}}\n{% endif %}"
                     }
                   ]
                 },
