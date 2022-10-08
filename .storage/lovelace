@@ -2316,6 +2316,33 @@
                   "type": "custom:button-card"
                 },
                 {
+                  "type": "horizontal-stack",
+                  "cards": [
+                    {
+                      "type": "custom:mushroom-entity-card",
+                      "entity": "switch.toms_desk",
+                      "secondary_info": "last-changed",
+                      "tap_action": {
+                        "action": "toggle"
+                      },
+                      "hold_action": {
+                        "action": "more-info"
+                      }
+                    },
+                    {
+                      "type": "custom:mushroom-entity-card",
+                      "entity": "switch.annas_desk",
+                      "secondary_info": "last-changed",
+                      "tap_action": {
+                        "action": "toggle"
+                      },
+                      "hold_action": {
+                        "action": "more-info"
+                      }
+                    }
+                  ]
+                },
+                {
                   "cards": [
                     {
                       "entity": "light.second_bedroom_light",
@@ -2323,14 +2350,9 @@
                       "name": " "
                     },
                     {
-                      "show_name": false,
-                      "show_icon": true,
-                      "type": "button",
-                      "tap_action": {
-                        "action": "toggle"
-                      },
-                      "entity": "switch.toms_desk",
-                      "show_state": false
+                      "type": "light",
+                      "entity": "light.annas_desk",
+                      "name": ""
                     }
                   ],
                   "type": "horizontal-stack"
@@ -2352,11 +2374,6 @@
                         "action": "toggle"
                       },
                       "entity": "switch.toms_monitor_light"
-                    },
-                    {
-                      "type": "light",
-                      "entity": "light.annas_desk",
-                      "name": ""
                     }
                   ]
                 },
@@ -2675,8 +2692,11 @@
                 {
                   "cards": [
                     {
-                      "entity": "switch.blanket_tom",
-                      "type": "button"
+                      "type": "button",
+                      "tap_action": {
+                        "action": "toggle"
+                      },
+                      "entity": "binary_sensor.main_bedroom_door"
                     },
                     {
                       "entity": "switch.blanket_anna",
@@ -2688,13 +2708,6 @@
                 {
                   "type": "horizontal-stack",
                   "cards": [
-                    {
-                      "type": "button",
-                      "tap_action": {
-                        "action": "toggle"
-                      },
-                      "entity": "binary_sensor.main_bedroom_door"
-                    },
                     {
                       "type": "custom:card-templater",
                       "entities": [
