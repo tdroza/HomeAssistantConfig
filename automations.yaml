@@ -1750,6 +1750,16 @@
     device_id: b1e67ae9d70423911cd751c767cce4fa
     entity_id: switch.toms_desk
     domain: switch
+  - choose:
+    - conditions:
+      - condition: state
+        entity_id: binary_sensor.workday_anna
+        state: 'on'
+      sequence:
+      - type: turn_on
+        device_id: c786200fce68c28d8cd9e4ca23064e2d
+        entity_id: switch.annas_desk
+        domain: switch
   - delay:
       hours: 0
       minutes: 15
@@ -1762,10 +1772,17 @@
   - condition: state
     entity_id: binary_sensor.workday_anna
     state: 'on'
-  - service: light.turn_on
-    target:
-      entity_id: light.anna
-    data: {}
+  - choose:
+    - conditions:
+      - condition: state
+        entity_id: binary_sensor.workday_anna
+        state: 'on'
+      sequence:
+      - type: turn_on
+        device_id: b4b84b4ae3fab4400b0e133c18da5980
+        entity_id: light.annas_desk
+        domain: light
+        brightness_pct: 100
   mode: single
 - id: '1637929014156'
   alias: 'Office: Turn off'
@@ -1781,13 +1798,13 @@
     entity_id: input_boolean.holiday_mode
     state: 'off'
   action:
-  - service: light.turn_off
-    target:
-      entity_id: light.anna
-    data: {}
   - type: turn_off
     device_id: b1e67ae9d70423911cd751c767cce4fa
     entity_id: switch.toms_desk
+    domain: switch
+  - type: turn_off
+    device_id: c786200fce68c28d8cd9e4ca23064e2d
+    entity_id: switch.annas_desk
     domain: switch
   mode: single
 - id: '1641984337744'
