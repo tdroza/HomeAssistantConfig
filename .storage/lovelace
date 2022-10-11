@@ -34,12 +34,7 @@
       "title": "Millview",
       "views": [
         {
-          "badges": [
-            "binary_sensor.updater",
-            "person.tom",
-            "person.anna",
-            "sun.sun"
-          ],
+          "badges": null,
           "cards": [
             {
               "cards": [
@@ -129,10 +124,6 @@
                 }
               ],
               "type": "conditional"
-            },
-            {
-              "entity": "weather.millview",
-              "type": "custom:weather-card"
             },
             {
               "cards": [
@@ -708,25 +699,18 @@
                   "type": "horizontal-stack",
                   "cards": [
                     {
-                      "type": "custom:mushroom-template-card",
-                      "primary": "Garage",
-                      "secondary": "{{ relative_time(states.binary_sensor.garage_door.last_changed) }} ago",
-                      "icon": "{% if is_state('binary_sensor.garage_door','open')  %}\n  {{'mdi:garage-open'}}\n{% else %}\n  {{'mdi:garage'}}\n{% endif %}",
+                      "type": "custom:mushroom-entity-card",
                       "entity": "binary_sensor.garage_door",
-                      "tap_action": {
-                        "action": "navigate",
-                        "navigation_path": "/lovelace/main-bedroom"
-                      },
-                      "hold_action": {
-                        "action": "toggle"
-                      },
-                      "icon_color": "{% if is_state('light.main_bedroom_light_group','on') %}\n{{ '#%02x%02x%02x' % state_attr('light.main_bedroom_light_group','rgb_color') }}\n{% endif %}",
-                      "fill_container": false
+                      "secondary_info": "last-changed"
                     }
                   ]
                 }
               ],
               "type": "vertical-stack"
+            },
+            {
+              "entity": "weather.millview",
+              "type": "custom:weather-card"
             },
             {
               "type": "conditional",
@@ -2327,7 +2311,8 @@
                       },
                       "hold_action": {
                         "action": "more-info"
-                      }
+                      },
+                      "icon_color": "green"
                     },
                     {
                       "type": "custom:mushroom-entity-card",
@@ -2338,7 +2323,8 @@
                       },
                       "hold_action": {
                         "action": "more-info"
-                      }
+                      },
+                      "icon_color": "green"
                     }
                   ]
                 },
