@@ -1361,6 +1361,15 @@
     entity_id: sun.sun
     attribute: elevation
     below: -2
+  - condition: state
+    entity_id: binary_sensor.toms_phone_is_charging
+    state: 'off'
+  - condition: state
+    entity_id: binary_sensor.annas_phone_is_charging
+    state: 'off'
+  - condition: state
+    entity_id: binary_sensor.huawei_watch_2_is_charging
+    state: 'off'
   action:
   - service: light.turn_on
     data:
