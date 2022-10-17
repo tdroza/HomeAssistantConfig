@@ -1839,6 +1839,11 @@
     data:
       source: '{{ media_player_entity_id }}'
       entity_id: media_player.ytube_music_player
+  - service: media_player.volume_set
+    data:
+      volume_level: 0.2
+    target:
+      entity_id: '{{ media_player_entity_id }}'
   - service: media_player.play_media
     data:
       entity_id: media_player.ytube_music_player
