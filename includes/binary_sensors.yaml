@@ -37,7 +37,7 @@
   province: England
 - platform: workday
   name: workday_anna
-  excludes: [sat, sun, mon, wed, holiday]
+  excludes: [sat, sun, wed, holiday]
   country: GB
   province: England
 
