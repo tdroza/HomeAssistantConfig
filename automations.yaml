@@ -2370,7 +2370,13 @@
       minutes: 2
       seconds: 0
     above: 9000
-  condition: []
+  condition:
+  - condition: state
+    entity_id: binary_sensor.workday_sensor
+    state: 'on'
+  - condition: state
+    entity_id: input_boolean.holiday_mode
+    state: 'off'
   action:
   - service: cover.set_cover_position
     data:
