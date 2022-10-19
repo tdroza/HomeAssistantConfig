@@ -3,6 +3,6 @@ cactus:
     moisture: sensor.cactus_moisture
     battery: sensor.cactus_battery
     temperature: sensor.cactus_temperature
-    conductivity: sensor.cactus_soil_conductivity
+    conductivity: sensor.cactus_conductivity
     brightness: sensor.cactus_illuminance
   min_moisture: 10

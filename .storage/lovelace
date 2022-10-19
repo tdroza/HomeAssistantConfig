@@ -2426,6 +2426,11 @@
                     }
                   ],
                   "type": "horizontal-stack"
+                },
+                {
+                  "type": "plant-status",
+                  "entity": "plant.cactus",
+                  "name": "Cactus"
                 }
               ],
               "type": "vertical-stack"
