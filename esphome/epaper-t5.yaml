@@ -415,7 +415,7 @@ sensor:
     internal: true    
   - platform: homeassistant
     id: bed2_temp
-    entity_id: sensor.office_temperature
+    entity_id: sensor.office_climate_temperature
     internal: true    
   - platform: homeassistant
     id: reu_temp
@@ -427,11 +427,11 @@ sensor:
     internal: true
   - platform: homeassistant
     id: bath_temp
-    entity_id: sensor.bathroom_temperature
+    entity_id: sensor.bathroom_climate_temperature
     internal: true
   - platform: homeassistant
     id: ensuite_temp
-    entity_id: sensor.ensuite_temperature
+    entity_id: sensor.ensuite_climate_temperature
     internal: true
   - platform: homeassistant
     id: lounge_temp

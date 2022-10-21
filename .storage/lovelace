@@ -1056,7 +1056,7 @@
                   "type": "state-icon"
                 },
                 {
-                  "entity": "light.toms_desk",
+                  "entity": "light.toms_desk_master",
                   "hold_action": {
                     "action": "more-info"
                   },
@@ -1067,6 +1067,14 @@
                   },
                   "tap_action": {
                     "action": "toggle"
+                  },
+                  "type": "state-icon"
+                },
+                {
+                  "entity": "cover.office_blind",
+                  "style": {
+                    "left": "94%",
+                    "top": "35%"
                   },
                   "type": "state-icon"
                 },
@@ -1297,12 +1305,6 @@
             {
               "entities": [
                 {
-                  "entity": "sensor.bed1_temperature"
-                },
-                {
-                  "entity": "sensor.white_temperature_2"
-                },
-                {
                   "entity": "sensor.seb_temperature"
                 },
                 {
@@ -1312,43 +1314,43 @@
                   "entity": "sensor.nest_thermostat_temperature"
                 },
                 {
-                  "entity": "sensor.bathroom_temperature"
+                  "entity": "sensor.bathroom_climate_temperature"
                 },
                 {
-                  "entity": "sensor.ensuite_temperature"
+                  "entity": "sensor.ensuite_climate_temperature"
                 },
                 {
-                  "entity": "sensor.hallway_motion_sensor_temperature"
+                  "entity": "sensor.hallway_motion_sensor_temperature_rounded"
+                },
+                {
+                  "entity": "sensor.bed1_temperature"
                 },
                 {
                   "entity": "sensor.bed1_humidity"
                 },
                 {
-                  "entity": "sensor.bed1_humidity_2"
-                },
-                {
-                  "entity": "sensor.white_humidity_2"
+                  "entity": "sensor.living_room_humidity"
                 },
                 {
                   "entity": "sensor.living_room_humidity"
                 },
                 {
-                  "entity": "sensor.bathroom_temperature"
+                  "entity": "sensor.bathroom_climate_temperature"
                 },
                 {
-                  "entity": "sensor.ensuite_humidity"
+                  "entity": "sensor.ensuite_climate_humidity"
                 },
                 {
-                  "entity": "sensor.office_temperature"
+                  "entity": "sensor.office_climate_temperature"
                 },
                 {
                   "entity": "sensor.hue_motion_sensor_temperature"
                 },
                 {
-                  "entity": "sensor.kitchen_humidity"
+                  "entity": "sensor.kitchen_climate_humidity"
                 },
                 {
-                  "entity": "sensor.office_humidity"
+                  "entity": "sensor.office_climate_humidity"
                 }
               ],
               "hours_to_show": 48,
