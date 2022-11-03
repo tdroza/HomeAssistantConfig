@@ -1903,6 +1903,9 @@
                 },
                 {
                   "entity": "automation.washer_notify_done"
+                },
+                {
+                  "entity": "input_boolean.holiday_mode"
                 }
               ]
             },
@@ -1914,6 +1917,12 @@
             {
               "type": "custom:slider-entity-row",
               "entity": "input_number.stepper_position"
+            },
+            {
+              "type": "entity",
+              "entity": "input_boolean.holiday_mode",
+              "name": "Holiday Mode",
+              "state_color": true
             }
           ],
           "icon": "mdi:beta",
@@ -2331,36 +2340,28 @@
                   ]
                 },
                 {
+                  "type": "horizontal-stack",
                   "cards": [
                     {
-                      "entity": "light.second_bedroom_light",
-                      "type": "light",
-                      "name": " "
+                      "type": "tile",
+                      "entity": "light.second_bedroom_light"
                     },
                     {
-                      "type": "light",
-                      "entity": "light.annas_desk",
-                      "name": ""
+                      "type": "tile",
+                      "entity": "light.annas_desk"
                     }
-                  ],
-                  "type": "horizontal-stack"
+                  ]
                 },
                 {
                   "type": "horizontal-stack",
                   "cards": [
                     {
-                      "entity": "light.toms_desk_master",
-                      "type": "light",
-                      "name": " ",
-                      "icon": "mdi:desk"
+                      "type": "tile",
+                      "entity": "light.toms_desk_master"
                     },
                     {
-                      "show_name": false,
-                      "show_icon": true,
-                      "type": "button",
-                      "tap_action": {
-                        "action": "toggle"
-                      },
+                      "color": "accent",
+                      "type": "tile",
                       "entity": "switch.toms_monitor_light"
                     }
                   ]
@@ -2784,17 +2785,13 @@
                   "type": "horizontal-stack",
                   "cards": [
                     {
-                      "type": "light",
-                      "entity": "light.kitchen_corner",
-                      "name": " "
+                      "type": "tile",
+                      "entity": "binary_sensor.fridge_door"
                     },
                     {
-                      "type": "button",
-                      "entity": "binary_sensor.fridge_door",
-                      "tap_action": {
-                        "action": "more-info"
-                      },
-                      "show_name": false
+                      "type": "tile",
+                      "entity": "sensor.kitchen_climate_temperature",
+                      "name": "Temperature"
                     }
                   ]
                 },
