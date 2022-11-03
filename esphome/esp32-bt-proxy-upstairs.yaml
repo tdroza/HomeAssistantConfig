@@ -6,7 +6,23 @@ esphome:
   name: ${name}
   name_add_mac_suffix: false
 
-
+bluetooth_proxy:
+  active: true
+  
 wifi:
   ssid: !secret wifi_iot_ssid
   password: !secret wifi_iot_password
+
+ble_client:
+  mac_address: 70:28:45:71:40:E2
+  id: oclean
+
+sensor:
+  type: characteristic
+  platform: ble_client
+  ble_client_id: oclean
+  name: "Oclean Battery"
+  service_uuid: '180f'
+  characteristic_uuid: '2a19'
+  icon: 'mdi:battery'
+  unit_of_measurement: '%'
