@@ -2344,11 +2344,17 @@
                   "cards": [
                     {
                       "type": "tile",
-                      "entity": "light.second_bedroom_light"
+                      "entity": "light.second_bedroom_light",
+                      "tap_action": {
+                        "action": "toggle"
+                      }
                     },
                     {
                       "type": "tile",
-                      "entity": "light.annas_desk"
+                      "entity": "light.annas_desk",
+                      "tap_action": {
+                        "action": "toggle"
+                      }
                     }
                   ]
                 },
@@ -2357,12 +2363,18 @@
                   "cards": [
                     {
                       "type": "tile",
-                      "entity": "light.toms_desk_master"
+                      "entity": "light.toms_desk_master",
+                      "tap_action": {
+                        "action": "toggle"
+                      }
                     },
                     {
                       "color": "accent",
                       "type": "tile",
-                      "entity": "switch.toms_monitor_light"
+                      "entity": "switch.toms_monitor_light",
+                      "tap_action": {
+                        "action": "toggle"
+                      }
                     }
                   ]
                 },
@@ -2457,27 +2469,22 @@
                   "type": "custom:button-card"
                 },
                 {
-                  "type": "horizontal-stack",
-                  "cards": [
-                    {
-                      "type": "custom:mushroom-light-card",
-                      "entity": "light.living_room_1",
-                      "use_light_color": true,
-                      "show_brightness_control": true,
-                      "show_color_temp_control": true,
-                      "show_color_control": true,
-                      "collapsible_controls": true
-                    },
-                    {
-                      "type": "custom:mushroom-light-card",
-                      "entity": "light.living_room_2",
-                      "use_light_color": true,
-                      "show_brightness_control": true,
-                      "show_color_temp_control": true,
-                      "show_color_control": true,
-                      "collapsible_controls": true
-                    }
-                  ]
+                  "type": "custom:mushroom-light-card",
+                  "entity": "light.living_room_1",
+                  "use_light_color": true,
+                  "show_brightness_control": true,
+                  "show_color_temp_control": true,
+                  "show_color_control": true,
+                  "collapsible_controls": false
+                },
+                {
+                  "type": "custom:mushroom-light-card",
+                  "entity": "light.living_room_2",
+                  "use_light_color": true,
+                  "show_brightness_control": true,
+                  "show_color_temp_control": true,
+                  "show_color_control": true,
+                  "collapsible_controls": false
                 },
                 {
                   "type": "horizontal-stack",
@@ -2495,6 +2502,19 @@
                       "type": "custom:mushroom-entity-card",
                       "entity": "switch.kodi",
                       "name": "Kodi"
+                    }
+                  ]
+                },
+                {
+                  "type": "horizontal-stack",
+                  "cards": [
+                    {
+                      "type": "tile",
+                      "entity": "climate.nest_thermostat"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "binary_sensor.living_room_door"
                     }
                   ]
                 },
@@ -2782,6 +2802,19 @@
                   }
                 },
                 {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "entity": "media_player.kitchen_and_dining_room_2",
+                      "state": "playing"
+                    }
+                  ],
+                  "card": {
+                    "type": "media-control",
+                    "entity": "media_player.kitchen_and_dining_room_2"
+                  }
+                },
+                {
                   "type": "horizontal-stack",
                   "cards": [
                     {
@@ -2999,19 +3032,6 @@
                       "name": false
                     },
                     "type": "custom:mini-graph-card"
-                  }
-                },
-                {
-                  "type": "conditional",
-                  "conditions": [
-                    {
-                      "entity": "media_player.kitchen_and_dining_room_2",
-                      "state": "playing"
-                    }
-                  ],
-                  "card": {
-                    "type": "media-control",
-                    "entity": "media_player.kitchen_and_dining_room_2"
                   }
                 }
               ],
@@ -3285,34 +3305,39 @@
                   }
                 },
                 {
+                  "type": "horizontal-stack",
                   "cards": [
                     {
+                      "type": "custom:mushroom-light-card",
                       "entity": "light.sebs_ceiling",
-                      "type": "light",
-                      "name": " "
-                    },
-                    {
-                      "aspect_ratio": "1/1.5",
-                      "entity": "switch.sonoff_1000d4baef_1",
-                      "show_name": false,
-                      "type": "button"
+                      "use_light_color": true,
+                      "show_brightness_control": true,
+                      "show_color_temp_control": true,
+                      "show_color_control": true,
+                      "collapsible_controls": false
                     }
-                  ],
-                  "type": "horizontal-stack"
+                  ]
+                },
+                {
+                  "type": "custom:mushroom-light-card",
+                  "entity": "light.sebs_lamp",
+                  "use_light_color": true,
+                  "show_brightness_control": true,
+                  "show_color_temp_control": true,
+                  "show_color_control": true,
+                  "collapsible_controls": false
                 },
                 {
                   "type": "horizontal-stack",
                   "cards": [
                     {
-                      "type": "button",
-                      "tap_action": {
-                        "action": "toggle"
-                      },
-                      "entity": "light.sebs_lamp"
+                      "type": "tile",
+                      "name": "Motion",
+                      "entity": "binary_sensor.seb_d1_motion"
                     },
                     {
-                      "type": "button",
-                      "entity": "binary_sensor.seb_d1_motion"
+                      "type": "tile",
+                      "entity": "switch.sonoff_1000d4baef_1"
                     }
                   ]
                 },
@@ -3396,19 +3421,22 @@
                   }
                 },
                 {
-                  "cards": [
-                    {
-                      "entity": "light.reubens_ceiling",
-                      "name": " ",
-                      "type": "light"
-                    },
-                    {
-                      "entity": "light.rname",
-                      "name": " ",
-                      "type": "light"
-                    }
-                  ],
-                  "type": "horizontal-stack"
+                  "type": "custom:mushroom-light-card",
+                  "entity": "light.reubens_ceiling",
+                  "use_light_color": true,
+                  "show_brightness_control": true,
+                  "show_color_temp_control": true,
+                  "show_color_control": true,
+                  "collapsible_controls": false
+                },
+                {
+                  "type": "custom:mushroom-light-card",
+                  "entity": "light.rname",
+                  "use_light_color": true,
+                  "show_brightness_control": true,
+                  "show_color_temp_control": true,
+                  "show_color_control": true,
+                  "collapsible_controls": false
                 },
                 {
                   "cards": [
@@ -3461,10 +3489,8 @@
                     },
                     {
                       "entity": "binary_sensor.reu_d1_motion",
-                      "aspect_ratio": "1/0.7",
                       "icon": "mdi:motion-sensor",
-                      "show_name": false,
-                      "type": "custom:button-card"
+                      "type": "tile"
                     }
                   ],
                   "type": "horizontal-stack"
