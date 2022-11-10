@@ -28,7 +28,7 @@ rest_command: !include includes/rest.yaml
 script: !include scripts.yaml
 sensor: !include includes/sensors.yaml
 utility_meter: !include includes/utility.yaml
-zone: !include zones.yaml
+zone: !include includes/zones.yaml
 
 sonoff:
   username: !secret ewelink_username

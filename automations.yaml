@@ -182,15 +182,21 @@
     to: not_home
   condition: []
   action:
-  - data:
+  - service: notify.mobile_app_tom_s_phone
+    data:
       message: Anna left work 2 minutes ago.
-    service: notify.telegram_td
+      title: On the move...
 - id: '1578592845893'
   alias: 'Presence: Left Leeds (Tom)'
   description: Send a Telegram notification when Tom been away from work for 2 minutes
   trigger:
-  - entity_id: person.tom
-    for: 00:02:00
+  - entity_id:
+    - person.tom
+    - person.anna
+    for:
+      hours: 0
+      minutes: 2
+      seconds: 0
     from: Leeds Station
     platform: state
     to: not_home
@@ -198,12 +204,9 @@
   - after: '16:30'
     condition: time
   action:
-  - service: telegram_bot.send_message
+  - service: notify.mobile_app_tom_s_phone
     data:
-      target:
-      - '{{ states(''input_text.telegram_td'') }}'
-      - '{{ states(''input_text.telegram_ad'') }}'
-      message: Tom left Leeds Station 2 minutes ago
+      message: '{{ trigger.entity_id }} left Leeds Station 2 minutes ago.'
 - id: '1580903225785'
   alias: 'Presence: Greeting'
   description: Play a greeting when Tom arrives home
