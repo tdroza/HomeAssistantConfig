@@ -115,8 +115,8 @@ variables:
   exclude9: !input 'exclude9'
   sensors: "{% set result = namespace(sensors=[]) %} {% set exclude = [exclude0, exclude1,\
     \ exclude2, exclude3, exclude4, exclude5, exclude6, exclude7, exclude8, exclude9]\
-    \ %} {% for state in states.sensor | selectattr('attributes.device_class', '==',\
-    \ 'battery') %}\n  {% if 0 < state.state | int < threshold | int and not state.entity_id\
+    \ %} {% for state in states.sensor | selectattr('attributes.device_class','defined') | selectattr('attributes.device_class','==','battery')\n\
+    \ %}\n  {% if 0 <= state.state | int(-1) < threshold | int and not state.entity_id\
     \ in exclude %}\n    {% set result.sensors = result.sensors + [state.name + ' (%s%%)'|format(state.state)] %}\n\
     \  {% endif %}\n{% endfor %} {% for state in states.binary_sensor | selectattr('attributes.device_class',\
     \ '==', 'battery') | selectattr('state', '==', 'on') %}\n  {% if not state.entity_id\

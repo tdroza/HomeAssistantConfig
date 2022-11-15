@@ -1310,7 +1310,7 @@
     path: sbyx/low-battery-level-detection-notification-for-all-battery-sensors.yaml
     input:
       day: 0
-      threshold: 15
+      threshold: 25
       exclude0: sensor.annas_phone_battery_level
       actions:
       - service: notify.mobile_app_tom_s_phone
