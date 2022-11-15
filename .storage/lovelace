@@ -516,8 +516,7 @@
                   "card": null,
                   "name": "Rooms",
                   "template": "button-card-headers",
-                  "type": "custom:button-card",
-                  "icon": "mdi:floor-plan"
+                  "type": "custom:button-card"
                 },
                 {
                   "type": "horizontal-stack",
