@@ -2,7 +2,7 @@ substitutions:
   device_name: "epaper-t5"
   friendly_name: "ePaper T5"
   run_time: 24h
-  sleep_time: 13min # normal sleep time
+  sleep_time: 5min # normal sleep time
   night_sleep_time: 7h
 
 globals:
