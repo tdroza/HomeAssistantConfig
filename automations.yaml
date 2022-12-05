@@ -62,7 +62,7 @@
   action:
   - data:
       message: Nobody is home right now
-    service: notify.telegram_td
+    service: notify.mobile_app_tom_s_phone
 - id: '1576676147603'
   alias: 'Lights on: Nobody home and lights on (repeat)'
   description: ''
@@ -113,7 +113,7 @@
       message: "{%- for person in states.group.all_persons.attributes.entity_id -%}\n
         \ {%- if is_state(person, 'home') -%} \n    {{ state_attr(person, 'friendly_name')
         }} just arrived home\n  {%- endif -%}\n{%- endfor -%} \n"
-    service: notify.telegram_td
+    service: notify.mobile_app_tom_s_phone
   mode: single
 - id: '1576773914306'
   alias: 'Lights: Handle "Lights Off" command'
@@ -170,7 +170,7 @@
   action:
   - data:
       message: Tom left work 2 minutes ago
-    service: notify.telegram_td
+    service: notify.mobile_app_tom_s_phone
 - id: '1578494385278'
   alias: Presence - Left work (Anna)
   description: Send a Telegram notification when Anna been away from work for 2 minutes
@@ -489,13 +489,25 @@
   - entity_id: automation.washer_notify_done
     service: automation.turn_off
   - data:
-      message: 'Great! The forecast for today is: {{ state_attr(''weather.millview'',
-        ''temperature'') }}°C, {{ states(''weather.millview'')}}. Wind speed is {{
-        state_attr(''weather.millview'', ''wind_speed'') }}km/h.'
-      target:
-      - '{{ states(''input_text.telegram_td'') }}'
-      - '{{ states(''input_text.telegram_ad'') }}'
-    service: telegram_bot.send_message
+      title: Washing Machine
+      message: '{{weather_icons[states(''weather.millview'')]}}Great! The forecast
+        for today is: {{ state_attr(''weather.millview'', ''temperature'') }}°C, {{
+        states(''weather.millview'')}}. Wind speed is {{ state_attr(''weather.millview'',
+        ''wind_speed'') }}km/h.'
+      data:
+        group: Washing machine
+        channel: WashingMachine
+    service: notify.tom_and_anna
+  variables:
+    weather_icons:
+      cloudy: "\U0001F325️"
+      rainy: "\U0001F326️"
+      windy: "\U0001F4A8"
+      sunny: ☀️
+      lightning: "\U0001F329️"
+      hail: "\U0001F9CA"
+      fog: "\U0001F32B️"
+      snowy: ❄️
   mode: single
 - id: '1582057191428'
   alias: Printer - Telegram command
@@ -534,67 +546,6 @@
   - data: {}
     entity_id: switch.blanket_tom
     service: switch.turn_off
-  mode: single
-- id: '1583963701174'
-  alias: Telegram - cam1
-  description: ''
-  trigger:
-  - event_data:
-      command: /cam1
-    event_type: telegram_callback
-    platform: event
-  - event_data:
-      command: /cam1
-    event_type: telegram_command
-    platform: event
-  condition: []
-  action:
-  - data:
-      entity_id: camera.esp32cam_one
-      filename: /tmp/cam1.jpg
-    service: camera.snapshot
-  - delay: '5'
-  - data:
-      data:
-        photo:
-          caption: Camera 1
-          url: /tmp/cam1.jpg
-      message: Camera 1
-    service: notify.telegram_td
-- id: '1584977470639'
-  alias: Telegram - Daily Image
-  description: Every day send the latest image from a chosen RSS feed
-  trigger:
-  - at: '14:00:00'
-    platform: time
-  condition: []
-  action:
-  - data: {}
-    entity_id: sensor.nasadaily
-    service: homeassistant.update_entity
-  - delay:
-      hours: 0
-      minutes: 0
-      seconds: 10
-      milliseconds: 0
-  - data:
-      data:
-        photo:
-          caption: '{{ state_attr(''sensor.nasadaily'',''entries'')[0].title }}'
-          url: '{{ (state_attr(''sensor.nasadaily'',''entries'')[0].links | selectattr(''rel'',
-            ''eq'',''enclosure'') | list)[0].href }}'
-      message: ''
-      title: NASA Daily
-    service: notify.telegram_td
-  - delay:
-      hours: 0
-      minutes: 0
-      seconds: 3
-      milliseconds: 0
-  - data:
-      title: ''
-      message: '{{ state_attr(''sensor.nasadaily'',''entries'')[0].summary }}'
-    service: notify.telegram_td
   mode: single
 - id: '1586469687141'
   alias: 'Globe: turn off after 30m'
@@ -821,19 +772,6 @@
     entity_id: light.main_bedroom_ceiling
     domain: light
   mode: single
-- id: '1600196508217'
-  alias: Daily camera photo - Nexus
-  description: ''
-  trigger:
-  - at: '11:00:00'
-    platform: time
-  condition: []
-  action:
-  - data:
-      entity_id: camera.ip_webcam
-      filename: /config/www/cams/ipcam_{{ states('sensor.date') }}.jpg
-    service: camera.snapshot
-  mode: single
 - id: '1600335652412'
   alias: ESP32 Cam timelapse
   description: ''
@@ -1050,8 +988,8 @@
     domain: binary_sensor
   - type: plugged_in
     platform: device
-    device_id: de894c337f5d68c3d20de7af161e8cef
-    entity_id: binary_sensor.huawei_watch_2_is_charging
+    device_id: 39bf23b9b31a661832e43605fcb26390
+    entity_id: binary_sensor.toms_watch_is_charging
     domain: binary_sensor
   condition:
   - condition: time
@@ -1371,7 +1309,7 @@
     entity_id: binary_sensor.annas_phone_is_charging
     state: 'off'
   - condition: state
-    entity_id: binary_sensor.huawei_watch_2_is_charging
+    entity_id: binary_sensor.toms_watch_is_charging
     state: 'off'
   action:
   - service: light.turn_on
@@ -1526,6 +1464,7 @@
       entity_id:
       - light.reubens_ceiling
       - light.sebs_ceiling
+      - light.main_bedroom_bloom
   mode: single
 - id: '1621850581589'
   alias: Close the fridge door
