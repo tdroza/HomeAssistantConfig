@@ -2346,14 +2346,24 @@
                       "entity": "light.second_bedroom_light",
                       "tap_action": {
                         "action": "toggle"
-                      }
+                      },
+                      "features": [
+                        {
+                          "type": "light-brightness"
+                        }
+                      ]
                     },
                     {
                       "type": "tile",
                       "entity": "light.annas_desk",
                       "tap_action": {
                         "action": "toggle"
-                      }
+                      },
+                      "features": [
+                        {
+                          "type": "light-brightness"
+                        }
+                      ]
                     }
                   ]
                 },
@@ -2640,13 +2650,16 @@
                   "type": "horizontal-stack",
                   "cards": [
                     {
-                      "type": "custom:mushroom-light-card",
+                      "type": "tile",
                       "entity": "light.main_bedroom_ceiling",
-                      "use_light_color": true,
-                      "show_brightness_control": true,
-                      "show_color_temp_control": true,
-                      "show_color_control": false,
-                      "collapsible_controls": false
+                      "tap_action": {
+                        "action": "toggle"
+                      },
+                      "features": [
+                        {
+                          "type": "light-brightness"
+                        }
+                      ]
                     },
                     {
                       "type": "custom:mushroom-light-card",
@@ -2705,15 +2718,15 @@
                 {
                   "cards": [
                     {
-                      "type": "button",
-                      "tap_action": {
-                        "action": "toggle"
-                      },
-                      "entity": "binary_sensor.main_bedroom_door"
+                      "type": "tile",
+                      "entity": "binary_sensor.main_bedroom_door",
+                      "name": "Bedroom Door"
                     },
                     {
                       "entity": "switch.blanket_anna",
-                      "type": "button"
+                      "type": "tile",
+                      "icon": "mdi:power-socket-uk",
+                      "name": "Anna's Socket"
                     }
                   ],
                   "type": "horizontal-stack"
@@ -3058,17 +3071,19 @@
                     {
                       "entity": "light.hallway",
                       "name": " ",
-                      "type": "light"
-                    },
-                    {
-                      "aspect_ratio": "1/1.25",
-                      "entity": "binary_sensor.hue_motion_sensor_motion",
-                      "icon": "mdi:motion-sensor",
-                      "show_name": false,
-                      "type": "custom:button-card"
+                      "type": "tile",
+                      "features": [
+                        {
+                          "type": "light-brightness"
+                        }
+                      ]
                     }
                   ],
                   "type": "horizontal-stack"
+                },
+                {
+                  "entity": "binary_sensor.hue_motion_sensor_motion",
+                  "type": "tile"
                 },
                 {
                   "type": "custom:card-templater",
