@@ -156,7 +156,11 @@
                                 "entity": "light.window"
                               },
                               {
-                                "entity": "light.xmas_tree"
+                                "entity": "light.xmas_tree",
+                                "name": "Window"
+                              },
+                              {
+                                "entity": "light.tree2"
                               },
                               "light.christmas_star",
                               {
@@ -2354,16 +2358,25 @@
                       ]
                     },
                     {
-                      "type": "tile",
-                      "entity": "light.annas_desk",
-                      "tap_action": {
-                        "action": "toggle"
-                      },
-                      "features": [
+                      "type": "conditional",
+                      "conditions": [
                         {
-                          "type": "light-brightness"
+                          "entity": "light.annas_desk",
+                          "state_not": "unavailable"
                         }
-                      ]
+                      ],
+                      "card": {
+                        "type": "tile",
+                        "entity": "light.annas_desk",
+                        "tap_action": {
+                          "action": "toggle"
+                        },
+                        "features": [
+                          {
+                            "type": "light-brightness"
+                          }
+                        ]
+                      }
                     }
                   ]
                 },
