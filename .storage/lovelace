@@ -153,14 +153,17 @@
                           {
                             "entities": [
                               {
-                                "entity": "light.window"
-                              },
-                              {
-                                "entity": "light.xmas_tree",
+                                "entity": "light.window",
                                 "name": "Window"
                               },
                               {
-                                "entity": "light.tree2"
+                                "entity": "light.tree_1"
+                              },
+                              {
+                                "entity": "light.tree_2"
+                              },
+                              {
+                                "entity": "light.tree_3"
                               },
                               "light.christmas_star",
                               {
