@@ -20,6 +20,6 @@
       set_cover_position:
         service: number.set_value
         target:
-            entity_id: number.office_blind_analog_output
+          entity_id: number.office_blind_analog_output
         data_template:
           value: "{{ position }}"
