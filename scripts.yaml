@@ -82,14 +82,92 @@ fade_volume:
       - service: media_player.volume_set
         data_template:
           entity_id: '{{ target_player }}'
-          volume_level: "{% set t = repeat.index / total_steps %} {% if curve == 'logarithmic'\
-            \ %}\n  {{ (start_volume + (t / (1 + (1 - t))) * start_diff) | float(0)\
-            \ }}\n{% elif curve == 'bezier' %}\n  {{ (start_volume + (t * t * (3 -\
-            \ 2 * t)) * start_diff) | float(0) }}\n{% else %}\n  {{ (start_volume\
-            \ + t * start_diff) | float(0) }}\n{% endif %}\n"
+          volume_level: "{% set t = repeat.index / total_steps %} {% if curve == 'logarithmic'
+            %}\n  {{ (start_volume + (t / (1 + (1 - t))) * start_diff) | float(0)
+            }}\n{% elif curve == 'bezier' %}\n  {{ (start_volume + (t * t * (3 - 2
+            * t)) * start_diff) | float(0) }}\n{% else %}\n  {{ (start_volume + t
+            * start_diff) | float(0) }}\n{% endif %}\n"
       - delay: '00:00:00.1'
   - service: media_player.volume_set
     data_template:
       entity_id: '{{ target_player }}'
       volume_level: '{{ target_volume }}'
   icon: mdi:tune-vertical
+nudge_blind_open:
+  alias: nudge_blind_open
+  fields:
+    target_blind:
+      name: Target blind
+      description: Target blind to nudge.
+      required: true
+      example: cover.office_blind
+      selector:
+        entity:
+          domain: cover
+  sequence:
+  - service: cover.set_cover_position
+    target:
+      entity_id: '{{target_blind}}'
+    data_template:
+      position: '{{  min([100,states.number.office_blind_analog_output.state | int
+        + 10]) }}'
+  mode: single
+  icon: mdi:archive-arrow-up
+nudge_blind_closed:
+  alias: nudge_blind_closed
+  fields:
+    target_blind:
+      name: Target blind
+      description: Target blind to nudge.
+      required: true
+      example: cover.office_blind
+      selector:
+        entity:
+          domain: cover
+  sequence:
+  - service: cover.set_cover_position
+    target:
+      entity_id: '{{target_blind}}'
+    data_template:
+      position: '{{  max([0,states.number.office_blind_analog_output.state | int -
+        10]) }}'
+  mode: single
+  icon: mdi:archive-arrow-down
+nudge_light_brighter:
+  alias: nudge_light_brighter
+  fields:
+    target_light:
+      name: Target light
+      description: Target light to nudge.
+      required: true
+      example: light.office_ceiling
+      selector:
+        entity:
+          domain: light
+  sequence:
+  - service: light.turn_on
+    data:
+      entity_id: '{{ target_light }}'
+      brightness: '{{  min([255,states.light.second_bedroom_light.attributes.brightness
+        | int + 25]) }}'
+  mode: single
+  icon: mdi:upload
+nudge_light_dimmer:
+  alias: nudge_light_dimmer
+  fields:
+    target_light:
+      name: Target light
+      description: Target light to nudge.
+      required: true
+      example: light.office_ceiling
+      selector:
+        entity:
+          domain: light
+  sequence:
+  - service: light.turn_on
+    data:
+      entity_id: '{{ target_light }}'
+      brightness: '{{  max([0,states.light.second_bedroom_light.attributes.brightness
+        | int - 25]) }}'
+  mode: single
+  icon: mdi:upload
