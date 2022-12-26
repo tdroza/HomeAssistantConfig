@@ -16,7 +16,6 @@
       effect: rainbow
       entity_id: 
         - light.advent
-        - light.xmas_tree
         - light.christmas_star
         - light.window
     service: light.turn_on
@@ -33,7 +32,6 @@
     data:
       entity_id:
         - light.advent
-        - light.xmas_tree
         - light.christmas_star
         - light.window
     service: light.turn_off
