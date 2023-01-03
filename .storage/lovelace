@@ -1887,7 +1887,7 @@
                     "attributes": {
                       "device_class": "battery"
                     },
-                    "state": "< 15"
+                    "state": "< 25"
                   }
                 ]
               }
