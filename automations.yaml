@@ -1490,6 +1490,12 @@
   condition: []
   action:
   - repeat:
+      while:
+      - type: is_open
+        condition: device
+        device_id: fbe90b70595bca42e7368c42573a812c
+        entity_id: binary_sensor.fridge_door
+        domain: binary_sensor
       sequence:
       - service: tts.google_translate_say
         target:
@@ -1504,12 +1510,10 @@
           title: Fridge freezer door
           message: "\U0001F9CA The fridge or freezer door has been open for more than
             1 minute"
+          data:
+            tag: fridge-door-repeat
       - delay:
           seconds: 30
-      until:
-      - condition: state
-        entity_id: binary_sensor.fridge_door
-        state: 'off'
   mode: single
 - id: '1625066107430'
   alias: 'Bins: Recycling notification'
@@ -1531,15 +1535,15 @@
       sequence:
       - service: notify.tom_and_anna
         data:
-          message: Recycling collection is due tomorrow. Don't forget to put the bin
-            out!
+          message: '♻ Recycling bin collection is due tomorrow. Don''t forget to put
+            the bin out!    '
           title: Bin Collection
     default:
     - service: notify.tom_and_anna
       data:
         title: Bin Collection
-        message: Regular bin collection is due tomorrow. Don't forget to put the bin
-          out!
+        message: "\U0001F5D1 Regular bin collection is due tomorrow. Don't forget
+          to put the bin out!    "
   mode: single
 - id: '1626116356389'
   alias: 'Lights: Turn on TV Backlight'
