@@ -557,7 +557,7 @@
                       "hold_action": {
                         "action": "toggle"
                       },
-                      "icon_color": "{% if is_state('binary_sensor.fridge_door','on') %}\nred\n{% endif %}"
+                      "icon_color": "{% if is_state('binary_sensor.fridge_door','on') %}\n{%   if (as_timestamp(now()) - as_timestamp(states.binary_sensor.fridge_door.last_changed) > 60) %}\nred\n{%   else %}\norange\n{%   endif %}\n{% endif %}"
                     }
                   ]
                 },
