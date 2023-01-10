@@ -612,7 +612,7 @@
                       "hold_action": {
                         "action": "toggle"
                       },
-                      "icon_color": "{% if is_state('light.main_bedroom_light_group','on') %}\n{{ '#%02x%02x%02x' % state_attr('light.main_bedroom_light_group','rgb_color') }}\n{% endif %}"
+                      "icon_color": "{% if is_state('light.main_bedroom_light_group','on') %}\n{{ '#%02x%02x%02x' % (state_attr('light.main_bedroom_light_group','rgb_color') or (255,193,7))}}\n{% endif %}"
                     },
                     {
                       "type": "custom:mushroom-template-card",
@@ -627,7 +627,7 @@
                       "hold_action": {
                         "action": "toggle"
                       },
-                      "icon_color": "{% if is_state('light.second_bedroom_light_group','on') %}\n{{'#%02x%02x%02x' % state_attr('light.second_bedroom_light_group','rgb_color')}}\n{% endif %}"
+                      "icon_color": "{% if is_state('light.second_bedroom_light_group','on') %}\n{{'#%02x%02x%02x' % (state_attr('light.second_bedroom_light_group','rgb_color') or (255,193,7))}}\n{% endif %}"
                     }
                   ]
                 },
