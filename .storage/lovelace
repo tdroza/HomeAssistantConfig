@@ -541,7 +541,7 @@
                       "hold_action": {
                         "action": "toggle"
                       },
-                      "icon_color": "{% if is_state('light.living_room_light_group','on') %}\n{{ '#%02x%02x%02x' % state_attr('light.living_room_1','rgb_color') }}\n{% endif %}",
+                      "icon_color": "{% if is_state('light.living_room_light_group','on') %}\n{{ '#%02x%02x%02x' % state_attr('light.living_room_light_group','rgb_color') }}\n{% endif %}",
                       "multiline_secondary": false
                     },
                     {
@@ -627,7 +627,7 @@
                       "hold_action": {
                         "action": "toggle"
                       },
-                      "icon_color": "{% if is_state('light.second_bedroom_light_group','on') %}\norange\n{% endif %}"
+                      "icon_color": "{% if is_state('light.second_bedroom_light_group','on') %}\n{{'#%02x%02x%02x' % state_attr('light.second_bedroom_light_group','rgb_color')}}\n{% endif %}"
                     }
                   ]
                 },
@@ -647,7 +647,7 @@
                       "hold_action": {
                         "action": "toggle"
                       },
-                      "icon_color": "{% if is_state('light.sebs_bedroom_light_group','on') %}\n{{ '#%02x%02x%02x' % state_attr('light.sebs_ceiling','rgb_color') }}\n{% endif %}"
+                      "icon_color": "{% if is_state('light.sebs_bedroom_light_group','on') %}\n{{'#%02x%02x%02x' % state_attr('light.sebs_bedroom_light_group','rgb_color')}}\n{% endif %}"
                     },
                     {
                       "type": "custom:mushroom-template-card",
@@ -662,7 +662,7 @@
                       "hold_action": {
                         "action": "toggle"
                       },
-                      "icon_color": "{% if is_state('light.reubens_bedroom_light_group','on') %}\n{{ '#%02x%02x%02x' % state_attr('light.reubens_ceiling','rgb_color') }}\n{% endif %}"
+                      "icon_color": "{% if is_state('light.reubens_bedroom_light_group','on') %}\n{{ '#%02x%02x%02x' % state_attr('light.reubens_bedroom_light_group','rgb_color') }}\n{% endif %}"
                     }
                   ]
                 },
@@ -3176,6 +3176,16 @@
                 }
               ],
               "type": "entities"
+            },
+            {
+              "type": "custom:mushroom-entity-card",
+              "entity": "automation.washer_notify_done",
+              "name": "Washer notifications",
+              "fill_container": false,
+              "icon": "mdi:bell-outline",
+              "tap_action": {
+                "action": "toggle"
+              }
             }
           ]
         },
