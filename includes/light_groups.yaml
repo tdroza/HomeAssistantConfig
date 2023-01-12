@@ -21,7 +21,7 @@
 - platform: group
   name: Second Bedroom Light Group
   entities:
-    - light.second_bedroom
+    - light.second_bedroom_ceiling
     - light.toms_desk_master
     - light.annas_desk
 - platform: group
@@ -29,7 +29,7 @@
   entities:
     - light.main_bedroom_ceiling
     - light.main_bedroom_bloom
-    - light.second_bedroom
+    - light.second_bedroom_ceiling
     - light.toms_desk_master
     - light.annas_desk
     - light.sebs_ceiling

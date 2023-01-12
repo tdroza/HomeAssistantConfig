@@ -148,7 +148,7 @@ nudge_light_brighter:
   - service: light.turn_on
     data:
       entity_id: '{{ target_light }}'
-      brightness: '{{  min([255,states.light.second_bedroom_light.attributes.brightness
+      brightness: '{{  min([255,states.light.second_bedroom_ceiling.attributes.brightness
         | int + 25]) }}'
   mode: single
   icon: mdi:upload
@@ -167,7 +167,7 @@ nudge_light_dimmer:
   - service: light.turn_on
     data:
       entity_id: '{{ target_light }}'
-      brightness: '{{  max([0,states.light.second_bedroom_light.attributes.brightness
+      brightness: '{{  max([0,states.light.second_bedroom_ceiling.attributes.brightness
         | int - 25]) }}'
   mode: single
   icon: mdi:upload

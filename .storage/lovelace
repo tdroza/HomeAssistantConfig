@@ -335,7 +335,7 @@
                           },
                           "entities": [
                             {
-                              "entity": "light.second_bedroom_light",
+                              "entity": "light.second_bedroom_ceiling",
                               "toggle": true,
                               "name": "Ceiling",
                               "type": "custom:slider-entity-row"
@@ -1032,7 +1032,7 @@
                   "type": "state-icon"
                 },
                 {
-                  "entity": "light.second_bedroom_light",
+                  "entity": "light.second_bedroom_light_ceiling",
                   "hold_action": {
                     "action": "more-info"
                   },
@@ -2349,16 +2349,16 @@
                   "type": "horizontal-stack",
                   "cards": [
                     {
-                      "type": "tile",
-                      "entity": "light.second_bedroom_light",
-                      "tap_action": {
-                        "action": "toggle"
-                      },
                       "features": [
                         {
                           "type": "light-brightness"
                         }
-                      ]
+                      ],
+                      "type": "tile",
+                      "entity": "light.second_bedroom_ceiling",
+                      "tap_action": {
+                        "action": "toggle"
+                      }
                     },
                     {
                       "type": "conditional",

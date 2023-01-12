@@ -997,6 +997,16 @@
     device_id: 39bf23b9b31a661832e43605fcb26390
     entity_id: binary_sensor.toms_watch_is_charging
     domain: binary_sensor
+  - type: plugged_in
+    platform: device
+    device_id: 9ff97222baf526d2a00bfe723a61cc3f
+    entity_id: binary_sensor.annas_watch_is_charging
+    domain: binary_sensor
+  - type: plugged_in
+    platform: device
+    device_id: 28abb52456ef5ac4459a0ac810e7cf0b
+    entity_id: binary_sensor.annas_phone_is_charging
+    domain: binary_sensor
   condition:
   - condition: time
     after: '21:30'
@@ -1859,7 +1869,7 @@
         data: {}
         target:
           entity_id:
-          - light.second_bedroom_light
+          - light.second_bedroom_ceiling
       face_5_knock:
       - service: light.toggle
         data: {}
@@ -1882,13 +1892,13 @@
         data:
           brightness_step_pct: -25
         target:
-          entity_id: light.second_bedroom_light
+          entity_id: light.second_bedroom_ceiling
       face_2_rotate_clockwise:
       - service: light.turn_on
         data:
           brightness_step_pct: 25
         target:
-          entity_id: light.second_bedroom_light
+          entity_id: light.second_bedroom_ceiling
       face_1_rotate_clockwise:
       - service: input_select.select_previous
         data: {}
@@ -2143,7 +2153,7 @@
       button_top_left_single_press:
       - type: turn_off
         device_id: cffb061e300b83a901a07ad99b0abaa4
-        entity_id: light.second_bedroom_light
+        entity_id: light.second_bedroom_ceiling
         domain: light
       button_top_left_double_press:
       - type: turn_off
@@ -2160,7 +2170,7 @@
         domain: light
       - type: turn_off
         device_id: cffb061e300b83a901a07ad99b0abaa4
-        entity_id: light.second_bedroom_light
+        entity_id: light.second_bedroom_ceiling
         domain: light
       button_top_left_hold_in:
       - service: light.turn_on
@@ -2171,7 +2181,7 @@
       button_top_right_single_press:
       - type: turn_on
         device_id: cffb061e300b83a901a07ad99b0abaa4
-        entity_id: light.second_bedroom_light
+        entity_id: light.second_bedroom_ceiling
         domain: light
         brightness_pct: 100
       button_top_right_double_press:
@@ -2186,7 +2196,7 @@
         brightness_pct: 100
       - type: turn_on
         device_id: cffb061e300b83a901a07ad99b0abaa4
-        entity_id: light.second_bedroom_light
+        entity_id: light.second_bedroom_ceiling
         domain: light
         brightness_pct: 100
       - type: turn_on
@@ -2229,7 +2239,7 @@
         domain: light
       - type: turn_off
         device_id: cffb061e300b83a901a07ad99b0abaa4
-        entity_id: light.second_bedroom_light
+        entity_id: light.second_bedroom_ceiling
         domain: light
       button_bottom_left_hold_in:
       - service: light.turn_on
@@ -2267,7 +2277,7 @@
         brightness_pct: 100
       - type: turn_on
         device_id: cffb061e300b83a901a07ad99b0abaa4
-        entity_id: light.second_bedroom_light
+        entity_id: light.second_bedroom_ceiling
         domain: light
       - type: turn_on
         device_id: 63e528584034c3704aa0ea7b8d0c6adb
