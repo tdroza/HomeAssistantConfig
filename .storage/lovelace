@@ -542,7 +542,9 @@
                         "action": "toggle"
                       },
                       "icon_color": "{% if is_state('light.living_room_light_group','on') %}\n{{ '#%02x%02x%02x' % state_attr('light.living_room_light_group','rgb_color') }}\n{% endif %}",
-                      "multiline_secondary": false
+                      "multiline_secondary": false,
+                      "badge_color": "red",
+                      "badge_icon": "{% if is_state('climate.nest_thermostat', 'heat') %}\nmdi:fire\n{% endif %}"
                     },
                     {
                       "type": "custom:mushroom-template-card",
@@ -557,7 +559,9 @@
                       "hold_action": {
                         "action": "toggle"
                       },
-                      "icon_color": "{% if is_state('binary_sensor.fridge_door','on') %}\n{%   if (as_timestamp(now()) - as_timestamp(states.binary_sensor.fridge_door.last_changed) > 60) %}\nred\n{%   else %}\norange\n{%   endif %}\n{% endif %}"
+                      "icon_color": "{% if is_state('binary_sensor.fridge_door','on') %}\n{%   if (as_timestamp(now()) - as_timestamp(states.binary_sensor.fridge_door.last_changed) > 60) %}\nred\n{%   else %}\norange\n{%   endif %}\n{% endif %}",
+                      "badge_color": "{%   if (as_timestamp(now()) - as_timestamp(states.binary_sensor.fridge_door.last_changed) > 60) %}\nred\n{%   else %}\norange\n{%   endif %}",
+                      "badge_icon": "{% if is_state('binary_sensor.fridge_door', 'on') %}\nmdi:door-open\n{% endif %}"
                     }
                   ]
                 },
@@ -577,7 +581,9 @@
                       "hold_action": {
                         "action": "toggle"
                       },
-                      "icon_color": "{% if is_state('light.hallway','on') %}\norange\n{% endif %}"
+                      "icon_color": "{% if is_state('light.hallway','on') %}\norange\n{% endif %}",
+                      "badge_icon": "{% if is_state('binary_sensor.hue_motion_sensor_motion', 'on') %}\nmdi:motion-sensor\n{% endif %}",
+                      "badge_color": "blue"
                     },
                     {
                       "type": "custom:mushroom-template-card",
@@ -612,7 +618,9 @@
                       "hold_action": {
                         "action": "toggle"
                       },
-                      "icon_color": "{% if is_state('light.main_bedroom_light_group','on') %}\n{{ '#%02x%02x%02x' % (state_attr('light.main_bedroom_light_group','rgb_color') or (255,193,7))}}\n{% endif %}"
+                      "icon_color": "{% if is_state('light.main_bedroom_light_group','on') %}\n{{ '#%02x%02x%02x' % (state_attr('light.main_bedroom_light_group','rgb_color') or (255,193,7))}}\n{% endif %}",
+                      "badge_color": "blue",
+                      "badge_icon": "{% if is_state('binary_sensor.main_bedroom_door', 'on') %}\nmdi:door-open\n{% endif %}"
                     },
                     {
                       "type": "custom:mushroom-template-card",
@@ -647,7 +655,9 @@
                       "hold_action": {
                         "action": "toggle"
                       },
-                      "icon_color": "{% if is_state('light.sebs_bedroom_light_group','on') %}\n{{'#%02x%02x%02x' % state_attr('light.sebs_bedroom_light_group','rgb_color')}}\n{% endif %}"
+                      "icon_color": "{% if is_state('light.sebs_bedroom_light_group','on') %}\n{{'#%02x%02x%02x' % state_attr('light.sebs_bedroom_light_group','rgb_color')}}\n{% endif %}",
+                      "badge_color": "blue",
+                      "badge_icon": "{% if is_state('binary_sensor.seb_d1_motion', 'on') %}\nmdi:motion-sensor\n{% endif %}"
                     },
                     {
                       "type": "custom:mushroom-template-card",
@@ -662,7 +672,9 @@
                       "hold_action": {
                         "action": "toggle"
                       },
-                      "icon_color": "{% if is_state('light.reubens_bedroom_light_group','on') %}\n{{ '#%02x%02x%02x' % state_attr('light.reubens_bedroom_light_group','rgb_color') }}\n{% endif %}"
+                      "icon_color": "{% if is_state('light.reubens_bedroom_light_group','on') %}\n{{ '#%02x%02x%02x' % state_attr('light.reubens_bedroom_light_group','rgb_color') }}\n{% endif %}",
+                      "badge_color": "blue",
+                      "badge_icon": "{% if is_state('binary_sensor.reu_d1_motion', 'on') %}\nmdi:motion-sensor\n{% endif %}"
                     }
                   ]
                 },
