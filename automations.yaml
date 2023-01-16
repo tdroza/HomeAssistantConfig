@@ -1010,6 +1010,14 @@
   condition:
   - condition: time
     after: '21:30'
+  - condition: or
+    conditions:
+    - condition: zone
+      entity_id: person.anna
+      zone: zone.home
+    - condition: zone
+      entity_id: person.tom
+      zone: zone.home
   action:
   - service: light.turn_off
     data: {}
