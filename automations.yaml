@@ -319,6 +319,10 @@
     from: playing
     platform: state
     to: paused
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 0
   - entity_id:
     - media_player.kodi
     - media_player.living_room_tv
@@ -326,6 +330,10 @@
     from: playing
     platform: state
     to: idle
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 2
   - entity_id:
     - media_player.kodi
     - media_player.living_room_tv
@@ -387,7 +395,11 @@
     entity_id: input_boolean.do_not_disturb
     state: 'off'
   action:
-  - service: notify.mobile_app_tom_s_phone
+  - data:
+      entity_id: media_player.living_room_display
+      message: The 3D printer has finished
+    service: tts.google_translate_say
+  - service: notify.mobile_app_toms_phone
     data:
       message: The 3D Printer has finished
       data:
@@ -396,10 +408,6 @@
         - action: URI
           title: View live camera
           uri: lovelace/printer
-  - data:
-      entity_id: media_player.living_room_display
-      message: The 3D printer has finished
-    service: tts.google_translate_say
   mode: single
 - id: '1581776307274'
   alias: 'Washer: Notify done (repeat)'
@@ -1275,11 +1283,13 @@
       threshold: 25
       exclude0: sensor.annas_phone_battery_level
       actions:
-      - service: notify.mobile_app_tom_s_phone
+      - service: notify.mobile_app_toms_phone
         data:
           message: Low battery alert for {{sensors}}
         enabled: true
       exclude1: sensor.toms_phone_battery_level
+      exclude2: sensor.annas_watch_battery_level
+      exclude3: sensor.toms_watch_battery_level
 - id: '1609885331052'
   alias: 'Lights: Turn off boys'' light at bedtime'
   description: ''
