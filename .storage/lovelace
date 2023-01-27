@@ -544,7 +544,7 @@
                       "icon_color": "{% if is_state('light.living_room_light_group','on') %}\n{{ '#%02x%02x%02x' % state_attr('light.living_room_light_group','rgb_color') }}\n{% endif %}",
                       "multiline_secondary": false,
                       "badge_color": "red",
-                      "badge_icon": "{% if is_state('climate.nest_thermostat', 'heat') %}\nmdi:fire\n{% endif %}"
+                      "badge_icon": "{% if state_attr('climate.nest_thermostat','hvac_action') == 'heating' %}\nmdi:fire\n{% endif %}"
                     },
                     {
                       "type": "custom:mushroom-template-card",
