@@ -198,7 +198,7 @@ binary_sensor:
             
 sensor:
   - platform: homeassistant
-    id: crypto_change
+    id: crypto_portfolio_change
     entity_id: 'sensor.crypto_daily_change'
   - platform: homeassistant
     id: crypto_portfolio
@@ -293,10 +293,10 @@ display:
         lambda: |-
           std::string changeIcon = "\U000F0FE1";
           std::string change = "";
-          if (id(crypto_change).state > 0) {
+          if (id(crypto_portfolio_change).state > 0) {
             changeIcon = "\U000F0CE1";
             change = "+%.2f";
-          } else if (id(crypto_change).state < 0) {
+          } else if (id(crypto_portfolio_change).state < 0) {
             changeIcon = "\U000F0047";
             change = "(%.2f)";
           }
@@ -304,7 +304,7 @@ display:
           if (id(crypto_portfolio).has_state()) {
             it.printf(80, 70, id(sans_xl), TextAlign::BOTTOM_LEFT, "£%.2f", id(crypto_portfolio).state);
           }
-          it.printf(80, 70, id(sans_m), TextAlign::TOP_LEFT, change.c_str(), id(crypto_change).state);
+          it.printf(80, 70, id(sans_m), TextAlign::TOP_LEFT, change.c_str(), id(crypto_portfolio_change).state);
           it.strftime(250, 125, id(roboto_bold_xs), COLOR_ON, TextAlign::BOTTOM_RIGHT , "Updated: %H:%M", id(esptime).now());
       - id: page_image
         lambda: |-
