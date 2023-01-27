@@ -379,3 +379,7 @@
   state_topic: "espresense/rooms"
   timeout: 5
   away_timeout: 150
+- platform: opensky
+  radius: 10
+  latitude: 53.839673475134795
+  longitude: -1.7783505732140494
