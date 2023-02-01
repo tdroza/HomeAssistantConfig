@@ -862,16 +862,6 @@
                   "type": "state-icon"
                 },
                 {
-                  "entity": "binary_sensor.kitchen_motion_sensor",
-                  "style": {
-                    "font-size": "12px",
-                    "left": "93%",
-                    "top": "39%"
-                  },
-                  "title": null,
-                  "type": "state-icon"
-                },
-                {
                   "entity": "light.advent",
                   "hold_action": {
                     "action": "more-info"
@@ -1044,7 +1034,7 @@
                   "type": "state-icon"
                 },
                 {
-                  "entity": "light.second_bedroom_light_ceiling",
+                  "entity": "light.second_bedroom_ceiling",
                   "hold_action": {
                     "action": "more-info"
                   },
