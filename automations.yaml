@@ -643,11 +643,11 @@
   alias: 'Garage: Closed'
   description: ''
   trigger:
-  - type: not_opened
-    platform: device
-    device_id: 95b859a2f9f711eaa43c6ba5d5c98dd1
-    entity_id: binary_sensor.garage_door
-    domain: binary_sensor
+  - platform: state
+    entity_id:
+    - binary_sensor.garage_door
+    from: 'on'
+    to: 'off'
   condition: []
   action:
   - service: notify.tom_and_anna
@@ -663,6 +663,7 @@
       - media_player.living_room_display
       - media_player.hallway_home
       message: The garage door was closed
+      cache: false
     service: tts.google_translate_say
   mode: single
 - id: '1589231983089'
@@ -1010,11 +1011,13 @@
     device_id: 9ff97222baf526d2a00bfe723a61cc3f
     entity_id: binary_sensor.annas_watch_is_charging
     domain: binary_sensor
+    enabled: false
   - type: plugged_in
     platform: device
     device_id: 28abb52456ef5ac4459a0ac810e7cf0b
     entity_id: binary_sensor.annas_phone_is_charging
     domain: binary_sensor
+    enabled: false
   condition:
   - condition: time
     after: '21:30'
