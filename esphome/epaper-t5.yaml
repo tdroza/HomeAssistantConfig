@@ -1,9 +1,8 @@
 substitutions:
   device_name: "epaper-t5"
   friendly_name: "ePaper T5"
-  run_time: 24h
-  sleep_time: 5min # normal sleep time
-  night_sleep_time: 7h
+  run_time: 5min
+  sleep_time: 2min # normal sleep time
 
 globals:
   - id: current_page
@@ -45,10 +44,15 @@ captive_portal:
 time:
   - platform: homeassistant
     id: ntp
-    on_time_sync:
-      - then:
-        - component.update: sunrise
-        - component.update: sunset
+    on_time:
+      - hours: 18
+        then:
+          - logger.log: "Entering night time sleep, triggered by time"
+          - delay: 1s
+          - deep_sleep.enter:
+              id: deep_sleep_1
+              until: "18:10:00"
+              time_id: ntp
 
 external_components:
   - source: github://ashald/esphome@lilygo-t5-47
@@ -140,7 +144,7 @@ script:
   - id: all_data_received
     then:
       - script.execute: show_page
-      - script.execute: enter_sleep
+      - script.execute: evaluate_sleep
  
   - id: show_page
     then:
@@ -177,13 +181,21 @@ script:
           variables:
             selected_page: |-
               return id(current_page_select).state.c_str();
-  - id: enter_sleep
+  - id: evaluate_sleep
     then:
+      - if: 
+          condition: 
+            lambda: return id(ntp).now().is_valid();
+          then:
+            - component.update: sunrise
+            - component.update: sunset          
       - if:
           condition:
-            binary_sensor.is_off: prevent_sleep
+            binary_sensor.is_on: prevent_sleep
           then:
-            
+            - logger.log: "Automatic deep sleep DISABLED"
+            - deep_sleep.prevent: deep_sleep_1
+          else:
             - if:
                 condition:
                   lambda: |-
@@ -195,31 +207,12 @@ script:
                     }
                     return false;
                 then:
-                  - logger.log: "All data received. Calculating sleep duration..."
-                  - if:
-                      condition:
-                        lambda: |- 
-                          auto time = id(ntp).now();
-                          if (!time.is_valid()) { 
-                            return false;
-                          }
-                          return (time.hour < 6) || (time.hour > 23); 
-                      then:
-                        - logger.log: "It's nighttime, entering long sleep for ${night_sleep_time}"       
-                        - display.page.show: page_sleep
-                        - component.update: t5_display
-                        - deep_sleep.enter: 
-                            id: deep_sleep_1 
-                            sleep_duration: ${night_sleep_time}
-                      else:
-                        - logger.log: "It's daytime, entering short sleep for ${sleep_time}"             
-                        - deep_sleep.enter: 
-                            id: deep_sleep_1 
-                            sleep_duration: ${sleep_time}      
+                  - logger.log: "All data received. Short sleep duration is ${sleep_time}"     
+                  - deep_sleep.allow: deep_sleep_1                                    
                 else:
                   - logger.log: "Staying awake to wait for data..."
-          else:
-            - logger.log: "Prevent deep sleep enabled."
+                  - deep_sleep.prevent: deep_sleep_1
+
 text_sensor:
   - platform: homeassistant
     id: quote_text
@@ -352,6 +345,8 @@ text_sensor:
       entity_category: diagnostic
 
 binary_sensor:
+  - platform: status
+    name: "${friendly_name}  Status"
   - platform: gpio
     pin: GPIO34
     name: "Temps Page"
@@ -382,8 +377,12 @@ binary_sensor:
           condition:
             - binary_sensor.is_on: prevent_sleep
           then:
-            - logger.log: "Automatic deep sleep disabled"
+            - logger.log: "Automatic deep sleep DISABLED"
             - deep_sleep.prevent: deep_sleep_1
+          else: 
+            - logger.log: "Automatic deep sleep ENABLED"
+            - deep_sleep.allow: deep_sleep_1            
+
       
 button:
   - platform: restart
