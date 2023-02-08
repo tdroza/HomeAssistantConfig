@@ -1914,6 +1914,9 @@
                 },
                 {
                   "entity": "input_boolean.holiday_mode"
+                },
+                {
+                  "entity": "input_text.matrix_text"
                 }
               ]
             },

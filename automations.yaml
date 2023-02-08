@@ -152,13 +152,18 @@
       message: All lights turned off.
   mode: single
 - id: '1577980276286'
-  alias: Presence - Left work (Tom)
-  description: Send a telegram notification when Tom has been away from work for 2
+  alias: Presence - Left work
+  description: Send a notification when Tom or Anna has been away from work for 2
     minutes
   trigger:
   - entity_id: person.tom
     for: 00:02:00
     from: BJSS
+    platform: state
+    to: not_home
+  - entity_id: person.anna
+    for: 00:02:00
+    from: AD Work
     platform: state
     to: not_home
   condition:
@@ -168,27 +173,13 @@
   - after: '16:30'
     condition: time
   action:
-  - data:
-      message: Tom left work 2 minutes ago
-    service: notify.mobile_app_toms_phone
-- id: '1578494385278'
-  alias: Presence - Left work (Anna)
-  description: Send a Telegram notification when Anna been away from work for 2 minutes
-  trigger:
-  - entity_id: person.anna
-    for: 00:02:00
-    from: AD Work
-    platform: state
-    to: not_home
-  condition: []
-  action:
   - service: notify.mobile_app_toms_phone
     data:
-      message: Anna left work 2 minutes ago.
-      title: On the move...
+      message: '{{ state_attr(trigger.entity_id, ''friendly_name'') }} left work 2
+        minutes ago.'
 - id: '1578592845893'
-  alias: 'Presence: Left Leeds (Tom)'
-  description: Send a Telegram notification when Tom been away from work for 2 minutes
+  alias: 'Presence: Left Leeds Station'
+  description: Send a notification 2 mins after Tom or Anna has left Leeds station
   trigger:
   - entity_id:
     - person.tom
@@ -203,10 +194,12 @@
   condition:
   - after: '16:30'
     condition: time
+    enabled: true
   action:
   - service: notify.mobile_app_toms_phone
     data:
-      message: '{{ trigger.entity_id }} left Leeds Station 2 minutes ago.'
+      message: '{{ state_attr(trigger.entity_id, ''friendly_name'') }} left Leeds
+        Station 2 minutes ago.'
 - id: '1580903225785'
   alias: 'Presence: Greeting'
   description: Play a greeting when Tom arrives home
@@ -969,7 +962,32 @@
   condition: []
   action:
   - variables:
-      zoom_status: empty
+      images:
+        on_air: 0,256,[0,0,0], 0,34,[255,0,0], 34,37,[255,255,255], 37,39,[255,0,0],
+          39,[255,255,255], 40,43,[255,0,0], 43,[255,255,255], 44,49,[255,0,0], 49,52,[255,255,255],
+          52,54,[255,0,0], 54,57,[255,255,255], 57,[255,0,0], 58,62,[255,255,255],
+          62,65,[255,0,0], 65,[255,255,255], 66,69,[255,0,0], 69,[255,255,255], 70,[255,0,0],
+          71,73,[255,255,255], 73,75,[255,0,0], 75,[255,255,255], 76,80,[255,0,0],
+          80,[255,255,255], 81,84,[255,0,0], 84,[255,255,255], 85,87,[255,0,0], 87,[255,255,255],
+          88,90,[255,0,0], 90,[255,255,255], 91,94,[255,0,0], 94,[255,255,255], 95,97,[255,0,0],
+          97,[255,255,255], 98,101,[255,0,0], 101,[255,255,255], 102,[255,0,0], 103,[255,255,255],
+          104,[255,0,0], 105,[255,255,255], 106,[255,0,0], 107,[255,255,255], 108,[255,0,0],
+          109,111,[255,255,255], 111,[255,0,0], 112,[255,255,255], 113,116,[255,0,0],
+          116,[255,255,255], 117,119,[255,0,0], 119,[255,255,255], 120,122,[255,0,0],
+          122,[255,255,255], 123,126,[255,0,0], 126,[255,255,255], 127,129,[255,0,0],
+          129,[255,255,255], 130,133,[255,0,0], 133,[255,255,255], 134,[255,0,0],
+          135,[255,255,255], 136,[255,0,0], 137,[255,255,255], 138,[255,0,0], 139,[255,255,255],
+          140,[255,0,0], 141,143,[255,255,255], 143,[255,0,0], 144,149,[255,255,255],
+          149,151,[255,0,0], 151,[255,255,255], 152,154,[255,0,0], 154,158,[255,255,255],
+          158,161,[255,0,0], 161,[255,255,255], 162,165,[255,0,0], 165,[255,255,255],
+          166,[255,0,0], 167,[255,255,255], 168,170,[255,0,0], 170,172,[255,255,255],
+          172,176,[255,0,0], 176,[255,255,255], 177,180,[255,0,0], 180,[255,255,255],
+          181,183,[255,0,0], 183,[255,255,255], 184,186,[255,0,0], 186,[255,255,255],
+          187,190,[255,0,0], 190,[255,255,255], 191,194,[255,0,0], 194,197,[255,255,255],
+          197,199,[255,0,0], 199,[255,255,255], 200,203,[255,0,0], 203,[255,255,255],
+          204,208,[255,0,0], 208,[255,255,255], 209,212,[255,0,0], 212,[255,255,255],
+          213,[255,0,0], 214,217,[255,255,255], 217,[255,0,0], 218,[255,255,255],
+          219,222,[255,0,0], 222,[255,255,255], 223,256,[255,0,0]
   - choose:
     - conditions:
       - condition: state
@@ -979,7 +997,37 @@
       - service: tts.google_translate_say
         data:
           message: Tom has started a zoom meeting
-        entity_id: media_player.bedroom_2_speaker
+          entity_id: media_player.bedroom_2_speaker
+          cache: false
+        enabled: false
+      - service: rest_command.matrix_image
+        data:
+          image: 0,256,[0,0,0], 0,34,[255,0,0], 34,37,[255,255,255], 37,39,[255,0,0],
+            39,[255,255,255], 40,43,[255,0,0], 43,[255,255,255], 44,49,[255,0,0],
+            49,52,[255,255,255], 52,54,[255,0,0], 54,57,[255,255,255], 57,[255,0,0],
+            58,62,[255,255,255], 62,65,[255,0,0], 65,[255,255,255], 66,69,[255,0,0],
+            69,[255,255,255], 70,[255,0,0], 71,73,[255,255,255], 73,75,[255,0,0],
+            75,[255,255,255], 76,80,[255,0,0], 80,[255,255,255], 81,84,[255,0,0],
+            84,[255,255,255], 85,87,[255,0,0], 87,[255,255,255], 88,90,[255,0,0],
+            90,[255,255,255], 91,94,[255,0,0], 94,[255,255,255], 95,97,[255,0,0],
+            97,[255,255,255], 98,101,[255,0,0], 101,[255,255,255], 102,[255,0,0],
+            103,[255,255,255], 104,[255,0,0], 105,[255,255,255], 106,[255,0,0], 107,[255,255,255],
+            108,[255,0,0], 109,111,[255,255,255], 111,[255,0,0], 112,[255,255,255],
+            113,116,[255,0,0], 116,[255,255,255], 117,119,[255,0,0], 119,[255,255,255],
+            120,122,[255,0,0], 122,[255,255,255], 123,126,[255,0,0], 126,[255,255,255],
+            127,129,[255,0,0], 129,[255,255,255], 130,133,[255,0,0], 133,[255,255,255],
+            134,[255,0,0], 135,[255,255,255], 136,[255,0,0], 137,[255,255,255], 138,[255,0,0],
+            139,[255,255,255], 140,[255,0,0], 141,143,[255,255,255], 143,[255,0,0],
+            144,149,[255,255,255], 149,151,[255,0,0], 151,[255,255,255], 152,154,[255,0,0],
+            154,158,[255,255,255], 158,161,[255,0,0], 161,[255,255,255], 162,165,[255,0,0],
+            165,[255,255,255], 166,[255,0,0], 167,[255,255,255], 168,170,[255,0,0],
+            170,172,[255,255,255], 172,176,[255,0,0], 176,[255,255,255], 177,180,[255,0,0],
+            180,[255,255,255], 181,183,[255,0,0], 183,[255,255,255], 184,186,[255,0,0],
+            186,[255,255,255], 187,190,[255,0,0], 190,[255,255,255], 191,194,[255,0,0],
+            194,197,[255,255,255], 197,199,[255,0,0], 199,[255,255,255], 200,203,[255,0,0],
+            203,[255,255,255], 204,208,[255,0,0], 208,[255,255,255], 209,212,[255,0,0],
+            212,[255,255,255], 213,[255,0,0], 214,217,[255,255,255], 217,[255,0,0],
+            218,[255,255,255], 219,222,[255,0,0], 222,[255,255,255], 223,256,[255,0,0]
     - conditions:
       - condition: state
         entity_id: binary_sensor.zoom_tomBJSS
@@ -988,9 +1036,9 @@
       - service: tts.google_translate_say
         data:
           message: Tom has ended a zoom meeting
-        entity_id: media_player.bedroom_2_speaker
-  - delay:
-      seconds: 10
+          entity_id: media_player.bedroom_2_speaker
+          cache: false
+        enabled: false
   mode: single
 - id: '1603313648727'
   alias: Bedtime - phone charging
@@ -2354,4 +2402,32 @@
     data: {}
     target:
       device_id: d900db50135294c1549bb9a9ecde74b0
+  mode: single
+- id: '1675701493281'
+  alias: 'Matrix: Set text'
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - input_text.matrix_text
+  condition: []
+  action:
+  - service: rest_command.wled_text
+    data:
+      text: '{{states(''input_text.matrix_text'')}}'
+      fx: 122
+  mode: single
+- id: '1675852669630'
+  alias: Matrix - Default
+  description: Return to default display in various trigger conditions
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.zoom_tombjss
+    from: 'on'
+    to: 'off'
+  condition: []
+  action:
+  - service: rest_command.matrix_default
+    data: {}
   mode: single
