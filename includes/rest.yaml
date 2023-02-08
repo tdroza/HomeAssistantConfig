@@ -1,7 +1,3 @@
-set_desk_percent:
-  url: 'http://192.168.1.137/winIX={{percent}}'
-  method: GET
-  
 pixel_it:
   url: 'http://192.168.1.163/api/screen'
   method: POST
@@ -34,3 +30,16 @@ pixel_it:
         },
         "hexColor": "{{hexColor}}"
     }}'
+    
+matrix_text:
+  url: http://192.168.1.163/json/state
+  method: POST
+  payload: '{"seg": [{"n": "{{text}}","fx":122,"pal":"~"}]}'
+matrix_image:
+  url: http://192.168.1.163/json/state
+  method: POST
+  payload: '{"on":true, "bri": 25, "seg": {"i":[{{image}}]} }'
+matrix_default:
+  url: http://192.168.1.163/json/state
+  method: POST
+  payload: '{"on": true, "ps": 1, "bri": 25}'
