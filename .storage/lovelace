@@ -1808,7 +1808,7 @@
                 }
               ],
               "title": "WLED Matrix",
-              "show_header_toggle": true,
+              "show_header_toggle": false,
               "state_color": true,
               "footer": {
                 "type": "buttons",
