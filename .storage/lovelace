@@ -1816,17 +1816,38 @@
                   {
                     "entity": "automation.matrix_default",
                     "name": "Default",
-                    "icon": "mdi:format-clear"
+                    "icon": "mdi:format-clear",
+                    "tap_action": {
+                      "action": "call-service",
+                      "service": "automation.trigger",
+                      "service_data": {
+                        "entity_id": "automation.matrix_default"
+                      }
+                    }
                   },
                   {
                     "entity": "automation.matrix_set_text",
                     "name": "Set text",
-                    "icon": "mdi:cursor-text"
+                    "icon": "mdi:cursor-text",
+                    "tap_action": {
+                      "action": "call-service",
+                      "service": "automation.trigger",
+                      "service_data": {
+                        "entity_id": "automation.matrix_set_text"
+                      }
+                    }
                   },
                   {
                     "entity": "automation.matrix_music_artist",
                     "name": "Music",
-                    "icon": "mdi:music"
+                    "icon": "mdi:music",
+                    "tap_action": {
+                      "action": "call-service",
+                      "service": "automation.trigger",
+                      "service_data": {
+                        "entity_id": "automation.matrix_music_artist"
+                      }
+                    }
                   }
                 ]
               }
