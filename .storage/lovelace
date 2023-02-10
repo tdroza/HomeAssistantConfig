@@ -1748,135 +1748,6 @@
           "badges": [],
           "cards": [
             {
-              "entities": [
-                {
-                  "entity": "sensor.worldwide_coronavirus_current",
-                  "icon": "mdi:medical-bag",
-                  "name": "Current"
-                },
-                {
-                  "entity": "sensor.worldwide_coronavirus_deaths",
-                  "icon": "mdi:emoticon-dead",
-                  "name": "Deaths"
-                },
-                {
-                  "entity": "sensor.worldwide_coronavirus_recovered",
-                  "icon": "mdi:doctor",
-                  "name": "Recovered"
-                },
-                {
-                  "entity": "sensor.worldwide_coronavirus_confirmed",
-                  "icon": "mdi:account-multiple",
-                  "name": "Confirmed"
-                }
-              ],
-              "show_icon": true,
-              "show_name": true,
-              "show_state": true,
-              "title": "Worldwide",
-              "type": "glance"
-            },
-            {
-              "cards": [
-                {
-                  "card": null,
-                  "entities": [
-                    {
-                      "entity": "sensor.united_kingdom_coronavirus_current",
-                      "icon": "mdi:medical-bag",
-                      "name": "Current"
-                    },
-                    {
-                      "entity": "sensor.united_kingdom_coronavirus_deaths",
-                      "icon": "mdi:emoticon-dead",
-                      "name": "Deaths"
-                    },
-                    {
-                      "entity": "sensor.united_kingdom_coronavirus_recovered",
-                      "icon": "mdi:doctor",
-                      "name": "Recovered"
-                    },
-                    {
-                      "entity": "sensor.united_kingdom_coronavirus_confirmed",
-                      "icon": "mdi:account-multiple",
-                      "name": "Confirmed"
-                    }
-                  ],
-                  "show_icon": true,
-                  "show_name": true,
-                  "show_state": true,
-                  "title": "UK",
-                  "type": "glance"
-                },
-                {
-                  "card": null,
-                  "entities": [
-                    "sensor.uk_coronavirus_confirmed",
-                    "sensor.uk_coronavirus_current",
-                    "sensor.uk_coronavirus_deaths",
-                    "sensor.uk_coronavirus_recovered"
-                  ],
-                  "type": "custom:mini-graph-card"
-                }
-              ],
-              "type": "vertical-stack"
-            },
-            {
-              "entities": [
-                {
-                  "entity": "sensor.quarantine_meter_tom",
-                  "name": "Proportion at home"
-                },
-                {
-                  "entity": "sensor.quarantine_meter_tom_count_left",
-                  "name": "Times left home"
-                }
-              ],
-              "show_icon": false,
-              "title": "Lockdown Meter, 7d (Tom)",
-              "type": "glance"
-            },
-            {
-              "entities": [
-                {
-                  "entity": "sensor.quarantine_meter_anna",
-                  "name": "Proportion at home"
-                },
-                {
-                  "entity": "sensor.quarantine_meter_anna_count_left",
-                  "name": "Times left home"
-                }
-              ],
-              "show_icon": false,
-              "show_name": true,
-              "show_state": true,
-              "title": "Lockdown Meter, 7d (Anna)",
-              "type": "glance"
-            }
-          ],
-          "icon": "mdi:biohazard",
-          "path": "coronavirus",
-          "title": "Coronavirus"
-        },
-        {
-          "badges": [],
-          "cards": [
-            {
-              "entities": [
-                {
-                  "entity": "light.living_room_lights",
-                  "name": "Lounge"
-                },
-                {
-                  "entity": "sensor.replay_living_room_lights",
-                  "name": "Lounge Replay"
-                }
-              ],
-              "hours_to_show": 168,
-              "refresh_interval": 0,
-              "type": "history-graph"
-            },
-            {
               "type": "custom:auto-entities",
               "card": {
                 "type": "entities",
@@ -1910,30 +1781,55 @@
                   "entity": "input_select.epaper_page"
                 },
                 {
-                  "entity": "automation.washer_notify_done"
+                  "entity": "automation.washer_notify_done",
+                  "name": "Washing machine reminders",
+                  "icon": "mdi:washing-machine"
                 },
                 {
-                  "entity": "input_boolean.holiday_mode"
-                },
-                {
-                  "entity": "input_text.matrix_text"
+                  "entity": "input_boolean.holiday_mode",
+                  "name": "Holiday mode"
                 }
               ]
-            },
-            {
-              "type": "plant-status",
-              "entity": "plant.cactus",
-              "name": "Office Cactus"
-            },
-            {
-              "type": "custom:slider-entity-row",
-              "entity": "input_number.stepper_position"
             },
             {
               "type": "entity",
               "entity": "input_boolean.holiday_mode",
               "name": "Holiday Mode",
               "state_color": true
+            },
+            {
+              "type": "entities",
+              "entities": [
+                {
+                  "entity": "light.wled_matrix"
+                },
+                {
+                  "entity": "input_text.matrix_text"
+                }
+              ],
+              "title": "WLED Matrix",
+              "show_header_toggle": true,
+              "state_color": true,
+              "footer": {
+                "type": "buttons",
+                "entities": [
+                  {
+                    "entity": "automation.matrix_default",
+                    "name": "Default",
+                    "icon": "mdi:format-clear"
+                  },
+                  {
+                    "entity": "automation.matrix_set_text",
+                    "name": "Set text",
+                    "icon": "mdi:cursor-text"
+                  },
+                  {
+                    "entity": "automation.matrix_music_artist",
+                    "name": "Music",
+                    "icon": "mdi:music"
+                  }
+                ]
+              }
             }
           ],
           "icon": "mdi:beta",

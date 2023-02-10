@@ -2381,7 +2381,7 @@
   action:
   - service: cover.set_cover_position
     data:
-      position: 60
+      position: 30
     target:
       device_id: d900db50135294c1549bb9a9ecde74b0
   mode: single
@@ -2412,9 +2412,9 @@
     - input_text.matrix_text
   condition: []
   action:
-  - service: rest_command.wled_text
+  - service: rest_command.matrix_text
     data:
-      text: '{{states(''input_text.matrix_text'')}}'
+      text: '{{states(''input_text.matrix_text'')[:28]}}'
       fx: 122
   mode: single
 - id: '1675852669630'
@@ -2426,8 +2426,54 @@
     - binary_sensor.zoom_tombjss
     from: 'on'
     to: 'off'
+  - platform: state
+    entity_id:
+    - input_text.matrix_text
+    for:
+      hours: 0
+      minutes: 1
+      seconds: 0
   condition: []
   action:
   - service: rest_command.matrix_default
     data: {}
+  mode: single
+- id: '1675874795995'
+  alias: 'Matrix: Music artist'
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - media_player.bedroom_2_speaker
+    id: Google Speaker
+  - platform: state
+    entity_id:
+    - sensor.tdroza
+    id: LastFM
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: Google Speaker
+      sequence:
+      - service: input_text.set_value
+        data:
+          entity_id: input_text.matrix_text
+          value: '{{state_attr(''media_player.bedroom_2_speaker'', ''media_artist'')}}:
+            {{state_attr(''media_player.bedroom_2_speaker'', ''media_title'') | truncate(28,
+            true) }}}}
+
+            '
+    - conditions:
+      - condition: trigger
+        id: LastFM
+      sequence:
+      - service: input_text.set_value
+        data:
+          entity_id: input_text.matrix_text
+          value: '{{states(''sensor.tdroza'') | replace('' - '', '': '') | truncate(28,
+            true) }}
+
+            '
   mode: single

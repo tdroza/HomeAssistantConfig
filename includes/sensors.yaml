@@ -27,17 +27,17 @@
       value_template: '{{ as_timestamp(states.calendar.family.attributes.start_time) | timestamp_custom("%A %H:%M") }}'
     youtube_music_artist:
       value_template: >
-        {% if (state_attr("media_player.youtube_music", "media_artist")==None) %}
+        {% if (state_attr("media_player.ytube_music_player", "media_artist")==None) %}
           {{""}}
         {% else %}
-          {{state_attr("media_player.youtube_music", "media_artist") }}
+          {{state_attr("media_player.ytube_music_player", "media_artist") }}
         {% endif %}
     youtube_music_title:
       value_template: >
-        {% if (state_attr("media_player.youtube_music", "media_title")==None) %}
+        {% if (state_attr("media_player.ytube_music_player", "media_title")==None) %}
           {{""}}
         {% else %}
-          {{state_attr("media_player.youtube_music", "media_title") }}
+          {{state_attr("media_player.ytube_music_player", "media_title") }}
         {% endif %}
     teams_status: 
       friendly_name: "Microsoft Teams status"
@@ -383,3 +383,7 @@
   radius: 10
   latitude: 53.839673475134795
   longitude: -1.7783505732140494
+- platform: lastfm
+  api_key: !secret lastfm_api_key
+  users:
+    - tdroza

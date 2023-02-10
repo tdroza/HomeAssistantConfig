@@ -42,4 +42,4 @@ matrix_image:
 matrix_default:
   url: http://192.168.1.163/json/state
   method: POST
-  payload: '{"on": true, "ps": 1, "bri": 25}'
+  payload: '{"on": true, "ps": 1, "bri": 25, "seg": {"n": ""}}'
