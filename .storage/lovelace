@@ -2477,6 +2477,8 @@
                     "type": "horizontal-stack",
                     "cards": [
                       {
+                        "show_name": true,
+                        "show_icon": true,
                         "type": "button",
                         "tap_action": {
                           "action": "toggle"
@@ -2545,15 +2547,29 @@
                             "name": "Temp"
                           },
                           {
-                            "color": "var(--humidity)",
-                            "entity": "sensor.living_room_humidity",
-                            "index": 1,
-                            "name": "Humidity",
-                            "y_axis": "secondary"
+                            "entity": "climate.nest_thermostat",
+                            "attribute": "hvac_action",
+                            "y_axis": "secondary",
+                            "color": "grey",
+                            "name": "Heating",
+                            "show_fill": true,
+                            "show_line": false,
+                            "smoothing": false
+                          }
+                        ],
+                        "state_map": [
+                          {
+                            "label": "Idle",
+                            "value": "idle"
+                          },
+                          {
+                            "label": "Heating",
+                            "value": "heating"
                           }
                         ],
                         "name": "Living room",
-                        "points_per_hour": 1,
+                        "points_per_hour": 20,
+                        "line_width": 2,
                         "show": {
                           "icon": false,
                           "labels": true,
