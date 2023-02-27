@@ -1069,6 +1069,7 @@
   condition:
   - condition: time
     after: '21:30'
+    before: '23:00:00'
   - condition: or
     conditions:
     - condition: zone
@@ -2370,7 +2371,7 @@
       hours: 0
       minutes: 2
       seconds: 0
-    above: 9000
+    above: 4000
   condition:
   - condition: state
     entity_id: binary_sensor.workday_sensor
@@ -2378,6 +2379,11 @@
   - condition: state
     entity_id: input_boolean.holiday_mode
     state: 'off'
+  - condition: numeric_state
+    entity_id: sun.sun
+    attribute: azimuth
+    above: 90
+    below: 150
   action:
   - service: cover.set_cover_position
     data:
@@ -2395,7 +2401,15 @@
       hours: 0
       minutes: 5
       seconds: 0
-    below: 9000
+    below: 4000
+  - platform: numeric_state
+    entity_id: sun.sun
+    attribute: azimuth
+    above: 120
+  - platform: numeric_state
+    entity_id: sun.sun
+    below: 90
+    attribute: azimuth
   condition: []
   action:
   - service: cover.open_cover
