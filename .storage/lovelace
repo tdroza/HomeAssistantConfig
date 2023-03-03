@@ -543,8 +543,8 @@
                       },
                       "icon_color": "{% if is_state('light.living_room_light_group','on') %}\n{{ '#%02x%02x%02x' % state_attr('light.living_room_light_group','rgb_color') }}\n{% endif %}",
                       "multiline_secondary": false,
-                      "badge_color": "red",
-                      "badge_icon": "{% if state_attr('climate.nest_thermostat','hvac_action') == 'heating' %}\nmdi:fire\n{% endif %}"
+                      "badge_color": "{% if state_attr('climate.nest_thermostat','hvac_action') == 'heating' %}\nred\n{% else %}\n  {% if is_state('binary_sensor.living_room_door', 'on') %}\n  orange\n  {% endif %}\n{% endif %}",
+                      "badge_icon": "{% if state_attr('climate.nest_thermostat','hvac_action') == 'heating' %}\nmdi:fire\n{% else %}\n  {% if is_state('binary_sensor.living_room_door', 'on') %}\n  mdi:door-open\n  {% else %}\n  mdi:door-closed\n  {% endif %}\n{% endif %}"
                     },
                     {
                       "type": "custom:mushroom-template-card",
@@ -598,7 +598,9 @@
                       "hold_action": {
                         "action": "toggle"
                       },
-                      "icon_color": "{% if is_state('binary_sensor.washer','on') %}\ngreen\n{% endif %}"
+                      "icon_color": "",
+                      "badge_color": "{% if is_state('binary_sensor.washer','on') %}\ngreen\n{% endif %}",
+                      "badge_icon": "{% if is_state('binary_sensor.washer','on') %}\nmdi:washing-machine\n{% else %}\nmdi:washing-machine-off\n{% endif %}"
                     }
                   ]
                 },
@@ -619,8 +621,8 @@
                         "action": "toggle"
                       },
                       "icon_color": "{% if is_state('light.main_bedroom_light_group','on') %}\n{{ '#%02x%02x%02x' % (state_attr('light.main_bedroom_light_group','rgb_color') or (255,193,7))}}\n{% endif %}",
-                      "badge_color": "blue",
-                      "badge_icon": "{% if is_state('binary_sensor.main_bedroom_door', 'on') %}\nmdi:door-open\n{% endif %}"
+                      "badge_color": "{% if is_state('binary_sensor.main_bedroom_door', 'on') %}\norange\n{% endif %}",
+                      "badge_icon": "{% if is_state('binary_sensor.main_bedroom_door', 'on') %}\nmdi:door-open\n{% else %}\nmdi:door-closed\n{% endif %}"
                     },
                     {
                       "type": "custom:mushroom-template-card",
@@ -709,7 +711,9 @@
                       "hold_action": {
                         "action": "none"
                       },
-                      "icon_color": ""
+                      "icon_color": "",
+                      "badge_color": "",
+                      "badge_icon": ""
                     }
                   ]
                 },
@@ -862,19 +866,30 @@
                   "type": "state-icon"
                 },
                 {
-                  "entity": "light.advent",
-                  "hold_action": {
-                    "action": "more-info"
-                  },
-                  "style": {
-                    "font-size": "12px",
-                    "left": "87%",
-                    "top": "39%"
-                  },
-                  "tap_action": {
-                    "action": "toggle"
-                  },
-                  "type": "state-icon"
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "entity": "input_boolean.xmas_mode",
+                      "state": "on"
+                    }
+                  ],
+                  "elements": [
+                    {
+                      "type": "state-icon",
+                      "entity": "light.advent",
+                      "hold_action": {
+                        "action": "more-info"
+                      },
+                      "style": {
+                        "font-size": "12px",
+                        "left": "87%",
+                        "top": "39%"
+                      },
+                      "tap_action": {
+                        "action": "toggle"
+                      }
+                    }
+                  ]
                 },
                 {
                   "entity": "sensor.hallway_motion_sensor_temperature_rounded",
@@ -902,19 +917,30 @@
                   "type": "state-icon"
                 },
                 {
-                  "entity": "switch.christmas_star",
-                  "hold_action": {
-                    "action": "more-info"
-                  },
-                  "style": {
-                    "font-size": "12px",
-                    "left": "93%",
-                    "top": "70%"
-                  },
-                  "tap_action": {
-                    "action": "toggle"
-                  },
-                  "type": "state-icon"
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "entity": "input_boolean.xmas_mode",
+                      "state": "on"
+                    }
+                  ],
+                  "elements": [
+                    {
+                      "entity": "switch.christmas_star",
+                      "hold_action": {
+                        "action": "more-info"
+                      },
+                      "style": {
+                        "font-size": "12px",
+                        "left": "93%",
+                        "top": "70%"
+                      },
+                      "tap_action": {
+                        "action": "toggle"
+                      },
+                      "type": "state-icon"
+                    }
+                  ]
                 },
                 {
                   "entity": "light.tv_backlight",
@@ -2554,7 +2580,8 @@
                             "name": "Heating",
                             "show_fill": true,
                             "show_line": false,
-                            "smoothing": false
+                            "smoothing": false,
+                            "show_state": true
                           }
                         ],
                         "state_map": [
