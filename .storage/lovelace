@@ -2596,6 +2596,7 @@
                         ],
                         "name": "Living room",
                         "points_per_hour": 20,
+                        "hours_to_show_template": "{{96 if states('input_boolean.extended_history')=='on' else 24}}",
                         "line_width": 2,
                         "show": {
                           "icon": false,
@@ -2603,6 +2604,22 @@
                           "name": false
                         },
                         "type": "custom:mini-graph-card"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "custom:mushroom-chips-card",
+                  "chips": [
+                    {
+                      "type": "entity",
+                      "entity": "input_boolean.extended_history",
+                      "name": "Extended Hitory",
+                      "tap_action": {
+                        "action": "toggle"
+                      },
+                      "hold_action": {
+                        "action": "toggle"
                       }
                     }
                   ]
