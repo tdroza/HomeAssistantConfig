@@ -167,10 +167,7 @@
     platform: state
     to: not_home
   condition:
-  - condition: template
-    value_template: '{{ not is_state(''sensor.oneplus5t_wifi_connection'', ''BJSS-Staff'')
-      }}'
-  - after: '16:30'
+  - after: '15:30:00'
     condition: time
   action:
   - service: notify.mobile_app_toms_phone
@@ -2490,4 +2487,43 @@
             true) }}
 
             '
+  mode: single
+- id: '1678450635245'
+  alias: Notify when Kodi Media Centre is left on
+  description: ''
+  trigger:
+  - platform: device
+    type: turned_on
+    device_id: 0e0a0a0580ffaad6b71401efe970fd27
+    entity_id: switch.kodi
+    domain: switch
+    for:
+      hours: 3
+      minutes: 0
+      seconds: 0
+  condition: []
+  action:
+  - service: notify.mobile_app_toms_phone
+    data:
+      message: The Kodi Media Centre has been left on for 3 hours
+      title: Media Centre
+      data:
+        actions:
+        - action: KODI_OFF
+          title: Turn off
+  mode: single
+- id: '1678450844041'
+  alias: Handle KODI_OFF action
+  description: ''
+  trigger:
+  - platform: event
+    event_type: mobile_app_notification_action
+    event_data:
+      action: KODI_OFF
+  condition: []
+  action:
+  - type: turn_off
+    device_id: 0e0a0a0580ffaad6b71401efe970fd27
+    entity_id: switch.kodi
+    domain: switch
   mode: single
