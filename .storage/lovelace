@@ -2209,6 +2209,25 @@
               ],
               "title": "But Why",
               "show_header_toggle": false
+            },
+            {
+              "type": "entities",
+              "entities": [
+                {
+                  "type": "custom:template-entity-row",
+                  "name": "Last podcast",
+                  "state": "{{ strptime(state_attr('sensor.podcast_finn_caspian','entries')[states('counter.podcast_finn_caspian') | int + 1].published[:-2] + '2021', '%a, %b %d %H:%M %Y').timestamp() | timestamp_custom('%d %B')}}",
+                  "secondary": "{{ state_attr('sensor.podcast_finn_caspian','entries')[states('counter.podcast_finn_caspian') | int +1].title }}"
+                },
+                {
+                  "type": "custom:template-entity-row",
+                  "name": "Next podcast",
+                  "state": "{{ strptime(state_attr('sensor.podcast_finn_caspian','entries')[states('counter.podcast_finn_caspian') | int].published[:-2] + '2021', '%a, %b %d %H:%M %Y').timestamp() | timestamp_custom('%d %B')}}",
+                  "secondary": "{{ state_attr('sensor.podcast_finn_caspian','entries')[states('counter.podcast_finn_caspian') | int].title }}"
+                }
+              ],
+              "title": "Finn Caspian",
+              "show_header_toggle": false
             }
           ]
         },
@@ -2395,15 +2414,30 @@
                             "name": "Temp"
                           },
                           {
-                            "color": "var(--humidity)",
-                            "entity": "sensor.office_climate_humidity",
-                            "index": 1,
-                            "name": "Humidity",
-                            "y_axis": "secondary"
+                            "entity": "climate.nest_thermostat",
+                            "attribute": "hvac_action",
+                            "y_axis": "secondary",
+                            "color": "grey",
+                            "name": "Heating",
+                            "show_fill": true,
+                            "show_line": false,
+                            "smoothing": false,
+                            "show_state": true
                           }
                         ],
-                        "name": "Living room",
-                        "points_per_hour": 1,
+                        "state_map": [
+                          {
+                            "label": "Idle",
+                            "value": "idle"
+                          },
+                          {
+                            "label": "Heating",
+                            "value": "heating"
+                          }
+                        ],
+                        "points_per_hour": 20,
+                        "hours_to_show_template": "{{96 if states('input_boolean.extended_history')=='on' else 24}}",
+                        "line_width": 2,
                         "show": {
                           "icon": false,
                           "labels": true,
