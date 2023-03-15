@@ -1137,17 +1137,21 @@
   trigger:
   - platform: time
     at: 08:30
-  - type: not_plugged_in
-    platform: device
-    device_id: cf4ceb29a2e7464abe92c738f5983356
-    entity_id: binary_sensor.toms_phone_is_charging
-    domain: binary_sensor
   - type: battery_level
     platform: device
     device_id: cf4ceb29a2e7464abe92c738f5983356
     entity_id: sensor.toms_phone_battery_level
     domain: sensor
     above: 99
+  - platform: state
+    entity_id:
+    - sensor.toms_phone_charger_type
+    from: ac
+    to: none
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 5
   condition:
   - condition: device
     type: is_on
