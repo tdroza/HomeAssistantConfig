@@ -48,11 +48,12 @@ time:
       - hours: 18
         then:
           - logger.log: "Entering night time sleep, triggered by time"
+          - display.page.show: page_sleep
+          - component.update: t5_display
           - delay: 1s
           - deep_sleep.enter:
               id: deep_sleep_1
-              until: "18:10:00"
-              time_id: ntp
+              sleep_duration: 12h
 
 external_components:
   - source: github://ashald/esphome@lilygo-t5-47
@@ -129,8 +130,15 @@ font:
         - "\U000F059D" # wind
         - "\U000F059B" # sunset
         - "\U000F059C" # sunrise
+  - file: 'fonts/materialdesignicons-webfont.ttf'
+    id: font_icons_footer
+    size: 30
+    glyphs:
+        - "\U000F06A5" # power-plug
+        - "\U000F140B" # lightning-bolt
 
 script:
+  # should only be called from show_page to ensure that page content is loaded after refresh
   - id: refresh_display
     then:
       - repeat:
@@ -138,8 +146,10 @@ script:
           then:
           - display.page.show: page_black
           - component.update: t5_display
+          - delay: 1s
           - display.page.show: page_white
           - component.update: t5_display
+          - delay: 1s
       - lambda: id(updates_since_refresh) = 0;
   - id: all_data_received
     then:
@@ -150,7 +160,7 @@ script:
     then:
       - if: 
           condition:
-            lambda: return id(updates_since_refresh) >= 20;
+            lambda: return id(updates_since_refresh) >= 10;
           then:
             - script.execute: refresh_display
       - display.page.show: !lambda |-
@@ -183,6 +193,7 @@ script:
               return id(current_page_select).state.c_str();
   - id: evaluate_sleep
     then:
+      - logger.log: "Evaluating sleep..."
       - if: 
           condition: 
             lambda: return id(ntp).now().is_valid();
@@ -354,8 +365,7 @@ binary_sensor:
       then:
         - lambda: |-
             id(current_page) = 1;
-            id(current_page_select).state = "Temperature";
-        - script.execute: refresh_display            
+            id(current_page_select).state = "Temperature";    
         - script.execute: update_page_in_ha
         - script.execute: show_page
   - platform: gpio
@@ -389,6 +399,28 @@ button:
     name: "${friendly_name} Restart"
 
 sensor:
+  - id: batt_volt
+    name: ${friendly_name} Battery Voltage
+    platform: lilygo_t5_47
+    device_class: voltage
+    state_class: measurement
+    unit_of_measurement: V 
+  - platform: template
+    name: "${friendly_name} Battery"
+    id: batt
+    unit_of_measurement: "%"
+    accuracy_decimals: 0
+    device_class: battery
+    lambda: |-
+      int y = (1-(4.1-id(batt_volt).state)/(4.1-2.9))*100;
+      if (y > 100) {
+        return 100;
+      } else if (y < 0) {
+        return 0;
+      } else {
+        return y;
+      }
+  
   - id: battery
     platform: lilygo_t5_47
   - platform: homeassistant
@@ -454,16 +486,18 @@ display:
   - platform: lilygo_t5_47
     id: t5_display
     rotation: 180
-    full_update_every: 10
+    full_update_every: 5
     update_interval: never
     pages:
       - id: page_white
+        # only_call this from refresh_display
         lambda: |-
           #define xres 960 
           #define yres 540
           it.filled_rectangle(0, 0, xres, yres, COLOR_OFF);
           it.print(xres/2, yres/2, id(font_name), COLOR_ON, TextAlign::CENTER, "Refreshing...");    
       - id: page_black
+        # only call this from refresh_display
         lambda: |-
           #define xres 960 
           #define yres 540
@@ -479,8 +513,6 @@ display:
           #define yres 540
           #define x_pad 10 // border padding
           #define y_pad 10 // border padding      
-          #define BATTERY_MAX 4.2
-          #define BATTERY_MIN 2.9
 
           #define y1 0
           #define y2 285
@@ -533,11 +565,16 @@ display:
           it.strftime(xres/2, yres-y_pad/2, id(font_footer), COLOR_OFF, TextAlign::BASELINE_CENTER, "Updated %H:%M", id(ntp).now());
   
           // Now we're ready to read the battery
-          double_t percentage = (1-(BATTERY_MAX- id(battery).state)/(BATTERY_MAX-BATTERY_MIN))*100;
-          uint8_t battery_percentage = percentage < 0 ? 0 : percentage > 100 ? 100 : percentage;
+          //double_t percentage = (1-(BATTERY_MAX- id(battery).state)/(BATTERY_MAX-BATTERY_MIN))*100;
+          //uint8_t battery_percentage = percentage < 0 ? 0 : percentage > 100 ? 100 : percentage;
         
-          it.printf(xres-x_pad, yres-y_pad/2, id(font_footer), COLOR_OFF, TextAlign::BASELINE_RIGHT, "%.2fV/%3d%%", id(battery).state, battery_percentage);
-          
+          //it.printf(xres-x_pad, yres-y_pad/2, id(font_footer), COLOR_OFF, TextAlign::BASELINE_RIGHT, "%.2fV/%3d%%", id(battery).state, battery_percentage);
+          bool charging = id(batt_volt).state >= 4.25;
+          if (charging) {
+            it.printf(xres-x_pad, yres-y_pad/2, id(font_icons_footer), COLOR_OFF, TextAlign::BASELINE_RIGHT, "\U000F140B"); // lightning-bolt
+          } else {
+            it.printf(xres-x_pad, yres-y_pad/2, id(font_footer), COLOR_OFF, TextAlign::BASELINE_RIGHT, "%.2fV/%.0f%%", id(batt_volt).state, id(batt).state);
+          }
       - id: page_temps
         lambda: |-
 
@@ -619,8 +656,13 @@ display:
           it.filled_rectangle(0, yres-30, xres, yres);
           it.strftime(x_pad, yres-y_pad/2, id(font_footer), COLOR_OFF, TextAlign::BASELINE_LEFT, "%A %d/%b/%Y", id(ntp).now());
           it.strftime(xres/2, yres-y_pad/2, id(font_footer), COLOR_OFF, TextAlign::BASELINE_CENTER, "Updated %H:%M", id(ntp).now());
-          //it.printf(xres-x_pad, yres-y_pad/2, id(font_footer), COLOR_OFF, TextAlign::BASELINE_RIGHT, "%.2fV/%.0f%%", id(batt_volt).voltage->state, id(batt).state);
-          
+
+          bool charging = id(batt_volt).state >= 4.25;
+          if (charging) {
+            it.printf(xres-x_pad, yres-y_pad/2, id(font_icons_footer), COLOR_OFF, TextAlign::BASELINE_RIGHT, "\U000F140B"); // lightning-bolt
+          } else {
+            it.printf(xres-x_pad, yres-y_pad/2, id(font_footer), COLOR_OFF, TextAlign::BASELINE_RIGHT, "%.2fV/%.0f%%", id(batt_volt).state, id(batt).state);
+          }
       - id: page_crypto_graph
         lambda: |-
           it.graph(0, 0, id(crypto_graph));         
