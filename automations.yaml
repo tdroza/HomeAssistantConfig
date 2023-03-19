@@ -666,7 +666,6 @@
     for: 00:00:30
   condition: []
   action:
-  - delay: 00:00:15
   - entity_id: switch.kodi
     service: switch.turn_off
   mode: single
@@ -1399,6 +1398,9 @@
   - condition: state
     entity_id: binary_sensor.toms_watch_is_charging
     state: 'off'
+  - condition: state
+    entity_id: light.main_bedroom_light_group
+    state: 'off'
   action:
   - service: light.turn_on
     data:
@@ -1406,7 +1408,6 @@
     target:
       entity_id:
       - light.main_bedroom_ceiling
-      - light.test_bulb
   - delay:
       hours: 0
       minutes: 7
@@ -2411,7 +2412,11 @@
     entity_id: sun.sun
     below: 90
     attribute: azimuth
-  condition: []
+  condition:
+  - condition: numeric_state
+    entity_id: sun.sun
+    attribute: elevation
+    above: -1
   action:
   - service: cover.open_cover
     data: {}
