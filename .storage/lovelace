@@ -2608,7 +2608,8 @@
                             "show_fill": false
                           },
                           {
-                            "entity": "input_number.heating_threshold",
+                            "entity": "climate.nest_thermostat",
+                            "attribute": "temperature",
                             "index": 0,
                             "name": "Target",
                             "color": "lightblue",
