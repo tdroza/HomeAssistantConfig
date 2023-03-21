@@ -2604,7 +2604,25 @@
                           {
                             "entity": "sensor.living_room_temp",
                             "index": 0,
-                            "name": "Temp"
+                            "name": "Temp",
+                            "show_fill": false
+                          },
+                          {
+                            "entity": "input_number.heating_threshold",
+                            "index": 0,
+                            "name": "Target",
+                            "color": "lightblue",
+                            "show_fill": false
+                          },
+                          {
+                            "entity": "sensor.daytime",
+                            "y_axis": "secondary",
+                            "color": "orange",
+                            "name": "Day/Night",
+                            "show_fill": true,
+                            "show_line": false,
+                            "smoothing": false,
+                            "show_state": true
                           },
                           {
                             "entity": "climate.nest_thermostat",
@@ -2632,6 +2650,7 @@
                         "points_per_hour": 20,
                         "hours_to_show_template": "{{96 if states('input_boolean.extended_history')=='on' else 24}}",
                         "line_width": 2,
+                        "lower_bound": 10,
                         "show": {
                           "icon": false,
                           "labels": true,

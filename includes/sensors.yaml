@@ -1,5 +1,13 @@
 - platform: template
   sensors:
+    daytime:
+      friendly_name: 'Daytime'
+      value_template: '{% if is_state("sun.sun","above_horizon") %}1{% else %}0{% endif %}}'
+      icon_template: '{% if is_state("sun.sun","above_horizon") %}mdi:weather-sunny{% else %}mdi:weather-night{% endif %}}'
+    central_heating:
+      friendly_name: 'Central heating'
+      value_template: '{% if is_state_attr("climate.nest_thermostat", "hvac_action", "heating") %}1{% else %}0{% endif %}'
+      icon_template: '{% if is_state_attr("climate.nest_thermostat", "hvac_action", "heating") %}mdi:fire1{% else %}mdi:clock-outline{% endif %}'
     broadband_mb_received: 
       value_template: '{{ states(''sensor.bt_home_hub_6_0a_b_received'') | filesizeformat() }}'
     weather_condition:
