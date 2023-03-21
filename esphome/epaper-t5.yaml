@@ -1,7 +1,7 @@
 substitutions:
   device_name: "epaper-t5"
   friendly_name: "ePaper T5"
-  run_time: 5min
+  run_time: 2min
   sleep_time: 5min # normal sleep time
 
 globals:
@@ -13,9 +13,19 @@ globals:
     restore_value: yes
     initial_value: "0"
     type: int
+  - id: shutting_down
+    restore_value: no
+    initial_value: "false"
+    type: boolean
     
 esphome:
   name: "${device_name}"
+  on_shutdown:
+    then:
+      - lambda: |-
+          id(shutting_down) = true;
+      - script.execute: show_page
+
 
 esp32:
   board: esp32dev
@@ -50,7 +60,7 @@ time:
           - logger.log: "Entering night time sleep, triggered by time"
           - display.page.show: page_sleep
           - component.update: t5_display
-          - delay: 1s
+          - delay: 5s
           - deep_sleep.enter:
               id: deep_sleep_1
               sleep_duration: 12h
@@ -120,8 +130,7 @@ font:
         - "\U000F0CE1" # up
         - "\U000F0047" # down 
         - "\U000F0FE1" # horizontal
-        - "\U000F059B" # sunset
-        - "\U000F059C" # sunrise
+        
   - file: 'fonts/materialdesignicons-webfont.ttf'
     id: font_icons_smaller
     size: 40
@@ -130,6 +139,8 @@ font:
         - "\U000F059D" # wind
         - "\U000F059B" # sunset
         - "\U000F059C" # sunrise
+        - "\U000F04B2" # sleep
+        - "\U000F04B3" # sleep-off        
   - file: 'fonts/materialdesignicons-webfont.ttf'
     id: font_icons_footer
     size: 30
@@ -218,8 +229,13 @@ script:
                     }
                     return false;
                 then:
+                  - lambda: |-
+                      id(shutting_down) = true;
                   - logger.log: "All data received. Short sleep duration is ${sleep_time}"     
-                  - deep_sleep.allow: deep_sleep_1                                    
+                  - deep_sleep.allow: deep_sleep_1              
+                  - deep_sleep.enter:
+                      id: deep_sleep_1
+                      sleep_duration: 5min                                       
                 else:
                   - logger.log: "Staying awake to wait for data..."
                   - deep_sleep.prevent: deep_sleep_1
@@ -319,24 +335,18 @@ text_sensor:
   - platform: homeassistant
     id: weather_day0_condition
     entity_id: sensor.weather_condition
-    internal: true
-
   - platform: homeassistant
     id: calendar_next_title
     entity_id: sensor.calendar_family_next_title
-    internal: true
   - platform: homeassistant
     id: calendar_next_start
     entity_id: sensor.calendar_family_next_start
-    internal: true
   - platform: homeassistant
     id: music_title
     entity_id: sensor.youtube_music_title
-    internal: true
   - platform: homeassistant
     id: music_artist
     entity_id: sensor.youtube_music_artist
-    internal: true
     on_value: # Redraw every time music data changes
       then:
         - script.execute: all_data_received  
@@ -383,6 +393,7 @@ binary_sensor:
     id: prevent_sleep
     entity_id: input_boolean.prevent_deep_sleep
     on_state:
+      - script.execute: all_data_received 
       - if:
           condition:
             - binary_sensor.is_on: prevent_sleep
@@ -435,39 +446,31 @@ sensor:
   - platform: homeassistant
     id: weather_day0_temperature
     entity_id: sensor.weather_temperature
-    internal: true
   - platform: homeassistant
     id: weather_day0_windspeed
     entity_id: sensor.weather_windspeed
-    internal: true
   - platform: homeassistant
     id: bed1_temp
     entity_id: sensor.bed1_temperature
-    internal: true    
   - platform: homeassistant
     id: bed2_temp
     entity_id: sensor.office_climate_temperature
-    internal: true    
+    
   - platform: homeassistant
     id: reu_temp
     entity_id: sensor.reu_d1_temperature
-    internal: true
   - platform: homeassistant
     id: seb_temp
     entity_id: sensor.seb_d1_temperature
-    internal: true
   - platform: homeassistant
     id: bath_temp
     entity_id: sensor.bathroom_climate_temperature
-    internal: true
   - platform: homeassistant
     id: ensuite_temp
     entity_id: sensor.ensuite_climate_temperature
-    internal: true
   - platform: homeassistant
     id: lounge_temp
     entity_id: sensor.living_room_temp
-    internal: true
     on_value: # Actions to perform once data for the last sensor has been received
       then:
         - script.execute: all_data_received 
@@ -564,10 +567,6 @@ display:
           it.strftime(x_pad, yres-y_pad/2, id(font_footer), COLOR_OFF, TextAlign::BASELINE_LEFT, "%A %d/%b/%Y", id(ntp).now());
           it.strftime(xres/2, yres-y_pad/2, id(font_footer), COLOR_OFF, TextAlign::BASELINE_CENTER, "Updated %H:%M", id(ntp).now());
   
-          // Now we're ready to read the battery
-          //double_t percentage = (1-(BATTERY_MAX- id(battery).state)/(BATTERY_MAX-BATTERY_MIN))*100;
-          //uint8_t battery_percentage = percentage < 0 ? 0 : percentage > 100 ? 100 : percentage;
-        
           //it.printf(xres-x_pad, yres-y_pad/2, id(font_footer), COLOR_OFF, TextAlign::BASELINE_RIGHT, "%.2fV/%3d%%", id(battery).state, battery_percentage);
           bool charging = id(batt_volt).state >= 4.25;
           if (charging) {
@@ -575,6 +574,13 @@ display:
           } else {
             it.printf(xres-x_pad, yres-y_pad/2, id(font_footer), COLOR_OFF, TextAlign::BASELINE_RIGHT, "%.2fV/%.0f%%", id(batt_volt).state, id(batt).state);
           }
+
+          if (id(shutting_down)) {
+            it.print(xres-x_pad, y_pad, id(font_icons_smaller), TextAlign::TOP_RIGHT, "\U000F04B2"); // # sleep
+          } else if (id(prevent_sleep).state) {
+            it.print(xres-x_pad, y_pad, id(font_icons_smaller), TextAlign::TOP_RIGHT, "\U000F04B3"); // # sleep-off
+          }
+
       - id: page_temps
         lambda: |-
 
@@ -663,6 +669,12 @@ display:
           } else {
             it.printf(xres-x_pad, yres-y_pad/2, id(font_footer), COLOR_OFF, TextAlign::BASELINE_RIGHT, "%.2fV/%.0f%%", id(batt_volt).state, id(batt).state);
           }
+
+          if (id(shutting_down)) {
+            it.print(xres-x_pad, y_pad, id(font_icons_smaller), TextAlign::TOP_RIGHT, "\U000F04B2"); // # sleep
+          } else if (id(prevent_sleep).state) {
+            it.print(xres-x_pad, y_pad, id(font_icons_smaller), TextAlign::TOP_RIGHT, "\U000F04B3"); // # sleep-off
+          }
       - id: page_crypto_graph
         lambda: |-
           it.graph(0, 0, id(crypto_graph));         
@@ -692,7 +704,4 @@ display:
 deep_sleep:
   run_duration: ${run_time} 
   sleep_duration: ${sleep_time}
-  id: deep_sleep_1
-  esp32_ext1_wakeup:
-    pins: GPIO39
-    mode: ALL_LOW          
+  id: deep_sleep_1        
