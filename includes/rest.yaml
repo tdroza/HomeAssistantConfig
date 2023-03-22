@@ -1,45 +1,16 @@
-pixel_it:
-  url: 'http://192.168.1.163/api/screen'
-  method: POST
-  content_type: 'application/json'
-  payload: '{
-    "switchAnimation": {
-        "aktiv": true,
-        "animation": "{{transition}}"
-    },
-    "bitmap": {
-        "data": {{icon}},
-        "position": {
-            "x": 0,
-            "y": 0
-        },
-        "size": {
-            "width": 8,
-            "height": 8
-        }
-    },
-    "text": {
-        "textString": "{{message}}",
-        "bigFont": false,
-        "scrollText": "auto", 
-        "scrollTextDelay": 80,
-        "centerText": false, 
-        "position": {
-            "x": 8,
-            "y": 1
-        },
-        "hexColor": "{{hexColor}}"
-    }}'
-    
 matrix_text:
   url: http://192.168.1.163/json/state
   method: POST
-  payload: '{"seg": [{"n": "{{text}}","fx":122,"pal":"~"}]}'
+  payload: '{"on":true, "bri": 128, "seg": [{"id": {{segment}}, "n": "{{text}}","fx":122,"pal":"~"}]}'
 matrix_image:
   url: http://192.168.1.163/json/state
   method: POST
-  payload: '{"on":true, "bri": 25, "seg": {"i":[{{image}}]} }'
+  payload: '{"on":true, "bri": 128, "seg": {"id": {{segment}}, "i":[{{image}}]} }'
 matrix_default:
   url: http://192.168.1.163/json/state
   method: POST
-  payload: '{"on": true, "ps": 1, "bri": 25, "seg": {"n": ""}}'
+  payload: '{"on": true, "ps": 1, "bri": 128, "seg": {"n": ""}}'
+matrix_effect:
+  url: http://192.168.1.163/json/state
+  method: POST
+  payload: '{"on": true, "bri": 128, "seg": {"id": {{segment}}, "fx": {{effect}} }}'
