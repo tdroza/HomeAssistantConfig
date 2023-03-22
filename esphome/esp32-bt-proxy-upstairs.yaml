@@ -12,7 +12,8 @@ bluetooth_proxy:
 wifi:
   ssid: !secret wifi_iot_ssid
   password: !secret wifi_iot_password
-
+  domain: ".lan"
+  
 ble_client:
   mac_address: 70:28:45:71:40:E2
   id: oclean
