@@ -248,6 +248,7 @@
   - entity_id:
     - media_player.kodi
     - media_player.halo
+    - media_player.kodi_halo
     platform: state
     to: playing
     id: kodi
@@ -306,6 +307,7 @@
     - media_player.kodi
     - media_player.living_room_tv
     - media_player.halo
+    - media_player.kodi_halo
     from: playing
     platform: state
     to: paused
@@ -317,6 +319,7 @@
     - media_player.kodi
     - media_player.living_room_tv
     - media_player.halo
+    - media_player.kodi_halo
     from: playing
     platform: state
     to: idle
@@ -328,6 +331,7 @@
     - media_player.kodi
     - media_player.living_room_tv
     - media_player.halo
+    - media_player.kodi_halo
     from: paused
     platform: state
     to: idle
@@ -2371,9 +2375,9 @@
     entity_id: sensor.cactus_illuminance
     for:
       hours: 0
-      minutes: 2
+      minutes: 1
       seconds: 0
-    above: 4000
+    above: input_number.office_window_brightness_threshold
   condition:
   - condition: state
     entity_id: binary_sensor.workday_sensor
@@ -2385,7 +2389,7 @@
     entity_id: sun.sun
     attribute: azimuth
     above: 90
-    below: 150
+    below: 135
   action:
   - service: cover.set_cover_position
     data:
@@ -2403,11 +2407,11 @@
       hours: 0
       minutes: 5
       seconds: 0
-    below: 4000
+    below: input_number.office_window_brightness_threshold
   - platform: numeric_state
     entity_id: sun.sun
     attribute: azimuth
-    above: 120
+    above: 135
   - platform: numeric_state
     entity_id: sun.sun
     below: 90
