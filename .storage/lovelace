@@ -1654,63 +1654,15 @@
               "show": {
                 "graph": "line"
               },
-              "type": "custom:mini-graph-card"
-            },
-            {
-              "entities": [
-                {
-                  "entity": "sensor.speedtest_download",
-                  "name": "Download"
-                },
-                {
-                  "entity": "sensor.speedtest_upload",
-                  "name": "Upload"
-                },
-                {
-                  "entity": "sensor.speedtest_ping",
-                  "name": "Ping"
-                }
-              ],
-              "hours_to_show": 24,
-              "refresh_interval": 0,
-              "title": "Network",
-              "type": "history-graph"
+              "type": "custom:mini-graph-card",
+              "icon": "mdi:advertisements-off",
+              "points_per_hour": 10,
+              "smoothing": true,
+              "line_width": 2,
+              "name": "Ads blocked (24h)"
             },
             {
               "type": "custom:mini-graph-card",
-              "entities": [
-                {
-                  "entity": "sensor.bt_home_hub_6_0a_b_received"
-                }
-              ],
-              "show": {
-                "graph": "bar"
-              }
-            },
-            {
-              "type": "custom:mini-graph-card",
-              "color_thresholds": [
-                {
-                  "color": "var(--temp-twenty)",
-                  "value": 5
-                },
-                {
-                  "color": "var(--temp-nineteen)",
-                  "value": 4
-                },
-                {
-                  "color": "var(--temp-eighteen)",
-                  "value": 3
-                },
-                {
-                  "color": "var(--temp-seventeen)",
-                  "value": 2
-                },
-                {
-                  "color": "var(--temp-sixteen)",
-                  "value": 1
-                }
-              ],
               "entities": [
                 {
                   "entity": "sensor.broadband_mb_received"
@@ -1719,7 +1671,7 @@
               "points_per_hour": 1,
               "unit": "GB",
               "icon": "mdi:download",
-              "name": "Data Received",
+              "name": "Data Received (last 24h)",
               "show": {
                 "graph": "bar"
               }
@@ -1737,33 +1689,64 @@
                     "yellow": 30,
                     "red": 0
                   },
-                  "name": "Download"
+                  "name": "Download",
+                  "needle": true
                 },
                 {
                   "type": "gauge",
                   "entity": "sensor.speedtest_upload",
                   "min": 0,
-                  "max": 20,
+                  "max": 25,
                   "severity": {
                     "green": 15,
                     "yellow": 10,
-                    "red": 5
+                    "red": 0
                   },
-                  "name": "Upload"
+                  "name": "Upload",
+                  "needle": true
                 },
                 {
                   "type": "gauge",
                   "entity": "sensor.speedtest_ping",
                   "min": 0,
-                  "max": 100,
+                  "max": 50,
                   "severity": {
-                    "green": 15,
-                    "yellow": 20,
+                    "green": 0,
+                    "yellow": 15,
                     "red": 25
                   },
-                  "name": "Ping"
+                  "name": "Ping",
+                  "needle": true
                 }
               ]
+            },
+            {
+              "type": "custom:mini-graph-card",
+              "entities": [
+                {
+                  "entity": "sensor.speedtest_download",
+                  "name": "Download"
+                },
+                {
+                  "entity": "sensor.speedtest_upload",
+                  "name": "Upload"
+                },
+                {
+                  "entity": "sensor.speedtest_ping",
+                  "name": "Ping",
+                  "y_axis": "secondary"
+                }
+              ],
+              "points_per_hour": 30,
+              "line_width": 2,
+              "logarithmic": true,
+              "name": "Bandwidth",
+              "show": {
+                "icon": true,
+                "labels": true,
+                "name": true,
+                "legend": true
+              }
             }
           ],
           "icon": "mdi:network",
@@ -1877,6 +1860,11 @@
                   }
                 ]
               }
+            },
+            {
+              "type": "custom:mushroom-number-card",
+              "entity": "input_number.office_window_brightness_threshold",
+              "icon": "mdi:roller-shade"
             }
           ],
           "icon": "mdi:beta",
@@ -3592,6 +3580,127 @@
                 }
               ],
               "type": "vertical-stack"
+            }
+          ]
+        },
+        {
+          "theme": "Backend-selected",
+          "title": "Solar",
+          "path": "solar",
+          "icon": "mdi:solar-power-variant",
+          "type": "sidebar",
+          "badges": [],
+          "cards": [
+            {
+              "type": "custom:card-templater",
+              "entities": [
+                "sensor.solcast_forecast_d3",
+                "sensor.solcast_forecast_d4",
+                "sensor.solcast_forecast_d5",
+                "sensor.solcast_forecast_d6",
+                "sensor.solcast_forecast_d7"
+              ],
+              "card": {
+                "type": "custom:bar-card",
+                "entities": [
+                  {
+                    "entity": "sensor.solcast_forecast_today",
+                    "name": "Today"
+                  },
+                  {
+                    "entity": "sensor.solcast_forecast_tomorrow",
+                    "name": "Tomorrow"
+                  },
+                  {
+                    "entity": "sensor.solcast_forecast_d3",
+                    "name_template": "{{(as_timestamp(now()) + 2 * 86400) | timestamp_custom(\"%a\")}}"
+                  },
+                  {
+                    "entity": "sensor.solcast_forecast_d4",
+                    "name_template": "{{(as_timestamp(now()) + 3 * 86400) | timestamp_custom(\"%a\")}}"
+                  },
+                  {
+                    "entity": "sensor.solcast_forecast_d5",
+                    "name_template": "{{(as_timestamp(now()) + 4 * 86400) | timestamp_custom(\"%a\")}}"
+                  },
+                  {
+                    "entity": "sensor.solcast_forecast_d6",
+                    "name_template": "{{(as_timestamp(now()) + 5 * 86400) | timestamp_custom(\"%a\")}}"
+                  },
+                  {
+                    "entity": "sensor.solcast_forecast_d7",
+                    "name_template": "{{(as_timestamp(now()) + 6 * 86400) | timestamp_custom(\"%a\")}}"
+                  }
+                ],
+                "columns": "7",
+                "direction": "up",
+                "height": "200px",
+                "max": 50,
+                "min": 0,
+                "severity": [
+                  {
+                    "from": 0,
+                    "to": 10,
+                    "color": "#fed8b1"
+                  },
+                  {
+                    "from": 10,
+                    "to": 20,
+                    "color": "#f8d568"
+                  },
+                  {
+                    "from": 20,
+                    "to": 30,
+                    "color": "#ffae42"
+                  },
+                  {
+                    "from": 30,
+                    "to": 40,
+                    "color": "#ff8c00"
+                  },
+                  {
+                    "from": 40,
+                    "to": 75,
+                    "color": "#ff4500"
+                  }
+                ],
+                "positions": {
+                  "indicator": "inside",
+                  "icon": "off",
+                  "value": "outside"
+                }
+              }
+            },
+            {
+              "type": "entities",
+              "entities": [
+                {
+                  "entity": "sensor.solcast_peak_forecast_today"
+                },
+                {
+                  "entity": "sensor.solcast_peak_time_today"
+                },
+                {
+                  "entity": "sensor.solcast_peak_forecast_tomorrow"
+                },
+                {
+                  "entity": "sensor.solcast_peak_time_tomorrow"
+                },
+                {
+                  "entity": "sensor.solcast_api_used"
+                }
+              ]
+            },
+            {
+              "type": "custom:mushroom-chips-card",
+              "chips": [
+                {
+                  "type": "template",
+                  "entity": "sensor.solcast_api_last_polled",
+                  "icon": "mdi:history",
+                  "content": "Updated {{states.sensor.solcast_api_last_polled.last_updated | relative_time}} ago"
+                }
+              ]
             }
           ]
         }

@@ -2550,3 +2550,18 @@
     entity_id: switch.kodi
     domain: switch
   mode: single
+- id: '1680508943961'
+  alias: 'Solar: Update forecast'
+  description: ''
+  trigger:
+  - platform: time
+    at: 07:00:00
+  - platform: time
+    at: '12:00:00'
+  - platform: time
+    at: '17:00:00'
+  condition: []
+  action:
+  - service: solcast_solar.update_forecasts
+    data: {}
+  mode: single
