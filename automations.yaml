@@ -1078,6 +1078,9 @@
     - condition: zone
       entity_id: person.tom
       zone: zone.home
+  - condition: state
+    entity_id: light.main_bedroom_ceiling
+    state: 'on'
   action:
   - service: light.turn_off
     data: {}
