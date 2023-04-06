@@ -1630,12 +1630,11 @@
               "type": "glance"
             },
             {
-              "type": "picture-entity",
-              "entity": "camera.octoprint",
-              "camera_image": "camera.octoprint",
-              "camera_view": "live",
               "show_state": false,
-              "show_name": false
+              "show_name": false,
+              "camera_view": "live",
+              "type": "picture-entity",
+              "entity": "camera.octoprint_camera"
             }
           ],
           "icon": "mdi:printer-3d",
@@ -2239,14 +2238,14 @@
                     {
                       "type": "custom:template-entity-row",
                       "name": "Recycling",
-                      "state": "{{ ((as_timestamp(state_attr('calendar.recycling', 'start_time')) - as_timestamp(now())) | int /60/1440) | round(0) }}",
+                      "state": "{{ ((as_timestamp(state_attr('calendar.recycling', 'start_time')) - as_timestamp(now())) | int /60/1440) | round(0) }} days",
                       "secondary": "{{as_timestamp(state_attr('calendar.recycling', 'start_time')) | timestamp_custom('%d %B %Y')}}",
                       "icon": "mdi:recycle"
                     },
                     {
                       "type": "custom:template-entity-row",
                       "name": "General waste",
-                      "state": "{{ ((as_timestamp(state_attr('calendar.regular', 'start_time')) - as_timestamp(now())) | int /60/1440) | round(0) }}",
+                      "state": "{{ ((as_timestamp(state_attr('calendar.regular', 'start_time')) - as_timestamp(now())) | int /60/1440) | round(0) }} days",
                       "secondary": "{{as_timestamp(state_attr('calendar.regular', 'start_time')) | timestamp_custom('%d %B %Y')}}",
                       "icon": "mdi:trash-can"
                     }
