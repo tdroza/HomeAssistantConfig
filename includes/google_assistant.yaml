@@ -3,6 +3,13 @@ service_account: !include google_service_account.json
 report_state: true
 expose_by_default: false
 entity_config:
+    light.living_room_ceiling:
+      name: "Living room ceiling"
+      room: "Living room"
+      aliases:
+        - Ceiling light
+        - Ceiling
+      expose: true
     light.main_bedroom_ceiling:
       name: "Main bedroom ceiling"
       expose: true

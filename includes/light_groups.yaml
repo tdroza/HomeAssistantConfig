@@ -3,6 +3,7 @@
   entities:
     - light.living_room_1
     - light.living_room_2
+    - light.living_room_ceiling
 - platform: group
   name: Main Bedroom Light Group
   entities:
