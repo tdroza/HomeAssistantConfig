@@ -14,3 +14,8 @@ matrix_effect:
   url: http://192.168.1.163/json/state
   method: POST
   payload: '{"on": true, "bri": 128, "seg": {"id": {{segment}}, "fx": {{effect}} }}'
+  
+solax_local_charge_battery_from_grid:
+    url: !secret solax_local_ip
+    method: post
+    payload: !secret solax_local_set_battery_grid_charge_level_payload

@@ -196,6 +196,10 @@
                         {
                           "entities": [
                             {
+                              "entity": "light.living_room_ceiling",
+                              "type": "custom:slider-entity-row"
+                            },
+                            {
                               "entity": "light.living_room_1",
                               "type": "custom:slider-entity-row"
                             },
@@ -2483,6 +2487,12 @@
                 },
                 {
                   "type": "custom:mushroom-light-card",
+                  "entity": "light.living_room_ceiling",
+                  "use_light_color": false,
+                  "show_brightness_control": true
+                },
+                {
+                  "type": "custom:mushroom-light-card",
                   "entity": "light.living_room_1",
                   "use_light_color": true,
                   "show_brightness_control": true,
@@ -3579,127 +3589,6 @@
                 }
               ],
               "type": "vertical-stack"
-            }
-          ]
-        },
-        {
-          "theme": "Backend-selected",
-          "title": "Solar",
-          "path": "solar",
-          "icon": "mdi:solar-power-variant",
-          "type": "sidebar",
-          "badges": [],
-          "cards": [
-            {
-              "type": "custom:card-templater",
-              "entities": [
-                "sensor.solcast_forecast_d3",
-                "sensor.solcast_forecast_d4",
-                "sensor.solcast_forecast_d5",
-                "sensor.solcast_forecast_d6",
-                "sensor.solcast_forecast_d7"
-              ],
-              "card": {
-                "type": "custom:bar-card",
-                "entities": [
-                  {
-                    "entity": "sensor.solcast_forecast_today",
-                    "name": "Today"
-                  },
-                  {
-                    "entity": "sensor.solcast_forecast_tomorrow",
-                    "name": "Tomorrow"
-                  },
-                  {
-                    "entity": "sensor.solcast_forecast_d3",
-                    "name_template": "{{(as_timestamp(now()) + 2 * 86400) | timestamp_custom(\"%a\")}}"
-                  },
-                  {
-                    "entity": "sensor.solcast_forecast_d4",
-                    "name_template": "{{(as_timestamp(now()) + 3 * 86400) | timestamp_custom(\"%a\")}}"
-                  },
-                  {
-                    "entity": "sensor.solcast_forecast_d5",
-                    "name_template": "{{(as_timestamp(now()) + 4 * 86400) | timestamp_custom(\"%a\")}}"
-                  },
-                  {
-                    "entity": "sensor.solcast_forecast_d6",
-                    "name_template": "{{(as_timestamp(now()) + 5 * 86400) | timestamp_custom(\"%a\")}}"
-                  },
-                  {
-                    "entity": "sensor.solcast_forecast_d7",
-                    "name_template": "{{(as_timestamp(now()) + 6 * 86400) | timestamp_custom(\"%a\")}}"
-                  }
-                ],
-                "columns": "7",
-                "direction": "up",
-                "height": "200px",
-                "max": 50,
-                "min": 0,
-                "severity": [
-                  {
-                    "from": 0,
-                    "to": 10,
-                    "color": "#fed8b1"
-                  },
-                  {
-                    "from": 10,
-                    "to": 20,
-                    "color": "#f8d568"
-                  },
-                  {
-                    "from": 20,
-                    "to": 30,
-                    "color": "#ffae42"
-                  },
-                  {
-                    "from": 30,
-                    "to": 40,
-                    "color": "#ff8c00"
-                  },
-                  {
-                    "from": 40,
-                    "to": 75,
-                    "color": "#ff4500"
-                  }
-                ],
-                "positions": {
-                  "indicator": "inside",
-                  "icon": "off",
-                  "value": "outside"
-                }
-              }
-            },
-            {
-              "type": "entities",
-              "entities": [
-                {
-                  "entity": "sensor.solcast_peak_forecast_today"
-                },
-                {
-                  "entity": "sensor.solcast_peak_time_today"
-                },
-                {
-                  "entity": "sensor.solcast_peak_forecast_tomorrow"
-                },
-                {
-                  "entity": "sensor.solcast_peak_time_tomorrow"
-                },
-                {
-                  "entity": "sensor.solcast_api_used"
-                }
-              ]
-            },
-            {
-              "type": "custom:mushroom-chips-card",
-              "chips": [
-                {
-                  "type": "template",
-                  "entity": "sensor.solcast_api_last_polled",
-                  "icon": "mdi:history",
-                  "content": "Updated {{states.sensor.solcast_api_last_polled.last_updated | relative_time}} ago"
-                }
-              ]
             }
           ]
         }
