@@ -1327,6 +1327,10 @@
             {
               "entity": "media_player.whole_house",
               "type": "media-control"
+            },
+            {
+              "type": "media-control",
+              "entity": "media_player.halo"
             }
           ],
           "icon": "mdi:google-assistant",
