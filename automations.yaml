@@ -670,8 +670,10 @@
     for: 00:00:30
   condition: []
   action:
-  - entity_id: switch.kodi
-    service: switch.turn_off
+  - type: turn_off
+    device_id: 5bb82585d208d7e31acd3eb432345e59
+    entity_id: switch.media_centre
+    domain: switch
   mode: single
 - id: '1604160427345'
   alias: 'Lights: Turn on boys'' light when motion'
@@ -1109,13 +1111,13 @@
     after: '22:00'
   - condition: device
     type: is_on
-    device_id: 993ecd7f96f07829da56b80a49a85b81
-    entity_id: switch.toms_phone_charger
+    device_id: c0673155fc4c6fb27f0f8917212ca42f
+    entity_id: switch.tom_s_phone_charger
     domain: switch
   action:
   - type: turn_off
-    device_id: 993ecd7f96f07829da56b80a49a85b81
-    entity_id: switch.toms_phone_charger
+    device_id: c0673155fc4c6fb27f0f8917212ca42f
+    entity_id: switch.tom_s_phone_charger
     domain: switch
   mode: single
 - id: '1603396316886'
@@ -1129,11 +1131,11 @@
   condition: []
   action:
   - type: turn_on
-    device_id: e7ce59b383ed38fc1f32573de8a29c4a
+    device_id: 63119b10ea09a788da942a5fc8aa67ce
     entity_id: switch.annas_phone_charger
     domain: switch
   - type: turn_on
-    device_id: 993ecd7f96f07829da56b80a49a85b81
+    device_id: c0673155fc4c6fb27f0f8917212ca42f
     entity_id: switch.toms_phone_charger
     domain: switch
   mode: single
@@ -1161,13 +1163,13 @@
   condition:
   - condition: device
     type: is_on
-    device_id: 993ecd7f96f07829da56b80a49a85b81
-    entity_id: switch.toms_phone_charger
+    device_id: c0673155fc4c6fb27f0f8917212ca42f
+    entity_id: switch.tom_s_phone_charger
     domain: switch
   action:
   - type: turn_off
-    device_id: 993ecd7f96f07829da56b80a49a85b81
-    entity_id: switch.toms_phone_charger
+    device_id: c0673155fc4c6fb27f0f8917212ca42f
+    entity_id: switch.tom_s_phone_charger
     domain: switch
   mode: single
 - id: '1603808684460'
@@ -1479,12 +1481,12 @@
     after: '22:00'
   - condition: device
     type: is_on
-    device_id: e7ce59b383ed38fc1f32573de8a29c4a
+    device_id: 63119b10ea09a788da942a5fc8aa67ce
     entity_id: switch.annas_phone_charger
     domain: switch
   action:
   - type: turn_off
-    device_id: e7ce59b383ed38fc1f32573de8a29c4a
+    device_id: 63119b10ea09a788da942a5fc8aa67ce
     entity_id: switch.annas_phone_charger
     domain: switch
   mode: single
@@ -1508,12 +1510,12 @@
   condition:
   - condition: device
     type: is_on
-    device_id: e7ce59b383ed38fc1f32573de8a29c4a
+    device_id: 63119b10ea09a788da942a5fc8aa67ce
     entity_id: switch.annas_phone_charger
     domain: switch
   action:
   - type: turn_off
-    device_id: e7ce59b383ed38fc1f32573de8a29c4a
+    device_id: 63119b10ea09a788da942a5fc8aa67ce
     entity_id: switch.annas_phone_charger
     domain: switch
   mode: single
@@ -1767,7 +1769,7 @@
     state: 'off'
   action:
   - type: turn_on
-    device_id: b1e67ae9d70423911cd751c767cce4fa
+    device_id: 22c0538cfdefb04c6682e6307751aeab
     entity_id: switch.toms_desk
     domain: switch
   - choose:
@@ -1777,8 +1779,8 @@
         state: 'on'
       sequence:
       - type: turn_on
-        device_id: c786200fce68c28d8cd9e4ca23064e2d
-        entity_id: switch.annas_desk
+        device_id: b40eb804797ddfe20d5c56ae0b92c1a9
+        entity_id: switch.anna_s_desk
         domain: switch
   - delay:
       hours: 0
@@ -1819,12 +1821,12 @@
     state: 'off'
   action:
   - type: turn_off
-    device_id: b1e67ae9d70423911cd751c767cce4fa
+    device_id: 22c0538cfdefb04c6682e6307751aeab
     entity_id: switch.toms_desk
     domain: switch
   - type: turn_off
-    device_id: c786200fce68c28d8cd9e4ca23064e2d
-    entity_id: switch.annas_desk
+    device_id: b40eb804797ddfe20d5c56ae0b92c1a9
+    entity_id: switch.anna_s_desk
     domain: switch
   mode: single
 - id: '1641984337744'
@@ -2520,8 +2522,8 @@
   trigger:
   - platform: device
     type: turned_on
-    device_id: 0e0a0a0580ffaad6b71401efe970fd27
-    entity_id: switch.kodi
+    device_id: 5bb82585d208d7e31acd3eb432345e59
+    entity_id: switch.media_centre
     domain: switch
     for:
       hours: 3
@@ -2549,8 +2551,8 @@
   condition: []
   action:
   - type: turn_off
-    device_id: 0e0a0a0580ffaad6b71401efe970fd27
-    entity_id: switch.kodi
+    device_id: 5bb82585d208d7e31acd3eb432345e59
+    entity_id: switch.media_centre
     domain: switch
   mode: single
 - id: '1680508943961'
@@ -2567,4 +2569,51 @@
   action:
   - service: solcast_solar.update_forecasts
     data: {}
+  mode: single
+- id: '1681728985474'
+  alias: 'Airer: Turn off'
+  description: Turn off heated airer after planned runtime, or insufficient excess
+    solar
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.solar_excess
+    below: 50
+    for:
+      hours: 0
+      minutes: 1
+      seconds: 0
+    id: insufficient_solar
+  - platform: numeric_state
+    entity_id: sensor.airer_run_time
+    above: 3
+    id: run_time_exceeded
+  condition:
+  - condition: state
+    entity_id: switch.heated_airer
+    state: 'on'
+  action:
+  - type: turn_off
+    device_id: b050da49473a618fe5a54f6fcd6737b2
+    entity_id: switch.heated_airer
+    domain: switch
+  - condition: trigger
+    id: run_time_exceeded
+  - service: input_boolean.turn_off
+    data: {}
+    target:
+      entity_id: input_boolean.heated_airer
+  mode: single
+- id: '1681730931444'
+  alias: 'Airer: Turn On'
+  description: ''
+  trigger:
+  - platform: template
+    value_template: '{{ states(''input_boolean.heated_airer'') == "on" and states(''sensor.solar_excess'')
+      | int > 350 }}'
+  condition: []
+  action:
+  - type: turn_on
+    device_id: b050da49473a618fe5a54f6fcd6737b2
+    entity_id: switch.heated_airer
+    domain: switch
   mode: single

@@ -1,3 +1,10 @@
+- trigger:
+  - platform: state
+    entity_id: input_boolean.heated_airer
+    to: 'on'
+  sensor:
+    - name: airer_requested_power
+      state: "{{ now() }}" 
 - sensor:
 ### Local sensor readings ###
     # Each valid SN seems to be 10 characters
@@ -116,8 +123,7 @@
     - name: "Solax Local Battery Power In"
       unique_id: solax_local_battery_power_in
       state:  >
-        {% if state_attr('sensor.solax_local', 'Data')[16] > 32767 %}{{max(state_attr('sensor.solax_local', 'Data')[16] - 65536,0)}}
-        {% else %}{{ state_attr('sensor.solax_local', 'Data')[16] }}{% endif %}
+        {{ max(states('sensor.solax_local_battery_power') | int, 0) }}
       unit_of_measurement: "W"
       #state_class: measurement
       device_class: "power"
@@ -125,8 +131,7 @@
     - name: "Solax Local Battery Power Out"
       unique_id: solax_local_battery_power_out
       state:  >
-        {% if state_attr('sensor.solax_local', 'Data')[16] > 32767 %}{{min(state_attr('sensor.solax_local', 'Data')[16] - 65536,0) * -1}}
-        {% else %}{{ state_attr('sensor.solax_local', 'Data')[16] }}{% endif %}
+        {{ min(states('sensor.solax_local_battery_power') | int, 0) * -1 }}
       unit_of_measurement: "W"
       #state_class: measurement
       device_class: "power"
@@ -184,7 +189,7 @@
       
     - name: "Solax Local Grid Power Import"
       unique_id: solax_local_grid_power_import
-      state:  "{{ min(states('sensor.solax_local_grid_power') | int, 0) }}"
+      state:  "{{ min(states('sensor.solax_local_grid_power') | int, 0) * -1 }}"
       unit_of_measurement: "W"
       state_class: measurement
       device_class: "power"
@@ -203,3 +208,12 @@
       state: "{{ states('sensor.solax_local_ac_power')| float(default=0) - states('sensor.solax_local_grid_power') | int(default=0) }}"
       unit_of_measurement: "W"
       device_class: "power"
+      
+### Excess solar (difference between PV output and house consumption)
+    - name: "Solar Excess"
+      unique_id: solar_excess
+      state: "{{ max(0, states('sensor.solax_local_pv_output') | int - states('sensor.solax_local_load_power') | int) }}"
+      unit_of_measurement: "W"
+      device_class: "power"
+      
+    

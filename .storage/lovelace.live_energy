@@ -1,0 +1,383 @@
+{
+  "version": 1,
+  "minor_version": 1,
+  "key": "lovelace.live_energy",
+  "data": {
+    "config": {
+      "views": [
+        {
+          "title": "Home",
+          "cards": [
+            {
+              "type": "custom:power-flow-card-plus",
+              "title": "Live Energy",
+              "clickable_entities": true,
+              "watt_threshold": 999,
+              "max_expected_flow_w": 5500,
+              "kw_decimals": 3,
+              "inverted_entities": "battery, grid",
+              "entities": {
+                "grid": {
+                  "entity": "sensor.solax_local_grid_power"
+                },
+                "solar": {
+                  "entity": "sensor.solax_local_pv_output"
+                },
+                "battery": {
+                  "entity": "sensor.solax_local_battery_power",
+                  "state_of_charge": "sensor.solax_local_battery_soc"
+                },
+                "home": {
+                  "entity": "sensor.solax_local_load_power",
+                  "override_state": true
+                }
+              }
+            },
+            {
+              "type": "vertical-stack",
+              "cards": [
+                {
+                  "type": "entities",
+                  "entities": [
+                    {
+                      "entity": "sensor.solax_local_pv_output",
+                      "name": "Solar PV",
+                      "icon": "mdi:solar-power-variant",
+                      "secondary_info": "none"
+                    },
+                    {
+                      "entity": "sensor.solax_local_pv1_output",
+                      "name": "PV1",
+                      "icon": "mdi:solar-panel-large"
+                    },
+                    {
+                      "entity": "sensor.solax_local_pv2_output",
+                      "name": "PV2",
+                      "icon": "mdi:solar-panel-large"
+                    },
+                    {
+                      "entity": "sensor.solax_local_load_power",
+                      "name": "House Usage",
+                      "icon": "mdi:home-lightning-bolt"
+                    },
+                    {
+                      "entity": "sensor.solax_local_battery_soc",
+                      "icon": "mdi:battery",
+                      "name": "Battery SoC"
+                    },
+                    {
+                      "entity": "sensor.solax_local_grid_power",
+                      "icon": "mdi:transmission-tower",
+                      "name": "Grid Power"
+                    },
+                    {
+                      "entity": "sensor.solax_local",
+                      "name": "Last updated",
+                      "format": "time",
+                      "icon": "mdi:history",
+                      "secondary_info": "last-updated"
+                    }
+                  ],
+                  "title": "Solax Inverter",
+                  "show_header_toggle": false,
+                  "state_color": true
+                },
+                {
+                  "type": "custom:mushroom-chips-card",
+                  "chips": [
+                    {
+                      "type": "action",
+                      "icon": "mdi:cast",
+                      "tap_action": {
+                        "action": "call-service",
+                        "service": "cast.show_lovelace_view",
+                        "target": {},
+                        "data": {
+                          "entity_id": "media_player.living_room_display",
+                          "dashboard_path": "live-energy",
+                          "view_path": "cast"
+                        }
+                      }
+                    },
+                    {
+                      "type": "spacer"
+                    },
+                    {
+                      "type": "template",
+                      "entity": "sensor.solax_local",
+                      "icon": "mdi:history",
+                      "content": "Updated {{states.sensor.solax_local.last_updated | relative_time}} ago",
+                      "tap_action": {
+                        "action": "call-service",
+                        "service": "homeassistant.update_entity",
+                        "target": {
+                          "entity_id": "sensor.solax_local"
+                        },
+                        "data": {}
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "custom:card-templater",
+              "entities": [
+                "sensor.solax_local_battery_soc"
+              ],
+              "card": {
+                "type": "custom:mini-graph-card",
+                "icon_template": "{% if states('sensor.solax_local_battery_soc') | int == 100 %} mdi:battery {% elif states('sensor.solax_local_battery_soc') | int > 10 %} mdi:battery-{{ ((states('sensor.solax_local_battery_soc') | int / 100) | round(1, 'floor')*100) |int}} {% else %} mdi:battery-alert {% endif %}",
+                "entities": [
+                  {
+                    "entity": "sensor.solax_local_battery_soc",
+                    "name": "Battery SoC",
+                    "y_axis": "secondary"
+                  }
+                ],
+                "points_per_hour": 20,
+                "line_width": 3
+              }
+            },
+            {
+              "type": "vertical-stack",
+              "cards": [
+                {
+                  "type": "entities",
+                  "entities": [
+                    {
+                      "entity": "sensor.solcast_peak_forecast_today"
+                    },
+                    {
+                      "entity": "sensor.solcast_peak_time_today"
+                    },
+                    {
+                      "entity": "sensor.solcast_peak_forecast_tomorrow"
+                    },
+                    {
+                      "entity": "sensor.solcast_peak_time_tomorrow"
+                    },
+                    {
+                      "entity": "sensor.solcast_api_used",
+                      "secondary_info": "none"
+                    },
+                    {
+                      "entity": "sensor.solcast_api_last_polled",
+                      "secondary_info": "last-changed",
+                      "format": "time",
+                      "icon": "mdi:history"
+                    }
+                  ],
+                  "title": "Solar Forecast"
+                },
+                {
+                  "type": "custom:mushroom-chips-card",
+                  "chips": [
+                    {
+                      "type": "spacer"
+                    },
+                    {
+                      "type": "template",
+                      "entity": "sensor.solax_local",
+                      "icon": "mdi:history",
+                      "content": "Updated {{states.sensor.solax_local.last_updated | relative_time}} ago",
+                      "tap_action": {
+                        "action": "call-service",
+                        "service": "solcast_solar.update_forecasts",
+                        "data": {},
+                        "confirmation": {
+                          "text": "Update solar forecast now?"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "custom:apexcharts-card",
+              "header": {
+                "show": true,
+                "title": "PV",
+                "show_states": true,
+                "colorize_states": true
+              },
+              "graph_span": "24h",
+              "experimental": {
+                "brush": true,
+                "hidden_by_default": true
+              },
+              "brush": {
+                "selection_span": "12h"
+              },
+              "span": {
+                "start": "day"
+              },
+              "all_series_config": {
+                "stroke_width": 2,
+                "group_by": {
+                  "duration": "5min",
+                  "func": "avg"
+                },
+                "extend_to": "now"
+              },
+              "series": [
+                {
+                  "entity": "sensor.solax_local_pv_output",
+                  "name": "PV (Combined)",
+                  "type": "area",
+                  "opacity": 0.25,
+                  "show": {
+                    "in_brush": true
+                  }
+                },
+                {
+                  "entity": "sensor.solax_local_pv1_output",
+                  "name": "East"
+                },
+                {
+                  "entity": "sensor.solax_local_pv2_output",
+                  "name": "South"
+                },
+                {
+                  "entity": "sensor.solax_local_grid_power_import",
+                  "name": "Grid import"
+                },
+                {
+                  "entity": "sensor.solax_local_load_power",
+                  "name": "House load",
+                  "show": {
+                    "hidden_by_default": true
+                  }
+                }
+              ]
+            },
+            {
+              "type": "custom:apexcharts-card",
+              "header": {
+                "show": true,
+                "title": "Solar Forecast",
+                "show_states": true,
+                "colorize_states": true
+              },
+              "experimental": {
+                "color_threshold": true
+              },
+              "graph_span": "6d",
+              "span": {
+                "start": "day"
+              },
+              "apex_config": {
+                "dataLabels": {
+                  "offsetY": -10,
+                  "position": "top",
+                  "background": {
+                    "enabled": false
+                  },
+                  "style": {
+                    "colors": [
+                      "#808080"
+                    ]
+                  }
+                }
+              },
+              "series": [
+                {
+                  "entity": "sensor.solcast_forecast_today",
+                  "type": "column",
+                  "show": {
+                    "datalabels": true
+                  },
+                  "color_threshold": [
+                    {
+                      "value": 35,
+                      "color": "#ff5800"
+                    },
+                    {
+                      "value": 25,
+                      "color": "#f58025"
+                    },
+                    {
+                      "value": 15,
+                      "color": "#ffae42"
+                    },
+                    {
+                      "value": 5,
+                      "color": "#fed8b1"
+                    }
+                  ],
+                  "data_generator": "const now = new Date(); const data = [];\ndata.push([now.setHours(0,0,0,0), hass.states['sensor.solcast_forecast_today'].state]);\ndata.push([now.setDate(now.getDate()+1), hass.states['sensor.solcast_forecast_tomorrow'].state]);\ndata.push([now.setDate(now.getDate()+1), hass.states['sensor.solcast_forecast_d3'].state]);\ndata.push([now.setDate(now.getDate()+1), hass.states['sensor.solcast_forecast_d4'].state]);\ndata.push([now.setDate(now.getDate()+1), hass.states['sensor.solcast_forecast_d5'].state]);\ndata.push([now.setDate(now.getDate()+1), hass.states['sensor.solcast_forecast_d6'].state]);\ndata.push([now.setDate(now.getDate()+1), hass.states['sensor.solcast_forecast_d7'].state]);\nreturn data.reverse();\n"
+                }
+              ]
+            },
+            {
+              "type": "energy-solar-graph"
+            },
+            {
+              "type": "custom:apexcharts-card",
+              "header": {
+                "show": true,
+                "title": "Live Usage",
+                "show_states": true,
+                "colorize_states": true
+              },
+              "chart_type": "donut",
+              "all_series_config": {
+                "min": 0,
+                "max": 6000,
+                "stroke_width": 10
+              },
+              "series": [
+                {
+                  "entity": "sensor.solax_local_pv_output",
+                  "color": "#FF9800",
+                  "name": "Solar generation"
+                },
+                {
+                  "entity": "sensor.solax_local_battery_power_out",
+                  "color": "#F06292",
+                  "name": "Battery"
+                },
+                {
+                  "entity": "sensor.solax_local_grid_power_import",
+                  "color": "#4D92C3",
+                  "name": "Grid import"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "theme": "Backend-selected",
+          "title": "Cast",
+          "path": "cast",
+          "icon": "mdi:cast",
+          "badges": [],
+          "cards": [
+            {
+              "type": "custom:power-flow-card-plus",
+              "title": "Live Energy",
+              "clickable_entities": true,
+              "watt_threshold": 999,
+              "max_expected_flow_w": 5500,
+              "kw_decimals": 3,
+              "inverted_entities": "battery, grid",
+              "entities": {
+                "grid": {
+                  "entity": "sensor.solax_local_grid_power"
+                },
+                "solar": {
+                  "entity": "sensor.solax_local_pv_output"
+                },
+                "battery": {
+                  "entity": "sensor.solax_local_battery_power",
+                  "state_of_charge": "sensor.solax_local_battery_soc"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
