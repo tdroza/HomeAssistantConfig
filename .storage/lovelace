@@ -1872,6 +1872,33 @@
               "type": "custom:mushroom-number-card",
               "entity": "input_number.office_window_brightness_threshold",
               "icon": "mdi:roller-shade"
+            },
+            {
+              "type": "entities",
+              "entities": [
+                {
+                  "entity": "input_boolean.heated_airer"
+                },
+                {
+                  "entity": "switch.heated_airer"
+                },
+                {
+                  "type": "custom:template-entity-row",
+                  "state": "{{ as_timestamp(states('sensor.airer_requested_power')) | timestamp_custom('%d/%m/%y %H:%M')}}",
+                  "icon": "mdi:clock-check",
+                  "name": "Requested power"
+                },
+                {
+                  "entity": "sensor.airer_run_time",
+                  "name": "Cumulative run time",
+                  "icon": "mdi:timelapse"
+                },
+                {
+                  "entity": "sensor.solar_excess"
+                }
+              ],
+              "title": "Heated Airer",
+              "show_header_toggle": false
             }
           ],
           "icon": "mdi:beta",
@@ -2527,8 +2554,8 @@
                     },
                     {
                       "type": "custom:mushroom-entity-card",
-                      "entity": "switch.kodi",
-                      "name": "Kodi"
+                      "name": "Kodi",
+                      "entity": "switch.media_centre"
                     }
                   ]
                 },
@@ -2795,10 +2822,9 @@
                       "name": "Bedroom Door"
                     },
                     {
-                      "entity": "switch.blanket_anna",
+                      "entity": "switch.annas_watch_charger",
                       "type": "tile",
-                      "icon": "mdi:power-socket-uk",
-                      "name": "Anna's Socket"
+                      "icon": ""
                     }
                   ],
                   "type": "horizontal-stack"
@@ -3144,11 +3170,8 @@
                       "entity": "light.hallway",
                       "name": " ",
                       "type": "tile",
-                      "features": [
-                        {
-                          "type": "light-brightness"
-                        }
-                      ]
+                      "show_entity_picture": false,
+                      "vertical": false
                     }
                   ],
                   "type": "horizontal-stack"
@@ -3217,21 +3240,37 @@
           "badges": [],
           "cards": [
             {
-              "entities": [
+              "type": "vertical-stack",
+              "cards": [
                 {
+                  "type": "entities",
                   "entities": [
                     {
-                      "entity": "sensor.washing_machine_count",
-                      "name": "Washes in 7d"
+                      "entities": [
+                        {
+                          "entity": "sensor.washing_machine_count",
+                          "name": "Washes in 7d"
+                        }
+                      ],
+                      "entity": "binary_sensor.washer",
+                      "secondary_info": "last-changed",
+                      "state_color": true,
+                      "type": "custom:multiple-entity-row"
                     }
-                  ],
-                  "entity": "binary_sensor.washer",
-                  "secondary_info": "last-changed",
-                  "state_color": true,
-                  "type": "custom:multiple-entity-row"
+                  ]
+                },
+                {
+                  "type": "custom:mushroom-template-card",
+                  "icon": "mdi:tumble-dryer",
+                  "icon_color": "{% if (is_state('input_boolean.heated_airer','on')) %} blue {% endif %}",
+                  "primary": "Heated airer",
+                  "secondary": "{% if (is_state('input_boolean.heated_airer','on')) %} Heating for {{ (states('sensor.airer_run_time') | float * 60) | round(1) }} mins {% else %} Last used: {{ as_timestamp(states('sensor.airer_requested_power')) | timestamp_custom('%d/%m/%y %H:%M')}} {% endif %}",
+                  "tap_action": {
+                    "action": "toggle"
+                  },
+                  "entity": "input_boolean.heated_airer"
                 }
-              ],
-              "type": "entities"
+              ]
             },
             {
               "type": "custom:mushroom-entity-card",
