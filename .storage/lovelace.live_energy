@@ -208,18 +208,18 @@
                 "hidden_by_default": true
               },
               "brush": {
-                "selection_span": "12h"
+                "selection_span": "4h"
               },
               "span": {
-                "start": "day"
+                "end": "minute"
               },
               "all_series_config": {
                 "stroke_width": 2,
+                "extend_to": "now",
                 "group_by": {
                   "duration": "5min",
                   "func": "avg"
-                },
-                "extend_to": "now"
+                }
               },
               "series": [
                 {
@@ -240,15 +240,19 @@
                   "name": "South"
                 },
                 {
-                  "entity": "sensor.solax_local_grid_power_import",
-                  "name": "Grid import"
+                  "entity": "sensor.solax_local_grid_power",
+                  "name": "Grid"
                 },
                 {
                   "entity": "sensor.solax_local_load_power",
                   "name": "House load",
                   "show": {
-                    "hidden_by_default": true
+                    "hidden_by_default": false
                   }
+                },
+                {
+                  "entity": "sensor.solax_local_battery_power",
+                  "name": "Battery"
                 }
               ]
             },
