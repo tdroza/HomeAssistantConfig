@@ -1780,7 +1780,7 @@
       sequence:
       - type: turn_on
         device_id: b40eb804797ddfe20d5c56ae0b92c1a9
-        entity_id: switch.anna_s_desk
+        entity_id: switch.annas_desk
         domain: switch
   - delay:
       hours: 0
@@ -1826,7 +1826,7 @@
     domain: switch
   - type: turn_off
     device_id: b40eb804797ddfe20d5c56ae0b92c1a9
-    entity_id: switch.anna_s_desk
+    entity_id: switch.annas_desk
     domain: switch
   mode: single
 - id: '1641984337744'
@@ -2007,7 +2007,7 @@
         target:
           area_id: 4ff1e165afb84885be26f9e1add47e4f
 - id: '1648486249768'
-  alias: Tag Office off is scanned
+  alias: 'NFC: Tag ''Office off'' is scanned'
   description: ''
   trigger:
   - platform: tag
