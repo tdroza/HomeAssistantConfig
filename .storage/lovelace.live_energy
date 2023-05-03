@@ -131,12 +131,13 @@
                 "entities": [
                   {
                     "entity": "sensor.solax_local_battery_soc",
-                    "name": "Battery SoC",
-                    "y_axis": "secondary"
+                    "name": "Battery SoC"
                   }
                 ],
                 "points_per_hour": 20,
-                "line_width": 3
+                "line_width": 3,
+                "lower_bound": 0,
+                "upper_bound": 100
               }
             },
             {
