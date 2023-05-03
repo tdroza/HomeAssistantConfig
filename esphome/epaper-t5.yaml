@@ -20,12 +20,6 @@ globals:
     
 esphome:
   name: "${device_name}"
-  on_shutdown:
-    then:
-      - lambda: |-
-          id(shutting_down) = true;
-      - script.execute: show_page
-
 
 esp32:
   board: esp32dev
@@ -157,10 +151,10 @@ script:
           then:
           - display.page.show: page_black
           - component.update: t5_display
-          - delay: 1s
+          - delay: 2s
           - display.page.show: page_white
           - component.update: t5_display
-          - delay: 1s
+          - delay: 2s
       - lambda: id(updates_since_refresh) = 0;
   - id: all_data_received
     then:
@@ -232,6 +226,8 @@ script:
                   - lambda: |-
                       id(shutting_down) = true;
                   - logger.log: "All data received. Short sleep duration is ${sleep_time}"     
+                  - script.execute: show_page
+                  - delay: 2sec
                   - deep_sleep.allow: deep_sleep_1              
                   - deep_sleep.enter:
                       id: deep_sleep_1
