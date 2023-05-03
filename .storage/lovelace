@@ -1899,6 +1899,44 @@
               ],
               "title": "Heated Airer",
               "show_header_toggle": false
+            },
+            {
+              "type": "custom:apexcharts-card",
+              "header": {
+                "show": true,
+                "title": "Weather",
+                "show_states": true,
+                "colorize_states": true
+              },
+              "graph_span": "1d",
+              "span": {
+                "start": "day"
+              },
+              "yaxis": [
+                {
+                  "id": "pv"
+                },
+                {
+                  "id": "temp",
+                  "opposite": true
+                }
+              ],
+              "all_series_config": {
+                "stroke_width": 2
+              },
+              "series": [
+                {
+                  "entity": "weather.home_hourly",
+                  "yaxis_id": "temp",
+                  "data_generator": "const data = [];\nentity.attributes.forecast.forEach(forecast => data.push([ forecast['datetime'],forecast['temperature'] ] ));\nreturn data.reverse();\n",
+                  "type": "line"
+                },
+                {
+                  "entity": "sensor.solcast_forecast_today",
+                  "yaxis_id": "pv",
+                  "data_generator": "const data = [];\nentity.attributes.forecast.forEach(forecast => data.push([forecast['period_start'],forecast['pv_estimate'] ] ));\nreturn data.reverse();\n"
+                }
+              ]
             }
           ],
           "icon": "mdi:beta",
@@ -3271,6 +3309,33 @@
                   "entity": "input_boolean.heated_airer"
                 }
               ]
+            },
+            {
+              "type": "conditional",
+              "conditions": [
+                {
+                  "entity": "input_boolean.heated_airer",
+                  "state": "on"
+                }
+              ],
+              "card": {
+                "type": "horizontal-stack",
+                "cards": [
+                  {
+                    "type": "custom:mushroom-template-card",
+                    "primary": "Heating",
+                    "secondary": "Requested: {{ as_timestamp(states('sensor.airer_requested_power')) | timestamp_custom('%H:%M')}}",
+                    "icon": "mdi:power",
+                    "icon_color": "green"
+                  },
+                  {
+                    "type": "gauge",
+                    "entity": "sensor.airer_run_time",
+                    "max": 3,
+                    "name": "Run time"
+                  }
+                ]
+              }
             },
             {
               "type": "custom:mushroom-entity-card",
