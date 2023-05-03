@@ -2577,15 +2577,15 @@
   trigger:
   - platform: numeric_state
     entity_id: sensor.solar_excess
-    below: 50
+    below: 10
     for:
       hours: 0
-      minutes: 1
+      minutes: 3
       seconds: 0
     id: insufficient_solar
   - platform: numeric_state
     entity_id: sensor.airer_run_time
-    above: 3
+    above: input_number.airer_target_runtime
     id: run_time_exceeded
   condition:
   - condition: state
