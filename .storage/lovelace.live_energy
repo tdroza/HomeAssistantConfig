@@ -211,6 +211,11 @@
               "brush": {
                 "selection_span": "4h"
               },
+              "yaxis": [
+                {
+                  "max": "~6000"
+                }
+              ],
               "span": {
                 "end": "minute"
               },
