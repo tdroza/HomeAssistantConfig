@@ -99,10 +99,14 @@ entity_config:
         - Tree
       expose: true
     light.christmas_star:
-     name: "Star"
-     aliases:
-       - Christmas star
-     expose: true
+      name: "Star"
+      aliases:
+        - Christmas star
+      expose: true
     input_boolean.do_not_disturb:
       expose: true
-
+    light.solar_lamp:
+      name: "Solar lamp"
+      aliases:
+        - "Solar light"
+      expose: true

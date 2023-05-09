@@ -2617,3 +2617,71 @@
     entity_id: switch.heated_airer
     domain: switch
   mode: single
+- id: '1683233886118'
+  alias: 'Solar Lamp: Cache options'
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - sensor.solax_local
+  condition: []
+  action:
+  - if:
+    - condition: numeric_state
+      entity_id: sensor.solax_local_pv_output
+      above: sensor.solax_local_grid_power_export
+    - condition: and
+      conditions:
+      - condition: numeric_state
+        entity_id: sensor.solax_local_pv_output
+        above: sensor.solax_local_battery_power_out
+    then:
+    - service: input_select.select_option
+      data:
+        option: '{{state_attr(''input_select.solarlamp_palette'', ''options'')[0]
+          }}'
+      target:
+        entity_id: input_select.solarlamp_palette
+    else:
+    - if:
+      - condition: numeric_state
+        entity_id: sensor.solax_local_battery_power_out
+        above: sensor.solax_local_grid_power_export
+      - condition: numeric_state
+        entity_id: sensor.solax_local_battery_power_out
+        above: sensor.solax_local_pv_output
+      then:
+      - service: input_select.select_option
+        data:
+          option: '{{state_attr(''input_select.solarlamp_palette'', ''options'')[1]
+            }}'
+        target:
+          entity_id: input_select.solarlamp_palette
+      else:
+      - service: input_select.select_option
+        data:
+          option: '{{state_attr(''input_select.solarlamp_palette'', ''options'')[2]
+            }}'
+        target:
+          entity_id: input_select.solarlamp_palette
+  mode: single
+- id: '1683234400143'
+  alias: 'Solar Lamp: Update lamp'
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - input_select.solarlamp_palette
+  - platform: device
+    type: turned_on
+    device_id: ec63665887421c732ef2e422c5514eac
+    entity_id: light.solar_lamp
+    domain: light
+  condition: []
+  action:
+  - service: select.select_option
+    data:
+      option: '{{ states(''input_select.solarlamp_palette'') }}'
+    target:
+      entity_id: select.solar_lamp_color_palette
+  mode: single
