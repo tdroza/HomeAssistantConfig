@@ -16,6 +16,7 @@
               "max_expected_flow_w": 5500,
               "kw_decimals": 3,
               "inverted_entities": "battery, grid",
+              "use_new_flow_rate_model": true,
               "entities": {
                 "grid": {
                   "entity": "sensor.solax_local_grid_power"
@@ -211,11 +212,6 @@
               "brush": {
                 "selection_span": "4h"
               },
-              "yaxis": [
-                {
-                  "max": "~6000"
-                }
-              ],
               "span": {
                 "end": "minute"
               },
@@ -224,7 +220,7 @@
                 "extend_to": "now",
                 "group_by": {
                   "duration": "5min",
-                  "func": "avg"
+                  "func": "max"
                 }
               },
               "series": [
@@ -251,10 +247,7 @@
                 },
                 {
                   "entity": "sensor.solax_local_load_power",
-                  "name": "House load",
-                  "show": {
-                    "hidden_by_default": false
-                  }
+                  "name": "House load"
                 },
                 {
                   "entity": "sensor.solax_local_battery_power",
@@ -372,6 +365,7 @@
               "max_expected_flow_w": 5500,
               "kw_decimals": 3,
               "inverted_entities": "battery, grid",
+              "use_new_flow_rate_model": true,
               "entities": {
                 "grid": {
                   "entity": "sensor.solax_local_grid_power"
@@ -382,6 +376,10 @@
                 "battery": {
                   "entity": "sensor.solax_local_battery_power",
                   "state_of_charge": "sensor.solax_local_battery_soc"
+                },
+                "home": {
+                  "entity": "sensor.solax_local_load_power",
+                  "override_state": true
                 }
               }
             }
