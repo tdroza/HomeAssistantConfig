@@ -3322,11 +3322,20 @@
                 "type": "horizontal-stack",
                 "cards": [
                   {
-                    "type": "custom:mushroom-template-card",
-                    "primary": "Heating",
-                    "secondary": "Requested: {{ as_timestamp(states('sensor.airer_requested_power')) | timestamp_custom('%H:%M')}}",
-                    "icon": "mdi:power",
-                    "icon_color": "green"
+                    "type": "vertical-stack",
+                    "cards": [
+                      {
+                        "type": "custom:mushroom-template-card",
+                        "primary": "Heating",
+                        "secondary": "Requested: {{ as_timestamp(states('sensor.airer_requested_power')) | timestamp_custom('%H:%M')}}",
+                        "icon": "mdi:power",
+                        "icon_color": "green"
+                      },
+                      {
+                        "type": "custom:mushroom-entity-card",
+                        "entity": "switch.heated_airer"
+                      }
+                    ]
                   },
                   {
                     "type": "gauge",
