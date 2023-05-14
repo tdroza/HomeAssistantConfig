@@ -1164,12 +1164,12 @@
   - condition: device
     type: is_on
     device_id: c0673155fc4c6fb27f0f8917212ca42f
-    entity_id: switch.tom_s_phone_charger
+    entity_id: switch.toms_phone_charger
     domain: switch
   action:
   - type: turn_off
     device_id: c0673155fc4c6fb27f0f8917212ca42f
-    entity_id: switch.tom_s_phone_charger
+    entity_id: switch.toms_phone_charger
     domain: switch
   mode: single
 - id: '1603808684460'
@@ -2587,6 +2587,11 @@
     entity_id: sensor.airer_run_time
     above: input_number.airer_target_runtime
     id: run_time_exceeded
+  - platform: state
+    entity_id:
+    - input_boolean.heated_airer
+    from: 'on'
+    to: 'off'
   condition:
   - condition: state
     entity_id: switch.heated_airer
@@ -2684,4 +2689,31 @@
       option: '{{ states(''input_select.solarlamp_palette'') }}'
     target:
       entity_id: select.solar_lamp_color_palette
+  mode: single
+- id: '1683805329919'
+  alias: Living room Idle alert
+  description: Alert if no motion in living room but lights or tv are on
+  trigger:
+  - type: not_occupied
+    platform: device
+    device_id: fc79fe98834fa565da4e2af11ad62e91
+    entity_id: binary_sensor.lumi_lumi_sensor_motion_aq2_occupancy
+    domain: binary_sensor
+  condition:
+  - condition: or
+    conditions:
+    - condition: state
+      entity_id: light.living_room_light_group
+      state: 'on'
+    - condition: state
+      entity_id: media_player.living_room_tv
+      state: playing
+    - condition: state
+      entity_id: media_player.halo
+      state: playing
+  action:
+  - service: notify.mobile_app_toms_phone
+    data:
+      message: No motion in Living Room, but lights or TV are on
+      title: Idle alert
   mode: single
