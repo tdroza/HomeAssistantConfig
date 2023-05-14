@@ -593,7 +593,8 @@
                       "type": "custom:mushroom-template-card",
                       "primary": "Utility",
                       "secondary": "{{states('sensor.washing_machine_count')}} washes this week",
-                      "icon": "mdi:washing-machine",
+                      "icon": "{% if is_state('binary_sensor.washer','on') %}\nmdi:washing-machine\n{% else %}\nmdi:washing-machine-off\n{% endif %}",
+                      "icon_color": "{% if is_state('binary_sensor.washer','on') %}\ngreen\n{% endif %}",
                       "entity": "binary_sensor.washer",
                       "tap_action": {
                         "action": "navigate",
@@ -602,9 +603,8 @@
                       "hold_action": {
                         "action": "toggle"
                       },
-                      "icon_color": "",
-                      "badge_color": "{% if is_state('binary_sensor.washer','on') %}\ngreen\n{% endif %}",
-                      "badge_icon": "{% if is_state('binary_sensor.washer','on') %}\nmdi:washing-machine\n{% else %}\nmdi:washing-machine-off\n{% endif %}"
+                      "badge_color": "{% if is_state('switch.heated_airer','on') %}\ngreen\n{% endif %}",
+                      "badge_icon": "{% if is_state('switch.heated_airer','on') %}\nmdi:tumble-dryer\n{% else %}\nmdi:tumble-dryer-off\n{% endif %}"
                     }
                   ]
                 },
@@ -1904,7 +1904,7 @@
               "type": "custom:apexcharts-card",
               "header": {
                 "show": true,
-                "title": "Weather",
+                "title": "Weather Vs Solar",
                 "show_states": true,
                 "colorize_states": true
               },
@@ -1929,12 +1929,14 @@
                   "entity": "weather.home_hourly",
                   "yaxis_id": "temp",
                   "data_generator": "const data = [];\nentity.attributes.forecast.forEach(forecast => data.push([ forecast['datetime'],forecast['temperature'] ] ));\nreturn data.reverse();\n",
-                  "type": "line"
+                  "type": "line",
+                  "name": "Temperature forecast"
                 },
                 {
                   "entity": "sensor.solcast_forecast_today",
                   "yaxis_id": "pv",
-                  "data_generator": "const data = [];\nentity.attributes.forecast.forEach(forecast => data.push([forecast['period_start'],forecast['pv_estimate'] ] ));\nreturn data.reverse();\n"
+                  "data_generator": "const data = [];\nentity.attributes.forecast.forEach(forecast => data.push([forecast['period_start'],forecast['pv_estimate'] ] ));\nreturn data.reverse();\n",
+                  "name": "Solar forecast"
                 }
               ]
             }
@@ -3319,29 +3321,57 @@
                 }
               ],
               "card": {
-                "type": "horizontal-stack",
+                "type": "vertical-stack",
                 "cards": [
                   {
-                    "type": "vertical-stack",
+                    "type": "horizontal-stack",
                     "cards": [
                       {
-                        "type": "custom:mushroom-template-card",
-                        "primary": "Heating",
-                        "secondary": "Requested: {{ as_timestamp(states('sensor.airer_requested_power')) | timestamp_custom('%H:%M')}}",
-                        "icon": "mdi:power",
-                        "icon_color": "green"
+                        "type": "vertical-stack",
+                        "cards": [
+                          {
+                            "type": "custom:mushroom-template-card",
+                            "primary": "Heating",
+                            "secondary": "Requested: {{ as_timestamp(states('sensor.airer_requested_power')) | timestamp_custom('%H:%M')}}",
+                            "icon": "mdi:power",
+                            "icon_color": "green",
+                            "fill_container": true,
+                            "multiline_secondary": false
+                          },
+                          {
+                            "type": "custom:mushroom-entity-card",
+                            "entity": "switch.heated_airer",
+                            "fill_container": true
+                          }
+                        ]
                       },
                       {
-                        "type": "custom:mushroom-entity-card",
-                        "entity": "switch.heated_airer"
+                        "type": "custom:apexcharts-card",
+                        "header": {
+                          "show": false,
+                          "colorize_states": true
+                        },
+                        "chart_type": "radialBar",
+                        "series": [
+                          {
+                            "entity": "sensor.airer_run_time",
+                            "max": 5,
+                            "name": "Heat time"
+                          }
+                        ],
+                        "apex_config": {
+                          "legend": false,
+                          "chart": {
+                            "height": "165px"
+                          }
+                        }
                       }
                     ]
                   },
                   {
-                    "type": "gauge",
-                    "entity": "sensor.airer_run_time",
-                    "max": 3,
-                    "name": "Run time"
+                    "type": "custom:mushroom-number-card",
+                    "entity": "input_number.airer_target_runtime",
+                    "icon": "mdi:timer-sand-complete"
                   }
                 ]
               }
@@ -3355,6 +3385,17 @@
               "tap_action": {
                 "action": "toggle"
               }
+            },
+            {
+              "type": "custom:mushroom-template-card",
+              "icon": "mdi:thermometer-water",
+              "icon_color": "{% if (is_state('switch.immersion_heater','on')) %} orange {% endif %}",
+              "primary": "Immersion heater",
+              "secondary": "{% if (is_state('switch.immersion_heater','on')) %} Heating since {{ states.switch.immersion_heater.last_changed | as_timestamp | timestamp_custom('%d/%m/%y %H:%M') }} {% else %}Off{% endif %}",
+              "tap_action": {
+                "action": "toggle"
+              },
+              "entity": "switch.immersion_heater"
             }
           ]
         },
