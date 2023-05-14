@@ -735,8 +735,17 @@
               "type": "vertical-stack"
             },
             {
-              "entity": "weather.millview",
-              "type": "custom:weather-card"
+              "type": "custom:expander-card",
+              "title": "Weather",
+              "cards": [
+                {
+                  "entity": "weather.millview",
+                  "type": "custom:weather-card",
+                  "number_of_forecasts": "5"
+                }
+              ],
+              "clear": false,
+              "expanded": false
             },
             {
               "type": "conditional",
@@ -3387,15 +3396,130 @@
               }
             },
             {
-              "type": "custom:mushroom-template-card",
-              "icon": "mdi:thermometer-water",
-              "icon_color": "{% if (is_state('switch.immersion_heater','on')) %} orange {% endif %}",
-              "primary": "Immersion heater",
-              "secondary": "{% if (is_state('switch.immersion_heater','on')) %} Heating since {{ states.switch.immersion_heater.last_changed | as_timestamp | timestamp_custom('%d/%m/%y %H:%M') }} {% else %}Off{% endif %}",
-              "tap_action": {
-                "action": "toggle"
-              },
-              "entity": "switch.immersion_heater"
+              "type": "vertical-stack",
+              "cards": [
+                {
+                  "type": "horizontal-stack",
+                  "cards": [
+                    {
+                      "type": "custom:mushroom-template-card",
+                      "icon": "mdi:thermometer-water",
+                      "icon_color": "{% if (is_state('switch.immersion_heater','on')) %} orange {% endif %}",
+                      "primary": "Immersion heater",
+                      "secondary": "{% if (is_state('switch.immersion_heater','on')) %} Heating since {{ states.switch.immersion_heater.last_changed | as_timestamp | timestamp_custom('%d/%m/%y %H:%M') }} {% else %}Off{% endif %}",
+                      "tap_action": {
+                        "action": "toggle"
+                      },
+                      "entity": "switch.immersion_heater",
+                      "fill_container": true,
+                      "multiline_secondary": false,
+                      "layout": "vertical"
+                    },
+                    {
+                      "type": "custom:apexcharts-card",
+                      "chart_type": "radialBar",
+                      "header": {
+                        "show": false
+                      },
+                      "apex_config": {
+                        "legend": {
+                          "show": false
+                        },
+                        "plotOptions": {
+                          "radialBar": {
+                            "dataLabels": {
+                              "show": true,
+                              "value": {
+                                "show": true,
+                                "formatter": "EVAL:function(val,opts) {\n  console.log(val); \n  return 12 * opts.config.series[0]/100 + \"hrs\"\n}\n"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "series": [
+                        {
+                          "entity": "sensor.immersion_run_time",
+                          "max": 12,
+                          "name": "Run time"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "custom:expander-card",
+              "gap": "0.6em",
+              "padding": "1em",
+              "clear": false,
+              "title": "History",
+              "overlay-margin": "2em",
+              "child-padding": "0.5em",
+              "button-background": "transparent",
+              "cards": [
+                {
+                  "type": "custom:apexcharts-card",
+                  "header": {
+                    "show": true,
+                    "title": "Immersion history"
+                  },
+                  "graph_span": "7d",
+                  "span": {
+                    "end": "day"
+                  },
+                  "yaxis": [
+                    {
+                      "max": "~4h"
+                    }
+                  ],
+                  "series": [
+                    {
+                      "entity": "sensor.immersion_run_time",
+                      "type": "column",
+                      "group_by": {
+                        "func": "last",
+                        "duration": "1d"
+                      },
+                      "show": {
+                        "as_duration": "hour",
+                        "extremas": true
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "custom:apexcharts-card",
+                  "header": {
+                    "show": true,
+                    "title": "Airer history"
+                  },
+                  "graph_span": "7d",
+                  "span": {
+                    "end": "day"
+                  },
+                  "yaxis": [
+                    {
+                      "max": "~4h"
+                    }
+                  ],
+                  "series": [
+                    {
+                      "entity": "sensor.airer_daily_run_time",
+                      "type": "column",
+                      "group_by": {
+                        "func": "last",
+                        "duration": "1d"
+                      },
+                      "show": {
+                        "as_duration": "hour",
+                        "extremas": true
+                      }
+                    }
+                  ]
+                }
+              ]
             }
           ]
         },
