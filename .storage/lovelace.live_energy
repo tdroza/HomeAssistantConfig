@@ -205,8 +205,7 @@
               "header": {
                 "show": true,
                 "title": "Solar Forecast",
-                "show_states": true,
-                "colorize_states": true
+                "show_states": false
               },
               "experimental": {
                 "color_threshold": true
@@ -234,7 +233,8 @@
                   "entity": "sensor.solcast_forecast_today",
                   "type": "column",
                   "show": {
-                    "datalabels": true
+                    "datalabels": true,
+                    "extremas": true
                   },
                   "color_threshold": [
                     {
