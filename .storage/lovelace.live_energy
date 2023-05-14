@@ -42,18 +42,18 @@
                   "entities": [
                     {
                       "entity": "sensor.solax_local_pv_output",
-                      "name": "Solar PV",
+                      "name": "PV Combined",
                       "icon": "mdi:solar-power-variant",
                       "secondary_info": "none"
                     },
                     {
                       "entity": "sensor.solax_local_pv1_output",
-                      "name": "PV1",
+                      "name": "PV East",
                       "icon": "mdi:solar-panel-large"
                     },
                     {
                       "entity": "sensor.solax_local_pv2_output",
-                      "name": "PV2",
+                      "name": "PV South",
                       "icon": "mdi:solar-panel-large"
                     },
                     {
@@ -324,11 +324,11 @@
                 "show_states": true,
                 "colorize_states": true
               },
-              "chart_type": "donut",
+              "chart_type": "radialBar",
               "all_series_config": {
                 "min": 0,
-                "max": 6000,
-                "stroke_width": 10
+                "stroke_width": 10,
+                "max": 7000
               },
               "series": [
                 {
@@ -339,12 +339,29 @@
                 {
                   "entity": "sensor.solax_local_battery_power_out",
                   "color": "#F06292",
-                  "name": "Battery"
+                  "max": 3500,
+                  "name": "From battery"
+                },
+                {
+                  "entity": "sensor.solax_local_battery_power_in",
+                  "color": "#F06292",
+                  "max": 3500,
+                  "name": "To battery"
                 },
                 {
                   "entity": "sensor.solax_local_grid_power_import",
                   "color": "#4D92C3",
                   "name": "Grid import"
+                },
+                {
+                  "entity": "sensor.solax_local_grid_power_export",
+                  "color": "#4D92C3",
+                  "name": "Grid export"
+                },
+                {
+                  "entity": "sensor.solax_local_ac_power",
+                  "color": "#ff0000",
+                  "name": "House"
                 }
               ]
             }
