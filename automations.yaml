@@ -2394,7 +2394,7 @@
     entity_id: sun.sun
     attribute: azimuth
     above: 90
-    below: 135
+    below: 125
   action:
   - service: cover.set_cover_position
     data:
@@ -2629,7 +2629,10 @@
   - platform: state
     entity_id:
     - sensor.solax_local
-  condition: []
+  condition:
+  - condition: numeric_state
+    entity_id: sensor.solax_local_load_power
+    above: 0
   action:
   - if:
     - condition: numeric_state
