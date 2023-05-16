@@ -359,7 +359,7 @@
                   "name": "Grid export"
                 },
                 {
-                  "entity": "sensor.solax_local_ac_power",
+                  "entity": "sensor.solax_local_load_power",
                   "color": "#ff0000",
                   "name": "House"
                 }
