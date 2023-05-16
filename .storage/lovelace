@@ -3355,23 +3355,30 @@
                         ]
                       },
                       {
-                        "type": "custom:apexcharts-card",
-                        "header": {
-                          "show": false,
-                          "colorize_states": true
-                        },
-                        "chart_type": "radialBar",
-                        "series": [
-                          {
-                            "entity": "sensor.airer_run_time",
-                            "max": 5,
-                            "name": "Heat time"
-                          }
+                        "type": "custom:card-templater",
+                        "entities": [
+                          "sensor.airer_run_time",
+                          "input_number.airer_target_runtime"
                         ],
-                        "apex_config": {
-                          "legend": false,
-                          "chart": {
-                            "height": "165px"
+                        "card": {
+                          "type": "custom:apexcharts-card",
+                          "header": {
+                            "show": false,
+                            "colorize_states": true
+                          },
+                          "chart_type": "radialBar",
+                          "series": [
+                            {
+                              "entity": "sensor.airer_run_time",
+                              "max_template": "{{ states(\"input_number.airer_target_runtime\") }}",
+                              "name": "Heat time"
+                            }
+                          ],
+                          "apex_config": {
+                            "legend": false,
+                            "chart": {
+                              "height": "165px"
+                            }
                           }
                         }
                       }
@@ -3380,7 +3387,8 @@
                   {
                     "type": "custom:mushroom-number-card",
                     "entity": "input_number.airer_target_runtime",
-                    "icon": "mdi:timer-sand-complete"
+                    "icon": "mdi:timer-sand-complete",
+                    "name": "Target Run Time"
                   }
                 ]
               }
@@ -3406,7 +3414,7 @@
                       "icon": "mdi:thermometer-water",
                       "icon_color": "{% if (is_state('switch.immersion_heater','on')) %} orange {% endif %}",
                       "primary": "Immersion heater",
-                      "secondary": "{% if (is_state('switch.immersion_heater','on')) %} Heating since {{ states.switch.immersion_heater.last_changed | as_timestamp | timestamp_custom('%d/%m/%y %H:%M') }} {% else %}Off{% endif %}",
+                      "secondary": "{% if (is_state('switch.immersion_heater','on')) %} Heating since {{ states.switch.immersion_heater.last_changed | as_timestamp | timestamp_custom('%H:%M') }} {% else %}Off{% endif %}",
                       "tap_action": {
                         "action": "toggle"
                       },
@@ -3462,8 +3470,7 @@
                 {
                   "type": "custom:apexcharts-card",
                   "header": {
-                    "show": true,
-                    "title": "Immersion history"
+                    "show": false
                   },
                   "graph_span": "7d",
                   "span": {
@@ -3477,6 +3484,7 @@
                   "series": [
                     {
                       "entity": "sensor.immersion_run_time",
+                      "name": "Immersion",
                       "type": "column",
                       "group_by": {
                         "func": "last",
@@ -3486,27 +3494,10 @@
                         "as_duration": "hour",
                         "extremas": true
                       }
-                    }
-                  ]
-                },
-                {
-                  "type": "custom:apexcharts-card",
-                  "header": {
-                    "show": true,
-                    "title": "Airer history"
-                  },
-                  "graph_span": "7d",
-                  "span": {
-                    "end": "day"
-                  },
-                  "yaxis": [
+                    },
                     {
-                      "max": "~4h"
-                    }
-                  ],
-                  "series": [
-                    {
-                      "entity": "sensor.airer_daily_run_time",
+                      "entity": "sensor.airer_total_daily_run_time",
+                      "name": "Airer",
                       "type": "column",
                       "group_by": {
                         "func": "last",

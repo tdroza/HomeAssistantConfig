@@ -74,34 +74,34 @@
   sensors:
     hallway_motion_sensor_temperature_rounded:
       friendly_name: 'Hall Temp'
-      value_template: '{{states.sensor.hue_motion_sensor_temperature.state |round(0)}}'
+      value_template: '{{states.sensor.hue_motion_sensor_temperature.state |round(0, default=0)}}'
     bed1_temperature_rounded:
       friendly_name: 'Bed1 Temp'
-      value_template: '{{states.sensor.bed1_temperature.state |round(0)}}'
+      value_template: '{{states.sensor.bed1_temperature.state |round(0, default=0)}}'
     office_temperature_rounded:
       friendly_name: 'Bed 2 Temp'
-      value_template: '{{states.sensor.office_climate_temperature.state |round(0)}}'
+      value_template: '{{states.sensor.office_climate_temperature.state |round(0, default=0)}}'
     seb_temperature_rounded:
       friendly_name: 'Seb Temp'
-      value_template: '{{states.sensor.seb_d1_temperature.state |round(0)}}'
+      value_template: '{{states.sensor.seb_d1_temperature.state |round(0, default=0)}}'
     reuben_temperature_rounded:
       friendly_name: 'Reuben Temp'
-      value_template: '{{states.sensor.reu_d1_temperature.state |round(0)}}'
+      value_template: '{{states.sensor.reu_d1_temperature.state |round(0, default=0)}}'
     bathroom_temperature_rounded:
       friendly_name: 'Bathroom Temp'
-      value_template: '{{states.sensor.bathroom_climate_temperature.state |round(0)}}'
+      value_template: '{{states.sensor.bathroom_climate_temperature.state |round(0, default=0)}}'
     ensuite_temperature_rounded:
       friendly_name: 'Ensuite Temp'
-      value_template: '{{states.sensor.ensuite_climate_temperature.state |round(0)}}'
+      value_template: '{{states.sensor.ensuite_climate_temperature.state |round(0, default=0)}}'
     nest_temperature_rounded:
       friendly_name: 'Living Room Temp'
-      value_template: '{{states.sensor.nest_thermostat_temperature.state |round(0)}}'
+      value_template: '{{states.sensor.nest_thermostat_temperature.state |round(0, default=0)}}'
     air_quality_temperature_rounded:
       friendly_name: 'Air Quality Temp'
-      value_template: '{{states.sensor.air_quality_temperature.state |round(0)}}'
+      value_template: '{{states.sensor.air_quality_temperature.state |round(0, default=0)}}'
     kitchen_temperature_rounded:
       friendly_name: 'Kitchen temperature'
-      value_template: '{{states.sensor.kitchen_climate_temperature.state |round(0)}}'
+      value_template: '{{states.sensor.kitchen_climate_temperature.state |round(0, default=0)}}'
 - platform: feedparser
   scan_interval: 43200
   name: podcast_finn_caspian
@@ -427,3 +427,21 @@
   start: "{{ as_datetime(states('sensor.airer_requested_power')) }}"
   end: "{{ now() }}"
   
+- platform: history_stats
+  name: airer_total_daily_run_time
+  entity_id: switch.heated_airer
+  state: "on"
+  type: time
+  start: "{{ now().replace(hour=0, minute=0, second=0, microsecond=0) }}"
+  duration:
+    hours: 24 
+    
+- platform: history_stats
+  name: immersion_run_time
+  entity_id: switch.immersion_heater
+  state: "on"
+  type: time
+  start: "{{ now().replace(hour=0, minute=0, second=0, microsecond=0) }}"
+  duration:
+    hours: 24
+    
