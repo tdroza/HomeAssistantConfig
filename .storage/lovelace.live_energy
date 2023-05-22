@@ -271,6 +271,12 @@
                       "entity": "sensor.solcast_peak_time_today"
                     },
                     {
+                      "entity": "sensor.solcast_forecast_this_hour"
+                    },
+                    {
+                      "entity": "sensor.solcast_forecast_next_hour"
+                    },
+                    {
                       "entity": "sensor.solcast_peak_forecast_tomorrow"
                     },
                     {
