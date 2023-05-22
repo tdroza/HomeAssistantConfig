@@ -603,8 +603,8 @@
                       "hold_action": {
                         "action": "toggle"
                       },
-                      "badge_color": "{% if is_state('switch.heated_airer','on') %}\ngreen\n{% endif %}",
-                      "badge_icon": "{% if is_state('switch.heated_airer','on') %}\nmdi:tumble-dryer\n{% else %}\nmdi:tumble-dryer-off\n{% endif %}"
+                      "badge_color": "{% if is_state('switch.immersion_heater','on') %}\norange\n{% elif is_state('switch.heated_airer','on') %}\ngreen\n{% endif %}",
+                      "badge_icon": "{% if is_state('switch.immersion_heater','on') %}\nmdi:thermometer-water\n{% elif is_state('switch.heated_airer','on') %}\nmdi:tumble-dryer\n{% endif %}"
                     }
                   ]
                 },
@@ -3414,7 +3414,7 @@
                       "icon": "mdi:thermometer-water",
                       "icon_color": "{% if (is_state('switch.immersion_heater','on')) %} orange {% endif %}",
                       "primary": "Immersion heater",
-                      "secondary": "{% if (is_state('switch.immersion_heater','on')) %} Heating since {{ states.switch.immersion_heater.last_changed | as_timestamp | timestamp_custom('%H:%M') }} {% else %}Off{% endif %}",
+                      "secondary": "{% if (is_state('switch.immersion_heater','on')) %} Heating for {{ (states('sensor.immersion_run_time') | float * 60) | round(1) | int}} mins{% else %}Off{% endif %}",
                       "tap_action": {
                         "action": "toggle"
                       },
@@ -3439,7 +3439,7 @@
                               "show": true,
                               "value": {
                                 "show": true,
-                                "formatter": "EVAL:function(val,opts) {\n  console.log(val); \n  return 12 * opts.config.series[0]/100 + \"hrs\"\n}\n"
+                                "formatter": "EVAL:function(val,opts) {\n  var runTime = 12 * opts.config.series[0]/100;\n  var hrs = Math.floor(runTime);\n  var mins = Math.round(60* runTime % hrs);\n  return hrs + \"hr \" + mins + \"min\"\n}\n"
                               }
                             }
                           }
@@ -3476,11 +3476,6 @@
                   "span": {
                     "end": "day"
                   },
-                  "yaxis": [
-                    {
-                      "max": "~4h"
-                    }
-                  ],
                   "series": [
                     {
                       "entity": "sensor.immersion_run_time",
