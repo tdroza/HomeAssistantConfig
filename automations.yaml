@@ -2720,3 +2720,43 @@
       message: No motion in Living Room, but lights or TV are on
       title: Idle alert
   mode: single
+- id: '1684944424669'
+  alias: 'Immersion: turn on in morning'
+  description: ''
+  trigger:
+  - platform: time
+    at: 06:50:00
+  condition:
+  - condition: numeric_state
+    entity_id: sensor.solax_local_battery_soc
+    above: 45
+  - condition: state
+    entity_id: input_boolean.holiday_mode
+    state: 'off'
+  action:
+  - type: turn_on
+    device_id: 38924405974cfa7b8651dd9ad067b108
+    entity_id: switch.immersion_heater
+    domain: switch
+  mode: single
+- id: '1684944583742'
+  alias: 'Immersion: Turn off in morning or low battery'
+  description: ''
+  trigger:
+  - platform: time
+    at: 07:15:00
+  - platform: numeric_state
+    entity_id: sensor.solax_local_battery_soc
+    below: 30
+  condition:
+  - condition: device
+    type: is_on
+    device_id: 38924405974cfa7b8651dd9ad067b108
+    entity_id: switch.immersion_heater
+    domain: switch
+  action:
+  - type: turn_off
+    device_id: 38924405974cfa7b8651dd9ad067b108
+    entity_id: switch.immersion_heater
+    domain: switch
+  mode: single
