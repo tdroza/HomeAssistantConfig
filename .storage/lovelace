@@ -3414,7 +3414,7 @@
                       "icon": "mdi:thermometer-water",
                       "icon_color": "{% if (is_state('switch.immersion_heater','on')) %} orange {% endif %}",
                       "primary": "Immersion heater",
-                      "secondary": "{% if (is_state('switch.immersion_heater','on')) %} Heating for {{ (states('sensor.immersion_run_time') | float * 60) | round(1) | int}} mins{% else %}Off{% endif %}",
+                      "secondary": "{% if (is_state('switch.immersion_heater','on')) %} Heating for {{ (states('sensor.immersion_run_time') | float * 60) | round(0) }} mins{% else %}Off{% endif %}",
                       "tap_action": {
                         "action": "toggle"
                       },
@@ -3439,7 +3439,7 @@
                               "show": true,
                               "value": {
                                 "show": true,
-                                "formatter": "EVAL:function(val,opts) {\n  var runTime = 12 * opts.config.series[0]/100;\n  var hrs = Math.floor(runTime);\n  var mins = Math.round(60* runTime % hrs);\n  return hrs + \"hr \" + mins + \"min\"\n}\n"
+                                "formatter": "EVAL:function(val,opts) {\n  var runTime = 12 * (opts.config.series[0]/100);\n  var hrs = Math.floor(runTime);\n  var mins = Math.round(runTime * 60 % 60);\n  return hrs + \"hr \" + mins + \"min\"\n}\n"
                               }
                             }
                           }
