@@ -15,18 +15,19 @@
               "watt_threshold": 999,
               "max_expected_flow_w": 5500,
               "kw_decimals": 3,
-              "inverted_entities": "battery, grid",
               "use_new_flow_rate_model": true,
               "entities": {
                 "grid": {
-                  "entity": "sensor.solax_local_grid_power"
+                  "entity": "sensor.solax_local_grid_power",
+                  "invert_state": true
                 },
                 "solar": {
                   "entity": "sensor.solax_local_pv_output"
                 },
                 "battery": {
                   "entity": "sensor.solax_local_battery_power",
-                  "state_of_charge": "sensor.solax_local_battery_soc"
+                  "state_of_charge": "sensor.solax_local_battery_soc",
+                  "invert_state": true
                 },
                 "home": {
                   "entity": "sensor.solax_local_load_power",
@@ -58,7 +59,7 @@
                     },
                     {
                       "entity": "sensor.solax_local_load_power",
-                      "name": "House Usage",
+                      "name": "House Load",
                       "icon": "mdi:home-lightning-bolt"
                     },
                     {
@@ -76,7 +77,18 @@
                       "name": "Last updated",
                       "format": "time",
                       "icon": "mdi:history",
-                      "secondary_info": "last-updated"
+                      "secondary_info": "last-updated",
+                      "tap_action": {
+                        "confirmation": {
+                          "text": "Update Solax inverter data now?"
+                        },
+                        "action": "call-service",
+                        "service": "homeassistant.update_entity",
+                        "target": {
+                          "entity_id": "sensor.solax_rest_local"
+                        },
+                        "data": {}
+                      }
                     }
                   ],
                   "title": "Solax Inverter",
@@ -86,6 +98,9 @@
                 {
                   "type": "custom:mushroom-chips-card",
                   "chips": [
+                    {
+                      "type": "spacer"
+                    },
                     {
                       "type": "action",
                       "icon": "mdi:cast",
@@ -98,23 +113,6 @@
                           "dashboard_path": "live-energy",
                           "view_path": "cast"
                         }
-                      }
-                    },
-                    {
-                      "type": "spacer"
-                    },
-                    {
-                      "type": "template",
-                      "entity": "sensor.solax_local",
-                      "icon": "mdi:history",
-                      "content": "Updated {{states.sensor.solax_local.last_updated | relative_time}} ago",
-                      "tap_action": {
-                        "action": "call-service",
-                        "service": "homeassistant.update_entity",
-                        "target": {
-                          "entity_id": "sensor.solax_local"
-                        },
-                        "data": {}
                       }
                     }
                   ]
@@ -171,7 +169,7 @@
               "series": [
                 {
                   "entity": "sensor.solax_local_pv_output",
-                  "name": "PV (Combined)",
+                  "name": "PV",
                   "type": "area",
                   "opacity": 0.25,
                   "show": {
@@ -192,7 +190,7 @@
                 },
                 {
                   "entity": "sensor.solax_local_load_power",
-                  "name": "House load"
+                  "name": "House"
                 },
                 {
                   "entity": "sensor.solax_local_battery_power",
@@ -387,18 +385,19 @@
               "watt_threshold": 999,
               "max_expected_flow_w": 5500,
               "kw_decimals": 3,
-              "inverted_entities": "battery, grid",
               "use_new_flow_rate_model": true,
               "entities": {
                 "grid": {
-                  "entity": "sensor.solax_local_grid_power"
+                  "entity": "sensor.solax_local_grid_power",
+                  "invert_state": true
                 },
                 "solar": {
                   "entity": "sensor.solax_local_pv_output"
                 },
                 "battery": {
                   "entity": "sensor.solax_local_battery_power",
-                  "state_of_charge": "sensor.solax_local_battery_soc"
+                  "state_of_charge": "sensor.solax_local_battery_soc",
+                  "invert_state": true
                 },
                 "home": {
                   "entity": "sensor.solax_local_load_power",
