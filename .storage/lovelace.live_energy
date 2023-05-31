@@ -89,6 +89,10 @@
                         },
                         "data": {}
                       }
+                    },
+                    {
+                      "entity": "sensor.daily_pv",
+                      "name": "Generated today"
                     }
                   ],
                   "title": "Solax Inverter",
@@ -303,7 +307,7 @@
                       "type": "template",
                       "entity": "sensor.solax_local",
                       "icon": "mdi:history",
-                      "content": "Updated {{states.sensor.solax_local.last_updated | relative_time}} ago",
+                      "content": "Updated {{states.sensor.solcast_api_last_polled.last_changed | relative_time}} ago",
                       "tap_action": {
                         "action": "call-service",
                         "service": "solcast_solar.update_forecasts",
@@ -368,6 +372,26 @@
                   "name": "House"
                 }
               ]
+            },
+            {
+              "type": "conditional",
+              "conditions": [
+                {
+                  "entity": "sensor.solax_local_battery_soc",
+                  "state_not": "100"
+                },
+                {
+                  "entity": "sensor.solax_local_battery_power_in",
+                  "state_not": "0"
+                }
+              ],
+              "card": {
+                "type": "custom:mushroom-template-card",
+                "primary": "Time to 100%",
+                "secondary": "{{(60 * (5800*((100-states('sensor.solax_local_battery_soc') | int) / 100)) / states('sensor.solax_local_battery_power_in') | int )|round}} minutes",
+                "icon": "mdi:battery-charging",
+                "badge_icon": ""
+              }
             }
           ]
         },
