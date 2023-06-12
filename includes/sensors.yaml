@@ -387,10 +387,6 @@
   state_topic: "espresense/rooms"
   timeout: 5
   away_timeout: 150
-- platform: lastfm
-  api_key: !secret lastfm_api_key
-  users:
-    - tdroza
 ### Solax Local REST sensor ###
 - platform: rest
   scan_interval: 60
