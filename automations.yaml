@@ -1048,12 +1048,12 @@
   trigger:
   - type: plugged_in
     platform: device
-    device_id: cf4ceb29a2e7464abe92c738f5983356
+    device_id: 477d49fc145f319f69ea1a3b8857f6ea
     entity_id: binary_sensor.toms_phone_is_charging
     domain: binary_sensor
   - type: plugged_in
     platform: device
-    device_id: 39bf23b9b31a661832e43605fcb26390
+    device_id: c51d67872c3edb614fac7a32412e6d7c
     entity_id: binary_sensor.toms_watch_is_charging
     domain: binary_sensor
   - type: plugged_in
@@ -1102,7 +1102,7 @@
   trigger:
   - type: battery_level
     platform: device
-    device_id: cf4ceb29a2e7464abe92c738f5983356
+    device_id: 477d49fc145f319f69ea1a3b8857f6ea
     entity_id: sensor.toms_phone_battery_level
     domain: sensor
     above: 80
@@ -1112,12 +1112,12 @@
   - condition: device
     type: is_on
     device_id: c0673155fc4c6fb27f0f8917212ca42f
-    entity_id: switch.tom_s_phone_charger
+    entity_id: switch.toms_phone_charger
     domain: switch
   action:
   - type: turn_off
     device_id: c0673155fc4c6fb27f0f8917212ca42f
-    entity_id: switch.tom_s_phone_charger
+    entity_id: switch.toms_phone_charger
     domain: switch
   mode: single
 - id: '1603396316886'
