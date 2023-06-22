@@ -2760,3 +2760,71 @@
     entity_id: switch.immersion_heater
     domain: switch
   mode: single
+- id: '1687424935982'
+  alias: Open main bedroom blinds on weekdays
+  description: Opens the blinds at 25% increments every 10 minutes from 6am
+  trigger:
+  - platform: time
+    at: 06:00:00
+  condition:
+  - condition: time
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+  action:
+  - service: cover.set_cover_position
+    data:
+      position: 25
+    target:
+      area_id: main_bedroom
+  - delay:
+      hours: 0
+      minutes: 10
+      seconds: 0
+      milliseconds: 0
+  - service: cover.set_cover_position
+    data:
+      position: 50
+    target:
+      area_id: main_bedroom
+  - delay:
+      hours: 0
+      minutes: 10
+      seconds: 0
+      milliseconds: 0
+  - service: cover.set_cover_position
+    data:
+      position: 75
+    target:
+      area_id: main_bedroom
+  - delay:
+      hours: 0
+      minutes: 10
+      seconds: 0
+      milliseconds: 0
+  - service: cover.set_cover_position
+    data:
+      position: 100
+    target:
+      area_id: main_bedroom
+  mode: single
+- id: '1687424997925'
+  alias: Open main bedroom blinds at weekends
+  description: Opens the blinds at 07:30
+  trigger:
+  - platform: time
+    at: 07:30:00
+  condition:
+  - condition: time
+    weekday:
+    - sat
+    - sun
+  action:
+  - service: cover.open_cover
+    data: {}
+    target:
+      area_id: main_bedroom
+  mode: single
