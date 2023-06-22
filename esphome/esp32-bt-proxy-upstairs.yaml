@@ -6,6 +6,10 @@ esphome:
   name: ${name}
   name_add_mac_suffix: false
 
+esp32:
+  framework:
+    type: esp-idf
+
 bluetooth_proxy:
   active: true
   
