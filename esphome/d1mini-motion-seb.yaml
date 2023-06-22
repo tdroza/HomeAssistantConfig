@@ -49,7 +49,7 @@ binary_sensor:
     name: "${friendly_name} Motion"
     device_class: motion
   - platform: status
-    name: "${friendly_name}  Status"
+    name: "${friendly_name} Status"
 
 text_sensor:
   - platform: version
