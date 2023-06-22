@@ -147,7 +147,7 @@
               "type": "custom:apexcharts-card",
               "header": {
                 "show": true,
-                "title": "PV",
+                "title": "5-min Average",
                 "show_states": true,
                 "colorize_states": true
               },
@@ -190,7 +190,11 @@
                 },
                 {
                   "entity": "sensor.solax_local_grid_power",
-                  "name": "Grid"
+                  "name": "Grid",
+                  "group_by": {
+                    "duration": "5min",
+                    "func": "min"
+                  }
                 },
                 {
                   "entity": "sensor.solax_local_load_power",
@@ -410,6 +414,8 @@
               "max_expected_flow_w": 5500,
               "kw_decimals": 3,
               "use_new_flow_rate_model": true,
+              "full_size": true,
+              "style_ha_card": "border: none;\nbackground: none;\n",
               "entities": {
                 "grid": {
                   "entity": "sensor.solax_local_grid_power",
