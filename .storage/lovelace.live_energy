@@ -167,7 +167,7 @@
                 "extend_to": "now",
                 "group_by": {
                   "duration": "5min",
-                  "func": "max"
+                  "func": "avg"
                 }
               },
               "series": [
@@ -182,19 +182,21 @@
                 },
                 {
                   "entity": "sensor.solax_local_pv1_output",
-                  "name": "East"
+                  "name": "East",
+                  "show": {
+                    "hidden_by_default": true
+                  }
                 },
                 {
                   "entity": "sensor.solax_local_pv2_output",
-                  "name": "South"
+                  "name": "South",
+                  "show": {
+                    "hidden_by_default": true
+                  }
                 },
                 {
                   "entity": "sensor.solax_local_grid_power",
-                  "name": "Grid",
-                  "group_by": {
-                    "duration": "5min",
-                    "func": "min"
-                  }
+                  "name": "Grid"
                 },
                 {
                   "entity": "sensor.solax_local_load_power",
@@ -408,14 +410,13 @@
           "cards": [
             {
               "type": "custom:power-flow-card-plus",
-              "title": "Live Energy",
               "clickable_entities": true,
               "watt_threshold": 999,
               "max_expected_flow_w": 5500,
               "kw_decimals": 3,
               "use_new_flow_rate_model": true,
               "full_size": true,
-              "style_ha_card": "border: none;\nbackground: none;\n",
+              "style_ha_card": "border: none;\nbackground: none;\nscale: 0.75;\n",
               "entities": {
                 "grid": {
                   "entity": "sensor.solax_local_grid_power",
