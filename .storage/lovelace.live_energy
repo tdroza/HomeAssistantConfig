@@ -4,36 +4,56 @@
   "key": "lovelace.live_energy",
   "data": {
     "config": {
+      "decluttering_templates": {
+        "power-flow": {
+          "default": [
+            {
+              "fullsize": false
+            }
+          ],
+          "card": {
+            "type": "custom:power-flow-card-plus",
+            "title": "[[title]]",
+            "clickable_entities": true,
+            "watt_threshold": 999,
+            "max_expected_flow_w": 5500,
+            "kw_decimals": 3,
+            "use_new_flow_rate_model": true,
+            "style_ha_card": "[[style]]",
+            "full_size": "[[fullsize]]",
+            "entities": {
+              "grid": {
+                "entity": "sensor.solax_local_grid_power",
+                "invert_state": true
+              },
+              "solar": {
+                "entity": "sensor.solax_local_pv_output"
+              },
+              "battery": {
+                "entity": "sensor.solax_local_battery_power",
+                "state_of_charge": "sensor.solax_local_battery_soc",
+                "invert_state": true
+              },
+              "home": {
+                "entity": "sensor.solax_local_load_power",
+                "override_state": true
+              }
+            }
+          }
+        }
+      },
       "views": [
         {
           "title": "Home",
           "cards": [
             {
-              "type": "custom:power-flow-card-plus",
-              "title": "Live Energy",
-              "clickable_entities": true,
-              "watt_threshold": 999,
-              "max_expected_flow_w": 5500,
-              "kw_decimals": 3,
-              "use_new_flow_rate_model": true,
-              "entities": {
-                "grid": {
-                  "entity": "sensor.solax_local_grid_power",
-                  "invert_state": true
-                },
-                "solar": {
-                  "entity": "sensor.solax_local_pv_output"
-                },
-                "battery": {
-                  "entity": "sensor.solax_local_battery_power",
-                  "state_of_charge": "sensor.solax_local_battery_soc",
-                  "invert_state": true
-                },
-                "home": {
-                  "entity": "sensor.solax_local_load_power",
-                  "override_state": true
+              "type": "custom:decluttering-card",
+              "template": "power-flow",
+              "variables": [
+                {
+                  "title": "Live Energy"
                 }
-              }
+              ]
             },
             {
               "type": "vertical-stack",
@@ -409,32 +429,19 @@
           "badges": [],
           "cards": [
             {
-              "type": "custom:power-flow-card-plus",
-              "clickable_entities": true,
-              "watt_threshold": 999,
-              "max_expected_flow_w": 5500,
-              "kw_decimals": 3,
-              "use_new_flow_rate_model": true,
-              "full_size": true,
-              "style_ha_card": "border: none;\nbackground: none;\nscale: 0.75;\n",
-              "entities": {
-                "grid": {
-                  "entity": "sensor.solax_local_grid_power",
-                  "invert_state": true
+              "type": "custom:decluttering-card",
+              "template": "power-flow",
+              "variables": [
+                {
+                  "title": ""
                 },
-                "solar": {
-                  "entity": "sensor.solax_local_pv_output"
+                {
+                  "style": "border: none; background: none; scale: 0.75;"
                 },
-                "battery": {
-                  "entity": "sensor.solax_local_battery_power",
-                  "state_of_charge": "sensor.solax_local_battery_soc",
-                  "invert_state": true
-                },
-                "home": {
-                  "entity": "sensor.solax_local_load_power",
-                  "override_state": true
+                {
+                  "fullsize": true
                 }
-              }
+              ]
             }
           ]
         }
