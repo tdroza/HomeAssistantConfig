@@ -1222,7 +1222,7 @@
         value_template: '{{ states(podcast_counter) | int >= number_of_podcasts |
           int }}'
       sequence:
-      - service: counter.configure
+      - service: counter.set_value
         data:
           value: '{{ number_of_podcasts - 1}}'
           entity_id: '{{podcast_counter}}'
@@ -1247,7 +1247,7 @@
       - condition: template
         value_template: '{{ states(podcast_counter) | int == 0 }} '
       sequence:
-      - service: counter.configure
+      - service: counter.set_value
         data:
           value: '{{ number_of_podcasts | int - 1 }}'
           entity_id: '{{podcast_counter}}'
@@ -2150,7 +2150,7 @@
         '
   mode: single
 - id: '1664188667644'
-  alias: Main Bedroom Opple Light Switch
+  alias: 'Lightswitch: Main Bedroom Opple'
   description: ''
   use_blueprint:
     path: Jarne_Roussard/aqara-opple-4-buttons-for-zha.yaml
@@ -2225,7 +2225,7 @@
         domain: light
         brightness_pct: 60
 - id: '1664293977688'
-  alias: Office Opple Light Switch
+  alias: 'Lightswitch: Office opple'
   description: ''
   use_blueprint:
     path: Jarne_Roussard/aqara-opple-4-buttons-for-zha.yaml
@@ -2827,4 +2827,203 @@
     data: {}
     target:
       area_id: main_bedroom
+  mode: single
+- id: '1688978901597'
+  alias: 'Lightswitch: Seb''s Opple'
+  description: ''
+  use_blueprint:
+    path: Jarne_Roussard/aqara-opple-4-buttons-for-zha.yaml
+    input:
+      remote: 66d322a356e1c6872bc9d49d43dd9a8e
+      button_top_left_single_press:
+      - type: turn_off
+        device_id: d06086fc62c3d9eb55cc76e0ae5de10a
+        entity_id: 8cbf964adee97b7aa253dbe942e02997
+        domain: light
+      button_top_left_double_press:
+      - type: turn_off
+        device_id: d06086fc62c3d9eb55cc76e0ae5de10a
+        entity_id: 8cbf964adee97b7aa253dbe942e02997
+        domain: light
+      - type: turn_off
+        device_id: 4fcff377266e9e7d5f9b7098401120b6
+        entity_id: 0f90b36a06ba8e8df751b30d18eac37c
+        domain: light
+      button_top_left_hold_in:
+      - service: light.turn_on
+        data:
+          brightness_pct: 30
+        target:
+          device_id:
+          - d06086fc62c3d9eb55cc76e0ae5de10a
+      button_top_right_single_press:
+      - type: turn_on
+        device_id: d06086fc62c3d9eb55cc76e0ae5de10a
+        entity_id: 8cbf964adee97b7aa253dbe942e02997
+        domain: light
+        brightness_pct: 100
+      button_top_right_double_press:
+      - type: turn_on
+        device_id: d06086fc62c3d9eb55cc76e0ae5de10a
+        entity_id: 8cbf964adee97b7aa253dbe942e02997
+        domain: light
+        brightness_pct: 100
+      - type: turn_on
+        device_id: 4fcff377266e9e7d5f9b7098401120b6
+        entity_id: 0f90b36a06ba8e8df751b30d18eac37c
+        domain: light
+      button_top_right_hold_release: []
+      button_top_right_hold_in:
+      - type: turn_on
+        device_id: d06086fc62c3d9eb55cc76e0ae5de10a
+        entity_id: 8cbf964adee97b7aa253dbe942e02997
+        domain: light
+        brightness_pct: 70
+      button_bottom_left_single_press:
+      - type: turn_off
+        device_id: 4fcff377266e9e7d5f9b7098401120b6
+        entity_id: 0f90b36a06ba8e8df751b30d18eac37c
+        domain: light
+      button_bottom_left_double_press:
+      - type: turn_off
+        device_id: d06086fc62c3d9eb55cc76e0ae5de10a
+        entity_id: 8cbf964adee97b7aa253dbe942e02997
+        domain: light
+      - type: turn_off
+        device_id: 4fcff377266e9e7d5f9b7098401120b6
+        entity_id: 0f90b36a06ba8e8df751b30d18eac37c
+        domain: light
+      button_bottom_left_hold_in: []
+      button_bottom_right_single_press:
+      - type: turn_on
+        device_id: 4fcff377266e9e7d5f9b7098401120b6
+        entity_id: 0f90b36a06ba8e8df751b30d18eac37c
+        domain: light
+      button_bottom_right_double_press:
+      - type: turn_on
+        device_id: d06086fc62c3d9eb55cc76e0ae5de10a
+        entity_id: 8cbf964adee97b7aa253dbe942e02997
+        domain: light
+        brightness_pct: 100
+      - type: turn_on
+        device_id: 4fcff377266e9e7d5f9b7098401120b6
+        entity_id: 0f90b36a06ba8e8df751b30d18eac37c
+        domain: light
+      button_bottom_right_hold_in: []
+      button_bottom_right_triple_press:
+      - service: media_player.play_media
+        data:
+          media_content_id: https://firebasestorage.googleapis.com/v0/b/storytime-7c623.appspot.com/o/stories%2F4Z0FQvDMnNyIOtJeBa93%2Frecordings%2FHzFp8GQRWwFEbkB4hSLw%2Frecordings%2Faudio.mp3?alt=media&token=b107fb98-e8af-4d60-908c-3be902cc76f6
+          media_content_type: music
+        target:
+          device_id: 63ae3e04c8c840288b8dba1a6b818dae
+- id: '1688981578290'
+  alias: 'Lightswitch: Reu''s Room Opple'
+  description: ''
+  use_blueprint:
+    path: Jarne_Roussard/aqara-opple-4-buttons-for-zha.yaml
+    input:
+      remote: 83df1f62053159716b814cfd72b827df
+      button_top_left_single_press:
+      - type: turn_off
+        device_id: 61f89eb89fac9724606bb7e0ffc52c9b
+        entity_id: c3b9816ec82bfeb67dcd86d19b0adac7
+        domain: light
+      button_top_left_double_press:
+      - type: turn_off
+        device_id: 61f89eb89fac9724606bb7e0ffc52c9b
+        entity_id: c3b9816ec82bfeb67dcd86d19b0adac7
+        domain: light
+      - type: turn_off
+        device_id: e04b748fc61f7ca1d9a4a202ddcefe7a
+        entity_id: f035cd56447801b7312fbce5f9453fa1
+        domain: light
+      button_top_left_hold_in:
+      - service: light.turn_on
+        data:
+          brightness_pct: 30
+        target:
+          device_id:
+          - d06086fc62c3d9eb55cc76e0ae5de10a
+      - type: turn_on
+        device_id: 61f89eb89fac9724606bb7e0ffc52c9b
+        entity_id: c3b9816ec82bfeb67dcd86d19b0adac7
+        domain: light
+        brightness_pct: 30
+      button_top_right_single_press:
+      - type: turn_on
+        device_id: 61f89eb89fac9724606bb7e0ffc52c9b
+        entity_id: c3b9816ec82bfeb67dcd86d19b0adac7
+        domain: light
+      button_top_right_double_press:
+      - type: turn_on
+        device_id: 61f89eb89fac9724606bb7e0ffc52c9b
+        entity_id: c3b9816ec82bfeb67dcd86d19b0adac7
+        domain: light
+        brightness_pct: 100
+      - type: turn_on
+        device_id: e04b748fc61f7ca1d9a4a202ddcefe7a
+        entity_id: f035cd56447801b7312fbce5f9453fa1
+        domain: light
+      button_top_right_hold_release: []
+      button_top_right_hold_in:
+      - type: turn_on
+        device_id: 61f89eb89fac9724606bb7e0ffc52c9b
+        entity_id: c3b9816ec82bfeb67dcd86d19b0adac7
+        domain: light
+        brightness_pct: 70
+      button_bottom_left_single_press:
+      - type: turn_off
+        device_id: e04b748fc61f7ca1d9a4a202ddcefe7a
+        entity_id: f035cd56447801b7312fbce5f9453fa1
+        domain: light
+      button_bottom_left_double_press:
+      - type: turn_off
+        device_id: 61f89eb89fac9724606bb7e0ffc52c9b
+        entity_id: c3b9816ec82bfeb67dcd86d19b0adac7
+        domain: light
+      - type: turn_off
+        device_id: e04b748fc61f7ca1d9a4a202ddcefe7a
+        entity_id: f035cd56447801b7312fbce5f9453fa1
+        domain: light
+      button_bottom_left_hold_in: []
+      button_bottom_right_single_press:
+      - type: turn_on
+        device_id: e04b748fc61f7ca1d9a4a202ddcefe7a
+        entity_id: f035cd56447801b7312fbce5f9453fa1
+        domain: light
+      button_bottom_right_double_press:
+      - type: turn_on
+        device_id: 61f89eb89fac9724606bb7e0ffc52c9b
+        entity_id: c3b9816ec82bfeb67dcd86d19b0adac7
+        domain: light
+        brightness_pct: 100
+      - type: turn_on
+        device_id: e04b748fc61f7ca1d9a4a202ddcefe7a
+        entity_id: f035cd56447801b7312fbce5f9453fa1
+        domain: light
+      button_bottom_right_hold_in: []
+      button_bottom_right_triple_press: []
+- id: '1688998873268'
+  alias: Hive Hot Water Toggle Control
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - input_boolean.heat_pump_water
+  condition: []
+  action:
+  - service: water_heater.set_operation_mode
+    data:
+      operation_mode: eco
+    target:
+      entity_id: water_heater.hive_thermostat
+  - condition: state
+    entity_id: input_boolean.heat_pump_water
+    state: 'on'
+  - service: water_heater.set_operation_mode
+    data:
+      operation_mode: 'on'
+    target:
+      entity_id: water_heater.hive_thermostat
   mode: single
