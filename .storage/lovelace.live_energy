@@ -17,7 +17,7 @@
             "clickable_entities": true,
             "watt_threshold": 999,
             "max_expected_flow_w": 5500,
-            "kw_decimals": 3,
+            "kw_decimals": 2,
             "use_new_flow_rate_model": true,
             "style_ha_card": "[[style]]",
             "full_size": "[[fullsize]]",
@@ -414,7 +414,7 @@
               "card": {
                 "type": "custom:mushroom-template-card",
                 "primary": "Time to 100%",
-                "secondary": "{{(60 * (5800*((100-states('sensor.solax_local_battery_soc') | int) / 100)) / states('sensor.solax_local_battery_power_in') | int )|round}} minutes",
+                "secondary": "{{(60 * (58*((100-states('sensor.solax_local_battery_soc') | int) )) / states('sensor.solax_local_battery_power_in') | int )|round}} minutes",
                 "icon": "mdi:battery-charging",
                 "badge_icon": ""
               }
@@ -436,7 +436,7 @@
                   "title": ""
                 },
                 {
-                  "style": "border: none; background: none; scale: 0.75;"
+                  "style": "border: none; background: none; scale: 0.85;top:-70px"
                 },
                 {
                   "fullsize": true
