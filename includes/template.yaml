@@ -208,6 +208,7 @@
       state: "{{ states('sensor.solax_local_ac_power')| float(default=0) - states('sensor.solax_local_grid_power') | int(default=0) }}"
       unit_of_measurement: "W"
       device_class: "power"
+      icon: "mdi:home-import-outline"
       
 ### Excess solar (difference between PV output and house consumption)
     - name: "Solar Excess"
