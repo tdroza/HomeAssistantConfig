@@ -171,3 +171,13 @@ nudge_light_dimmer:
         | int - 25]) }}'
   mode: single
   icon: mdi:upload
+energy_dashboard:
+  alias: EnergyDashboard
+  sequence:
+  - service: cast.show_lovelace_view
+    data:
+      entity_id: media_player.living_room_display
+      dashboard_path: live-energy
+      view_path: cast
+  mode: single
+  icon: mdi:home-battery-outline
