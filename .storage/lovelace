@@ -3389,7 +3389,10 @@
                 {
                   "type": "custom:mushroom-entity-card",
                   "entity": "input_boolean.heat_pump_water",
-                  "name": "Toggle Water Heater"
+                  "name": "Toggle Water Heater",
+                  "tap_action": {
+                    "action": "toggle"
+                  }
                 }
               ]
             }
