@@ -2893,7 +2893,11 @@
         device_id: 4fcff377266e9e7d5f9b7098401120b6
         entity_id: 0f90b36a06ba8e8df751b30d18eac37c
         domain: light
-      button_bottom_left_hold_in: []
+      button_bottom_left_hold_in:
+      - service: media_player.volume_down
+        data: {}
+        target:
+          entity_id: media_player.seb_s_home
       button_bottom_right_single_press:
       - type: turn_on
         device_id: 4fcff377266e9e7d5f9b7098401120b6
@@ -2909,7 +2913,11 @@
         device_id: 4fcff377266e9e7d5f9b7098401120b6
         entity_id: 0f90b36a06ba8e8df751b30d18eac37c
         domain: light
-      button_bottom_right_hold_in: []
+      button_bottom_right_hold_in:
+      - service: media_player.volume_up
+        data: {}
+        target:
+          entity_id: media_player.seb_s_home
       button_bottom_right_triple_press:
       - service: media_player.play_media
         data:
@@ -2986,7 +2994,11 @@
         device_id: e04b748fc61f7ca1d9a4a202ddcefe7a
         entity_id: f035cd56447801b7312fbce5f9453fa1
         domain: light
-      button_bottom_left_hold_in: []
+      button_bottom_left_hold_in:
+      - service: media_player.volume_down
+        data: {}
+        target:
+          entity_id: media_player.reuben_s_room_speaker
       button_bottom_right_single_press:
       - type: turn_on
         device_id: e04b748fc61f7ca1d9a4a202ddcefe7a
@@ -3002,7 +3014,11 @@
         device_id: e04b748fc61f7ca1d9a4a202ddcefe7a
         entity_id: f035cd56447801b7312fbce5f9453fa1
         domain: light
-      button_bottom_right_hold_in: []
+      button_bottom_right_hold_in:
+      - service: media_player.volume_up
+        data: {}
+        target:
+          entity_id: media_player.reuben_s_room_speaker
       button_bottom_right_triple_press: []
 - id: '1688998873268'
   alias: Hive Hot Water Toggle Control
