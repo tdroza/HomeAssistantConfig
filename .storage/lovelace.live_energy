@@ -220,7 +220,10 @@
                 },
                 {
                   "entity": "sensor.solax_local_load_power",
-                  "name": "House"
+                  "name": "House",
+                  "show": {
+                    "in_brush": true
+                  }
                 },
                 {
                   "entity": "sensor.solax_local_battery_power",
@@ -282,6 +285,7 @@
                       "color": "#fed8b1"
                     }
                   ],
+                  "name": "Forecast",
                   "data_generator": "const now = new Date(); const data = [];\ndata.push([now.setHours(0,0,0,0), hass.states['sensor.solcast_forecast_today'].state]);\ndata.push([now.setDate(now.getDate()+1), hass.states['sensor.solcast_forecast_tomorrow'].state]);\ndata.push([now.setDate(now.getDate()+1), hass.states['sensor.solcast_forecast_d3'].state]);\ndata.push([now.setDate(now.getDate()+1), hass.states['sensor.solcast_forecast_d4'].state]);\ndata.push([now.setDate(now.getDate()+1), hass.states['sensor.solcast_forecast_d5'].state]);\ndata.push([now.setDate(now.getDate()+1), hass.states['sensor.solcast_forecast_d6'].state]);\ndata.push([now.setDate(now.getDate()+1), hass.states['sensor.solcast_forecast_d7'].state]);\nreturn data.reverse();\n"
                 }
               ]
