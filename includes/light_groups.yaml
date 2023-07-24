@@ -1,30 +1,4 @@
-- platform: group
-  name: Living Room Light Group
-  entities:
-    - light.living_room_1
-    - light.living_room_2
-    - light.living_room_ceiling
-- platform: group
-  name: Main Bedroom Light Group
-  entities:
-    - light.main_bedroom_ceiling
-    - light.main_bedroom_bloom
-- platform: group
-  name: Reubens Bedroom Light Group
-  entities:
-    - light.rname
-    - light.reubens_ceiling
-- platform: group
-  name: Sebs Bedroom Light Group
-  entities:
-    - light.sebs_ceiling
-    - light.sebs_lamp
-- platform: group
-  name: Second Bedroom Light Group
-  entities:
-    - light.second_bedroom_ceiling
-    - light.toms_desk_master
-    - light.annas_desk
+
 - platform: group
   name: Upstairs Light Group
   entities:

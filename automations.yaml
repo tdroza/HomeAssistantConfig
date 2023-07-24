@@ -1561,8 +1561,8 @@
     target:
       entity_id:
       - light.reubens_ceiling
-      - light.sebs_ceiling
       - light.main_bedroom_bloom
+      - light.sebs_ceiling
   mode: single
 - id: '1621850581589'
   alias: Close the fridge door
@@ -2685,8 +2685,16 @@
     device_id: ec63665887421c732ef2e422c5514eac
     entity_id: light.solar_lamp
     domain: light
-  condition: []
+  condition:
+  - condition: state
+    entity_id: light.solar_lamp
+    state: 'on'
   action:
+  - service: select.select_option
+    data:
+      option: SolarState
+    target:
+      entity_id: select.solar_lamp_preset
   - service: select.select_option
     data:
       option: '{{ states(''input_select.solarlamp_palette'') }}'
@@ -3021,7 +3029,7 @@
           entity_id: media_player.reuben_s_room_speaker
       button_bottom_right_triple_press: []
 - id: '1688998873268'
-  alias: Hive Hot Water Toggle Control
+  alias: Heat Pump Water Toggle Control
   description: ''
   trigger:
   - platform: state
@@ -3042,4 +3050,60 @@
       operation_mode: 'on'
     target:
       entity_id: water_heater.hive_thermostat
+  mode: single
+- id: '1689681748696'
+  alias: Heat pump water turn off after target duration
+  description: ''
+  trigger:
+  - platform: template
+    value_template: "{{(as_timestamp(now()) -\n  as_timestamp(states.input_boolean.heat_pump_water.last_changed)
+      -\n  (3600*states('input_number.heatpump_water_target_runtime')|int) ) > 0 }}"
+  condition:
+  - condition: state
+    entity_id: input_boolean.heat_pump_water
+    state: 'on'
+  action:
+  - service: input_boolean.turn_off
+    data: {}
+    target:
+      entity_id: input_boolean.heat_pump_water
+  mode: single
+- id: '1689856553981'
+  alias: Immersion heater toggle control
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - input_boolean.immersion_heater
+  condition: []
+  action:
+  - type: turn_off
+    device_id: 38924405974cfa7b8651dd9ad067b108
+    entity_id: 5e6faac2be52566ab5fa958e0bb8745c
+    domain: switch
+  - condition: state
+    entity_id: input_boolean.immersion_heater
+    state: 'on'
+  - type: turn_on
+    device_id: 38924405974cfa7b8651dd9ad067b108
+    entity_id: 5e6faac2be52566ab5fa958e0bb8745c
+    domain: switch
+  mode: single
+- id: '1689857676594'
+  alias: 'Immersion heater: Turn off after target duration'
+  description: ''
+  trigger:
+  - platform: template
+    value_template: "{{(as_timestamp(now()) -\n  as_timestamp(states.input_boolean.immersion_heater.last_changed)
+      -\n  (3600*states('input_number.immersion_target_runtime')|int) ) > 0 }}"
+  condition:
+  - condition: state
+    entity_id: switch.immersion_heater
+    state: 'on'
+  action:
+  - service: input_boolean.turn_off
+    data: {}
+    target:
+      entity_id:
+      - input_boolean.immersion_heater
   mode: single
