@@ -438,3 +438,12 @@
   duration:
     hours: 24
     
+- platform: history_stats
+  name: heat_pump_water_run_time
+  entity_id: water_heater.hive_thermostat
+  state: "on"
+  type: time
+  start: "{{ now().replace(hour=0, minute=0, second=0, microsecond=0) }}"
+  duration:
+    hours: 24
+    
