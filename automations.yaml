@@ -3057,7 +3057,8 @@
   trigger:
   - platform: template
     value_template: "{{(as_timestamp(now()) -\n  as_timestamp(states.input_boolean.heat_pump_water.last_changed)
-      -\n  (3600*states('input_number.heatpump_water_target_runtime')|int) ) > 0 }}"
+      -\n  (3600*states('input_number.heatpump_water_target_runtime')|float) ) > 0
+      }}"
   condition:
   - condition: state
     entity_id: input_boolean.heat_pump_water
