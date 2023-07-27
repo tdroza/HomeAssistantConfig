@@ -37,6 +37,11 @@
               "home": {
                 "entity": "sensor.solax_local_load_power",
                 "override_state": true
+              },
+              "individual1": {
+                "entity": "sensor.sonoff_10003a0e20_power",
+                "name": "Washer",
+                "icon": "mdi:washing-machine"
               }
             }
           }

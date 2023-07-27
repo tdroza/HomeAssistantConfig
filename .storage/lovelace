@@ -600,7 +600,7 @@
                       "hold_action": {
                         "action": "toggle"
                       },
-                      "badge_color": "{% if is_state('switch.immersion_heater','on') %}\norange\n{% elif is_state('switch.heated_airer','on') %}\ngreen\n{% endif %}",
+                      "badge_color": "{% if is_state('switch.immersion_heater','on') %}\norange\n{% elif is_state('water_heater.hive_thermostat','on') %}\nblue\n{% elif is_state('climate.hive_thermostat','heat') %}\nred\n{% elif is_state('switch.heated_airer','on') %}\ngreen\n{% endif %}",
                       "badge_icon": "{% if is_state('switch.immersion_heater','on') %}\nmdi:thermometer-water\n{% elif is_state('water_heater.hive_thermostat','on') %}\nmdi:water-boiler\n{% elif is_state('climate.hive_thermostat','heat') %}\nmdi:heat-pump-outline\n{% elif is_state('switch.heated_airer','on') %}\nmdi:tumble-dryer\n{% endif %}"
                     }
                   ]
@@ -3151,6 +3151,17 @@
           "badges": [],
           "cards": [
             {
+              "type": "custom:mushroom-climate-card",
+              "entity": "climate.hive_thermostat",
+              "hvac_modes": [
+                "auto",
+                "heat",
+                "off"
+              ],
+              "collapsible_controls": false,
+              "show_temperature_control": true
+            },
+            {
               "type": "vertical-stack",
               "cards": [
                 {
@@ -3169,6 +3180,16 @@
                       "type": "custom:multiple-entity-row"
                     }
                   ]
+                },
+                {
+                  "type": "custom:mushroom-entity-card",
+                  "entity": "automation.washer_notify_done",
+                  "name": "Washer notifications",
+                  "fill_container": false,
+                  "icon": "mdi:bell-outline",
+                  "tap_action": {
+                    "action": "toggle"
+                  }
                 },
                 {
                   "type": "custom:mushroom-template-card",
@@ -3202,7 +3223,7 @@
                         "cards": [
                           {
                             "type": "custom:mushroom-template-card",
-                            "primary": "Heating",
+                            "primary": "Heating Airer",
                             "secondary": "Requested: {{ as_timestamp(states('sensor.airer_requested_power')) | timestamp_custom('%H:%M')}}",
                             "icon": "mdi:power",
                             "icon_color": "green",
@@ -3256,16 +3277,6 @@
               }
             },
             {
-              "type": "custom:mushroom-entity-card",
-              "entity": "automation.washer_notify_done",
-              "name": "Washer notifications",
-              "fill_container": false,
-              "icon": "mdi:bell-outline",
-              "tap_action": {
-                "action": "toggle"
-              }
-            },
-            {
               "type": "vertical-stack",
               "cards": [
                 {
@@ -3277,7 +3288,7 @@
                         {
                           "type": "custom:mushroom-entity-card",
                           "entity": "input_boolean.immersion_heater",
-                          "name": "Immersion Heater",
+                          "name": "Toggle Immersion Heater",
                           "tap_action": {
                             "action": "toggle"
                           },
@@ -3287,7 +3298,7 @@
                           "type": "custom:mushroom-template-card",
                           "icon": "mdi:thermometer-water",
                           "icon_color": "{% if (is_state('switch.immersion_heater','on')) %} orange {% endif %}",
-                          "primary": "Immersion status",
+                          "primary": "Immersion Status",
                           "secondary": "{% if (is_state('switch.immersion_heater','on')) %} Heating since {{ as_timestamp(states.input_boolean.immersion_heater.last_changed) | timestamp_custom(\"%H:%M\") }}{% else %}Off{% endif %}",
                           "tap_action": {
                             "action": "none"
@@ -3395,90 +3406,99 @@
                         "as_duration": "hour",
                         "extremas": true
                       }
+                    },
+                    {
+                      "entity": "sensor.heat_pump_water_run_time",
+                      "name": "HeatPump Water",
+                      "type": "column",
+                      "group_by": {
+                        "func": "last",
+                        "duration": "1d"
+                      },
+                      "show": {
+                        "as_duration": "hour",
+                        "extremas": true
+                      }
                     }
                   ]
                 }
               ]
             },
             {
-              "type": "custom:mushroom-climate-card",
-              "entity": "climate.hive_thermostat",
-              "hvac_modes": [
-                "auto",
-                "heat",
-                "off"
-              ],
-              "collapsible_controls": false,
-              "show_temperature_control": true
-            },
-            {
-              "type": "horizontal-stack",
+              "type": "vertical-stack",
               "cards": [
                 {
-                  "type": "vertical-stack",
+                  "type": "horizontal-stack",
                   "cards": [
                     {
-                      "type": "custom:mushroom-entity-card",
-                      "entity": "water_heater.hive_thermostat"
-                    },
-                    {
-                      "type": "custom:mushroom-entity-card",
-                      "entity": "input_boolean.heat_pump_water",
-                      "name": "Toggle Water Heater",
-                      "tap_action": {
-                        "action": "toggle"
-                      },
-                      "secondary_info": "last-changed"
-                    },
-                    {
-                      "type": "conditional",
-                      "conditions": [
+                      "type": "vertical-stack",
+                      "cards": [
                         {
+                          "type": "custom:mushroom-entity-card",
                           "entity": "input_boolean.heat_pump_water",
-                          "state": "on"
+                          "name": "Toggle Water Heater",
+                          "tap_action": {
+                            "action": "toggle"
+                          },
+                          "secondary_info": "last-changed",
+                          "icon": "mdi:power"
+                        },
+                        {
+                          "type": "custom:mushroom-entity-card",
+                          "entity": "water_heater.hive_thermostat",
+                          "name": "Water Heater Status"
                         }
-                      ],
-                      "card": {
-                        "type": "custom:mushroom-number-card",
-                        "entity": "input_number.heatpump_water_target_runtime",
-                        "icon": "mdi:timer-sand-complete",
-                        "name": "Water Target Runtime"
-                      }
+                      ]
+                    },
+                    {
+                      "type": "custom:apexcharts-card",
+                      "chart_type": "radialBar",
+                      "header": {
+                        "show": false
+                      },
+                      "apex_config": {
+                        "legend": {
+                          "show": false
+                        },
+                        "chart": {
+                          "height": "165px"
+                        },
+                        "plotOptions": {
+                          "radialBar": {
+                            "dataLabels": {
+                              "show": true,
+                              "value": {
+                                "show": true,
+                                "formatter": "EVAL:function(val,opts) {\n  var runTime = 12 * (opts.config.series[0]/100);\n  var hrs = Math.floor(runTime);\n  var mins = Math.round(runTime * 60 % 60);\n  return hrs + \"hr \" + mins + \"min\"\n}\n"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "series": [
+                        {
+                          "entity": "sensor.heat_pump_water_run_time",
+                          "max": 12,
+                          "name": "Run time"
+                        }
+                      ]
                     }
                   ]
                 },
                 {
-                  "type": "custom:apexcharts-card",
-                  "chart_type": "radialBar",
-                  "header": {
-                    "show": false
-                  },
-                  "apex_config": {
-                    "legend": {
-                      "show": false
-                    },
-                    "chart": {
-                      "height": "165px"
-                    },
-                    "plotOptions": {
-                      "radialBar": {
-                        "dataLabels": {
-                          "show": true,
-                          "value": {
-                            "show": true,
-                            "formatter": "EVAL:function(val,opts) {\n  var runTime = 12 * (opts.config.series[0]/100);\n  var hrs = Math.floor(runTime);\n  var mins = Math.round(runTime * 60 % 60);\n  return hrs + \"hr \" + mins + \"min\"\n}\n"
-                          }
-                        }
-                      }
-                    }
-                  },
-                  "series": [
+                  "type": "conditional",
+                  "conditions": [
                     {
-                      "entity": "sensor.heat_pump_water_run_time",
-                      "max": 12,
-                      "name": "Run time"
+                      "entity": "input_boolean.heat_pump_water",
+                      "state": "on"
                     }
-                  ]
+                  ],
+                  "card": {
+                    "type": "custom:mushroom-number-card",
+                    "entity": "input_number.heatpump_water_target_runtime",
+                    "icon": "mdi:timer-sand-complete",
+                    "name": "Water Target Runtime"
+                  }
                 }
               ]
             }
