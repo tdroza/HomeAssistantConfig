@@ -6,6 +6,28 @@
     - name: airer_requested_power
       state: "{{ now() }}" 
 - sensor:
+    - name: 'Current Grid Direction'
+      state: >-
+        {% if states('sensor.solax_local_grid_power') | float < 0 %}
+        {{'import'}}
+        {% else %}
+        {{'export'}}
+        {% endif %}
+      icon: >-
+        {% if is_state('sensor.current_grid_direction','import') %}
+        {{ 'mdi:home-import-outline'}}
+        {% else %}
+        {{ 'mdi:home-export_outline'}}
+        {% endif %}
+    - name: 'Current Grid Rate'
+      state: >-
+        {% if is_state('sensor.current_grid_direction','import') %}
+        {{states('sensor.octopus_energy_electricity_22l3131941_2380000814991_current_rate')|float * 100 }}
+        {% else %}
+        {{states('sensor.octopus_energy_electricity_22l3131941_2394300262296_export_current_rate')|float * 100 }}
+        {% endif %}
+      icon: 'mdi:piggy-bank'
+      unit_of_measurement: 'p'
 ### Local sensor readings ###
     # Each valid SN seems to be 10 characters
     - name: solax_local

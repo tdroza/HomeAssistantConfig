@@ -24,6 +24,11 @@
             "entities": {
               "grid": {
                 "entity": "sensor.solax_local_grid_power",
+                "secondary_info": {
+                  "entity": "sensor.current_grid_rate",
+                  "decimals": 2,
+                  "unit_of_measurement": "p"
+                },
                 "invert_state": true
               },
               "solar": {
