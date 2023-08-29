@@ -161,11 +161,13 @@
     from: BJSS
     platform: state
     to: not_home
+    id: tom
   - entity_id: person.anna
     for: 00:02:00
     from: AD Work
     platform: state
     to: not_home
+    id: anna
   condition:
   - after: '15:30:00'
     condition: time
@@ -180,6 +182,15 @@
   trigger:
   - entity_id:
     - person.tom
+    for:
+      hours: 0
+      minutes: 2
+      seconds: 0
+    from: Leeds Station
+    platform: state
+    to: not_home
+    id: tom
+  - entity_id:
     - person.anna
     for:
       hours: 0
@@ -188,12 +199,20 @@
     from: Leeds Station
     platform: state
     to: not_home
+    id: anna
   condition:
   - after: '16:30'
     condition: time
     enabled: true
   action:
   - service: notify.mobile_app_toms_phone
+    data:
+      message: '{{ state_attr(trigger.entity_id, ''friendly_name'') }} left Leeds
+        Station 2 minutes ago.'
+  - condition: trigger
+    id:
+    - tom
+  - service: notify.mobile_app_anna_s_phone
     data:
       message: '{{ state_attr(trigger.entity_id, ''friendly_name'') }} left Leeds
         Station 2 minutes ago.'
