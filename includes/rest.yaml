@@ -19,3 +19,15 @@ solax_local_charge_battery_from_grid:
     url: !secret solax_local_ip
     method: post
     payload: !secret solax_local_set_battery_grid_charge_level_payload
+solax_local_set_forced_charge_start:
+    url: !secret solax_local_ip
+    method: post
+    payload: !secret solax_local_set_battery_forced_charge_start
+solax_local_set_battery_min_soc:
+    url: !secret solax_local_ip
+    method: post
+    payload: !secret solax_local_set_battery_min_soc_payload
+solax_local_set_period2_enable:
+    url: !secret solax_local_ip
+    method: post
+    payload: !secret solax_local_set_period2_enable_payload    

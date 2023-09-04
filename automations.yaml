@@ -1564,9 +1564,8 @@
   alias: 'Lights: Boys'' wakeup light'
   description: Fade in ceiling lights 10min before wakeup time
   trigger:
-  - platform: template
-    value_template: '{{ now().hour * 3600 + now().minute * 60 >= state_attr(''input_datetime.boys_wakeup'',''timestamp'')
-      - 600 }}'
+  - platform: time
+    at: input_datetime.boys_wakeup
   condition:
   - condition: state
     entity_id: binary_sensor.workday_sensor
@@ -3126,4 +3125,76 @@
     target:
       entity_id:
       - input_boolean.immersion_heater
+  mode: single
+- id: '1693819219757'
+  alias: 'Solax: Reset grid charge'
+  description: Reset grid charge params every morning, after possible overnight charging
+    completed
+  trigger:
+  - platform: time
+    at: 04:59:00
+  condition: []
+  action:
+  - service: rest_command.solax_local_charge_battery_from_grid
+    data:
+      level: 10
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 10
+      milliseconds: 0
+  - service: rest_command.solax_local_set_forced_charge_start
+    data:
+      value: '{{0 + 0 * 256}}
+
+        '
+  mode: single
+- id: '1693819732477'
+  alias: 'Solax: Force grid charge'
+  description: Every morning during flux import period, charge battery if solar forecast
+    for the day is low
+  trigger:
+  - platform: time
+    at: 04:00:00
+  condition:
+  - condition: numeric_state
+    entity_id: sensor.solcast_forecast_today
+    below: 13
+  - condition: state
+    entity_id: input_boolean.holiday_mode
+    state: 'off'
+  - condition: numeric_state
+    entity_id: sensor.solax_local_battery_soc
+    below: 25
+  action:
+  - service: input_number.set_value
+    data:
+      value: "{% set forecast = states('sensor.solcast_forecast_today')|float %} {%
+        set battery_usable_kwh = 5.8*0.9 %} {% set forecast_kwh = 10 %} {% set charge_from_grid_kwh
+        = (13 -  forecast_kwh) %}  {% set charge_from_grid_pc = 10 + 100*charge_from_grid_kwh/battery_usable_kwh%}
+        {{charge_from_grid_pc|int}}        \n"
+    target:
+      entity_id: input_number.solax_battery_soc_target
+  - service: rest_command.solax_local_charge_battery_from_grid
+    data:
+      level:
+        '[object Object]':
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 10
+      milliseconds: 0
+  - service: rest_command.solax_local_set_forced_charge_start
+    data:
+      value:
+        '[object Object]':
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 15
+      milliseconds: 0
+  - service: homeassistant.update_entity
+    data: {}
+    target:
+      entity_id: sensor.solax_rest_local_settings
   mode: single
