@@ -302,7 +302,7 @@
                     }
                   ],
                   "name": "Forecast",
-                  "data_generator": "const now = new Date(); const data = [];\ndata.push([now.setHours(0,0,0,0), hass.states['sensor.solcast_forecast_today'].state]);\ndata.push([now.setDate(now.getDate()+1), hass.states['sensor.solcast_forecast_tomorrow'].state]);\ndata.push([now.setDate(now.getDate()+1), hass.states['sensor.solcast_forecast_d3'].state]);\ndata.push([now.setDate(now.getDate()+1), hass.states['sensor.solcast_forecast_d4'].state]);\ndata.push([now.setDate(now.getDate()+1), hass.states['sensor.solcast_forecast_d5'].state]);\ndata.push([now.setDate(now.getDate()+1), hass.states['sensor.solcast_forecast_d6'].state]);\ndata.push([now.setDate(now.getDate()+1), hass.states['sensor.solcast_forecast_d7'].state]);\nreturn data.reverse();\n"
+                  "data_generator": "const now = new Date(); const data = [];\ndata.push([now.setHours(0,0,0,0), hass.states['sensor.solcast_pv_forecast_forecast_today'].state]);\ndata.push([now.setDate(now.getDate()+1), hass.states['sensor.solcast_pv_forecast_forecast_tomorrow'].state]);\ndata.push([now.setDate(now.getDate()+1), hass.states['sensor.solcast_pv_forecast_forecast_day_3'].state]);\ndata.push([now.setDate(now.getDate()+1), hass.states['sensor.solcast_pv_forecast_forecast_day_4'].state]);\ndata.push([now.setDate(now.getDate()+1), hass.states['sensor.solcast_pv_forecast_forecast_day_5'].state]);\ndata.push([now.setDate(now.getDate()+1), hass.states['sensor.solcast_pv_forecast_forecast_day_6'].state]);\ndata.push([now.setDate(now.getDate()+1), hass.states['sensor.solcast_pv_forecast_forecast_day_7'].state]);\nreturn data.reverse();\n"
                 }
               ]
             },
@@ -313,32 +313,41 @@
                   "type": "entities",
                   "entities": [
                     {
-                      "entity": "sensor.solcast_peak_forecast_today"
-                    },
-                    {
-                      "entity": "sensor.solcast_peak_time_today"
-                    },
-                    {
-                      "entity": "sensor.solcast_forecast_this_hour"
-                    },
-                    {
-                      "entity": "sensor.solcast_forecast_next_hour"
-                    },
-                    {
-                      "entity": "sensor.solcast_peak_forecast_tomorrow"
-                    },
-                    {
-                      "entity": "sensor.solcast_peak_time_tomorrow"
-                    },
-                    {
-                      "entity": "sensor.solcast_api_used",
+                      "entity": "sensor.solcast_pv_forecast_forecast_today",
+                      "name": "Forecast Today",
                       "secondary_info": "none"
                     },
                     {
-                      "entity": "sensor.solcast_api_last_polled",
-                      "secondary_info": "last-changed",
-                      "format": "time",
-                      "icon": "mdi:history"
+                      "entity": "sensor.solcast_pv_forecast_forecast_remaining_today",
+                      "name": " Remaining Today"
+                    },
+                    {
+                      "entity": "sensor.solcast_pv_forecast_peak_time_today",
+                      "name": "Peak Time Today"
+                    },
+                    {
+                      "entity": "sensor.solcast_pv_forecast_forecast_this_hour",
+                      "name": "Foecast This Hour"
+                    },
+                    {
+                      "entity": "sensor.solcast_pv_forecast_forecast_next_hour",
+                      "name": "Forecast Next Hour"
+                    },
+                    {
+                      "entity": "sensor.solcast_pv_forecast_peak_time_tomorrow",
+                      "name": "Peak Time Tomorrow"
+                    },
+                    {
+                      "entity": "sensor.solcast_pv_forecast_forecast_tomorrow",
+                      "name": "Forecast Tomorrow"
+                    },
+                    {
+                      "entity": "sensor.solcast_pv_forecast_api_used",
+                      "name": "API Used"
+                    },
+                    {
+                      "entity": "sensor.solcast_pv_forecast_api_last_polled",
+                      "name": "API Last Polled"
                     }
                   ],
                   "title": "Solar Forecast"

@@ -3114,7 +3114,7 @@
   trigger:
   - platform: template
     value_template: "{{(as_timestamp(now()) -\n  as_timestamp(states.input_boolean.immersion_heater.last_changed)
-      -\n  (3600*states('input_number.immersion_target_runtime')|int) ) > 0 }}"
+      -\n  (3600*states('input_number.immersion_target_runtime')|float) ) > 0 }}"
   condition:
   - condition: state
     entity_id: switch.immersion_heater
@@ -3148,6 +3148,15 @@
       value: '{{0 + 0 * 256}}
 
         '
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 10
+      milliseconds: 0
+  - service: homeassistant.update_entity
+    data: {}
+    target:
+      entity_id: sensor.solax_rest_local_settings
   mode: single
 - id: '1693819732477'
   alias: 'Solax: Force grid charge'
@@ -3158,7 +3167,7 @@
     at: 04:00:00
   condition:
   - condition: numeric_state
-    entity_id: sensor.solcast_forecast_today
+    entity_id: sensor.solcast_pv_forecast_forecast_today
     below: 13
   - condition: state
     entity_id: input_boolean.holiday_mode
@@ -3169,16 +3178,17 @@
   action:
   - service: input_number.set_value
     data:
-      value: "{% set forecast = states('sensor.solcast_forecast_today')|float %} {%
-        set battery_usable_kwh = 5.8*0.9 %} {% set forecast_kwh = 10 %} {% set charge_from_grid_kwh
-        = (13 -  forecast_kwh) %}  {% set charge_from_grid_pc = 10 + 100*charge_from_grid_kwh/battery_usable_kwh%}
+      value: "{% set forecast_kwh = states('sensor.solcast_pv_forecast_forecast_today')|float
+        %}  {% set battery_usable_kwh = 5.8*0.9 %} {% set charge_from_grid_kwh = (13
+        - forecast_kwh) %} {% set charge_from_grid_pc = 10 + 100*charge_from_grid_kwh/battery_usable_kwh%}
         {{charge_from_grid_pc|int}}        \n"
     target:
       entity_id: input_number.solax_battery_soc_target
   - service: rest_command.solax_local_charge_battery_from_grid
     data:
-      level:
-        '[object Object]':
+      level: '{{states(''input_number.solax_battery_soc_target'') | int}}
+
+        '
   - delay:
       hours: 0
       minutes: 0
@@ -3186,8 +3196,9 @@
       milliseconds: 0
   - service: rest_command.solax_local_set_forced_charge_start
     data:
-      value:
-        '[object Object]':
+      value: '{{4 + 5 * 256}}
+
+        '
   - delay:
       hours: 0
       minutes: 0
