@@ -2751,7 +2751,7 @@
   description: ''
   trigger:
   - platform: time
-    at: 06:50:00
+    at: 06:40:00
   condition:
   - condition: numeric_state
     entity_id: sensor.solax_local_battery_soc
@@ -3174,7 +3174,7 @@
     state: 'off'
   - condition: numeric_state
     entity_id: sensor.solax_local_battery_soc
-    below: 25
+    below: 35
   action:
   - service: input_number.set_value
     data:
@@ -3199,6 +3199,12 @@
       value: '{{4 + 5 * 256}}
 
         '
+  - service: notify.mobile_app_toms_phone
+    data:
+      message: 'Home battery set to charge from grid. Target: {{states(''input_number.solax_battery_soc_target'')}}%
+        Solar Forecast: {{states(''sensor.solcast_pv_forecast_forecast_tomorrow'')|
+        round(2)}}kWh'
+      title: "\U0001F324 Solar "
   - delay:
       hours: 0
       minutes: 0
