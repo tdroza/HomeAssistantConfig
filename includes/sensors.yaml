@@ -386,7 +386,7 @@
   away_timeout: 150
 ### Solax Local REST sensor ###
 - platform: rest
-  scan_interval: 60
+  scan_interval: 30
   resource: !secret solax_local_ip
   payload: !secret solax_local_realtime_payload
   method: POST
