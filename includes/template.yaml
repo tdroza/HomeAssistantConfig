@@ -10,8 +10,10 @@
       state: >-
         {% if states('sensor.solax_local_grid_power') | float < 0 %}
         {{'import'}}
-        {% else %}
+        {% elif states('sensor.solax_local_grid_power') | float > 0 %}
         {{'export'}}
+        {% else %}
+        {{'none'}}
         {% endif %}
       icon: >-
         {% if is_state('sensor.current_grid_direction','import') %}
@@ -23,7 +25,7 @@
       state: >-
         {% if is_state('sensor.current_grid_direction','import') %}
         {{states('sensor.octopus_energy_electricity_22l3131941_2380000814991_current_rate')|float * 100 }}
-        {% else %}
+        {% elif is_state('sensor.current_grid_direction','export') %}
         {{states('sensor.octopus_energy_electricity_22l3131941_2394300262296_export_current_rate')|float * 100 }}
         {% endif %}
       icon: 'mdi:piggy-bank'
