@@ -37,6 +37,7 @@
               "battery": {
                 "entity": "sensor.solax_local_battery_power",
                 "state_of_charge": "sensor.solax_local_battery_soc",
+                "color_circle": true,
                 "invert_state": true
               },
               "home": {
