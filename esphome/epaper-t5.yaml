@@ -588,7 +588,11 @@ display:
             it.printf(x_pad,y_pad+100, id(font_footer), TextAlign::TOP_LEFT, id(music_artist).state.c_str());          
           } else {
             // Calendar
-            it.printf(x_pad, y_pad+30, id(font_value), TextAlign::TOP_LEFT, id(calendar_next_title).state.c_str());
+            if (strlen(id(calendar_next_title).state.c_str())>20) {
+              it.printf(x_pad, y_pad+30, id(font_value), TextAlign::TOP_LEFT, "%1s...",id(calendar_next_title).state.substr(0,20).c_str());
+            } else {
+              it.printf(x_pad, y_pad+30, id(font_value), TextAlign::TOP_LEFT, id(calendar_next_title).state.c_str());
+            }
             it.printf(x_pad,y_pad+100, id(font_footer), TextAlign::TOP_LEFT, id(calendar_next_start).state.c_str());  
           }
           
