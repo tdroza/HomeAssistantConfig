@@ -188,7 +188,6 @@
       seconds: 0
     from: Leeds Station
     platform: state
-    to: not_home
     id: tom
   - entity_id:
     - person.anna
@@ -198,7 +197,6 @@
       seconds: 0
     from: Leeds Station
     platform: state
-    to: not_home
     id: anna
   condition:
   - after: '16:30'
@@ -1130,13 +1128,13 @@
     after: '22:00'
   - condition: device
     type: is_on
-    device_id: c0673155fc4c6fb27f0f8917212ca42f
-    entity_id: switch.toms_phone_charger
+    device_id: d06d0cd9a4d1df684a518b6183d5ea1f
+    entity_id: cba274ca0aaf35bdde1082125786b1cf
     domain: switch
   action:
   - type: turn_off
-    device_id: c0673155fc4c6fb27f0f8917212ca42f
-    entity_id: switch.toms_phone_charger
+    device_id: d06d0cd9a4d1df684a518b6183d5ea1f
+    entity_id: cba274ca0aaf35bdde1082125786b1cf
     domain: switch
   mode: single
 - id: '1603396316886'
@@ -1154,8 +1152,8 @@
     entity_id: switch.annas_phone_charger
     domain: switch
   - type: turn_on
-    device_id: c0673155fc4c6fb27f0f8917212ca42f
-    entity_id: switch.toms_phone_charger
+    device_id: d06d0cd9a4d1df684a518b6183d5ea1f
+    entity_id: cba274ca0aaf35bdde1082125786b1cf
     domain: switch
   mode: single
 - id: '1603396482626'
@@ -1182,13 +1180,13 @@
   condition:
   - condition: device
     type: is_on
-    device_id: c0673155fc4c6fb27f0f8917212ca42f
-    entity_id: switch.toms_phone_charger
+    device_id: d06d0cd9a4d1df684a518b6183d5ea1f
+    entity_id: cba274ca0aaf35bdde1082125786b1cf
     domain: switch
   action:
   - type: turn_off
-    device_id: c0673155fc4c6fb27f0f8917212ca42f
-    entity_id: switch.toms_phone_charger
+    device_id: d06d0cd9a4d1df684a518b6183d5ea1f
+    entity_id: cba274ca0aaf35bdde1082125786b1cf
     domain: switch
   mode: single
 - id: '1603808684460'
