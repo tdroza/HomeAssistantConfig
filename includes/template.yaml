@@ -27,6 +27,8 @@
         {{states('sensor.octopus_energy_electricity_22l3131941_2380000814991_current_rate')|float * 100 }}
         {% elif is_state('sensor.current_grid_direction','export') %}
         {{states('sensor.octopus_energy_electricity_22l3131941_2394300262296_export_current_rate')|float * 100 }}
+        {% else %}
+        {{0 | float}}
         {% endif %}
       icon: 'mdi:piggy-bank'
       unit_of_measurement: 'p'
