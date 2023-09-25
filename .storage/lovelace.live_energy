@@ -25,7 +25,8 @@
               "grid": {
                 "entity": "sensor.solax_local_grid_power",
                 "secondary_info": {
-                  "entity": "sensor.current_grid_rate",
+                  "template": "{% if(not is_state('sensor.current_grid_direction','none')) %} \n  {{ states.sensor.current_grid_rate.state|round(2) }}p\n{% endif %} \n",
+                  "display_zero": false,
                   "decimals": 2,
                   "unit_of_measurement": "p"
                 },
