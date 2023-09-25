@@ -1106,7 +1106,6 @@
     target:
       entity_id:
       - light.main_bedroom_ceiling
-      - light.test_bulb
   - type: turn_on
     device_id: b9c88a37811e285dc2b594f847e29cf1
     entity_id: light.main_bedroom_bloom
@@ -1153,7 +1152,7 @@
     domain: switch
   - type: turn_on
     device_id: d06d0cd9a4d1df684a518b6183d5ea1f
-    entity_id: cba274ca0aaf35bdde1082125786b1cf
+    entity_id: switch.toms_phone_charger
     domain: switch
   mode: single
 - id: '1603396482626'
@@ -1164,8 +1163,8 @@
     at: 08:30
   - type: battery_level
     platform: device
-    device_id: cf4ceb29a2e7464abe92c738f5983356
-    entity_id: sensor.toms_phone_battery_level
+    device_id: 477d49fc145f319f69ea1a3b8857f6ea
+    entity_id: 3e73f1ade38098a05bc61ce0c592d789
     domain: sensor
     above: 99
   - platform: state
@@ -3172,7 +3171,7 @@
     state: 'off'
   - condition: numeric_state
     entity_id: sensor.solax_local_battery_soc
-    below: 35
+    below: 45
   action:
   - service: input_number.set_value
     data:
@@ -3200,8 +3199,7 @@
   - service: notify.mobile_app_toms_phone
     data:
       message: 'Home battery set to charge from grid. Target: {{states(''input_number.solax_battery_soc_target'')}}%
-        Solar Forecast: {{states(''sensor.solcast_pv_forecast_forecast_tomorrow'')|
-        round(2)}}kWh'
+        Solar Forecast: {{states(''sensor.solcast_pv_forecast_forecast_today'')| round(2)}}kWh'
       title: "\U0001F324 Solar "
   - delay:
       hours: 0
