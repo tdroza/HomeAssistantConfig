@@ -74,8 +74,8 @@ switch:
 
 # Enable logging
 logger:
-# level: VERY_VERBOSE
-# level: VERBOSE
+  logs:
+    component: ERROR
 
 # Enable Home Assistant API
 api:
