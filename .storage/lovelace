@@ -1718,9 +1718,18 @@
               }
             },
             {
-              "type": "custom:mushroom-number-card",
-              "entity": "input_number.office_window_brightness_threshold",
-              "icon": "mdi:roller-shade"
+              "type": "vertical-stack",
+              "cards": [
+                {
+                  "type": "custom:mushroom-number-card",
+                  "entity": "input_number.office_window_brightness_threshold",
+                  "icon": "mdi:sun-angle"
+                },
+                {
+                  "type": "custom:mushroom-number-card",
+                  "entity": "input_number.office_window_blind_shade_percent"
+                }
+              ]
             },
             {
               "type": "entities",
@@ -2508,23 +2517,23 @@
                       "card": {
                         "color_thresholds": [
                           {
-                            "value_template": "{{ state_attr(\"sensor.temps_min_stats\", \"min_value\") - state_attr(\"sensor.temps_min_stats\", \"standard_deviation\") }}",
+                            "value_template": "{{ states(\"sensor.temps_min_stats\")|float - states(\"sensor.temps_min_stats\")|float }}",
                             "color_template": "{{ states(\"input_text.colour_low\")}}"
                           },
                           {
-                            "value_template": "{{ state_attr(\"sensor.temps_min_stats\", \"mean\") }}",
+                            "value_template": "{{ states(\"sensor.temps_min_stats\")|float }}",
                             "color_template": "{{ states(\"input_text.colour_medium_low\")}}"
                           },
                           {
-                            "value_template": "{{ (state_attr(\"sensor.temps_min_stats\", \"mean\") +  state_attr(\"sensor.temps_max_stats\", \"mean\"))/2 }}",
+                            "value_template": "{{ (states(\"sensor.temps_min_stats\")|float +  states(\"sensor.temps_max_stats\")|float)/2 }}",
                             "color_template": "{{ states(\"input_text.colour_medium\")}}"
                           },
                           {
-                            "value_template": "{{ {{ state_attr(\"sensor.temps_max_stats\", \"mean\") }} }}",
+                            "value_template": "{{ states(\"sensor.temps_max_stats\")|float }}",
                             "color_template": "{{ states(\"input_text.colour_medium_high\")}}"
                           },
                           {
-                            "value_template": "{{ state_attr(\"sensor.temps_max_stats\", \"max_value\") - state_attr(\"sensor.temps_max_stats\", \"standard_deviation\") }}",
+                            "value_template": "{{ states(\"sensor.temps_max_stats\")|float - states(\"sensor.temps_max_stats\")|float }}",
                             "color_template": "{{ states(\"input_text.colour_high\")}}"
                           }
                         ],

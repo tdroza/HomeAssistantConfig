@@ -2413,7 +2413,7 @@
   action:
   - service: cover.set_cover_position
     data:
-      position: 30
+      position: '{{ states(''input_number.office_window_blind_shade_percent'') }}'
     target:
       device_id: d900db50135294c1549bb9a9ecde74b0
   mode: single
@@ -3130,6 +3130,8 @@
   trigger:
   - platform: time
     at: 04:59:00
+  - platform: time
+    at: '15:58:00'
   condition: []
   action:
   - service: rest_command.solax_local_charge_battery_from_grid
@@ -3178,7 +3180,7 @@
       value: "{% set forecast_kwh = states('sensor.solcast_pv_forecast_forecast_today')|float
         %}  {% set battery_usable_kwh = 5.8*0.9 %} {% set charge_from_grid_kwh = (13
         - forecast_kwh) %} {% set charge_from_grid_pc = 10 + 100*charge_from_grid_kwh/battery_usable_kwh%}
-        {{charge_from_grid_pc|int}}        \n"
+        {{min(charge_from_grid_pc|int,100)}}    \n"
     target:
       entity_id: input_number.solax_battery_soc_target
   - service: rest_command.solax_local_charge_battery_from_grid
@@ -3210,4 +3212,34 @@
     data: {}
     target:
       entity_id: sensor.solax_rest_local_settings
+  mode: single
+- id: '1696098127864'
+  alias: Dino
+  description: ''
+  trigger:
+  - type: motion
+    platform: device
+    device_id: e8cd43fe0f2842bca71d1ee8b5adc5da
+    entity_id: e7a3e2db6292b0b24b47623cb2d5cb60
+    domain: binary_sensor
+  condition:
+  - condition: time
+    after: 07:30:00
+    before: '20:00:00'
+  - condition: state
+    entity_id: light.rname
+    state: 'on'
+  action:
+  - variables:
+      dinos:
+      - https://tdroza.duckdns.org/local/dinosaur/dino.mp3
+      - https://tdroza.duckdns.org/local/dinosaur/dino2.wav
+      - https://tdroza.duckdns.org/local/dinosaur/dino3.wav
+      - https://tdroza.duckdns.org/local/dinosaur/dino4.mp3
+  - service: media_player.play_media
+    data:
+      media_content_type: music
+      media_content_id: '{{dinos[range(0,2)|random|int]}}'
+    target:
+      entity_id: media_player.reuben_s_room_speaker
   mode: single
