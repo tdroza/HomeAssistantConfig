@@ -449,6 +449,85 @@
                 "icon": "mdi:battery-charging",
                 "badge_icon": ""
               }
+            },
+            {
+              "type": "custom:expander-card",
+              "title": "Force Charge",
+              "cards": [
+                {
+                  "type": "vertical-stack",
+                  "cards": [
+                    {
+                      "type": "custom:mushroom-number-card",
+                      "entity": "input_number.solax_force_charge_duration_mins"
+                    },
+                    {
+                      "type": "custom:mushroom-number-card",
+                      "entity": "input_number.solax_battery_soc_target"
+                    },
+                    {
+                      "type": "custom:button-card",
+                      "name": "Send",
+                      "icon": "mdi:send-circle",
+                      "layout": "icon_name",
+                      "tap_action": {
+                        "confirmation": {
+                          "text": "Send to Solax?"
+                        },
+                        "action": "call-service",
+                        "service": "script.solax_force_charge"
+                      }
+                    },
+                    {
+                      "type": "custom:button-card",
+                      "name": "Reset",
+                      "icon": "mdi:restore-alert",
+                      "layout": "icon_name",
+                      "tap_action": {
+                        "confirmation": {
+                          "text": "Disable force charge?"
+                        },
+                        "action": "call-service",
+                        "service": "script.solax_reset_force_charge"
+                      }
+                    },
+                    {
+                      "type": "custom:mushroom-chips-card",
+                      "chips": [
+                        {
+                          "type": "template",
+                          "entity": "sensor.solax_local_battery_charge_from_grid_to",
+                          "icon": "mdi:battery-arrow-up",
+                          "content": "Target {{states('sensor.solax_local_battery_charge_from_grid_to')}}%",
+                          "tap_action": {
+                            "action": "more-info"
+                          }
+                        },
+                        {
+                          "type": "template",
+                          "entity": "sensor.solax_local_battery_setting_start_charge",
+                          "icon": "mdi:clock-start",
+                          "content": "{{states('sensor.solax_local_battery_setting_start_charge')}}",
+                          "tap_action": {
+                            "action": "more-info"
+                          }
+                        },
+                        {
+                          "type": "template",
+                          "entity": "sensor.solax_local_battery_setting_stop_charge",
+                          "icon": "mdi:clock-end",
+                          "content": "{{states('sensor.solax_local_battery_setting_stop_charge')}}",
+                          "tap_action": {
+                            "action": "more-info"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "clear": false,
+              "expanded": false
             }
           ]
         },
