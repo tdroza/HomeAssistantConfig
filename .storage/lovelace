@@ -68,7 +68,7 @@
                   "icon": "mdi:human-male",
                   "image": "/local/tom.jpg",
                   "name": "Tom",
-                  "secondary_info": "last-changed",
+                  "secondary_info": "last-updated",
                   "show_state": false,
                   "type": "custom:multiple-entity-row"
                 },
@@ -97,7 +97,7 @@
                   "icon": "mdi:human-female",
                   "image": "/local/anna.jpg",
                   "name": "Anna",
-                  "secondary_info": "last-changed",
+                  "secondary_info": "last-updated",
                   "show_state": false,
                   "type": "custom:multiple-entity-row"
                 }
