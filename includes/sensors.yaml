@@ -101,6 +101,30 @@
       value_template: '{{states.sensor.kitchen_climate_temperature.state |round(0, default=0)}}'
 - platform: feedparser
   scan_interval: 43200
+  name: podcast_brains_on
+  feed_url: https://feeds.publicradio.org/public_feeds/brains-on/rss/rss
+  inclusions: 
+    - title
+    - links
+    - published
+- platform: feedparser
+  scan_interval: 43200
+  name: podcast_stories
+  feed_url: https://rss.art19.com/stories-podcast
+  inclusions: 
+    - title
+    - links
+    - published
+- platform: feedparser
+  scan_interval: 43200
+  name: podcast_girl_tales
+  feed_url: https://feeds.megaphone.fm/CST7403212167
+  inclusions: 
+    - title
+    - links
+    - published
+- platform: feedparser
+  scan_interval: 43200
   name: podcast_finn_caspian
   feed_url: https://rss.art19.com/the-alien-adventures-of-finn-caspian
   inclusions: 
@@ -362,28 +386,28 @@
   entity_id: sensor.air_quality_pm2_5
 - platform: mqtt_room
   name: "Toms Phone BLE"
-  device_id: "iBeacon:add4883f-65b3-4004-b3dc-3e73d12100ec-100-1"
-  state_topic: "espresense/rooms"
+  device_id: "iBeacon:e740d314-4895-4c64-99b3-1efb7651d593-100-1"
+  state_topic: "espresense/devices/iBeacon:e740d314-4895-4c64-99b3-1efb7651d593-100-1"
   timeout: 5
-  away_timeout: 150
+  away_timeout: 60
 - platform: mqtt_room
-  name: "Annas MiBand"
-  device_id: "mifit:c0125c9784a2"
-  state_topic: "espresense/rooms"
+  name: "Toms Watch BLE"
+  device_id: "iBeacon:936e521c-74da-11ee-b962-0242ac120002-100-1"
+  state_topic: "espresense/devices/iBeacon:936e521c-74da-11ee-b962-0242ac120002-100-1"
   timeout: 5
-  away_timeout: 150
+  away_timeout: 120
 - platform: mqtt_room
   name: "Reubens MiBand"
   device_id: "mifit:ca53200f684b"
-  state_topic: "espresense/rooms"
+  state_topic: "espresense/devices/mifit:ca53200f684b"
   timeout: 5
-  away_timeout: 150
+  away_timeout: 60
 - platform: mqtt_room
   name: "Sebs MiBand"
   device_id: "mifit:ca53200f684b"
-  state_topic: "espresense/rooms"
+  state_topic: "espresense/devices/mifit:ca53200f684b"
   timeout: 5
-  away_timeout: 150
+  away_timeout: 60
 ### Solax Local REST sensor ###
 - platform: rest
   scan_interval: 30

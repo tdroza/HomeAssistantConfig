@@ -1277,6 +1277,18 @@
       4dd136882e204aec5b9809887714f25b: media_player.seb_s_home
       43ddd1e400d41d9d547f7bc24a95f86d: media_player.reuben_s_room_speaker
     tags:
+      04-41-6F-AA-ED-6C-80:
+        title: Girl Tales
+        podcast_counter: counter.podcast_girl_tales
+        sensor: sensor.podcast_girl_tales
+      04-49-6F-AA-ED-6C-80:
+        title: Stories Podcast
+        podcast_counter: counter.podcast_stories
+        sensor: sensor.podcast_stories
+      04-45-6F-AA-ED-6C-80:
+        title: Brains On
+        podcast_counter: counter.podcast_brains_on
+        sensor: sensor.podcast_brains_on
       04-72-6E-62-90-6B-80:
         title: Finn Caspian
         podcast_counter: counter.podcast_finn_caspian
@@ -1379,10 +1391,16 @@
     target:
       entity_id:
       - light.sebs_ceiling
-      - light.reubens_ceiling
     data:
       brightness: 25
       color_name: green
+  - service: light.turn_on
+    target:
+      entity_id:
+      - light.reubens_ceiling
+    data:
+      brightness: 25
+      color_name: red
   - delay:
       hours: 0
       minutes: 15
@@ -3175,6 +3193,7 @@
   - condition: numeric_state
     entity_id: sensor.solax_local_battery_soc
     below: 45
+    enabled: false
   action:
   - service: input_number.set_value
     data:
@@ -3247,4 +3266,24 @@
       media_content_id: '{{dinos[range(0,2)|random|int]}}'
     target:
       entity_id: media_player.reuben_s_room_speaker
+  mode: single
+- id: '1697812591018'
+  alias: Album A Day
+  description: ''
+  trigger:
+  - platform: time
+    at: 08:00:00
+  condition: []
+  action:
+  - service: notify.mobile_app_toms_phone
+    data:
+      title: Album A Day
+      message: <em>{{state_attr('sensor.album_a_day','name')}}</em> {{state_attr('sensor.album_a_day','artist')}}
+        ({{state_attr('sensor.album_a_day','releaseDate')}})
+      data:
+        actions:
+        - action: URI
+          title: Play
+          uri: https://music.youtube.com/playlist?list={{state_attr('sensor.album_a_day','youtubeMusicId')}}
+        image: '{{state_attr(''sensor.album_a_day'',''images'')[1].url}}'
   mode: single

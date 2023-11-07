@@ -1,2 +1,12 @@
-
-    
+- resource: !secret album_a_day
+  scan_interval: 7200
+  sensor:
+    - name: "album_a_day"
+      value_template: "OK"
+      json_attributes_path: '$.currentAlbum'
+      json_attributes:
+        - "artist"
+        - "name"
+        - "releaseDate"
+        - "youtubeMusicId"
+        - "images"

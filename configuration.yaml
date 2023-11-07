@@ -25,6 +25,7 @@ light: !include includes/light_groups.yaml
 notify: !include includes/notify.yaml
 plant: !include includes/plant.yaml
 recorder: !include includes/recorder.yaml
+rest: !include includes/restful.yaml
 rest_command: !include includes/rest.yaml
 script: !include scripts.yaml
 sensor: !include includes/sensors.yaml
