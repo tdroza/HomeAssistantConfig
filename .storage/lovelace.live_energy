@@ -5,6 +5,48 @@
   "data": {
     "config": {
       "decluttering_templates": {
+        "mixergy": {
+          "card": {
+            "type": "custom:apexcharts-card",
+            "header": {
+              "show": true,
+              "title": "Mixergy tank",
+              "colorize_states": true,
+              "show_states": true
+            },
+            "apex_config": {
+              "legend": {
+                "show": false
+              },
+              "chart": {
+                "height": "165px"
+              },
+              "dataLabels": {
+                "enabled": false
+              }
+            },
+            "yaxis": [
+              {
+                "min": 0,
+                "max": 100
+              }
+            ],
+            "chart_type": "donut",
+            "series": [
+              {
+                "entity": "sensor.mixergy_current_charge",
+                "name": "Hot Water",
+                "color": "#ff0000"
+              },
+              {
+                "entity": "sensor.mixergy_current_charge",
+                "name": "Cold Water",
+                "color": "#3030ff",
+                "data_generator": "const now = new Date(); const data = []; data.push([now.setHours(0,0,0,0), 100-hass.states['sensor.mixergy_current_charge'].state]); return data;\n"
+              }
+            ]
+          }
+        },
         "power-flow": {
           "default": [
             {
@@ -49,6 +91,11 @@
                 "entity": "sensor.sonoff_10003a0e20_power",
                 "name": "Washer",
                 "icon": "mdi:washing-machine"
+              },
+              "individual2": {
+                "entity": "sensor.mixergy_electric_heat_power",
+                "name": "Mixergy",
+                "icon": "mdi:water-boiler"
               }
             }
           }
@@ -364,7 +411,7 @@
                       "type": "template",
                       "entity": "sensor.solax_local",
                       "icon": "mdi:history",
-                      "content": "Updated {{states.sensor.solcast_api_last_polled.last_changed | relative_time}} ago",
+                      "content": "Updated {{states.sensor.solcast_pv_forecast_api_last_polled.last_changed | relative_time}} ago",
                       "tap_action": {
                         "action": "call-service",
                         "service": "solcast_solar.update_forecasts",
@@ -429,6 +476,10 @@
                   "name": "House"
                 }
               ]
+            },
+            {
+              "type": "custom:decluttering-card",
+              "template": "mixergy"
             },
             {
               "type": "conditional",
@@ -500,7 +551,14 @@
                           "icon": "mdi:battery-arrow-up",
                           "content": "Target {{states('sensor.solax_local_battery_charge_from_grid_to')}}%",
                           "tap_action": {
-                            "action": "more-info"
+                            "confirmation": {
+                              "text": "Refresh Solax settings?"
+                            },
+                            "action": "call-service",
+                            "service": "homeassistant.update_entity",
+                            "target": {
+                              "entity_id": "sensor.solax_rest_local_settings"
+                            }
                           }
                         },
                         {
