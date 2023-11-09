@@ -93,7 +93,7 @@
                 "icon": "mdi:washing-machine"
               },
               "individual2": {
-                "entity": "sensor.mixergy_electric_heat_power",
+                "entity": "sensor.mixergy_electric_pv_power",
                 "name": "Mixergy",
                 "icon": "mdi:water-boiler"
               }
