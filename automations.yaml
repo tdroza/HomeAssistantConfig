@@ -1400,7 +1400,7 @@
       - light.reubens_ceiling
     data:
       brightness: 25
-      color_name: red
+      color_name: orange
   - delay:
       hours: 0
       minutes: 15
