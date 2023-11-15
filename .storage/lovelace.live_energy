@@ -115,6 +115,26 @@
               ]
             },
             {
+              "type": "conditional",
+              "conditions": [
+                {
+                  "entity": "sensor.solax_local_battery_soc",
+                  "state_not": "100"
+                },
+                {
+                  "entity": "sensor.solax_local_battery_power_in",
+                  "state_not": "0"
+                }
+              ],
+              "card": {
+                "type": "custom:mushroom-template-card",
+                "primary": "Time to 100%",
+                "secondary": "{{(60 * (58*((100-states('sensor.solax_local_battery_soc') | int) )) / states('sensor.solax_local_battery_power_in') | int )|round}} minutes",
+                "icon": "mdi:battery-charging",
+                "badge_icon": ""
+              }
+            },
+            {
               "type": "vertical-stack",
               "cards": [
                 {
@@ -478,28 +498,42 @@
               ]
             },
             {
-              "type": "custom:decluttering-card",
-              "template": "mixergy"
-            },
-            {
-              "type": "conditional",
-              "conditions": [
+              "type": "vertical-stack",
+              "cards": [
                 {
-                  "entity": "sensor.solax_local_battery_soc",
-                  "state_not": "100"
+                  "type": "custom:decluttering-card",
+                  "template": "mixergy"
                 },
                 {
-                  "entity": "sensor.solax_local_battery_power_in",
-                  "state_not": "0"
+                  "type": "custom:mushroom-chips-card",
+                  "alignment": "justify",
+                  "chips": [
+                    {
+                      "type": "entity",
+                      "entity": "sensor.mixergy_coldest_water_temperature",
+                      "icon_color": "blue"
+                    },
+                    {
+                      "type": "template",
+                      "content": "{{states('sensor.mixergy_heatpump_heat') | title}}",
+                      "entity": "sensor.mixergy_heatpump_heat",
+                      "icon": "mdi:heat-pump-outline",
+                      "icon_color": "{{'green' if is_state('sensor.mixergy_heatpump_heat','on') }}"
+                    },
+                    {
+                      "type": "template",
+                      "content": "{{'On' if states('sensor.mixergy_electric_pv_power') | float > 0 else 'Off' }}",
+                      "icon": "mdi:power-plug-outline",
+                      "icon_color": "{{'green' if states('sensor.mixergy_electric_pv_power') | float > 0}}"
+                    },
+                    {
+                      "type": "entity",
+                      "entity": "sensor.mixergy_hot_water_temperature",
+                      "icon_color": "red"
+                    }
+                  ]
                 }
-              ],
-              "card": {
-                "type": "custom:mushroom-template-card",
-                "primary": "Time to 100%",
-                "secondary": "{{(60 * (58*((100-states('sensor.solax_local_battery_soc') | int) )) / states('sensor.solax_local_battery_power_in') | int )|round}} minutes",
-                "icon": "mdi:battery-charging",
-                "badge_icon": ""
-              }
+              ]
             },
             {
               "type": "custom:expander-card",
