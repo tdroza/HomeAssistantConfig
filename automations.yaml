@@ -771,10 +771,6 @@
   condition: []
   action:
   - type: turn_off
-    device_id: dd0fc2584dec5826995ff2cd2247533c
-    entity_id: light.main_bedroom_ceiling
-    domain: light
-  - type: turn_off
     device_id: b9c88a37811e285dc2b594f847e29cf1
     entity_id: light.main_bedroom_bloom
     domain: light
@@ -787,16 +783,16 @@
     entity_id: light.rname
     domain: light
   - type: turn_off
-    device_id: a7042a8ceb408ac6488c43cad4549a82
-    entity_id: light.sebs_ceiling
-    domain: light
-  - type: turn_off
     device_id: 4fcff377266e9e7d5f9b7098401120b6
     entity_id: light.sebs_lamp
     domain: light
   - type: turn_off
-    device_id: 860920bf5b3374e4ea3344b553666bcf
-    entity_id: light.main_bedroom_ceiling
+    device_id: f5cda250d456ab9d753117c612f812c4
+    entity_id: d8d3d88474f3161c637f50a46ea6671d
+    domain: light
+  - type: turn_off
+    device_id: d06086fc62c3d9eb55cc76e0ae5de10a
+    entity_id: 8cbf964adee97b7aa253dbe942e02997
     domain: light
   mode: single
 - id: '1600335652412'
@@ -1530,17 +1526,24 @@
   trigger:
   - type: not_plugged_in
     platform: device
-    device_id: 5fe5c0fe0b3111eb8c0681a6c5c84147
-    entity_id: binary_sensor.annas_phone_is_charging
+    device_id: 28abb52456ef5ac4459a0ac810e7cf0b
+    entity_id: b6abfb1a1ef994e70b4c1d4edea971c5
     domain: binary_sensor
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 5
+    id: Anna
   - type: battery_level
     platform: device
-    device_id: 5fe5c0fe0b3111eb8c0681a6c5c84147
-    entity_id: sensor.annas_phone_battery_level
+    device_id: 28abb52456ef5ac4459a0ac810e7cf0b
+    entity_id: ea87f75f153e1ad6b3e7f9b77b6f5845
     domain: sensor
     above: 99
+    id: Anna
   - platform: time
     at: 08:30
+    id: Anna
   condition:
   - condition: device
     type: is_on
@@ -1643,31 +1646,39 @@
   alias: 'Bins: Recycling notification'
   description: ''
   trigger:
-  - platform: template
-    value_template: '{{ ((as_timestamp(state_attr(''calendar.recycling'', ''start_time''))
-      - as_timestamp(now())) | int /3600 ) | round(0) < 13}}'
-  - platform: template
-    value_template: '{{ ((as_timestamp(state_attr(''calendar.regular'', ''start_time''))
-      - as_timestamp(now())) | int /3600 ) | round(0) < 13}}'
+  - platform: calendar
+    event: start
+    offset: '-13:0:0'
+    entity_id: calendar.recycling
+    id: recycling
+  - platform: calendar
+    event: start
+    offset: '-13:0:0'
+    entity_id: calendar.regular
+    id: regular
   condition: []
   action:
   - choose:
     - conditions:
-      - condition: template
-        value_template: '{{ as_timestamp(state_attr(''calendar.recycling'', ''start_time''))
-          <  as_timestamp(state_attr(''calendar.regular'', ''start_time'')) }}'
+      - condition: trigger
+        id:
+        - recycling
       sequence:
       - service: notify.tom_and_anna
         data:
           message: '♻ Recycling bin collection is due tomorrow. Don''t forget to put
             the bin out!    '
           title: Bin Collection
-    default:
-    - service: notify.tom_and_anna
-      data:
-        title: Bin Collection
-        message: "\U0001F5D1 Regular bin collection is due tomorrow. Don't forget
-          to put the bin out!    "
+    - conditions:
+      - condition: trigger
+        id:
+        - regular
+      sequence:
+      - service: notify.tom_and_anna
+        data:
+          title: Bin Collection
+          message: "\U0001F5D1 Regular bin collection is due tomorrow. Don't forget
+            to put the bin out! "
   mode: single
 - id: '1626116356389'
   alias: 'Lights: Turn on TV Backlight'
@@ -2191,8 +2202,8 @@
       remote: 4ea4829aee92ea2f29100c58eb2e75da
       button_top_left_single_press:
       - type: turn_off
-        device_id: d5286caed6a01b144913383573d6a242
-        entity_id: light.main_bedroom_ceiling
+        device_id: f5cda250d456ab9d753117c612f812c4
+        entity_id: d8d3d88474f3161c637f50a46ea6671d
         domain: light
       button_top_left_double_press:
       - service: light.turn_off
@@ -2201,14 +2212,14 @@
           area_id: main_bedroom
       button_top_left_hold_in:
       - type: turn_on
-        device_id: d5286caed6a01b144913383573d6a242
-        entity_id: light.main_bedroom_ceiling
+        device_id: f5cda250d456ab9d753117c612f812c4
+        entity_id: d8d3d88474f3161c637f50a46ea6671d
         domain: light
         brightness_pct: 30
       button_top_right_single_press:
       - type: turn_on
-        device_id: d5286caed6a01b144913383573d6a242
-        entity_id: light.main_bedroom_ceiling
+        device_id: f5cda250d456ab9d753117c612f812c4
+        entity_id: d8d3d88474f3161c637f50a46ea6671d
         domain: light
         brightness_pct: 100
       button_top_right_double_press:
@@ -2219,8 +2230,8 @@
           area_id: main_bedroom
       button_top_right_hold_in:
       - type: turn_on
-        device_id: d5286caed6a01b144913383573d6a242
-        entity_id: light.main_bedroom_ceiling
+        device_id: f5cda250d456ab9d753117c612f812c4
+        entity_id: d8d3d88474f3161c637f50a46ea6671d
         domain: light
         brightness_pct: 60
       button_bottom_left_single_press:
@@ -2670,7 +2681,7 @@
   - if:
     - condition: numeric_state
       entity_id: sensor.solax_local_pv_output
-      above: sensor.solax_local_grid_power_export
+      above: sensor.solax_local_grid_power_import
     - condition: and
       conditions:
       - condition: numeric_state
@@ -2687,7 +2698,7 @@
     - if:
       - condition: numeric_state
         entity_id: sensor.solax_local_battery_power_out
-        above: sensor.solax_local_grid_power_export
+        above: sensor.solax_local_grid_power_import
       - condition: numeric_state
         entity_id: sensor.solax_local_battery_power_out
         above: sensor.solax_local_pv_output
