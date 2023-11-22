@@ -13,43 +13,6 @@
       entity_id: all
     service: cover.close_cover
   mode: single
-- id: '1575923914112'
-  alias: ifttt_webhook
-  trigger:
-  - event_data:
-      action: call_service
-    event_type: ifttt_webhook_received
-    platform: event
-  action:
-  - data:
-      entity_id: '{{ trigger.event.data.entity_id }}'
-    service: '{{ trigger.event.data.service }}'
-- id: '1576537003318'
-  alias: ifttt_webhook_params
-  trigger:
-  - platform: event
-    event_data:
-      action: call_service_with_params
-    event_type: ifttt_webhook_received
-  action:
-  - service: '{{ trigger.event.data.service }}'
-    data:
-      brightness: '{{ trigger.event.data.brightness }}'
-      effect: '{{ trigger.event.data.effect }}'
-      entity_id: '{{ trigger.event.data.entity_id }}'
-- id: '1580936086819'
-  alias: ifttt kodi rpc
-  description: ''
-  trigger:
-  - platform: event
-    event_data:
-      action: kodi_rpc_service
-    event_type: ifttt_webhook_received
-  condition: []
-  action:
-  - service: '{{ trigger.event.data.service }}'
-    data:
-      method: '{{ trigger.event.data.method }}'
 - id: '1576675828079'
   alias: Presence - Nobody home
   description: ''
@@ -3297,4 +3260,359 @@
           title: Play
           uri: https://music.youtube.com/playlist?list={{state_attr('sensor.album_a_day','youtubeMusicId')}}
         image: '{{state_attr(''sensor.album_a_day'',''images'')[1].url}}'
+  mode: single
+- id: '1700481098796'
+  alias: OEPL Family Calendar
+  description: ''
+  trigger:
+  - platform: time_pattern
+    minutes: '1'
+  - platform: time_pattern
+    minutes: '16'
+  - platform: time_pattern
+    minutes: '31'
+  - platform: time_pattern
+    minutes: '46'
+  condition:
+  - condition: time
+    after: 07:00:00
+    before: '23:00:00'
+  action:
+  - service: open_epaper_link.drawcustom
+    data:
+      dry-run: false
+      background: white
+      payload:
+      - type: rectangle
+        x_start: 0
+        y_start: 0
+        x_end: 296
+        y_end: 128
+        fill: black
+        outline: black
+        width: 1
+      - type: rectangle
+        x_start: 0
+        y_start: 33
+        x_end: 296
+        y_end: 64
+        fill: red
+        outline: red
+        width: 1
+      - type: rectangle
+        x_start: 0
+        y_start: 97
+        x_end: 296
+        y_end: 128
+        fill: red
+        outline: red
+        width: 1
+      - type: text
+        x: 0
+        y: 1
+        size: 20
+        color: white
+        value: '{{state_attr(''sensor.family_events'', ''events'')[0].summary}}'
+      - type: text
+        x: 295
+        y: 31
+        size: 12
+        color: white
+        anchor: rb
+        value: '{{as_timestamp(state_attr(''sensor.family_events'', ''events'')[0].start)
+          | timestamp_custom(''%a, %H:%M'')}}'
+      - type: line
+        x_start: 0
+        x_end: 295
+        y_start: 32
+        y_end: 32
+        fill: white
+        width: 1
+      - type: text
+        x: 0
+        y: 34
+        size: 20
+        color: white
+        value: '{{state_attr(''sensor.family_events'', ''events'')[1].summary}}'
+      - type: text
+        x: 295
+        y: 63
+        size: 12
+        color: white
+        anchor: rb
+        value: '{{as_timestamp(state_attr(''sensor.family_events'', ''events'')[1].start)
+          | timestamp_custom(''%a, %H:%M'')}}'
+      - type: line
+        x_start: 0
+        x_end: 295
+        y_start: 64
+        y_end: 64
+        fill: white
+        width: 1
+      - type: text
+        x: 0
+        y: 66
+        size: 20
+        color: white
+        value: '{{state_attr(''sensor.family_events'', ''events'')[2].summary}}'
+      - type: text
+        x: 295
+        y: 95
+        size: 12
+        color: white
+        anchor: rb
+        value: '{{as_timestamp(state_attr(''sensor.family_events'', ''events'')[2].start)
+          | timestamp_custom(''%a, %H:%M'')}}'
+      - type: line
+        x_start: 0
+        x_end: 295
+        y_start: 96
+        y_end: 96
+        fill: white
+        width: 1
+      - type: text
+        x: 0
+        y: 98
+        size: 20
+        color: white
+        value: '{{state_attr(''sensor.family_events'', ''events'')[3].summary}}'
+      - type: text
+        x: 295
+        y: 127
+        size: 12
+        color: white
+        anchor: rb
+        value: '{{as_timestamp(state_attr(''sensor.family_events'', ''events'')[3].start)
+          | timestamp_custom(''%a, %H:%M'')}}'
+    target:
+      entity_id: open_epaper_link.00000218cf5d3b19
+  - event: oepl_update
+    event_data: {}
+  mode: single
+- id: '1700574169666'
+  alias: OEPL Energy Dashboard
+  description: ''
+  trigger:
+  - platform: time_pattern
+    minutes: /5
+  condition:
+  - condition: time
+    after: 07:00:00
+    before: '23:00:00'
+  action:
+  - service: open_epaper_link.drawcustom
+    data:
+      dry-run: false
+      background: white
+      rotate: 270
+      payload:
+      - type: rectangle
+        x_start: 0
+        x_end: 128
+        y_start: 0
+        y_end: 54
+        fill: black
+        outline: white
+        width: 1
+      - type: icon
+        x: 3
+        y: 3
+        size: 50
+        color: red
+        value: solar-power
+      - type: text
+        x: 55
+        anchor: lm
+        y: 27
+        size: 24
+        color: red
+        value: '{{states(''sensor.solax_local_pv_output'')|float/1000}}'
+      - type: text
+        x: 55
+        anchor: lb
+        y: 48
+        size: 12
+        color: red
+        value: kW
+      - type: rectangle
+        x_start: 0
+        x_end: 138
+        y_start: 56
+        y_end: 109
+        fill: red
+        outline: white
+        width: 1
+      - type: icon
+        x: 3
+        y: 58
+        size: 50
+        color: black
+        value: '{{''transmission-tower'' if states(''sensor.solax_local_grid_power'')|float
+          == 0 else ''transmission-tower-export'' if states(''sensor.solax_local_grid_power_import'')
+          > states(''sensor.solax_local_grid_power_export'') else ''transmission-tower-import''}}'
+      - type: text
+        x: 55
+        y: 82
+        anchor: lm
+        size: 24
+        color: black
+        value: '{{states(''sensor.solax_local_grid_power'')|float|abs/1000}}'
+      - type: text
+        x: 55
+        anchor: lb
+        y: 103
+        size: 12
+        color: black
+        value: kW
+      - type: rectangle
+        x_start: 0
+        x_end: 128
+        y_start: 111
+        y_end: 164
+        fill: black
+        outline: white
+        width: 1
+      - type: icon
+        x: 3
+        y: 113
+        size: 50
+        color: red
+        value: home-outline
+      - type: text
+        x: 55
+        y: 137
+        anchor: lm
+        size: 24
+        color: red
+        value: '{{states(''sensor.solax_local_load_power'')|int}}'
+      - type: rectangle
+        x_start: 0
+        x_end: 128
+        y_start: 166
+        y_end: 219
+        fill: red
+        outline: white
+        width: 1
+      - type: icon
+        x: 3
+        y: 168
+        size: 50
+        color: black
+        value: home-battery-outline
+      - type: icon
+        x: 55
+        y: 185
+        size: 15
+        color: black
+        value: '{{ ''battery-plus'' if states(''sensor.solax_local_battery_power'')
+          | int > 0 else ''battery-minus''}}'
+      - type: text
+        x: 72
+        y: 200
+        anchor: lb
+        size: 15
+        color: black
+        value: '{{states(''sensor.solax_local_battery_power'') | int | abs}}W'
+      - type: rectangle
+        fill: red
+        outline: white
+        width: 1
+        x_start: 55
+        x_end: 126
+        y_start: 173
+        y_end: 183
+      - type: rectangle
+        fill: black
+        outline: black
+        width: 1
+        x_start: 56
+        x_end: '{{56+(71/100)*states(''sensor.solax_local_battery_soc'')|round}}'
+        y_start: 174
+        y_end: 182
+      - type: text
+        x: 125
+        y: 175
+        anchor: rt
+        size: 9
+        color: white
+        value: '{{states(''sensor.solax_local_battery_soc'')}}%'
+      - type: rectangle
+        x_start: 0
+        x_end: 128
+        y_start: 221
+        y_end: 274
+        fill: black
+        outline: white
+        width: 1
+      - type: icon
+        x: 3
+        y: 223
+        size: 50
+        color: red
+        value: water-boiler
+      - type: rectangle
+        fill: black
+        outline: white
+        width: 1
+        x_start: 55
+        x_end: 126
+        y_start: 228
+        y_end: 238
+      - type: rectangle
+        fill: red
+        outline: red
+        width: 1
+        x_start: 56
+        x_end: '{{56+(71/100)*states(''sensor.mixergy_current_charge'')|round}}'
+        y_start: 229
+        y_end: 237
+      - type: text
+        x: 125
+        y: 230
+        anchor: rt
+        size: 9
+        color: white
+        value: '{{states(''sensor.mixergy_current_charge'') | round}}%'
+      - type: icon
+        x: 55
+        y: 240
+        size: 15
+        color: red
+        value: thermometer
+      - type: text
+        x: 72
+        y: 255
+        anchor: lb
+        size: 15
+        color: red
+        value: '{{states(''sensor.mixergy_hot_water_temperature'')}}C'
+      - type: icon
+        x: 55
+        y: 257
+        size: 15
+        color: '{{''red'' if states(''sensor.mixergy_electric_pv_power'') | float
+          > 0 else ''black''}}'
+        value: power-plug-outline
+      - type: text
+        x: 64
+        y: 297
+        anchor: mb
+        size: 10
+        color: black
+        value: 'Updated: {{now().strftime(''%H:%M'')}}'
+    target:
+      entity_id: open_epaper_link.0000021fb7d03b14
+  - event: oepl_update
+    event_data: {}
+  mode: single
+- id: '1700650416414'
+  alias: 'OEPL: Update HA dashboard'
+  description: ''
+  trigger:
+  - platform: event
+    event_type: oepl_update
+  condition: []
+  action:
+  - service: shell_command.epaper_copy
+    data: {}
   mode: single

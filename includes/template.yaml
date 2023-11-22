@@ -5,6 +5,23 @@
   sensor:
     - name: airer_requested_power
       state: "{{ now() }}" 
+- trigger:
+  - platform: time_pattern
+    minutes: /15
+  action:
+    - service: calendar.list_events
+      target:
+        entity_id: calendar.family
+      data:
+        end_date_time: "{{now().replace(day=now().day + 6, hour=0, minute=0, second=0)}}"
+      response_variable: family
+  sensor:
+    - name: Family Events
+      unique_id: family_events
+      state: "{{family.events | count() }}"
+      attributes:
+        events: "{{family.events}}"
+      icon: mdi:calendar
 - sensor:
     - name: 'Current Grid Direction'
       state: >-

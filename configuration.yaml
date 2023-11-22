@@ -14,6 +14,7 @@ tts:
 automation: !include automations.yaml
 automation old: !include_dir_merge_list automations
 binary_sensor: !include includes/binary_sensors.yaml
+camera: !include includes/camera.yaml
 cover: !include includes/covers.yaml
 device_tracker: !include includes/device_trackers.yaml
 downloader: !include includes/downloader.yaml
@@ -28,6 +29,7 @@ recorder: !include includes/recorder.yaml
 rest: !include includes/restful.yaml
 rest_command: !include includes/rest.yaml
 script: !include scripts.yaml
+shell_command: !include includes/shell.yaml
 sensor: !include includes/sensors.yaml
 template: !include includes/template.yaml
 utility_meter: !include includes/utility.yaml

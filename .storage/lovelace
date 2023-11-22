@@ -1604,6 +1604,55 @@
           "title": "Network"
         },
         {
+          "title": "OEPL",
+          "path": "oepl",
+          "icon": "mdi:tablet-dashboard",
+          "badges": [],
+          "cards": [
+            {
+              "show_state": false,
+              "show_name": true,
+              "camera_view": "auto",
+              "type": "picture-entity",
+              "entity": "camera.oepl_3b19"
+            },
+            {
+              "show_state": true,
+              "show_name": true,
+              "camera_view": "auto",
+              "type": "picture-entity",
+              "entity": "camera.oepl_3419"
+            },
+            {
+              "show_state": true,
+              "show_name": true,
+              "camera_view": "auto",
+              "type": "picture-entity",
+              "entity": "camera.oepl_3b1f"
+            },
+            {
+              "show_name": true,
+              "show_icon": true,
+              "type": "button",
+              "tap_action": {
+                "action": "call-service",
+                "service": "shell_command.epaper_copy",
+                "target": {}
+              },
+              "entity": "camera.oepl_3419",
+              "name": "Update Screenshots",
+              "icon": "mdi:image-refresh"
+            },
+            {
+              "show_state": true,
+              "show_name": true,
+              "camera_view": "auto",
+              "type": "picture-entity",
+              "entity": "camera.oepl_3b14"
+            }
+          ]
+        },
+        {
           "badges": [],
           "cards": [
             {
