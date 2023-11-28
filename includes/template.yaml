@@ -13,7 +13,7 @@
       target:
         entity_id: calendar.family
       data:
-        end_date_time: "{{now().replace(day=now().day + 6, hour=0, minute=0, second=0)}}"
+        end_date_time: "{{now().replace(hour=0, minute=0, second=0) + timedelta(days=6)}}"
       response_variable: family
   sensor:
     - name: Family Events
