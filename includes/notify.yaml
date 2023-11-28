@@ -1,9 +1,3 @@
-- name: telegram_td
-  platform: telegram
-  chat_id: !secret telegram_bot_chat_id_td
-- name: telegram_ad
-  platform: telegram
-  chat_id: !secret telegram_bot_chat_id_ad
 - name: tom_and_anna
   platform: group
   services:

@@ -41,13 +41,6 @@ sonoff:
   sensors: power, current, voltage
   force_update: power
 
-telegram_bot:
-  - platform: polling
-    api_key: !secret telegram_ha_bot_key
-    allowed_chat_ids: 
-      - !secret telegram_bot_chat_id_td
-      - !secret telegram_bot_chat_id_ad
-
 input_text:
   telegram_td: 
     initial: !secret telegram_bot_chat_id_td
