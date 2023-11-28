@@ -80,18 +80,8 @@
   mode: single
 - id: '1576773914306'
   alias: 'Lights: Handle "Lights Off" command'
-  description: Respond to a manually typed Telegram message of "/off" (using telegram_command)
-    or a "/off"  message from the inline_keyboard notification button (using telegram_callback),
-    or event from mobile app notification button
+  description: Respond to command from mobeil app notification to turn off all lights
   trigger:
-  - event_data:
-      command: /off
-    event_type: telegram_callback
-    platform: event
-  - event_data:
-      command: /off
-    event_type: telegram_command
-    platform: event
   - platform: event
     event_type: mobile_app_notification_action
     event_data:
@@ -101,17 +91,8 @@
   - data:
       entity_id: all
     service: light.turn_off
-  - data:
-      entity_id: switch.sonoff_10001f5fa0
-    service: switch.turn_off
-  - data:
-      entity_id: switch.christmas_star
-    service: switch.turn_off
   - service: notify.tom_and_anna
     data:
-      target:
-      - '{{ states(''input_text.telegram_td'') }}'
-      - '{{ states(''input_text.telegram_ad'') }}'
       message: All lights turned off.
   mode: single
 - id: '1577980276286'
@@ -452,14 +433,6 @@
   alias: 'Washer: Handle *washer_emptied* notification response'
   description: ''
   trigger:
-  - event_data:
-      command: /washer_emptied
-    event_type: telegram_callback
-    platform: event
-  - event_data:
-      command: /washer_emptied
-    event_type: telegram_command
-    platform: event
   - platform: event
     event_type: mobile_app_notification_action
     event_data:
@@ -491,29 +464,6 @@
       fog: "\U0001F32B️"
       snowy: ❄️
   mode: single
-- id: '1582057191428'
-  alias: Printer - Telegram command
-  description: Respond to */print* Telegram command with stats about 3D printer
-  trigger:
-  - event_data:
-      command: /printer
-    event_type: telegram_callback
-    platform: event
-  - event_data:
-      command: /printer
-    event_type: telegram_command
-    platform: event
-  condition: []
-  action:
-  - data:
-      message: "Status: {{ states('sensor.printer_current_state') }}  \nElapsed: {%-
-        if states('sensor.printer_time_elapsed') |int > 3600 -%} {{ states('sensor.printer_time_elapsed')
-        \ | multiply(0.0002777778) | round(2)}}h {%- else %} {{ states('sensor.printer_time_elapsed')}}m
-        {% endif %}\nRemaining: {%- if states('sensor.printer_time_remaining') |int
-        > 3600 -%} {{ states('sensor.printer_time_remaining')  | multiply(0.0002777778)
-        | round(2)}}h {%- else %} {{ states('sensor.printer_time_remaining')}}m {%
-        endif %} \nProgress: {{ states('sensor.printer_job_percentage') }}%\n"
-    service: notify.telegram_td
 - id: '1582836882523'
   alias: Blanket - turn off TD after 15m
   description: Turn off Toms blanket 15m after it is turned on
@@ -1892,7 +1842,7 @@
         media_content_type: playlist
         title: Sebs Favourite Music
 - id: '1645116168862'
-  alias: 'ZHA: Anna''s Desk'
+  alias: 'ZHA: Anna''s Desk Button'
   description: ''
   use_blueprint:
     path: SeanM/zha-aqara-wireless-mini-switch.yaml
@@ -3485,6 +3435,21 @@
         size: 24
         color: red
         value: '{{states(''sensor.solax_local_load_power'')|int}}'
+      - type: icon
+        x: 55
+        y: 147
+        size: 15
+        color: '{{''red'' if is_state(''binary_sensor.washer'',''on'') else ''white''}}'
+        value: '{{''washing-machine'' if is_state(''binary_sensor.washer'',''on'')
+          else ''washing-machine-off''}}'
+      - type: icon
+        x: 75
+        y: 147
+        size: 15
+        color: '{{''red'' if is_state_attr(''climate.hive_thermostat'',''hvac_action'',''heating'')
+          else ''white''}}'
+        value: '{{''radiator'' if is_state_attr(''climate.hive_thermostat'',''hvac_action'',''heating'')
+          else ''radiator-off''}}'
       - type: rectangle
         x_start: 0
         x_end: 128
@@ -3504,7 +3469,7 @@
         y: 185
         size: 15
         color: black
-        value: '{{ ''battery-plus'' if states(''sensor.solax_local_battery_power'')
+        value: '{{''battery-plus'' if states(''sensor.solax_local_battery_power'')
           | int > 0 else ''battery-minus''}}'
       - type: text
         x: 72
@@ -3604,7 +3569,7 @@
       entity_id: open_epaper_link.0000021fb7d03b14
   - event: oepl_update
     event_data: {}
-  mode: single
+  mode: restart
 - id: '1700650416414'
   alias: 'OEPL: Update HA dashboard'
   description: ''
@@ -3616,3 +3581,360 @@
   - service: shell_command.epaper_copy
     data: {}
   mode: single
+- id: '1701101378698'
+  alias: 'OEPL: Custom Weather'
+  description: ''
+  trigger:
+  - platform: time_pattern
+    minutes: /20
+  condition:
+  - condition: time
+    after: 07:00:00
+    before: '22:00:00'
+  action:
+  - service: open_epaper_link.drawcustom
+    data:
+      dry-run: false
+      background: white
+      rotate: 0
+      payload:
+      - type: text
+        value: '{{ as_timestamp(state_attr(''weather.home_hourly'',''forecast'')[0].datetime)
+          | timestamp_custom(''%I'') | int }} {{ as_timestamp(state_attr(''weather.home_hourly'',''forecast'')[0].datetime)
+          | timestamp_custom(''%p'') | upper }}'
+        font: ../../media/GothamRnd-Bold.ttf
+        x: 125
+        y: 2
+        size: 12
+        color: black
+        anchor: mt
+      - type: text
+        value: '{{ state_attr(''weather.home_hourly'',''forecast'')[0].temperature
+          | string }}{{ state_attr(''weather.home_hourly'',''temperature_unit'') }}'
+        font: ../../media/GothamRnd-Bold.ttf
+        x: 125
+        y: 50
+        size: 14
+        color: '{{''black'' if state_attr(''weather.home_hourly'',''forecast'')[0].temperature
+          | float > severe_temp_low else ''red'' }}'
+        anchor: mt
+      - type: icon
+        value: weather-{{ weather[state_attr('weather.home_hourly','forecast')[0].condition]
+          }}
+        x: 108
+        y: 13
+        size: 34
+        color: '{{''red'' if state_attr(''weather.home_hourly'',''forecast'')[0].condition
+          in severe_weather else ''black'' }}'
+      - type: text
+        value: '{{ as_timestamp(state_attr(''weather.home_hourly'',''forecast'')[1].datetime)
+          | timestamp_custom(''%I'') | int }} {{ as_timestamp(state_attr(''weather.home_hourly'',''forecast'')[1].datetime)
+          | timestamp_custom(''%p'') | upper }}'
+        font: ../../media/GothamRnd-Bold.ttf
+        x: 174
+        y: 2
+        size: 12
+        color: black
+        anchor: mt
+      - type: text
+        value: '{{ state_attr(''weather.home_hourly'',''forecast'')[1].temperature
+          }}{{ state_attr(''weather.home_hourly'',''temperature_unit'') }}'
+        font: ../../media/GothamRnd-Bold.ttf
+        x: 174
+        y: 50
+        size: 14
+        color: '{{''black'' if state_attr(''weather.home_hourly'',''forecast'')[1].temperature
+          | float > severe_temp_low else ''red'' }}'
+        anchor: mt
+      - type: icon
+        value: weather-{{ weather[state_attr('weather.home_hourly','forecast')[1].condition]
+          }}
+        x: 157
+        y: 13
+        size: 34
+        color: '{{''red'' if state_attr(''weather.home_hourly'',''forecast'')[1].condition
+          in severe_weather else ''black'' }}    '
+      - type: text
+        value: '{{ as_timestamp(state_attr(''weather.home_hourly'',''forecast'')[2].datetime)
+          | timestamp_custom(''%I'') | int }} {{ as_timestamp(state_attr(''weather.home_hourly'',''forecast'')[2].datetime)
+          | timestamp_custom(''%p'') | upper }}'
+        font: ../../media/GothamRnd-Bold.ttf
+        x: 223
+        y: 2
+        size: 12
+        color: black
+        anchor: mt
+      - type: text
+        value: '{{ state_attr(''weather.home_hourly'',''forecast'')[2].temperature  }}{{
+          state_attr(''weather.home_hourly'',''temperature_unit'') }}'
+        font: ../../media/GothamRnd-Bold.ttf
+        x: 223
+        y: 50
+        size: 14
+        color: '{{''black'' if state_attr(''weather.home_hourly'',''forecast'')[2].temperature
+          | float> severe_temp_low else ''red'' }}'
+        anchor: mt
+      - type: icon
+        value: weather-{{ weather[state_attr('weather.home_hourly','forecast')[2].condition]
+          }}
+        x: 206
+        y: 13
+        size: 34
+        color: '{{''red'' if state_attr(''weather.home_hourly'',''forecast'')[2].condition
+          in severe_weather else ''black'' }}'
+      - type: text
+        value: '{{ as_timestamp(state_attr(''weather.home_hourly'',''forecast'')[3].datetime)
+          | timestamp_custom(''%I'') | int }} {{ as_timestamp(state_attr(''weather.home_hourly'',''forecast'')[3].datetime)
+          | timestamp_custom(''%p'') | upper }}'
+        font: ../../media/GothamRnd-Bold.ttf
+        x: 272
+        y: 2
+        size: 12
+        color: black
+        anchor: mt
+      - type: text
+        value: '{{ state_attr(''weather.home_hourly'',''forecast'')[3].temperature
+          }}{{ state_attr(''weather.home_hourly'',''temperature_unit'') }}'
+        font: ../../media/GothamRnd-Bold.ttf
+        x: 272
+        y: 50
+        size: 14
+        color: '{{''black'' if state_attr(''weather.home_hourly'',''forecast'')[3].temperature
+          | float > severe_temp_low else ''red'' }}'
+        anchor: mt
+      - type: icon
+        value: weather-{{ weather[state_attr('weather.home_hourly','forecast')[3].condition]  }}
+        x: 255
+        y: 13
+        size: 34
+        color: '{{''red'' if state_attr(''weather.home_hourly'',''forecast'')[3].condition
+          in severe_weather else ''black'' }}        '
+      - type: text
+        value: '{{ state_attr(''weather.millview'',''forecast'')[1].temperature }}'
+        font: ../../media/GothamRnd-Bold.ttf
+        x: 122
+        y: 111
+        size: 12
+        color: '{{''black'' if state_attr(''weather.millview'',''forecast'')[1].temperature
+          | float > severe_temp_low else ''red'' }}'
+        anchor: rt
+      - type: text
+        value: /
+        font: ../../media/GothamRnd-Bold.ttf
+        x: 125
+        y: 112
+        size: 14
+        color: black
+        anchor: mt
+      - type: text
+        value: '{{ state_attr(''weather.millview'',''forecast'')[1].templow }}'
+        font: ../../media/GothamRnd-Bold.ttf
+        x: 128
+        y: 118
+        size: 12
+        color: '{{''black'' if state_attr(''weather.millview'',''forecast'')[1].templow
+          | float > severe_temp_low else ''red'' }}'
+        anchor: lt
+      - type: icon
+        value: weather-{{ weather[state_attr('weather.millview','forecast')[1].condition]}}
+        x: 108
+        y: 78
+        size: 34
+        color: '{{''red'' if state_attr(''weather.millview'',''forecast'')[1].condition
+          in severe_weather else ''black'' }}'
+      - type: text
+        value: '{{ state_attr(''weather.millview'',''forecast'')[2].temperature }}'
+        font: ../../media/GothamRnd-Bold.ttf
+        x: 171
+        y: 111
+        size: 12
+        color: '{{''black'' if state_attr(''weather.millview'',''forecast'')[2].templow
+          | float > severe_temp_low else ''red'' }}'
+        anchor: rt
+      - type: text
+        value: /
+        font: ../../media/GothamRnd-Bold.ttf
+        x: 174
+        y: 112
+        size: 14
+        color: black
+        anchor: mt
+      - type: text
+        value: '{{ state_attr(''weather.millview'',''forecast'')[2].templow }}'
+        font: ../../media/GothamRnd-Bold.ttf
+        x: 177
+        y: 118
+        size: 12
+        color: '{{''black'' if state_attr(''weather.millview'',''forecast'')[2].templow
+          | float > severe_temp_low else ''red'' }}'
+        anchor: lt
+      - type: icon
+        value: weather-{{ weather[state_attr('weather.millview','forecast')[2].condition]
+          }}
+        x: 157
+        y: 78
+        size: 34
+        color: '{{''red'' if state_attr(''weather.millview'',''forecast'')[2].condition
+          in severe_weather else ''black'' }}'
+      - type: text
+        value: '{{ state_attr(''weather.millview'',''forecast'')[3].temperature  }}'
+        font: ../../media/GothamRnd-Bold.ttf
+        x: 220
+        y: 111
+        size: 12
+        color: '{{''black'' if state_attr(''weather.millview'',''forecast'')[3].temperature
+          | float > severe_temp_low else ''red'' }}'
+        anchor: rt
+      - type: text
+        value: /
+        font: ../../media/GothamRnd-Bold.ttf
+        x: 223
+        y: 112
+        size: 14
+        color: black
+        anchor: mt
+      - type: text
+        value: '{{ state_attr(''weather.millview'',''forecast'')[3].templow  }}'
+        font: ../../media/GothamRnd-Bold.ttf
+        x: 226
+        y: 118
+        size: 12
+        color: '{{''black'' if state_attr(''weather.millview'',''forecast'')[3].templow
+          | float > severe_temp_low else ''red'' }}'
+        anchor: lt
+      - type: icon
+        value: weather-{{ weather[state_attr('weather.millview','forecast')[3].condition]}}
+        x: 206
+        y: 78
+        size: 34
+        color: '{{''red'' if state_attr(''weather.millview'',''forecast'')[3].condition
+          in severe_weather else ''black'' }}'
+      - type: text
+        value: '{{ state_attr(''weather.millview'',''forecast'')[4].temperature }}'
+        font: ../../media/GothamRnd-Bold.ttf
+        x: 269
+        y: 111
+        size: 12
+        color: '{{''black'' if state_attr(''weather.millview'',''forecast'')[4].temperature
+          | float > severe_temp_low else ''red'' }}'
+        anchor: rt
+      - type: text
+        value: /
+        font: ../../media/GothamRnd-Bold.ttf
+        x: 272
+        y: 112
+        size: 14
+        color: black
+        anchor: mt
+      - type: text
+        value: '{{ state_attr(''weather.millview'',''forecast'')[4].templow }}'
+        font: ../../media/GothamRnd-Bold.ttf
+        x: 275
+        y: 118
+        size: 12
+        color: '{{''black'' if state_attr(''weather.millview'',''forecast'')[4].templow
+          | float > severe_temp_low else ''red'' }}'
+        anchor: lt
+      - type: icon
+        value: weather-{{ weather[state_attr('weather.millview','forecast')[4].condition]
+          }}
+        x: 255
+        y: 78
+        size: 34
+        color: "{{'red' if state_attr('weather.millview','forecast')[4].condition
+          in severe_weather else 'black' }}\n    "
+      - type: text
+        value: '{{ as_timestamp(state_attr(''weather.millview'',''forecast'')[1].datetime)
+          | timestamp_custom(''%a'') | upper }}'
+        font: ../../media/GothamRnd-Bold.ttf
+        x: 125
+        y: 67
+        size: 12
+        color: black
+        anchor: mt
+      - type: text
+        value: '{{ as_timestamp(state_attr(''weather.millview'',''forecast'')[2].datetime)
+          | timestamp_custom(''%a'') | upper }}'
+        font: ../../media/GothamRnd-Bold.ttf
+        x: 174
+        y: 67
+        size: 12
+        color: black
+        anchor: mt
+      - type: text
+        value: '{{ as_timestamp(state_attr(''weather.millview'',''forecast'')[3].datetime)
+          | timestamp_custom(''%a'') | upper }}'
+        font: ../../media/GothamRnd-Bold.ttf
+        x: 223
+        y: 67
+        size: 12
+        color: black
+        anchor: mt
+      - type: text
+        value: '{{ as_timestamp(state_attr(''weather.millview'',''forecast'')[4].datetime)
+          | timestamp_custom(''%a'') | upper }}'
+        font: ../../media/GothamRnd-Bold.ttf
+        x: 272
+        y: 67
+        size: 12
+        color: black
+        anchor: mt
+      - type: line
+        fill: black
+        width: 1
+        x_start: 125
+        y_start: 64
+        x_end: 272
+        y_end: 64
+      - type: text
+        value: '{{ state_attr(''weather.millview'',''temperature'') | float | round
+          | int(0)}}{{ state_attr(''weather.millview'',''temperature_unit'') }}'
+        font: ../../media/GothamRnd-Bold.ttf
+        x: 52
+        y: 94
+        size: 38
+        anchor: mt
+        color: '{{''black'' if state_attr(''weather.millview'',''temperature'') |
+          float | round > severe_temp_low else ''red'' }}'
+      - type: icon
+        value: weather-{{ weather[states('weather.millview')] }}
+        x: 6
+        y: 2
+        size: 92
+        color: '{{''red'' if states(''weather.millview'') in severe_weather else ''black''
+          }}'
+    target:
+      entity_id:
+      - open_epaper_link.0000021f40f13b1f
+  - event: oepl_update
+    event_data: {}
+  variables:
+    weather:
+      partlycloudy: partly-cloudy
+      clear-night: night
+      rainy: rainy
+      sunny: sunny
+      cloudy: cloudy
+      fog: fog
+      hail: hail
+      lightning: lightning
+      lightning-rainy: lightning-rainy
+      pouring: pouring
+      snowy: snowy
+      snowy-rainy: snowy-rainy
+      windy: windy
+      windy-variant: windy-variant
+      exceptional: exceptional
+    severe_weather:
+    - fog
+    - hail
+    - lightning
+    - lightning-rainy
+    - pouring
+    - snowy
+    - snowy-rainy
+    - windy
+    - windy-variant
+    - exceptional
+    severe_temp_low: 3
+  mode: restart
