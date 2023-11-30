@@ -2533,14 +2533,6 @@
     solar
   trigger:
   - platform: numeric_state
-    entity_id: sensor.solar_excess
-    below: 10
-    for:
-      hours: 0
-      minutes: 3
-      seconds: 0
-    id: insufficient_solar
-  - platform: numeric_state
     entity_id: sensor.airer_run_time
     above: input_number.airer_target_runtime
     id: run_time_exceeded
@@ -2549,6 +2541,15 @@
     - input_boolean.heated_airer
     from: 'on'
     to: 'off'
+    id: manually_disable
+  - platform: template
+    value_template: '{{ states(''sensor.solar_excess'') | int < 10 and is_state(''input_boolean.heated_airer_solar_override'',
+      ''off'') }}'
+    for:
+      hours: 0
+      minutes: 3
+      seconds: 0
+    id: insufficient_solar
   condition:
   - condition: state
     entity_id: switch.heated_airer
@@ -3448,8 +3449,8 @@
         size: 15
         color: '{{''red'' if is_state_attr(''climate.hive_thermostat'',''hvac_action'',''heating'')
           else ''white''}}'
-        value: '{{''radiator'' if is_state_attr(''climate.hive_thermostat'',''hvac_action'',''heating'')
-          else ''radiator-off''}}'
+        value: '{{''fire'' if is_state_attr(''climate.hive_thermostat'',''hvac_action'',''heating'')
+          else ''fire-off''}}'
       - type: rectangle
         x_start: 0
         x_end: 128
@@ -3557,7 +3558,7 @@
         size: 15
         color: '{{''red'' if states(''sensor.mixergy_electric_pv_power'') | float
           > 0 else ''black''}}'
-        value: power-plug-outline
+        value: solar-power
       - type: text
         x: 64
         y: 297
