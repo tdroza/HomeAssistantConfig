@@ -544,8 +544,8 @@
                       },
                       "icon_color": "{% if is_state('light.living_room_light_group','on') %}\n{{ '#%02x%02x%02x' % state_attr('light.living_room_light_group','rgb_color') }}\n{% endif %}",
                       "multiline_secondary": false,
-                      "badge_color": "{% if state_attr('climate.hive_thermostat','hvac_action') == 'heating' %}\nred\n{% else %}\n  {% if is_state('binary_sensor.living_room_door', 'on') %}\n  orange\n  {% endif %}\n{% endif %}",
-                      "badge_icon": "{% if state_attr('climate.hive_thermostat','hvac_action') == 'heating' %}\nmdi:fire\n{% else %}\n  {% if is_state('binary_sensor.living_room_door', 'on') %}\n  mdi:door-open\n  {% else %}\n  mdi:door-closed\n  {% endif %}\n{% endif %}"
+                      "badge_color": "{% if is_state_attr('climate.hive_thermostat','hvac_action', 'heating') %}\nred\n{% else %}\n  {% if is_state('binary_sensor.living_room_door', 'on') %}\n  orange\n  {% endif %}\n{% endif %}",
+                      "badge_icon": "{% if is_state_attr('climate.hive_thermostat','hvac_action', 'heating') %}\nmdi:fire\n{% else %}\n  {% if is_state('binary_sensor.living_room_door', 'on') %}\n  mdi:door-open\n  {% else %}\n  mdi:door-closed\n  {% endif %}\n{% endif %}"
                     },
                     {
                       "type": "custom:mushroom-template-card",
@@ -600,8 +600,8 @@
                       "hold_action": {
                         "action": "toggle"
                       },
-                      "badge_color": "{% if is_state('switch.immersion_heater','on') %}\norange\n{% elif is_state('water_heater.hive_thermostat','on') %}\nblue\n{% elif is_state('climate.hive_thermostat','heat') %}\nred\n{% elif is_state('switch.heated_airer','on') %}\ngreen\n{% endif %}",
-                      "badge_icon": "{% if is_state('switch.immersion_heater','on') %}\nmdi:thermometer-water\n{% elif is_state('water_heater.hive_thermostat','on') %}\nmdi:water-boiler\n{% elif is_state('climate.hive_thermostat','heat') %}\nmdi:heat-pump-outline\n{% elif is_state('switch.heated_airer','on') %}\nmdi:tumble-dryer\n{% endif %}"
+                      "badge_color": "{% if states('sensor.mixergy_electric_heat_power') | float > 0 %}\norange\n{% elif states('sensor.mixergy_electric_pv_power') | float > 0 %}\nblue\n{% elif is_state_attr('climate.hive_thermostat','hvac_action','heating') %}\nred\n{% elif is_state('switch.heated_airer','on') %}\ngreen\n{% endif %}",
+                      "badge_icon": "{% if states('sensor.mixergy_electric_heat_power') | float > 0 %}\nmdi:thermometer-water\n{% elif states('sensor.mixergy_electric_pv_power') | float > 0 %}\nmdi:water-boiler\n{% elif is_state_attr('climate.hive_thermostat','hvac_action','heating') %}\nmdi:heat-pump-outline\n{% elif is_state('switch.heated_airer','on') %}\nmdi:tumble-dryer\n{% endif %}"
                     }
                   ]
                 },
@@ -1784,6 +1784,9 @@
                   "entity": "switch.heated_airer"
                 },
                 {
+                  "entity": "input_boolean.heated_airer_solar_override"
+                },
+                {
                   "type": "custom:template-entity-row",
                   "state": "{{ as_timestamp(states('sensor.airer_requested_power')) | timestamp_custom('%d/%m/%y %H:%M')}}",
                   "icon": "mdi:clock-check",
@@ -2639,10 +2642,13 @@
                         ],
                         "entities": [
                           {
-                            "entity": "sensor.living_room_temp",
-                            "index": 0,
-                            "name": "Temp",
-                            "show_fill": false
+                            "entity": "climate.hive_thermostat",
+                            "attribute": "current_temperature",
+                            "name": "Hive Temp",
+                            "show_fill": false,
+                            "show_line": false,
+                            "smoothing": false,
+                            "show_state": true
                           },
                           {
                             "entity": "climate.hive_thermostat",
@@ -2663,21 +2669,18 @@
                             "show_state": false
                           },
                           {
+                            "entity": "sensor.living_room_temp",
+                            "index": 0,
+                            "name": "D1Temp",
+                            "show_fill": false
+                          },
+                          {
                             "entity": "climate.hive_thermostat",
                             "attribute": "hvac_action",
                             "y_axis": "secondary",
                             "color": "grey",
                             "name": "Heating",
                             "show_fill": true,
-                            "show_line": false,
-                            "smoothing": false,
-                            "show_state": true
-                          },
-                          {
-                            "entity": "climate.hive_thermostat",
-                            "attribute": "current_temperature",
-                            "name": "Hive Temp",
-                            "show_fill": false,
                             "show_line": false,
                             "smoothing": false,
                             "show_state": true

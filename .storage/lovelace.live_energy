@@ -106,6 +106,68 @@
           "title": "Home",
           "cards": [
             {
+              "type": "custom:auto-entities",
+              "card": {
+                "type": "custom:mushroom-chips-card"
+              },
+              "card_param": "chips",
+              "filter": {
+                "include": [
+                  {
+                    "entity_id": "climate.hive_thermostat",
+                    "attributes": {
+                      "hvac_action": "heating"
+                    },
+                    "options": {
+                      "type": "template",
+                      "icon": "mdi:fire",
+                      "icon_color": "red",
+                      "content": "{{state_attr('climate.hive_thermostat','current_temperature')}} ⁰C"
+                    }
+                  },
+                  {
+                    "entity_id": "switch.heated_airer",
+                    "options": {
+                      "type": "entity",
+                      "content_info": "none"
+                    }
+                  },
+                  {
+                    "entity_id": "binary_sensor.washer",
+                    "options": {
+                      "type": "entity"
+                    }
+                  },
+                  {
+                    "entity_id": "sensor.mixergy_electric_pv_power",
+                    "options": {
+                      "type": "template",
+                      "icon": "mdi:water-boiler",
+                      "icon_color": "orange",
+                      "content": "{{states('sensor.mixergy_electric_pv_power') | round(2)}} kW"
+                    }
+                  },
+                  {
+                    "entity_id": "sensor.mixergy_electric_heat_power",
+                    "options": {
+                      "type": "template",
+                      "icon": "mdi:water-boiler",
+                      "icon_color": "red",
+                      "content": "{{states('sensor.mixergy_electric_heat_power') | round(2)}} kW"
+                    }
+                  }
+                ],
+                "exclude": [
+                  {
+                    "state": "off"
+                  },
+                  {
+                    "state": "<=0"
+                  }
+                ]
+              }
+            },
+            {
               "type": "custom:decluttering-card",
               "template": "power-flow",
               "variables": [
