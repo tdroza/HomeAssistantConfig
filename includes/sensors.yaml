@@ -47,15 +47,6 @@
         {% else %}
           {{state_attr("media_player.ytube_music_player", "media_title") }}
         {% endif %}
-    teams_status: 
-      friendly_name: "Microsoft Teams status"
-      value_template: "{{states('input_text.teams_status')}}"
-      icon_template: "{{state_attr('input_text.teams_status','icon')}}"
-      unique_id: sensor.teams_status
-    teams_activity:
-      friendly_name: "Microsoft Teams activity"
-      value_template: "{{states('input_text.teams_activity')}}"
-      unique_id: sensor.teams_activity  
 
     vacuum_state:
       value_template: 'Ditto: {{ states.vacuum.ditto.attributes.status }}'
