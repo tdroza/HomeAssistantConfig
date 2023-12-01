@@ -3337,8 +3337,6 @@
           | timestamp_custom(''%a, %H:%M'')}}'
     target:
       entity_id: open_epaper_link.00000218cf5d3b19
-  - event: oepl_update
-    event_data: {}
   mode: single
 - id: '1700574169666'
   alias: OEPL Energy Dashboard
@@ -3568,20 +3566,7 @@
         value: 'Updated: {{now().strftime(''%H:%M'')}}'
     target:
       entity_id: open_epaper_link.0000021fb7d03b14
-  - event: oepl_update
-    event_data: {}
   mode: restart
-- id: '1700650416414'
-  alias: 'OEPL: Update HA dashboard'
-  description: ''
-  trigger:
-  - platform: event
-    event_type: oepl_update
-  condition: []
-  action:
-  - service: shell_command.epaper_copy
-    data: {}
-  mode: single
 - id: '1701101378698'
   alias: 'OEPL: Custom Weather'
   description: ''
@@ -3907,8 +3892,6 @@
     target:
       entity_id:
       - open_epaper_link.0000021f40f13b1f
-  - event: oepl_update
-    event_data: {}
   variables:
     weather:
       partlycloudy: partly-cloudy
@@ -3939,3 +3922,29 @@
     - exceptional
     severe_temp_low: 3
   mode: restart
+- id: '1701429230401'
+  alias: 'OEPL: Teams Status'
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - binary_sensor.tom_in_meeting
+  condition: []
+  action:
+  - service: open_epaper_link.drawcustom
+    data:
+      dry-run: false
+      background: white
+      rotate: 0
+      payload:
+      - type: icon
+        x: 0
+        y: 0
+        size: 152
+        color: '{{''red'' if is_state(''binary_sensor.tom_in_meeting'',''on'') else
+          ''black''}}'
+        value: '{{''video-account'' if is_state(''binary_sensor.tom_in_meeting'',''on'')
+          else ''video-off-outline''}}'
+    target:
+      entity_id: open_epaper_link.0000021eedc53411
+  mode: single

@@ -1,12 +1,1 @@
-- platform: local_file
-  name: oepl_3B19
-  file_path: '/config/www/open_epaper_link.00000218cf5d3b19.jpg'
-- platform: local_file
-  name: oepl_3419
-  file_path: '/config/www/open_epaper_link.0000021ec31c3419.jpg'
-- platform: local_file
-  name: oepl_3B1F
-  file_path: '/config/www/open_epaper_link.0000021f40f13b1f.jpg'
-- platform: local_file
-  name: oepl_3B14
-  file_path: '/config/www/open_epaper_link.0000021fb7d03b14.jpg'
+

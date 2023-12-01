@@ -1614,41 +1614,35 @@
               "show_name": true,
               "camera_view": "auto",
               "type": "picture-entity",
-              "entity": "camera.oepl_3b19"
+              "entity": "camera.0000021ec31c3419_cam"
             },
             {
-              "show_state": true,
+              "show_state": false,
               "show_name": true,
               "camera_view": "auto",
               "type": "picture-entity",
-              "entity": "camera.oepl_3419"
+              "entity": "camera.0000021f40f13b1f_cam"
             },
             {
-              "show_state": true,
+              "show_state": false,
               "show_name": true,
               "camera_view": "auto",
               "type": "picture-entity",
-              "entity": "camera.oepl_3b1f"
+              "entity": "camera.0000021fb7d03b14_cam"
             },
             {
-              "show_name": true,
-              "show_icon": true,
-              "type": "button",
-              "tap_action": {
-                "action": "call-service",
-                "service": "shell_command.epaper_copy",
-                "target": {}
-              },
-              "entity": "camera.oepl_3419",
-              "name": "Update Screenshots",
-              "icon": "mdi:image-refresh"
-            },
-            {
-              "show_state": true,
+              "show_state": false,
               "show_name": true,
               "camera_view": "auto",
               "type": "picture-entity",
-              "entity": "camera.oepl_3b14"
+              "entity": "camera.00000218cf5d3b19_cam"
+            },
+            {
+              "show_state": false,
+              "show_name": true,
+              "camera_view": "auto",
+              "type": "picture-entity",
+              "entity": "camera.0000021eedc53411_cam"
             }
           ]
         },
