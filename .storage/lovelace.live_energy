@@ -120,6 +120,7 @@
                     },
                     "options": {
                       "type": "template",
+                      "tap_action": "none",
                       "icon": "mdi:fire",
                       "icon_color": "red",
                       "content": "{{state_attr('climate.hive_thermostat','current_temperature')}} ⁰C"
@@ -144,6 +145,7 @@
                       "type": "template",
                       "icon": "mdi:water-boiler",
                       "icon_color": "orange",
+                      "tap_action": "none",
                       "content": "{{states('sensor.mixergy_electric_pv_power') | round(2)}} kW"
                     }
                   },
