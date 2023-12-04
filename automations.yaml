@@ -756,6 +756,8 @@
       media_player_entity_id: '{{ media_players[trigger.event.data.device_id] }}'
       media_content_id: '{{ tags[trigger.event.data.tag_id].media_content_id }}'
       media_content_type: '{{ tags[trigger.event.data.tag_id].media_content_type }}'
+  - service: media_player.volume_set
+    data: {}
   - service: media_player.play_media
     data:
       entity_id: '{{ media_player_entity_id }}'
@@ -886,7 +888,7 @@
   trigger:
   - platform: state
     entity_id:
-    - binary_sensor.zoom_tomBJSS
+    - binary_sensor.teams_video
   condition: []
   action:
   - variables:
@@ -919,7 +921,7 @@
   - choose:
     - conditions:
       - condition: state
-        entity_id: binary_sensor.zoom_tomBJSS
+        entity_id: binary_sensor.teams_video
         state: 'on'
       sequence:
       - service: tts.google_translate_say
@@ -958,7 +960,7 @@
             218,[255,255,255], 219,222,[255,0,0], 222,[255,255,255], 223,256,[255,0,0]
     - conditions:
       - condition: state
-        entity_id: binary_sensor.zoom_tomBJSS
+        entity_id: binary_sensor.teams_video
         state: 'off'
       sequence:
       - service: tts.google_translate_say
@@ -1152,6 +1154,10 @@
           value: '{{ number_of_podcasts - 1}}'
           entity_id: '{{podcast_counter}}'
     default: []
+  - service: media_player.volume_set
+    data:
+      volume_level: 0.5
+      entity_id:
   - service: tts.google_translate_say
     data:
       entity_id: '{{ media_player_entity_id }}'
@@ -1805,6 +1811,8 @@
       media_player_entity_id: '{{ media_players[trigger.event.data.device_id] }}'
       media_content_id: '{{ tags[trigger.event.data.tag_id].media_content_id }}'
       media_content_type: '{{ tags[trigger.event.data.tag_id].media_content_type }}'
+  - service: media_player.volume_set
+    data: {}
   - service: media_player.select_source
     data:
       source: '{{ media_player_entity_id }}'
