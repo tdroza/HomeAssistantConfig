@@ -611,7 +611,7 @@
                     {
                       "type": "custom:mushroom-template-card",
                       "primary": "Main Bedroom",
-                      "secondary": "{{ states('sensor.bed1_temperature') }}°C",
+                      "secondary": "{{ state_attr('climate.main_bedroom_radiator_thermostat','current_temperature') }}°C",
                       "icon": "mdi:bed-king",
                       "entity": "light.main_bedroom_light_group",
                       "tap_action": {
@@ -622,8 +622,8 @@
                         "action": "toggle"
                       },
                       "icon_color": "{% if is_state('light.main_bedroom_light_group','on') %}\n{{ '#%02x%02x%02x' % (state_attr('light.main_bedroom_light_group','rgb_color') or (255,193,7))}}\n{% endif %}",
-                      "badge_color": "{% if is_state('binary_sensor.main_bedroom_door', 'on') %}\norange\n{% endif %}",
-                      "badge_icon": "{% if is_state('binary_sensor.main_bedroom_door', 'on') %}\nmdi:door-open\n{% else %}\nmdi:door-closed\n{% endif %}"
+                      "badge_color": "{% if is_state_attr('climate.hive_thermostat','hvac_action','heating') and state_attr('climate.main_bedroom_radiator_thermostat', 'temperature') | float(0) > state_attr('climate.main_bedroom_radiator_thermostat', 'current_temperature') | float(0) %}\nred\n{% elif is_state('binary_sensor.main_bedroom_door', 'on') %}\norange\n{% endif %}",
+                      "badge_icon": "{% if is_state_attr('climate.hive_thermostat','hvac_action','heating') and state_attr('climate.main_bedroom_radiator_thermostat', 'temperature') | float(0) > state_attr('climate.main_bedroom_radiator_thermostat', 'current_temperature') | float(0) %}\nmdi:radiator\n{% elif is_state('binary_sensor.main_bedroom_door', 'on') %}\nmdi:door-open\n{% else %}\nmdi:door-closed\n{% endif %}"
                     },
                     {
                       "type": "custom:mushroom-template-card",
@@ -2404,23 +2404,23 @@
                       "card": {
                         "color_thresholds": [
                           {
-                            "value_template": "{{ state_attr(\"sensor.temps_min_stats\", \"min_value\") - state_attr(\"sensor.temps_min_stats\", \"standard_deviation\") }}",
+                            "value_template": "{{ states(\"sensor.temps_min_stats\")|float - states(\"sensor.temps_min_stats\")|float }}",
                             "color_template": "{{ states(\"input_text.colour_low\")}}"
                           },
                           {
-                            "value_template": "{{ state_attr(\"sensor.temps_min_stats\", \"mean\") }}",
+                            "value_template": "{{ states(\"sensor.temps_min_stats\")|float }}",
                             "color_template": "{{ states(\"input_text.colour_medium_low\")}}"
                           },
                           {
-                            "value_template": "{{ (state_attr(\"sensor.temps_min_stats\", \"mean\") +  state_attr(\"sensor.temps_max_stats\", \"mean\"))/2 }}",
+                            "value_template": "{{ (states(\"sensor.temps_min_stats\")|float +  states(\"sensor.temps_max_stats\")|float)/2 }}",
                             "color_template": "{{ states(\"input_text.colour_medium\")}}"
                           },
                           {
-                            "value_template": "{{ {{ state_attr(\"sensor.temps_max_stats\", \"mean\") }} }}",
+                            "value_template": "{{ states(\"sensor.temps_max_stats\")|float }}",
                             "color_template": "{{ states(\"input_text.colour_medium_high\")}}"
                           },
                           {
-                            "value_template": "{{ state_attr(\"sensor.temps_max_stats\", \"max_value\") - state_attr(\"sensor.temps_max_stats\", \"standard_deviation\") }}",
+                            "value_template": "{{ states(\"sensor.temps_max_stats\")|float - states(\"sensor.temps_max_stats\")|float }}",
                             "color_template": "{{ states(\"input_text.colour_high\")}}"
                           }
                         ],
@@ -2837,31 +2837,34 @@
                       "card": {
                         "color_thresholds": [
                           {
-                            "value_template": "{{ state_attr(\"sensor.temps_min_stats\", \"min_value\") - state_attr(\"sensor.temps_min_stats\", \"standard_deviation\") }}",
+                            "value_template": "{{ states(\"sensor.temps_min_stats\")|float - states(\"sensor.temps_min_stats\")|float }}",
                             "color_template": "{{ states(\"input_text.colour_low\")}}"
                           },
                           {
-                            "value_template": "{{ state_attr(\"sensor.temps_min_stats\", \"mean\") }}",
+                            "value_template": "{{ states(\"sensor.temps_min_stats\")|float }}",
                             "color_template": "{{ states(\"input_text.colour_medium_low\")}}"
                           },
                           {
-                            "value_template": "{{ (state_attr(\"sensor.temps_min_stats\", \"mean\") +  state_attr(\"sensor.temps_max_stats\", \"mean\"))/2 }}",
+                            "value_template": "{{ (states(\"sensor.temps_min_stats\")|float +  states(\"sensor.temps_max_stats\")|float)/2 }}",
                             "color_template": "{{ states(\"input_text.colour_medium\")}}"
                           },
                           {
-                            "value_template": "{{ {{ state_attr(\"sensor.temps_max_stats\", \"mean\") }} }}",
+                            "value_template": "{{ states(\"sensor.temps_max_stats\")|float }}",
                             "color_template": "{{ states(\"input_text.colour_medium_high\")}}"
                           },
                           {
-                            "value_template": "{{ state_attr(\"sensor.temps_max_stats\", \"max_value\") - state_attr(\"sensor.temps_max_stats\", \"standard_deviation\") }}",
+                            "value_template": "{{ states(\"sensor.temps_max_stats\")|float - states(\"sensor.temps_max_stats\")|float }}",
                             "color_template": "{{ states(\"input_text.colour_high\")}}"
                           }
                         ],
                         "entities": [
                           {
-                            "entity": "sensor.bed1_temperature",
+                            "entity": "climate.main_bedroom_radiator_thermostat",
+                            "attribute": "current_temperature",
                             "index": 0,
-                            "name": "Temp"
+                            "name": "Temp",
+                            "show_fill": false,
+                            "smoothing": false
                           },
                           {
                             "entity": "climate.hive_thermostat",
@@ -2873,6 +2876,16 @@
                             "show_line": false,
                             "smoothing": false,
                             "show_state": true
+                          },
+                          {
+                            "entity": "sensor.daytime",
+                            "y_axis": "secondary",
+                            "color": "orange",
+                            "name": "Day/Night",
+                            "show_fill": true,
+                            "show_line": false,
+                            "smoothing": false,
+                            "show_state": false
                           }
                         ],
                         "state_map": [
@@ -2887,7 +2900,7 @@
                         ],
                         "points_per_hour": 20,
                         "line_width": 2,
-                        "name": "Living room",
+                        "name": "Main bedroom",
                         "show": {
                           "icon": false,
                           "labels": true,
@@ -2900,6 +2913,11 @@
                 }
               ],
               "type": "vertical-stack"
+            },
+            {
+              "type": "thermostat",
+              "entity": "climate.main_bedroom_radiator_thermostat",
+              "name": "Main Bedroom Radiator"
             }
           ]
         },
@@ -2926,13 +2944,14 @@
                   "type": "conditional",
                   "conditions": [
                     {
-                      "entity": "media_player.kitchen_and_dining_room_2",
+                      "condition": "state",
+                      "entity": "media_player.kitchen_display",
                       "state": "playing"
                     }
                   ],
                   "card": {
                     "type": "media-control",
-                    "entity": "media_player.kitchen_and_dining_room_2"
+                    "entity": "media_player.kitchen_display"
                   }
                 },
                 {
@@ -3018,23 +3037,23 @@
                   "card": {
                     "color_thresholds": [
                       {
-                        "value_template": "{{ state_attr(\"sensor.temps_min_stats\", \"min_value\") - state_attr(\"sensor.temps_min_stats\", \"standard_deviation\") }}",
+                        "value_template": "{{ states(\"sensor.temps_min_stats\")|float - states(\"sensor.temps_min_stats\")|float }}",
                         "color_template": "{{ states(\"input_text.colour_low\")}}"
                       },
                       {
-                        "value_template": "{{ state_attr(\"sensor.temps_min_stats\", \"mean\") }}",
+                        "value_template": "{{ states(\"sensor.temps_min_stats\")|float }}",
                         "color_template": "{{ states(\"input_text.colour_medium_low\")}}"
                       },
                       {
-                        "value_template": "{{ (state_attr(\"sensor.temps_min_stats\", \"mean\") +  state_attr(\"sensor.temps_max_stats\", \"mean\"))/2 }}",
+                        "value_template": "{{ (states(\"sensor.temps_min_stats\")|float +  states(\"sensor.temps_max_stats\")|float)/2 }}",
                         "color_template": "{{ states(\"input_text.colour_medium\")}}"
                       },
                       {
-                        "value_template": "{{ {{ state_attr(\"sensor.temps_max_stats\", \"mean\") }} }}",
+                        "value_template": "{{ states(\"sensor.temps_max_stats\")|float }}",
                         "color_template": "{{ states(\"input_text.colour_medium_high\")}}"
                       },
                       {
-                        "value_template": "{{ state_attr(\"sensor.temps_max_stats\", \"max_value\") - state_attr(\"sensor.temps_max_stats\", \"standard_deviation\") }}",
+                        "value_template": "{{ states(\"sensor.temps_max_stats\")|float - states(\"sensor.temps_max_stats\")|float }}",
                         "color_template": "{{ states(\"input_text.colour_high\")}}"
                       }
                     ],
@@ -3043,6 +3062,16 @@
                         "entity": "sensor.kitchen_climate_temperature",
                         "index": 0,
                         "name": "Temp"
+                      },
+                      {
+                        "entity": "sensor.daytime",
+                        "y_axis": "secondary",
+                        "color": "orange",
+                        "name": "Day/Night",
+                        "show_fill": true,
+                        "show_line": false,
+                        "smoothing": false,
+                        "show_state": false
                       },
                       {
                         "entity": "climate.hive_thermostat",
@@ -3215,23 +3244,23 @@
                   "card": {
                     "color_thresholds": [
                       {
-                        "value_template": "{{ state_attr(\"sensor.temps_min_stats\", \"min_value\") - state_attr(\"sensor.temps_min_stats\", \"standard_deviation\") }}",
+                        "value_template": "{{ states(\"sensor.temps_min_stats\")|float - states(\"sensor.temps_min_stats\")|float }}",
                         "color_template": "{{ states(\"input_text.colour_low\")}}"
                       },
                       {
-                        "value_template": "{{ state_attr(\"sensor.temps_min_stats\", \"mean\") }}",
+                        "value_template": "{{ states(\"sensor.temps_min_stats\")|float }}",
                         "color_template": "{{ states(\"input_text.colour_medium_low\")}}"
                       },
                       {
-                        "value_template": "{{ (state_attr(\"sensor.temps_min_stats\", \"mean\") +  state_attr(\"sensor.temps_max_stats\", \"mean\"))/2 }}",
+                        "value_template": "{{ (states(\"sensor.temps_min_stats\")|float +  states(\"sensor.temps_max_stats\")|float)/2 }}",
                         "color_template": "{{ states(\"input_text.colour_medium\")}}"
                       },
                       {
-                        "value_template": "{{ {{ state_attr(\"sensor.temps_max_stats\", \"mean\") }} }}",
+                        "value_template": "{{ states(\"sensor.temps_max_stats\")|float }}",
                         "color_template": "{{ states(\"input_text.colour_medium_high\")}}"
                       },
                       {
-                        "value_template": "{{ state_attr(\"sensor.temps_max_stats\", \"max_value\") - state_attr(\"sensor.temps_max_stats\", \"standard_deviation\") }}",
+                        "value_template": "{{ states(\"sensor.temps_max_stats\")|float - states(\"sensor.temps_max_stats\")|float }}",
                         "color_template": "{{ states(\"input_text.colour_high\")}}"
                       }
                     ],
@@ -3239,11 +3268,44 @@
                       {
                         "entity": "sensor.hue_motion_sensor_temperature",
                         "index": 0,
-                        "name": "Temp"
+                        "name": "Temp",
+                        "show_fill": false
+                      },
+                      {
+                        "entity": "sensor.daytime",
+                        "y_axis": "secondary",
+                        "color": "orange",
+                        "name": "Day/Night",
+                        "show_fill": true,
+                        "show_line": false,
+                        "smoothing": false,
+                        "show_state": false
+                      },
+                      {
+                        "entity": "climate.hive_thermostat",
+                        "attribute": "hvac_action",
+                        "y_axis": "secondary",
+                        "color": "grey",
+                        "name": "Heating",
+                        "show_fill": true,
+                        "show_line": false,
+                        "smoothing": false,
+                        "show_state": true
                       }
                     ],
-                    "name": "Living room",
-                    "points_per_hour": 1,
+                    "state_map": [
+                      {
+                        "label": "Idle",
+                        "value": "idle"
+                      },
+                      {
+                        "label": "Heating",
+                        "value": "heating"
+                      }
+                    ],
+                    "name": "Hallway",
+                    "points_per_hour": 20,
+                    "line_width": 2,
                     "show": {
                       "icon": false,
                       "labels": true,
@@ -3645,23 +3707,23 @@
                       "card": {
                         "color_thresholds": [
                           {
-                            "value_template": "{{ state_attr(\"sensor.temps_min_stats\", \"min_value\") - state_attr(\"sensor.temps_min_stats\", \"standard_deviation\") }}",
+                            "value_template": "{{ states(\"sensor.temps_min_stats\")|float - states(\"sensor.temps_min_stats\")|float }}",
                             "color_template": "{{ states(\"input_text.colour_low\")}}"
                           },
                           {
-                            "value_template": "{{ state_attr(\"sensor.temps_min_stats\", \"mean\") }}",
+                            "value_template": "{{ states(\"sensor.temps_min_stats\")|float }}",
                             "color_template": "{{ states(\"input_text.colour_medium_low\")}}"
                           },
                           {
-                            "value_template": "{{ (state_attr(\"sensor.temps_min_stats\", \"mean\") +  state_attr(\"sensor.temps_max_stats\", \"mean\"))/2 }}",
+                            "value_template": "{{ (states(\"sensor.temps_min_stats\")|float +  states(\"sensor.temps_max_stats\")|float)/2 }}",
                             "color_template": "{{ states(\"input_text.colour_medium\")}}"
                           },
                           {
-                            "value_template": "{{ {{ state_attr(\"sensor.temps_max_stats\", \"mean\") }} }}",
+                            "value_template": "{{ states(\"sensor.temps_max_stats\")|float }}",
                             "color_template": "{{ states(\"input_text.colour_medium_high\")}}"
                           },
                           {
-                            "value_template": "{{ state_attr(\"sensor.temps_max_stats\", \"max_value\") - state_attr(\"sensor.temps_max_stats\", \"standard_deviation\") }}",
+                            "value_template": "{{ states(\"sensor.temps_max_stats\")|float - states(\"sensor.temps_max_stats\")|float }}",
                             "color_template": "{{ states(\"input_text.colour_high\")}}"
                           }
                         ],
@@ -3696,23 +3758,23 @@
                       "card": {
                         "color_thresholds": [
                           {
-                            "value_template": "{{ state_attr(\"sensor.temps_min_stats\", \"min_value\") - state_attr(\"sensor.temps_min_stats\", \"standard_deviation\") }}",
+                            "value_template": "{{ states(\"sensor.temps_min_stats\")|float - states(\"sensor.temps_min_stats\")|float }}",
                             "color_template": "{{ states(\"input_text.colour_low\")}}"
                           },
                           {
-                            "value_template": "{{ state_attr(\"sensor.temps_min_stats\", \"mean\") }}",
+                            "value_template": "{{ states(\"sensor.temps_min_stats\")|float }}",
                             "color_template": "{{ states(\"input_text.colour_medium_low\")}}"
                           },
                           {
-                            "value_template": "{{ (state_attr(\"sensor.temps_min_stats\", \"mean\") +  state_attr(\"sensor.temps_max_stats\", \"mean\"))/2 }}",
+                            "value_template": "{{ (states(\"sensor.temps_min_stats\")|float +  states(\"sensor.temps_max_stats\")|float)/2 }}",
                             "color_template": "{{ states(\"input_text.colour_medium\")}}"
                           },
                           {
-                            "value_template": "{{ {{ state_attr(\"sensor.temps_max_stats\", \"mean\") }} }}",
+                            "value_template": "{{ states(\"sensor.temps_max_stats\")|float }}",
                             "color_template": "{{ states(\"input_text.colour_medium_high\")}}"
                           },
                           {
-                            "value_template": "{{ state_attr(\"sensor.temps_max_stats\", \"max_value\") - state_attr(\"sensor.temps_max_stats\", \"standard_deviation\") }}",
+                            "value_template": "{{ states(\"sensor.temps_max_stats\")|float - states(\"sensor.temps_max_stats\")|float }}",
                             "color_template": "{{ states(\"input_text.colour_high\")}}"
                           }
                         ],
@@ -3728,6 +3790,16 @@
                             "index": 1,
                             "name": "Humidity",
                             "y_axis": "secondary"
+                          }
+                        ],
+                        "state_map": [
+                          {
+                            "label": "Idle",
+                            "value": "idle"
+                          },
+                          {
+                            "label": "Heating",
+                            "value": "heating"
                           }
                         ],
                         "name": "Ensuite",
@@ -3820,23 +3892,23 @@
                   "card": {
                     "color_thresholds": [
                       {
-                        "value_template": "{{ state_attr(\"sensor.temps_min_stats\", \"min_value\") - state_attr(\"sensor.temps_min_stats\", \"standard_deviation\") }}",
+                        "value_template": "{{ states(\"sensor.temps_min_stats\")|float - states(\"sensor.temps_min_stats\")|float }}",
                         "color_template": "{{ states(\"input_text.colour_low\")}}"
                       },
                       {
-                        "value_template": "{{ state_attr(\"sensor.temps_min_stats\", \"mean\") }}",
+                        "value_template": "{{ states(\"sensor.temps_min_stats\")|float }}",
                         "color_template": "{{ states(\"input_text.colour_medium_low\")}}"
                       },
                       {
-                        "value_template": "{{ (state_attr(\"sensor.temps_min_stats\", \"mean\") +  state_attr(\"sensor.temps_max_stats\", \"mean\"))/2 }}",
+                        "value_template": "{{ (states(\"sensor.temps_min_stats\")|float +  states(\"sensor.temps_max_stats\")|float)/2 }}",
                         "color_template": "{{ states(\"input_text.colour_medium\")}}"
                       },
                       {
-                        "value_template": "{{ {{ state_attr(\"sensor.temps_max_stats\", \"mean\") }} }}",
+                        "value_template": "{{ states(\"sensor.temps_max_stats\")|float }}",
                         "color_template": "{{ states(\"input_text.colour_medium_high\")}}"
                       },
                       {
-                        "value_template": "{{ state_attr(\"sensor.temps_max_stats\", \"max_value\") - state_attr(\"sensor.temps_max_stats\", \"standard_deviation\") }}",
+                        "value_template": "{{ states(\"sensor.temps_max_stats\")|float - states(\"sensor.temps_max_stats\")|float }}",
                         "color_template": "{{ states(\"input_text.colour_high\")}}"
                       }
                     ],
@@ -3845,10 +3917,42 @@
                         "entity": "sensor.seb_d1_temperature",
                         "index": 0,
                         "name": "Temp"
+                      },
+                      {
+                        "entity": "sensor.daytime",
+                        "y_axis": "secondary",
+                        "color": "orange",
+                        "name": "Day/Night",
+                        "show_fill": true,
+                        "show_line": false,
+                        "smoothing": false,
+                        "show_state": false
+                      },
+                      {
+                        "entity": "climate.hive_thermostat",
+                        "attribute": "hvac_action",
+                        "y_axis": "secondary",
+                        "color": "grey",
+                        "name": "Heating",
+                        "show_fill": true,
+                        "show_line": false,
+                        "smoothing": false,
+                        "show_state": true
                       }
                     ],
-                    "name": "Living room",
-                    "points_per_hour": 1,
+                    "state_map": [
+                      {
+                        "label": "Idle",
+                        "value": "idle"
+                      },
+                      {
+                        "label": "Heating",
+                        "value": "heating"
+                      }
+                    ],
+                    "name": "Seb's room",
+                    "line_width": 2,
+                    "points_per_hour": 20,
                     "show": {
                       "icon": false,
                       "labels": true,
@@ -3919,23 +4023,23 @@
                       "card": {
                         "color_thresholds": [
                           {
-                            "value_template": "{{ state_attr(\"sensor.temps_min_stats\", \"min_value\") - state_attr(\"sensor.temps_min_stats\", \"standard_deviation\") }}",
+                            "value_template": "{{ states(\"sensor.temps_min_stats\")|float - states(\"sensor.temps_min_stats\")|float }}",
                             "color_template": "{{ states(\"input_text.colour_low\")}}"
                           },
                           {
-                            "value_template": "{{ state_attr(\"sensor.temps_min_stats\", \"mean\") }}",
+                            "value_template": "{{ states(\"sensor.temps_min_stats\")|float }}",
                             "color_template": "{{ states(\"input_text.colour_medium_low\")}}"
                           },
                           {
-                            "value_template": "{{ (state_attr(\"sensor.temps_min_stats\", \"mean\") +  state_attr(\"sensor.temps_max_stats\", \"mean\"))/2 }}",
+                            "value_template": "{{ (states(\"sensor.temps_min_stats\")|float +  states(\"sensor.temps_max_stats\")|float)/2 }}",
                             "color_template": "{{ states(\"input_text.colour_medium\")}}"
                           },
                           {
-                            "value_template": "{{ {{ state_attr(\"sensor.temps_max_stats\", \"mean\") }} }}",
+                            "value_template": "{{ states(\"sensor.temps_max_stats\")|float }}",
                             "color_template": "{{ states(\"input_text.colour_medium_high\")}}"
                           },
                           {
-                            "value_template": "{{ state_attr(\"sensor.temps_max_stats\", \"max_value\") - state_attr(\"sensor.temps_max_stats\", \"standard_deviation\") }}",
+                            "value_template": "{{ states(\"sensor.temps_max_stats\")|float - states(\"sensor.temps_max_stats\")|float }}",
                             "color_template": "{{ states(\"input_text.colour_high\")}}"
                           }
                         ],
@@ -3944,10 +4048,41 @@
                             "entity": "sensor.reu_d1_temperature",
                             "index": 0,
                             "name": "Temp"
+                          },
+                          {
+                            "entity": "climate.hive_thermostat",
+                            "attribute": "hvac_action",
+                            "y_axis": "secondary",
+                            "color": "grey",
+                            "name": "Heating",
+                            "show_fill": true,
+                            "show_line": false,
+                            "smoothing": false,
+                            "show_state": true
+                          },
+                          {
+                            "entity": "sensor.daytime",
+                            "y_axis": "secondary",
+                            "color": "orange",
+                            "name": "Day/Night",
+                            "show_fill": true,
+                            "show_line": false,
+                            "smoothing": false,
+                            "show_state": false
+                          }
+                        ],
+                        "state_map": [
+                          {
+                            "label": "Idle",
+                            "value": "idle"
+                          },
+                          {
+                            "label": "Heating",
+                            "value": "heating"
                           }
                         ],
                         "name": "Reuben's Room",
-                        "points_per_hour": 1,
+                        "points_per_hour": 20,
                         "align_icon": "state",
                         "show": {
                           "icon": true,
