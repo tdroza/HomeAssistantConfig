@@ -971,8 +971,9 @@
         enabled: false
   mode: single
 - id: '1603313648727'
-  alias: Bedtime - phone charging
-  description: Turn off light, turn on lamp, when phone or watch starts charging
+  alias: Bedtime - phone charging and radiator
+  description: Turn off light, turn on lamp, set radiator to low when phone or watch
+    starts charging
   trigger:
   - type: plugged_in
     platform: device
@@ -1022,6 +1023,11 @@
     entity_id: light.main_bedroom_bloom
     domain: light
     brightness_pct: 80
+  - service: climate.set_temperature
+    data:
+      temperature: 15
+    target:
+      entity_id: climate.main_bedroom_radiator_thermostat
   mode: single
 - id: '1603396218827'
   alias: Tom's phone - smart charging
@@ -1157,7 +1163,7 @@
   - service: media_player.volume_set
     data:
       volume_level: 0.5
-      entity_id:
+      entity_id: '{{ media_player_entity_id }}'
   - service: tts.google_translate_say
     data:
       entity_id: '{{ media_player_entity_id }}'
@@ -3955,4 +3961,70 @@
           else ''video-off-outline''}}'
     target:
       entity_id: open_epaper_link.0000021eedc53411
+  mode: single
+- id: '1701697431464'
+  alias: Presence - home office
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - sensor.toms_phone_ble
+    to: office
+    id: office_entered
+  - platform: state
+    entity_id:
+    - sensor.toms_phone_ble
+    from: office
+    id: office_left
+  condition: []
+  action:
+  - service: light.turn_on
+    data: {}
+    target:
+      entity_id: light.toms_desk_master
+  - type: turn_on
+    device_id: 63e528584034c3704aa0ea7b8d0c6adb
+    entity_id: f24328478d5751eff84f7aafecbbebc8
+    domain: switch
+  - choose:
+    - conditions:
+      - condition: trigger
+        id:
+        - office_left
+      sequence:
+      - type: turn_off
+        device_id: a4b059569334cd311559fcb877f3deba
+        entity_id: 06eeebc1e5fcf9143cc03a5b54f13885
+        domain: light
+      - type: turn_off
+        device_id: 63e528584034c3704aa0ea7b8d0c6adb
+        entity_id: f24328478d5751eff84f7aafecbbebc8
+        domain: switch
+    - conditions:
+      - condition: trigger
+        id:
+        - office_entered
+      sequence:
+      - type: turn_on
+        device_id: 63e528584034c3704aa0ea7b8d0c6adb
+        entity_id: f24328478d5751eff84f7aafecbbebc8
+        domain: switch
+      - type: turn_on
+        device_id: a4b059569334cd311559fcb877f3deba
+        entity_id: 06eeebc1e5fcf9143cc03a5b54f13885
+        domain: light
+  mode: single
+- id: '1701724272223'
+  alias: Morning - Set main bedroom radiator
+  description: ''
+  trigger:
+  - platform: time
+    at: 07:00:00
+  condition: []
+  action:
+  - service: climate.set_temperature
+    data:
+      temperature: 18
+    target:
+      entity_id: climate.main_bedroom_radiator_thermostat
   mode: single
