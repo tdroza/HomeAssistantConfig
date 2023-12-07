@@ -18,9 +18,9 @@
   sensor:
     - name: Family Events
       unique_id: family_events
-      state: "{{data.calendar.family.events | count() }}"
+      state: "{{data['calendar.family'].events | count() }}"
       attributes:
-        events: "{{data.calendar.family.events}}"
+        events: "{{data['calendar.family'].events}}"
       icon: mdi:calendar
 - sensor:
     - name: 'Current Grid Direction'
