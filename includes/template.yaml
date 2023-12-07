@@ -9,18 +9,18 @@
   - platform: time_pattern
     minutes: /15
   action:
-    - service: calendar.list_events
+    - service: calendar.get_events
       target:
         entity_id: calendar.family
       data:
         end_date_time: "{{now().replace(hour=0, minute=0, second=0) + timedelta(days=6)}}"
-      response_variable: family
+      response_variable: data
   sensor:
     - name: Family Events
       unique_id: family_events
-      state: "{{family.events | count() }}"
+      state: "{{data.calendar.family.events | count() }}"
       attributes:
-        events: "{{family.events}}"
+        events: "{{data.calendar.family.events}}"
       icon: mdi:calendar
 - sensor:
     - name: 'Current Grid Direction'
