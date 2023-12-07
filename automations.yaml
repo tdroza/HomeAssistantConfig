@@ -1009,25 +1009,25 @@
     - condition: zone
       entity_id: person.tom
       zone: zone.home
-  - condition: state
-    entity_id: light.main_bedroom_ceiling
-    state: 'on'
   action:
-  - service: light.turn_off
-    data: {}
-    target:
-      entity_id:
-      - light.main_bedroom_ceiling
-  - type: turn_on
-    device_id: b9c88a37811e285dc2b594f847e29cf1
-    entity_id: light.main_bedroom_bloom
-    domain: light
-    brightness_pct: 80
   - service: climate.set_temperature
     data:
-      temperature: 15
+      temperature: 16
     target:
       entity_id: climate.main_bedroom_radiator_thermostat
+  - if:
+    - condition: state
+      entity_id: light.main_bedroom_ceiling
+      state: 'on'
+    then:
+    - type: turn_off
+      device_id: f5cda250d456ab9d753117c612f812c4
+      entity_id: d8d3d88474f3161c637f50a46ea6671d
+      domain: light
+    - type: turn_on
+      device_id: b9c88a37811e285dc2b594f847e29cf1
+      entity_id: 54674009d38a14ac7eb62dfed9b2cb3b
+      domain: light
   mode: single
 - id: '1603396218827'
   alias: Tom's phone - smart charging
@@ -1618,13 +1618,17 @@
     from: 'off'
     to: 'on'
   - platform: state
-    entity_id: switch.living_room_watch_tv
-    from: 'off'
-    to: 'on'
+    entity_id:
+    - select.living_room_activities
+    from: power_off
+    to: Watch a Movie
+    enabled: true
   - platform: state
-    entity_id: switch.living_room_watch_tv
-    from: 'off'
-    to: 'on'
+    entity_id:
+    - select.living_room_activities
+    from: power_off
+    to: Watch TV
+    enabled: true
   condition: []
   action:
   - service: light.turn_on
@@ -1637,13 +1641,10 @@
   description: ''
   trigger:
   - platform: state
-    entity_id: switch.living_room_watch_a_movie
-    from: 'on'
-    to: 'off'
-  - platform: state
-    entity_id: switch.living_room_watch_tv
-    from: 'on'
-    to: 'off'
+    entity_id:
+    - select.living_room_activities
+    from:
+    to: power_off
   - platform: state
     entity_id: light.living_room_light_group
     from: 'on'
@@ -3086,7 +3087,7 @@
     completed
   trigger:
   - platform: time
-    at: 04:59:00
+    at: 06:59:00
   - platform: time
     at: '15:58:00'
   condition: []
@@ -3121,7 +3122,7 @@
     for the day is low
   trigger:
   - platform: time
-    at: 03:00:00
+    at: 04:00:00
   condition:
   - condition: numeric_state
     entity_id: sensor.solcast_pv_forecast_forecast_today
@@ -3976,6 +3977,10 @@
     - sensor.toms_phone_ble
     from: office
     id: office_left
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 30
   condition: []
   action:
   - service: light.turn_on
@@ -4027,4 +4032,59 @@
       temperature: 18
     target:
       entity_id: climate.main_bedroom_radiator_thermostat
+  mode: single
+- id: '1701795669665'
+  alias: 'OEPL: Electricity tariff'
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - sensor.octopus_energy_electricity_22l3131941_2380000814991_current_rate
+    attribute: start
+  condition: []
+  action:
+  - service: open_epaper_link.drawcustom
+    target:
+      entity_id: open_epaper_link.0000021d19153414
+    data:
+      background: white
+      rotation: 0
+      dry-run: false
+      payload:
+      - type: text
+        x: 76
+        y: 3
+        size: 25
+        anchor: mt
+        color: black
+        value: '{{ 100 * states(''sensor.octopus_energy_electricity_22l3131941_2380000814991_current_rate'')
+          | float | round(2) }}p/kWh'
+      - type: icon
+        x: 26
+        y: 30
+        size: 100
+        color: '{{''red'' if states(''sensor.octopus_energy_electricity_22l3131941_2380000814991_current_rate'')
+          | float > 0.3 else ''black''}}'
+        value: transmission-tower
+      - type: icon
+        x: 90
+        y: 90
+        size: 40
+        color: '{{''red'' if states(''sensor.octopus_energy_electricity_22l3131941_2380000814991_current_rate'')
+          | float > 0.3 or states(''sensor.octopus_energy_electricity_22l3131941_2380000814991_current_rate'')
+          | float < 0.2 else ''black''}}'
+        value: '{{''arrow-up-bold-circle'' if states(''sensor.octopus_energy_electricity_22l3131941_2380000814991_current_rate'')
+          | float >= state_attr(''sensor.octopus_energy_electricity_22l3131941_2380000814991_current_rate'',''current_day_max_rate'')
+          | float else ''arrow-down-bold-circle'' if states(''sensor.octopus_energy_electricity_22l3131941_2380000814991_current_rate'')
+          | float <= state_attr(''sensor.octopus_energy_electricity_22l3131941_2380000814991_current_rate'',''current_day_min_rate'')
+          | float else ''speedometer-medium''}}'
+      - type: text
+        x: 76
+        y: 149
+        size: 20
+        anchor: mb
+        color: black
+        value: '{{state_attr(''sensor.octopus_energy_electricity_22l3131941_2380000814991_current_rate'',''start'')
+          |as_timestamp()| timestamp_custom(''%H:%M'')}}-{{state_attr(''sensor.octopus_energy_electricity_22l3131941_2380000814991_current_rate'',''end'')
+          |as_timestamp()| timestamp_custom(''%H:%M'')}}'
   mode: single
