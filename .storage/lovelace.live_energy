@@ -127,6 +127,15 @@
                     }
                   },
                   {
+                    "entity_id": "sensor.mixergy_heatpump_heat",
+                    "options": {
+                      "type": "entity",
+                      "icon": "mdi:water-boiler",
+                      "icon_color": "green",
+                      "content_info": "none"
+                    }
+                  },
+                  {
                     "entity_id": "switch.heated_airer",
                     "options": {
                       "type": "entity",
