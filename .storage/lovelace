@@ -1279,7 +1279,7 @@
           "badges": [],
           "cards": [
             {
-              "entity": "media_player.bedroom_speaker",
+              "entity": "media_player.lenovosmartclock9603",
               "type": "media-control"
             },
             {
@@ -1291,7 +1291,7 @@
               "type": "media-control"
             },
             {
-              "entity": "media_player.kitchen_home",
+              "entity": "media_player.kitchen_display",
               "type": "media-control"
             },
             {
@@ -1304,10 +1304,6 @@
             },
             {
               "entity": "media_player.living_room_display",
-              "type": "media-control"
-            },
-            {
-              "entity": "media_player.living_room",
               "type": "media-control"
             },
             {
@@ -1643,6 +1639,13 @@
               "camera_view": "auto",
               "type": "picture-entity",
               "entity": "camera.0000021eedc53411_cam"
+            },
+            {
+              "show_state": false,
+              "show_name": true,
+              "camera_view": "auto",
+              "type": "picture-entity",
+              "entity": "camera.0000021d19153414_cam"
             }
           ]
         },
@@ -2886,6 +2889,17 @@
                             "show_line": false,
                             "smoothing": false,
                             "show_state": false
+                          },
+                          {
+                            "entity": "climate.main_bedroom_radiator_thermostat",
+                            "attribute": "hvac_action",
+                            "y_axis": "secondary",
+                            "color": "blue",
+                            "name": "Radiator",
+                            "show_fill": true,
+                            "show_line": false,
+                            "smoothing": false,
+                            "show_state": true
                           }
                         ],
                         "state_map": [
