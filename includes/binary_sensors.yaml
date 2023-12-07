@@ -1,15 +1,5 @@
 - platform: template
   sensors:
-    tom_in_meeting:
-      friendly_name: "Is Tom in a Zoom/Teams meeting?"
-      value_template: >-
-        "{{ is_state('binary_sensor.zoom_tombjss',"on")  }}"
-      icon_template: >
-        {% if is_state("binary_sensor.tom_in_meeting", "on") %}
-          mdi:phone-in-talk
-        {% else %}
-          mdi:phone-hangup
-        {% endif %}
     washer:
       friendly_name: "Washing machine"
       value_template: >-
