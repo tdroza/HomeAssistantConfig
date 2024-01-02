@@ -3247,13 +3247,7 @@
   description: ''
   trigger:
   - platform: time_pattern
-    minutes: '1'
-  - platform: time_pattern
-    minutes: '16'
-  - platform: time_pattern
-    minutes: '31'
-  - platform: time_pattern
-    minutes: '46'
+    minutes: /15
   condition:
   - condition: time
     after: 07:00:00
@@ -3609,11 +3603,6 @@
     after: 07:00:00
     before: '22:00:00'
   action:
-  - delay:
-      hours: 0
-      minutes: 0
-      seconds: 7
-      milliseconds: 0
   - service: open_epaper_link.drawcustom
     data:
       dry-run: false
@@ -4090,11 +4079,6 @@
     attribute: start
   condition: []
   action:
-  - delay:
-      hours: 0
-      minutes: 0
-      seconds: 4
-      milliseconds: 0
   - service: open_epaper_link.drawcustom
     target:
       entity_id: open_epaper_link.0000021d19153414
