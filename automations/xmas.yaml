@@ -35,3 +35,46 @@
         - light.christmas_star
         - light.window
     service: light.turn_off
+  
+- id: 'tree-lights-motion' 
+  alias: "Turn xmas tree lights on/off triggered by motion sensor"
+  description: ''
+  mode: single
+  trigger:
+    - platform: state
+      entity_id:
+        - binary_sensor.lumi_lumi_sensor_motion_aq2_occupancy
+      to: "on"
+      id: motion-detected
+    - platform: state
+      entity_id:
+        - binary_sensor.lumi_lumi_sensor_motion_aq2_occupancy
+      to: "off"
+      id: motion-clear
+  condition:
+    - condition: state
+      entity_id: input_boolean.xmas_mode
+      state: "on"
+    - condition: time
+      after: "08:00:00"
+      before: "23:30:00"
+  action:
+    - choose:
+        - conditions:
+            - condition: trigger
+              id:
+                - motion-detected
+          sequence:
+            - service: light.turn_on
+              target:
+                entity_id: light.tree_1
+              data: {}
+        - conditions:
+            - condition: trigger
+              id:
+                - motion-clear
+          sequence:
+            - service: light.turn_off
+              target:
+                entity_id: light.tree_1
+              data: {}
