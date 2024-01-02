@@ -4159,7 +4159,6 @@
         color: black
         size: 120
         value: coffee-maker
-        anchor: rm
       - type: text
         x: 77
         y: 92
