@@ -650,8 +650,12 @@
   alias: 'Lights: Turn off boys'' light when no motion'
   description: ''
   trigger:
-  - entity_id: binary_sensor.seb_d1_motion
-    for: 00:10:00
+  - entity_id:
+    - binary_sensor.seb_d1_motion
+    for:
+      hours: 0
+      minutes: 10
+      seconds: 0
     from: 'on'
     platform: state
     to: 'off'
@@ -757,7 +761,9 @@
       media_content_id: '{{ tags[trigger.event.data.tag_id].media_content_id }}'
       media_content_type: '{{ tags[trigger.event.data.tag_id].media_content_type }}'
   - service: media_player.volume_set
-    data: {}
+    data:
+      volume_level: 0.5
+      entity_id: '{{ media_player_entity_id }}'
   - service: media_player.play_media
     data:
       entity_id: '{{ media_player_entity_id }}'
@@ -1000,7 +1006,7 @@
   condition:
   - condition: time
     after: '21:30'
-    before: '23:00:00'
+    before: '23:30:00'
   - condition: or
     conditions:
     - condition: zone
@@ -1142,6 +1148,7 @@
   - condition: template
     value_template: '{{ states(''sensor.time'') < states(''input_datetime.boys_bedtime'')
       }}'
+    enabled: true
   action:
   - variables:
       number_of_podcasts: '{{ state_attr(tags[trigger.event.data.tag_id].sensor, ''entries'')
@@ -1522,8 +1529,16 @@
     target:
       entity_id:
       - light.reubens_ceiling
-      - light.main_bedroom_bloom
       - light.sebs_ceiling
+    enabled: false
+  - service: light.turn_on
+    data:
+      transition: 600
+      brightness_pct: 100
+      color_name: wheat
+    target:
+      entity_id:
+      - light.main_bedroom_bloom
   mode: single
 - id: '1621850581589'
   alias: Close the fridge door
@@ -1707,7 +1722,7 @@
       replay_sensor_1: sensor.replay_hallway
       light_target_1: light.hallway
       replay_sensor_2: sensor.replay_living_room_lights
-      light_target_2: light.living_room_lights
+      light_target_2: light.living_room_light_group
       replay_sensor_3: sensor.replay_main_bedroom
       light_target_3: light.main_bedroom_ceiling
       replay_sensor_4: sensor.replay_main_bedroom_bloom
@@ -3248,6 +3263,7 @@
     data:
       dry-run: false
       background: white
+      rotate: '{{180 if now().day < 15 else 0}}'
       payload:
       - type: rectangle
         x_start: 0
@@ -3352,23 +3368,23 @@
           | timestamp_custom(''%a, %H:%M'')}}'
     target:
       entity_id: open_epaper_link.00000218cf5d3b19
-  mode: single
+  mode: restart
 - id: '1700574169666'
   alias: OEPL Energy Dashboard
   description: ''
   trigger:
   - platform: time_pattern
-    minutes: /5
+    minutes: /10
   condition:
   - condition: time
-    after: 07:00:00
-    before: '23:00:00'
+    after: 08:00:00
+    before: '18:00:00'
   action:
   - service: open_epaper_link.drawcustom
     data:
       dry-run: false
       background: white
-      rotate: 270
+      rotate: '{{270 if now().hour < 12 else 90 }}'
       payload:
       - type: rectangle
         x_start: 0
@@ -3593,12 +3609,43 @@
     after: 07:00:00
     before: '22:00:00'
   action:
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 7
+      milliseconds: 0
   - service: open_epaper_link.drawcustom
     data:
       dry-run: false
       background: white
-      rotate: 0
+      rotate: '{{180 if now().day < 15 else 0}}'
       payload:
+      - type: icon
+        x: 7
+        y: 12
+        size: 20
+        value: weather-sunset-up
+        color: black
+      - type: text
+        x: 15
+        y: 3
+        size: 10
+        anchor: mt
+        color: black
+        value: '{{state_attr(''sun.sun'',''next_rising'') | as_timestamp() | timestamp_custom(''%H:%M'')}}'
+      - type: icon
+        x: 75
+        y: 12
+        size: 20
+        value: weather-sunset-down
+        color: black
+      - type: text
+        x: 86
+        y: 3
+        size: 10
+        anchor: mt
+        color: black
+        value: '{{state_attr(''sun.sun'',''next_setting'') | as_timestamp() | timestamp_custom(''%H:%M'')}}'
       - type: text
         value: '{{ as_timestamp(state_attr(''weather.home_hourly'',''forecast'')[0].datetime)
           | timestamp_custom(''%I'') | int }} {{ as_timestamp(state_attr(''weather.home_hourly'',''forecast'')[0].datetime)
@@ -3673,7 +3720,7 @@
         y: 50
         size: 14
         color: '{{''black'' if state_attr(''weather.home_hourly'',''forecast'')[2].temperature
-          | float> severe_temp_low else ''red'' }}'
+          | float > severe_temp_low else ''red'' }}'
         anchor: mt
       - type: icon
         value: weather-{{ weather[state_attr('weather.home_hourly','forecast')[2].condition]
@@ -3730,7 +3777,7 @@
       - type: text
         value: '{{ state_attr(''weather.millview'',''forecast'')[1].templow }}'
         font: ../../media/GothamRnd-Bold.ttf
-        x: 128
+        x: 126
         y: 118
         size: 12
         color: '{{''black'' if state_attr(''weather.millview'',''forecast'')[1].templow
@@ -3749,7 +3796,7 @@
         x: 171
         y: 111
         size: 12
-        color: '{{''black'' if state_attr(''weather.millview'',''forecast'')[2].templow
+        color: '{{''black'' if state_attr(''weather.millview'',''forecast'')[2].temperature
           | float > severe_temp_low else ''red'' }}'
         anchor: rt
       - type: text
@@ -3763,7 +3810,7 @@
       - type: text
         value: '{{ state_attr(''weather.millview'',''forecast'')[2].templow }}'
         font: ../../media/GothamRnd-Bold.ttf
-        x: 177
+        x: 175
         y: 118
         size: 12
         color: '{{''black'' if state_attr(''weather.millview'',''forecast'')[2].templow
@@ -3797,7 +3844,7 @@
       - type: text
         value: '{{ state_attr(''weather.millview'',''forecast'')[3].templow  }}'
         font: ../../media/GothamRnd-Bold.ttf
-        x: 226
+        x: 224
         y: 118
         size: 12
         color: '{{''black'' if state_attr(''weather.millview'',''forecast'')[3].templow
@@ -3805,7 +3852,7 @@
         anchor: lt
       - type: icon
         value: weather-{{ weather[state_attr('weather.millview','forecast')[3].condition]}}
-        x: 206
+        x: 204
         y: 78
         size: 34
         color: '{{''red'' if state_attr(''weather.millview'',''forecast'')[3].condition
@@ -3813,7 +3860,7 @@
       - type: text
         value: '{{ state_attr(''weather.millview'',''forecast'')[4].temperature }}'
         font: ../../media/GothamRnd-Bold.ttf
-        x: 269
+        x: 267
         y: 111
         size: 12
         color: '{{''black'' if state_attr(''weather.millview'',''forecast'')[4].temperature
@@ -3830,7 +3877,7 @@
       - type: text
         value: '{{ state_attr(''weather.millview'',''forecast'')[4].templow }}'
         font: ../../media/GothamRnd-Bold.ttf
-        x: 275
+        x: 273
         y: 118
         size: 12
         color: '{{''black'' if state_attr(''weather.millview'',''forecast'')[4].templow
@@ -3884,23 +3931,23 @@
         fill: black
         width: 1
         x_start: 125
-        y_start: 64
+        y_start: 63
         x_end: 272
-        y_end: 64
+        y_end: 63
       - type: text
         value: '{{ state_attr(''weather.millview'',''temperature'') | float | round
           | int(0)}}{{ state_attr(''weather.millview'',''temperature_unit'') }}'
         font: ../../media/GothamRnd-Bold.ttf
-        x: 52
-        y: 94
+        x: 56
+        y: 126
         size: 38
-        anchor: mt
+        anchor: mb
         color: '{{''black'' if state_attr(''weather.millview'',''temperature'') |
           float | round > severe_temp_low else ''red'' }}'
       - type: icon
         value: weather-{{ weather[states('weather.millview')] }}
         x: 6
-        y: 2
+        y: 6
         size: 92
         color: '{{''red'' if states(''weather.millview'') in severe_weather else ''black''
           }}'
@@ -4043,6 +4090,11 @@
     attribute: start
   condition: []
   action:
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 4
+      milliseconds: 0
   - service: open_epaper_link.drawcustom
     target:
       entity_id: open_epaper_link.0000021d19153414
@@ -4057,8 +4109,8 @@
         size: 25
         anchor: mt
         color: black
-        value: '{{ 100 * states(''sensor.octopus_energy_electricity_22l3131941_2380000814991_current_rate'')
-          | float | round(2) }}p/kWh'
+        value: '{{(states(''sensor.octopus_energy_electricity_22l3131941_2380000814991_current_rate'')|
+          float * 100) | round(1) }}p/kWh'
       - type: icon
         x: 26
         y: 30
@@ -4068,11 +4120,17 @@
         value: transmission-tower
       - type: icon
         x: 90
-        y: 90
+        y: '{{30 if states(''sensor.octopus_energy_electricity_22l3131941_2380000814991_current_rate'')
+          | float >= state_attr(''sensor.octopus_energy_electricity_22l3131941_2380000814991_current_rate'',''current_day_max_rate'')
+          | float else 90 if states(''sensor.octopus_energy_electricity_22l3131941_2380000814991_current_rate'')
+          | float <= state_attr(''sensor.octopus_energy_electricity_22l3131941_2380000814991_current_rate'',''current_day_min_rate'')
+          | float else 70}}'
         size: 40
         color: '{{''red'' if states(''sensor.octopus_energy_electricity_22l3131941_2380000814991_current_rate'')
-          | float > 0.3 or states(''sensor.octopus_energy_electricity_22l3131941_2380000814991_current_rate'')
-          | float < 0.2 else ''black''}}'
+          | float >= state_attr(''sensor.octopus_energy_electricity_22l3131941_2380000814991_current_rate'',''current_day_max_rate'')
+          or states(''sensor.octopus_energy_electricity_22l3131941_2380000814991_current_rate'')
+          | float <= state_attr(''sensor.octopus_energy_electricity_22l3131941_2380000814991_current_rate'',''current_day_min_rate'')
+          else ''black''}}'
         value: '{{''arrow-up-bold-circle'' if states(''sensor.octopus_energy_electricity_22l3131941_2380000814991_current_rate'')
           | float >= state_attr(''sensor.octopus_energy_electricity_22l3131941_2380000814991_current_rate'',''current_day_max_rate'')
           | float else ''arrow-down-bold-circle'' if states(''sensor.octopus_energy_electricity_22l3131941_2380000814991_current_rate'')
@@ -4087,4 +4145,71 @@
         value: '{{state_attr(''sensor.octopus_energy_electricity_22l3131941_2380000814991_current_rate'',''start'')
           |as_timestamp()| timestamp_custom(''%H:%M'')}}-{{state_attr(''sensor.octopus_energy_electricity_22l3131941_2380000814991_current_rate'',''end'')
           |as_timestamp()| timestamp_custom(''%H:%M'')}}'
-  mode: single
+  mode: restart
+- id: '1702637553110'
+  alias: 'OEPL: Coffee settings'
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - input_number.coffee_grind_setting_caf
+    - input_number.coffee_grind_setting_decaf
+  condition: []
+  action:
+  - service: open_epaper_link.drawcustom
+    data:
+      dry-run: false
+      background: white
+      rotate: '{{180 if now().day < 15 else 0}}'
+      payload:
+      - type: text
+        x: 74
+        y: 2
+        size: 20
+        color: black
+        value: Caffeine
+        anchor: mt
+      - type: icon
+        x: 12
+        y: 13
+        color: black
+        size: 120
+        value: coffee-maker
+        anchor: rm
+      - type: text
+        x: 77
+        y: 92
+        size: 48
+        color: red
+        value: '{{states(''input_number.coffee_grind_setting_caf'') | int}}'
+        anchor: mm
+      - type: line
+        x_start: 146
+        x_end: 146
+        y_start: 20
+        y_end: 108
+        fill: red
+        width: 1
+      - type: text
+        x: 222
+        y: 2
+        size: 20
+        color: black
+        value: Decaf
+        anchor: mt
+      - type: icon
+        x: 158
+        y: 13
+        color: black
+        size: 120
+        value: coffee-maker-outline
+      - type: text
+        x: 223
+        y: 92
+        size: 48
+        color: red
+        value: '{{states(''input_number.coffee_grind_setting_decaf'') | int}}'
+        anchor: mm
+    target:
+      entity_id: open_epaper_link.0000021e69133b19
+  mode: restart
