@@ -250,7 +250,7 @@
 # All sensors will have naming convention "sensor.replay_xxxxx"
 - platform: history_stats
   name: "replay_living_room_lights"
-  entity_id: light.living_room_lights
+  entity_id: light.living_room
   state: "on"
   type: count
   start: >
