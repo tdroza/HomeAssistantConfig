@@ -173,6 +173,9 @@
                     "state": "off"
                   },
                   {
+                    "state": "unavailable"
+                  },
+                  {
                     "state": "<=0"
                   }
                 ]
@@ -596,7 +599,7 @@
                     {
                       "type": "template",
                       "content": "{{'On' if states('sensor.mixergy_electric_pv_power') | float > 0 else 'Off' }}",
-                      "icon": "mdi:power-plug-outline",
+                      "icon": "mdi:solar-power",
                       "icon_color": "{{'green' if states('sensor.mixergy_electric_pv_power') | float > 0}}"
                     },
                     {
