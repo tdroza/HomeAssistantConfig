@@ -1610,7 +1610,7 @@
               "show_name": true,
               "camera_view": "auto",
               "type": "picture-entity",
-              "entity": "camera.0000021ec31c3419_cam"
+              "entity": "camera.0000021e69133b19_cam"
             },
             {
               "show_state": false,
@@ -1632,13 +1632,6 @@
               "camera_view": "auto",
               "type": "picture-entity",
               "entity": "camera.00000218cf5d3b19_cam"
-            },
-            {
-              "show_state": false,
-              "show_name": true,
-              "camera_view": "auto",
-              "type": "picture-entity",
-              "entity": "camera.0000021eedc53411_cam"
             },
             {
               "show_state": false,
@@ -1838,6 +1831,21 @@
                   "data_generator": "const data = [];\nentity.attributes.forecast.forEach(forecast => data.push([ forecast['datetime'],forecast['temperature'] ] ));\nreturn data.reverse();\n",
                   "type": "line",
                   "name": "Temperature forecast"
+                }
+              ]
+            },
+            {
+              "type": "vertical-stack",
+              "cards": [
+                {
+                  "type": "custom:mushroom-number-card",
+                  "entity": "input_number.coffee_grind_setting_caf",
+                  "icon": "",
+                  "display_mode": ""
+                },
+                {
+                  "type": "custom:mushroom-number-card",
+                  "entity": "input_number.coffee_grind_setting_decaf"
                 }
               ]
             }
