@@ -1530,7 +1530,7 @@
       entity_id:
       - light.reubens_ceiling
       - light.sebs_ceiling
-    enabled: false
+    enabled: true
   - service: light.turn_on
     data:
       transition: 600
@@ -1670,14 +1670,16 @@
       seconds: 0
   condition:
   - condition: state
-    entity_id: switch.living_room_watch_a_movie
-    state: 'off'
-  - condition: state
-    entity_id: switch.living_room_watch_tv
-    state: 'off'
-  - condition: state
     entity_id: light.living_room_light_group
     state: 'off'
+  - condition: not
+    conditions:
+    - condition: state
+      entity_id: select.living_room_activities
+      state: Watch TV
+    - condition: state
+      entity_id: select.living_room_activities
+      state: Watch a Movie
   action:
   - service: light.turn_off
     target:
