@@ -8,8 +8,6 @@
       friendly_name: 'Central heating'
       value_template: '{% if is_state_attr("climate.nest_thermostat", "hvac_action", "heating") %}1{% else %}0{% endif %}'
       icon_template: '{% if is_state_attr("climate.nest_thermostat", "hvac_action", "heating") %}mdi:fire1{% else %}mdi:clock-outline{% endif %}'
-    broadband_mb_received: 
-      value_template: '{{ states(''sensor.bt_home_hub_6_0a_b_received'') | filesizeformat() }}'
     weather_condition:
       value_template: '{{ states.weather.millview.state }}'
     weather_temperature:
