@@ -2558,6 +2558,22 @@
                   ]
                 },
                 {
+                  "type": "thermostat",
+                  "entity": "climate.hive_thermostat",
+                  "show_current_as_primary": true,
+                  "features": [
+                    {
+                      "style": "icons",
+                      "preset_modes": [
+                        "boost",
+                        "none"
+                      ],
+                      "type": "climate-preset-modes"
+                    }
+                  ],
+                  "name": "Hive"
+                },
+                {
                   "type": "horizontal-stack",
                   "cards": [
                     {
@@ -2939,7 +2955,8 @@
             {
               "type": "thermostat",
               "entity": "climate.main_bedroom_radiator_thermostat",
-              "name": "Main Bedroom Radiator"
+              "name": "Main Bedroom Radiator",
+              "show_current_as_primary": true
             }
           ]
         },
