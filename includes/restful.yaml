@@ -1,5 +1,5 @@
 - resource: !secret album_a_day
-  scan_interval: 7200
+  scan_interval: 120
   sensor:
     - name: "album_a_day"
       value_template: "OK"
@@ -10,3 +10,16 @@
         - "releaseDate"
         - "youtubeMusicId"
         - "images"
+- resource_template: "https://tdroza.duckdns.org/local/times/{{now().strftime('%H_%M')}}.json"
+  scan_interval: 1
+  sensor:
+    - name: "Quote Clock"
+      value_template: "{{ value_json['time'] }}"
+      json_attributes_path: "$.[0]"
+      json_attributes:
+        - "quote_first"
+        - "quote_time_case"
+        - "quote_last"
+        - "title"
+        - "author"
+

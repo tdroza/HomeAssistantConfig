@@ -52,6 +52,7 @@ homeassistant:
   allowlist_external_dirs:
     - /tmp
     - /config/www/cams
+    - /config/quotes_clock
 
 ifttt:
   key:
