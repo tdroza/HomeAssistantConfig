@@ -1453,7 +1453,7 @@
     domain: switch
   mode: single
 - id: '1616500250252'
-  alias: Anna's phone - turn off charger
+  alias: Anna's watch & phone - turn off charger
   description: Turn off when fully charged, when unplugged, or at 08:30
   trigger:
   - type: not_plugged_in
@@ -1465,28 +1465,79 @@
       hours: 0
       minutes: 0
       seconds: 5
-    id: Anna
+    id: phone
   - type: battery_level
     platform: device
     device_id: 28abb52456ef5ac4459a0ac810e7cf0b
     entity_id: ea87f75f153e1ad6b3e7f9b77b6f5845
     domain: sensor
     above: 99
-    id: Anna
+    id: phone
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 0
   - platform: time
     at: 08:30
-    id: Anna
+    id: phone
+  - type: not_plugged_in
+    platform: device
+    device_id: 9ff97222baf526d2a00bfe723a61cc3f
+    entity_id: 6542a4248d595dcb21cf7b6a45335489
+    domain: binary_sensor
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 5
+    id: watch
   condition:
   - condition: device
     type: is_on
     device_id: 63119b10ea09a788da942a5fc8aa67ce
     entity_id: switch.annas_phone_charger
     domain: switch
+  - condition: or
+    conditions:
+    - condition: and
+      conditions:
+      - condition: trigger
+        id:
+        - phone
+      - condition: device
+        type: is_on
+        device_id: 63119b10ea09a788da942a5fc8aa67ce
+        entity_id: eaead4516bf95c532b1b30ca83611ff3
+        domain: switch
+    - condition: and
+      conditions:
+      - condition: trigger
+        id:
+        - watch
+      - condition: device
+        type: is_on
+        device_id: b7ab635f3051f3c87e93b4b497b470ea
+        entity_id: 09a9cb7cf20ec52da102d4ee329c9d20
+        domain: switch
   action:
-  - type: turn_off
-    device_id: 63119b10ea09a788da942a5fc8aa67ce
-    entity_id: switch.annas_phone_charger
-    domain: switch
+  - choose:
+    - conditions:
+      - condition: trigger
+        id:
+        - phone
+      sequence:
+      - type: turn_off
+        device_id: 63119b10ea09a788da942a5fc8aa67ce
+        entity_id: eaead4516bf95c532b1b30ca83611ff3
+        domain: switch
+    - conditions:
+      - condition: trigger
+        id:
+        - watch
+      sequence:
+      - type: turn_off
+        device_id: b7ab635f3051f3c87e93b4b497b470ea
+        entity_id: 09a9cb7cf20ec52da102d4ee329c9d20
+        domain: switch
   mode: single
 - id: '1618222807946'
   alias: 'NFC: Tag scanned after 20:30 plays bedtime message'
@@ -4017,7 +4068,7 @@
     id: office_left
     for:
       hours: 0
-      minutes: 0
+      minutes: 1
       seconds: 30
   condition: []
   action:
@@ -4198,3 +4249,50 @@
     target:
       entity_id: open_epaper_link.0000021e69133b19
   mode: restart
+- id: '1704814686625'
+  alias: 'OEPL: Literary clock'
+  description: ''
+  trigger: []
+  condition: []
+  action:
+  - service: open_epaper_link.drawcustom
+    target:
+      entity_id: open_epaper_link.00000218cf5d3b19
+    data:
+      background: white
+      dry-run: false
+      rotate:
+        '[object Object]':
+      payload:
+      - type: rectangle
+        x_start: 0
+        y_start: 0
+        x_end: 296
+        y_end: 14
+        fill: red
+        outline: red
+        width: 1
+      - type: text
+        x: 5
+        y: 15
+        size: '{% set quote_length = state_attr(''sensor.quote_clock'',''quote_first'')
+          | length %}  {% set quote_length = quote_length + state_attr(''sensor.quote_clock'',''quote_time_case'')
+          | length + 2 %}  {% set quote_length = quote_length + state_attr(''sensor.quote_clock'',''quote_last'')
+          | length %}  {{10 if quote_length > 300 else 12 if quote_length > 150 else
+          14 }}'
+        value: '{{state_attr(''sensor.quote_clock'',''quote_first'') | striptags}}
+          [{{state_attr(''sensor.quote_clock'',''quote_time_case'') | upper}}] {{state_attr(''sensor.quote_clock'',''quote_last'')
+          | striptags}}'
+        font: ../../media/CourierPrime-Regular.ttf
+        max_width: 280
+      - type: text
+        color: white
+        size: 14
+        x: 0
+        y: 0
+        align: right
+        value: '{{(state_attr(''sensor.quote_clock'',''author'') +'': '' + state_attr(''sensor.quote_clock'',''title'')
+          )| truncate(35, True)}}
+
+          '
+  mode: single
