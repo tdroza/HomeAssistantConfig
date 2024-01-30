@@ -1751,18 +1751,23 @@
               }
             },
             {
-              "type": "vertical-stack",
-              "cards": [
+              "type": "entities",
+              "entities": [
+                "input_number.office_window_brightness_threshold",
+                "input_number.office_window_blind_shade_percent",
                 {
-                  "type": "custom:mushroom-number-card",
-                  "entity": "input_number.office_window_brightness_threshold",
-                  "icon": "mdi:sun-angle"
+                  "entity": "sensor.cactus_illuminance",
+                  "name": "Current brightness"
                 },
                 {
-                  "type": "custom:mushroom-number-card",
-                  "entity": "input_number.office_window_blind_shade_percent"
+                  "type": "attribute",
+                  "entity": "sun.sun",
+                  "attribute": "azimuth",
+                  "name": "Sun azimuth",
+                  "suffix": "⁰"
                 }
-              ]
+              ],
+              "title": "Office Window"
             },
             {
               "type": "entities",
