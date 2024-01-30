@@ -1491,11 +1491,6 @@
       seconds: 5
     id: watch
   condition:
-  - condition: device
-    type: is_on
-    device_id: 63119b10ea09a788da942a5fc8aa67ce
-    entity_id: switch.annas_phone_charger
-    domain: switch
   - condition: or
     conditions:
     - condition: and
@@ -1538,7 +1533,8 @@
         device_id: b7ab635f3051f3c87e93b4b497b470ea
         entity_id: 09a9cb7cf20ec52da102d4ee329c9d20
         domain: switch
-  mode: single
+  mode: parallel
+  max: 3
 - id: '1618222807946'
   alias: 'NFC: Tag scanned after 20:30 plays bedtime message'
   description: Time cut-off is set by `input_datetime.boys_bedtime`
@@ -4068,18 +4064,10 @@
     id: office_left
     for:
       hours: 0
-      minutes: 1
+      minutes: 2
       seconds: 30
   condition: []
   action:
-  - service: light.turn_on
-    data: {}
-    target:
-      entity_id: light.toms_desk_master
-  - type: turn_on
-    device_id: 63e528584034c3704aa0ea7b8d0c6adb
-    entity_id: f24328478d5751eff84f7aafecbbebc8
-    domain: switch
   - choose:
     - conditions:
       - condition: trigger
