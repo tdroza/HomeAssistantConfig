@@ -2847,7 +2847,10 @@
                     {
                       "entity": "switch.annas_watch_charger",
                       "type": "tile",
-                      "icon": ""
+                      "icon": "",
+                      "tap_action": {
+                        "action": "toggle"
+                      }
                     }
                   ],
                   "type": "horizontal-stack"
@@ -3019,7 +3022,6 @@
                       },
                       {
                         "entity_id": "sensor.vacuum_last_run",
-                        "attribute": "clean_stop",
                         "subtitle": "Last clean date"
                       }
                     ]

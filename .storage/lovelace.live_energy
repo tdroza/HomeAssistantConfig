@@ -145,7 +145,10 @@
                   {
                     "entity_id": "binary_sensor.washer",
                     "options": {
-                      "type": "entity"
+                      "type": "template",
+                      "icon": "mdi:washing-machine",
+                      "icon_color": "green",
+                      "content": "{{(states('sensor.sonoff_10003a0e20_power')|int / 1000) | round(2)}}kW"
                     }
                   },
                   {
