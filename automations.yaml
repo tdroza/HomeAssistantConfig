@@ -413,8 +413,8 @@
   - data:
       entity_id:
       - media_player.living_room_display
-      - media_player.bedroom_2_speaker
       - media_player.hallway_home
+      - media_player.office_wifi
       message: The washing machine has finished.
     service: tts.google_translate_say
   - service: notify.tom_and_anna
@@ -4179,6 +4179,8 @@
     entity_id:
     - input_number.coffee_grind_setting_caf
     - input_number.coffee_grind_setting_decaf
+  - platform: template
+    value_template: '{{now().day == 1 or now().day == 15}}'
   condition: []
   action:
   - service: open_epaper_link.drawcustom
@@ -4283,4 +4285,31 @@
           )| truncate(35, True)}}
 
           '
+  mode: single
+- id: '1706642170148'
+  alias: 'NFC: Reuben''s tablets'
+  description: ''
+  trigger:
+  - platform: tag
+    tag_id: 04-70-7F-62-EC-6B-81
+  - platform: tag
+    tag_id: D0-50-B3-32
+  condition: []
+  action:
+  - service: counter.decrement
+    target:
+      entity_id: counter.reuben_tablet
+    data: {}
+  - service: media_player.volume_set
+    data:
+      volume_level: 0.5
+      entity_id: '{{ media_players[trigger.event.data.device_id] }}'
+  - service: tts.google_translate_say
+    data:
+      entity_id: '{{ media_players[trigger.event.data.device_id] }}'
+      message: You have {{states('counter.reuben_tablet') }} tablets left.
+  variables:
+    media_players:
+      43ddd1e400d41d9d547f7bc24a95f86d: media_player.reuben_s_room_speaker
+      4dd136882e204aec5b9809887714f25b: media_player.seb_s_home
   mode: single

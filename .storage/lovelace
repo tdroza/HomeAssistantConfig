@@ -1843,6 +1843,11 @@
               "type": "vertical-stack",
               "cards": [
                 {
+                  "name": "Coffee",
+                  "template": "button-card-headers",
+                  "type": "custom:button-card"
+                },
+                {
                   "type": "custom:mushroom-number-card",
                   "entity": "input_number.coffee_grind_setting_caf",
                   "icon": "",
@@ -1851,6 +1856,73 @@
                 {
                   "type": "custom:mushroom-number-card",
                   "entity": "input_number.coffee_grind_setting_decaf"
+                }
+              ]
+            },
+            {
+              "type": "vertical-stack",
+              "cards": [
+                {
+                  "name": "Reuben's Tablets",
+                  "template": "button-card-headers",
+                  "type": "custom:button-card"
+                },
+                {
+                  "type": "entity",
+                  "entity": "counter.reuben_tablet",
+                  "name": "Tablets remaining"
+                },
+                {
+                  "type": "horizontal-stack",
+                  "cards": [
+                    {
+                      "show_name": true,
+                      "show_icon": true,
+                      "type": "button",
+                      "tap_action": {
+                        "action": "call-service",
+                        "service": "counter.decrement",
+                        "target": {
+                          "entity_id": [
+                            "counter.reuben_tablet"
+                          ]
+                        }
+                      },
+                      "entity": "counter.reuben_tablet",
+                      "icon": "mdi:numeric-negative-1",
+                      "name": "Decrement"
+                    },
+                    {
+                      "show_name": true,
+                      "show_icon": true,
+                      "type": "button",
+                      "tap_action": {
+                        "action": "call-service",
+                        "service": "counter.reset",
+                        "target": {
+                          "entity_id": "counter.reuben_tablet"
+                        }
+                      },
+                      "entity": "counter.reuben_tablet",
+                      "icon": "mdi:restart",
+                      "name": "Reset"
+                    },
+                    {
+                      "show_name": true,
+                      "show_icon": true,
+                      "type": "button",
+                      "tap_action": {
+                        "action": "call-service",
+                        "service": "counter.increment",
+                        "target": {
+                          "entity_id": "counter.reuben_tablet"
+                        }
+                      },
+                      "entity": "counter.reuben_tablet",
+                      "icon": "mdi:numeric-positive-1",
+                      "name": "Increment"
+                    }
+                  ]
                 }
               ]
             }
