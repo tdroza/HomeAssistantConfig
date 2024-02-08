@@ -1606,39 +1606,149 @@
           "badges": [],
           "cards": [
             {
-              "show_state": false,
-              "show_name": true,
-              "camera_view": "auto",
-              "type": "picture-entity",
-              "entity": "camera.0000021e69133b19_cam"
+              "type": "vertical-stack",
+              "cards": [
+                {
+                  "name": "Coffee",
+                  "template": "button-card-headers",
+                  "type": "custom:button-card"
+                },
+                {
+                  "type": "custom:mushroom-number-card",
+                  "entity": "input_number.coffee_grind_setting_caf",
+                  "icon": "",
+                  "display_mode": ""
+                },
+                {
+                  "type": "custom:mushroom-number-card",
+                  "entity": "input_number.coffee_grind_setting_decaf"
+                },
+                {
+                  "show_state": false,
+                  "show_name": true,
+                  "camera_view": "auto",
+                  "type": "picture-entity",
+                  "entity": "camera.0000021e69133b19_cam",
+                  "hold_action": {
+                    "action": "call-service",
+                    "service": "automation.trigger",
+                    "target": {
+                      "entity_id": "automation.oepl_coffee_settings"
+                    },
+                    "data": {
+                      "skip_condition": true
+                    }
+                  }
+                }
+              ]
             },
             {
-              "show_state": false,
-              "show_name": true,
-              "camera_view": "auto",
-              "type": "picture-entity",
-              "entity": "camera.0000021f40f13b1f_cam"
+              "type": "vertical-stack",
+              "cards": [
+                {
+                  "name": "Custom Weather",
+                  "template": "button-card-headers",
+                  "type": "custom:button-card"
+                },
+                {
+                  "show_state": false,
+                  "show_name": true,
+                  "camera_view": "auto",
+                  "type": "picture-entity",
+                  "entity": "camera.0000021f40f13b1f_cam",
+                  "hold_action": {
+                    "action": "call-service",
+                    "service": "automation.trigger",
+                    "target": {
+                      "entity_id": "automation.oepl_custom_weather"
+                    },
+                    "data": {
+                      "skip_condition": true
+                    }
+                  }
+                }
+              ]
             },
             {
-              "show_state": false,
-              "show_name": true,
-              "camera_view": "auto",
-              "type": "picture-entity",
-              "entity": "camera.0000021fb7d03b14_cam"
+              "type": "vertical-stack",
+              "cards": [
+                {
+                  "name": "Energy Dashboard",
+                  "template": "button-card-headers",
+                  "type": "custom:button-card"
+                },
+                {
+                  "show_state": false,
+                  "show_name": true,
+                  "camera_view": "auto",
+                  "type": "picture-entity",
+                  "entity": "camera.0000021fb7d03b14_cam",
+                  "hold_action": {
+                    "action": "call-service",
+                    "service": "automation.trigger",
+                    "target": {
+                      "entity_id": "automation.oepl_energy_dashboard"
+                    },
+                    "data": {
+                      "skip_condition": true
+                    }
+                  }
+                }
+              ]
             },
             {
-              "show_state": false,
-              "show_name": true,
-              "camera_view": "auto",
-              "type": "picture-entity",
-              "entity": "camera.00000218cf5d3b19_cam"
+              "type": "vertical-stack",
+              "cards": [
+                {
+                  "name": "Family Calendar",
+                  "template": "button-card-headers",
+                  "type": "custom:button-card"
+                },
+                {
+                  "show_state": false,
+                  "show_name": true,
+                  "camera_view": "auto",
+                  "type": "picture-entity",
+                  "entity": "camera.00000218cf5d3b19_cam",
+                  "hold_action": {
+                    "action": "call-service",
+                    "service": "automation.trigger",
+                    "target": {
+                      "entity_id": "automation.oepl_family_calendar"
+                    },
+                    "data": {
+                      "skip_condition": true
+                    }
+                  }
+                }
+              ]
             },
             {
-              "show_state": false,
-              "show_name": true,
-              "camera_view": "auto",
-              "type": "picture-entity",
-              "entity": "camera.0000021d19153414_cam"
+              "type": "vertical-stack",
+              "cards": [
+                {
+                  "name": "Energy Tariff",
+                  "template": "button-card-headers",
+                  "type": "custom:button-card"
+                },
+                {
+                  "show_state": false,
+                  "show_name": true,
+                  "camera_view": "auto",
+                  "type": "picture-entity",
+                  "entity": "camera.0000021d19153414_cam",
+                  "hold_action": {
+                    "action": "call-service",
+                    "service": "automation.trigger",
+                    "target": {
+                      "entity_id": "automation.oepl_electricity_tariff"
+                    },
+                    "data": {
+                      "skip_condition": true
+                    }
+                  }
+                }
+              ]
             }
           ]
         },
