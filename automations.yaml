@@ -4313,3 +4313,20 @@
       43ddd1e400d41d9d547f7bc24a95f86d: media_player.reuben_s_room_speaker
       4dd136882e204aec5b9809887714f25b: media_player.seb_s_home
   mode: single
+- id: '1707757875572'
+  alias: 'Notify: Reuben''s tablets'
+  description: Send a notification when tablets remaining <= 10
+  trigger:
+  - platform: state
+    entity_id:
+    - counter.reuben_tablet
+  condition:
+  - condition: numeric_state
+    entity_id: counter.reuben_tablet
+    below: 11
+  action:
+  - service: notify.tom_and_anna
+    data:
+      title: "\U0001F48A Reuben's tablets"
+      message: Reuben only has {{ states('counter.reuben_tablet') }} tablet(s) remaining
+  mode: single
