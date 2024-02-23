@@ -41,20 +41,9 @@ sonoff:
   sensors: power, current, voltage
   force_update: power
 
-input_text:
-  telegram_td: 
-    initial: !secret telegram_bot_chat_id_td
-  telegram_ad: 
-    initial: !secret telegram_bot_chat_id_ad
-
 homeassistant:
   customize: !include customize.yaml
   allowlist_external_dirs:
     - /tmp
     - /config/www/cams
     - /config/quotes_clock
-
-ifttt:
-  key:
-    tom: !secret tom_ifttt
-    anna: !secret anna_ifttt
