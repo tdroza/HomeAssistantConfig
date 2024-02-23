@@ -413,7 +413,7 @@
   - data:
       entity_id:
       - media_player.living_room_display
-      - media_player.hallway_home
+      - media_player.kitchen_display
       - media_player.office_wifi
       message: The washing machine has finished.
     service: tts.google_translate_say
@@ -2515,7 +2515,7 @@
   trigger:
   - platform: state
     entity_id:
-    - media_player.bedroom_2_speaker
+    - media_player.office_wifi
     id: Google Speaker
   - platform: state
     entity_id:
@@ -2531,9 +2531,9 @@
       - service: input_text.set_value
         data:
           entity_id: input_text.matrix_text
-          value: '{{state_attr(''media_player.bedroom_2_speaker'', ''media_artist'')}}:
-            {{state_attr(''media_player.bedroom_2_speaker'', ''media_title'') | truncate(28,
-            true) }}}}
+          value: '{{state_attr(''media_player.office_wifi'', ''media_artist'')}}:
+            {{state_attr(''media_player.office_wifi'', ''media_title'') | truncate(28,
+            true) }}
 
             '
     - conditions:
@@ -4329,4 +4329,27 @@
     data:
       title: "\U0001F48A Reuben's tablets"
       message: Reuben only has {{ states('counter.reuben_tablet') }} tablet(s) remaining
+  mode: single
+- id: '1708165342713'
+  alias: 'Dishwasher: Finished notification'
+  description: ''
+  trigger:
+  - entity_id:
+    - binary_sensor.dishwasher
+    from: 'on'
+    platform: state
+    to: 'off'
+  condition: []
+  action:
+  - data:
+      entity_id:
+      - media_player.kitchen_display
+      - media_player.living_room_display
+      - media_player.office_wifi
+      message: The dishwasher has finished.
+    service: tts.google_translate_say
+  - service: notify.tom_and_anna
+    data:
+      title: Dishwasher
+      message: "\U0001F37D️ The dishwasher has finished"
   mode: single

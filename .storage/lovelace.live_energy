@@ -87,16 +87,24 @@
                 "entity": "sensor.solax_local_load_power",
                 "override_state": true
               },
-              "individual1": {
-                "entity": "sensor.sonoff_10003a0e20_power",
-                "name": "Washer",
-                "icon": "mdi:washing-machine"
-              },
-              "individual2": {
-                "entity": "sensor.mixergy_electric_pv_power",
-                "name": "Mixergy",
-                "icon": "mdi:water-boiler"
-              }
+              "individual": [
+                {
+                  "entity": "sensor.sonoff_10003a0e20_power",
+                  "name": "Washer",
+                  "icon": "mdi:washing-machine"
+                },
+                {
+                  "entity": "sensor.mixergy_electric_pv_power",
+                  "name": "Mixergy",
+                  "icon": "mdi:water-boiler",
+                  "color": "#2196f3"
+                },
+                {
+                  "entity": "sensor.sonoff_dishwasher_power",
+                  "name": "Dishwasher",
+                  "icon": "mdi:dishwasher"
+                }
+              ]
             }
           }
         }
@@ -147,8 +155,16 @@
                     "options": {
                       "type": "template",
                       "icon": "mdi:washing-machine",
-                      "icon_color": "green",
+                      "icon_color": "#D0CC5B",
                       "content": "{{(states('sensor.sonoff_10003a0e20_power')|int / 1000) | round(2)}}kW"
+                    }
+                  },
+                  {
+                    "entity_id": "binary_sensor.dishwasher",
+                    "options": {
+                      "type": "template",
+                      "icon": "mdi:dishwasher",
+                      "content": "{{(states('sensor.sonoff_dishwasher_power')|int / 1000) | round(2)}}kW"
                     }
                   },
                   {
@@ -707,6 +723,7 @@
           "title": "Cast",
           "path": "cast",
           "icon": "mdi:cast",
+          "type": "panel",
           "badges": [],
           "cards": [
             {
@@ -717,10 +734,10 @@
                   "title": ""
                 },
                 {
-                  "style": "border: none; background: none; scale: 0.85;top:-70px"
+                  "style": "border: none; background: none; scale: 1.8;top:120px"
                 },
                 {
-                  "fullsize": true
+                  "fullsize": false
                 }
               ]
             }

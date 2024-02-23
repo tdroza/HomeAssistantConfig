@@ -3192,8 +3192,7 @@
                     },
                     {
                       "type": "tile",
-                      "entity": "sensor.kitchen_climate_temperature",
-                      "name": "Temperature"
+                      "entity": "binary_sensor.dishwasher"
                     }
                   ]
                 },
@@ -3847,11 +3846,6 @@
                           },
                           "secondary_info": "last-changed",
                           "icon": "mdi:power"
-                        },
-                        {
-                          "type": "custom:mushroom-entity-card",
-                          "entity": "water_heater.hive_thermostat",
-                          "name": "Water Heater Status"
                         }
                       ]
                     },

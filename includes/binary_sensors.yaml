@@ -11,9 +11,23 @@
           mdi:washing-machine-off
         {% endif %}
       delay_on: 
-        minutes: 5
+        minutes: 2
       delay_off:
         seconds: 90            
+    dishwasher:
+      friendly_name: "Dishwasher"
+      value_template: >-
+        {{ states('sensor.sonoff_dishwasher_power')|float > 10 }}
+      icon_template: >
+        {% if is_state("binary_sensor.dishwasher", "on") %}
+          mdi:dishwasher
+        {% else %}
+          mdi:dishwasher-off
+        {% endif %}
+      delay_on: 
+        minutes: 1
+      delay_off:
+        seconds: 90    
     show_commute_work:
       friendly_name: Display card between 07:00 and 09:00.
       value_template: >

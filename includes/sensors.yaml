@@ -243,7 +243,15 @@
   duration:
     days: 7
   end: "{{ now() }}"
- 
+- platform: history_stats
+  name: Dishwasher Count
+  entity_id: binary_sensor.dishwasher
+  state: "on"
+  type: count
+  duration:
+    days: 7
+  end: "{{ now() }}"
+  
 # Sensors for the holiday mode lighting automation
 # All sensors will have naming convention "sensor.replay_xxxxx"
 - platform: history_stats
