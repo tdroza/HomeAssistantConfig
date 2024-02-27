@@ -4328,7 +4328,8 @@
   - service: notify.tom_and_anna
     data:
       title: "\U0001F48A Reuben's tablets"
-      message: Reuben only has {{ states('counter.reuben_tablet') }} tablet(s) remaining
+      message: Reuben only has {{ states('counter.reuben_tablet') }} tablet{{'s' if
+        states('counter.reuben_tablet')|int > 1 else ''}} remaining
   mode: single
 - id: '1708165342713'
   alias: 'Dishwasher: Finished notification'
