@@ -90,6 +90,7 @@
               "individual": [
                 {
                   "entity": "sensor.sonoff_10003a0e20_power",
+                  "display_zero_tolerance": 5,
                   "name": "Washer",
                   "icon": "mdi:washing-machine"
                 },
@@ -102,7 +103,14 @@
                 {
                   "entity": "sensor.sonoff_dishwasher_power",
                   "name": "Dishwasher",
-                  "icon": "mdi:dishwasher"
+                  "icon": "mdi:dishwasher",
+                  "color": "orange"
+                },
+                {
+                  "entity": "sensor.heated_airer_power",
+                  "name": "Airer",
+                  "icon": "mdi:tumble-dryer",
+                  "color": "green"
                 }
               ]
             }
@@ -139,7 +147,7 @@
                     "options": {
                       "type": "entity",
                       "icon": "mdi:water-boiler",
-                      "icon_color": "green",
+                      "icon_color": "purple",
                       "content_info": "none"
                     }
                   },
@@ -147,7 +155,8 @@
                     "entity_id": "switch.heated_airer",
                     "options": {
                       "type": "entity",
-                      "content_info": "none"
+                      "content_info": "none",
+                      "icon_color": "green"
                     }
                   },
                   {
@@ -164,6 +173,7 @@
                     "options": {
                       "type": "template",
                       "icon": "mdi:dishwasher",
+                      "icon_color": "orange",
                       "content": "{{(states('sensor.sonoff_dishwasher_power')|int / 1000) | round(2)}}kW"
                     }
                   },
@@ -172,7 +182,7 @@
                     "options": {
                       "type": "template",
                       "icon": "mdi:water-boiler",
-                      "icon_color": "blue",
+                      "icon_color": "#2196f3",
                       "tap_action": "none",
                       "content": "{{states('sensor.mixergy_electric_pv_power') | round(2)}} kW"
                     }
@@ -735,6 +745,29 @@
                 },
                 {
                   "style": "border: none; background: none; scale: 1.8;top:120px"
+                },
+                {
+                  "fullsize": false
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "path": "kiosk",
+          "icon": "mdi:tablet",
+          "type": "panel",
+          "badges": [],
+          "cards": [
+            {
+              "type": "custom:decluttering-card",
+              "template": "power-flow",
+              "variables": [
+                {
+                  "title": ""
+                },
+                {
+                  "style": "border: none; background: none; scale: 1.1;top:0px"
                 },
                 {
                   "fullsize": false
