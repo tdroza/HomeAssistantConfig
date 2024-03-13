@@ -27,7 +27,7 @@
       delay_on: 
         minutes: 1
       delay_off:
-        seconds: 90    
+        seconds: 30    
     show_commute_work:
       friendly_name: Display card between 07:00 and 09:00.
       value_template: >
