@@ -3536,7 +3536,8 @@
         y: 168
         size: 50
         color: black
-        value: home-battery-outline
+        value: battery-{{(states('sensor.solax_local_battery_soc') | int / 10) | round(0)
+          * 10}}
       - type: icon
         x: 55
         y: 185
@@ -4353,4 +4354,20 @@
     data:
       title: Dishwasher
       message: "\U0001F37D️ The dishwasher has finished"
+  mode: single
+- id: '1709651798349'
+  alias: 'Notify: Oven hot'
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id:
+    - sensor.solax_local_load_power
+    below: 2000
+  condition: []
+  action:
+  - service: notify.mobile_app_toms_phone
+    metadata: {}
+    data:
+      title: ♨️Oven Temperature
+      message: It looks like the oven is hot
   mode: single
