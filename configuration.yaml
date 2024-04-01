@@ -11,6 +11,7 @@ tts:
   - platform: google_translate
     service_name: google_translate_say
 
+alert: !include includes/alert.yaml
 automation: !include automations.yaml
 automation old: !include_dir_merge_list automations
 binary_sensor: !include includes/binary_sensors.yaml
