@@ -3653,7 +3653,8 @@
   description: ''
   trigger:
   - platform: time_pattern
-    minutes: /20
+    minutes: '0'
+    seconds: '30'
   condition:
   - condition: time
     after: 07:00:00
@@ -3703,8 +3704,7 @@
         anchor: mt
       - type: text
         value: '{{ state_attr(''sensor.weather_forecast_home'',''forecast_hourly'')[0].temperature
-          | string }}{{ state_attr(''sensor.weather_forecast_home'',''temperature_unit'')
-          }}'
+          | string }}°C'
         font: ../../media/GothamRnd-Bold.ttf
         x: 125
         y: 50
@@ -3732,7 +3732,7 @@
         anchor: mt
       - type: text
         value: '{{ state_attr(''sensor.weather_forecast_home'',''forecast_hourly'')[1].temperature
-          }}{{ state_attr(''sensor.weather_forecast_home'',''temperature_unit'') }}'
+          }}°C'
         font: ../../media/GothamRnd-Bold.ttf
         x: 174
         y: 50
@@ -3759,8 +3759,7 @@
         color: black
         anchor: mt
       - type: text
-        value: '{{ state_attr(''sensor.weather_forecast_home'',''forecast_hourly'')[2].temperature  }}{{
-          state_attr(''sensor.weather_forecast_home'',''temperature_unit'') }}'
+        value: '{{ state_attr(''sensor.weather_forecast_home'',''forecast_hourly'')[2].temperature  }}°C'
         font: ../../media/GothamRnd-Bold.ttf
         x: 223
         y: 50
@@ -3788,7 +3787,7 @@
         anchor: mt
       - type: text
         value: '{{ state_attr(''sensor.weather_forecast_home'',''forecast_hourly'')[3].temperature
-          }}{{ state_attr(''sensor.weather_forecast_home'',''temperature_unit'') }}'
+          }}°C'
         font: ../../media/GothamRnd-Bold.ttf
         x: 272
         y: 50
