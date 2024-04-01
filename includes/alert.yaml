@@ -1,0 +1,13 @@
+garage_door:
+    name: Garage is open
+    done_message: "Now fixed"
+    entity_id: counter.reuben_tablet
+    state: "21"
+    repeat:
+        - 2
+        - 5
+    can_acknowledge: true
+    notifiers:
+        - mobile_app_toms_phone
+    data:
+        tag: tablets
