@@ -102,6 +102,7 @@
                 },
                 {
                   "entity": "sensor.sonoff_dishwasher_power",
+                  "display_zero_tolerance": 5,
                   "name": "Dishwasher",
                   "icon": "mdi:dishwasher",
                   "color": "orange"
@@ -193,7 +194,7 @@
                       "type": "template",
                       "icon": "mdi:water-boiler",
                       "icon_color": "red",
-                      "content": "{{states('sensor.mixergy_electric_heat_power') | round(2)}} kW"
+                      "content": "{{states('sensor.mixergy_electric_heat_power') | int /1000 }} kW"
                     }
                   }
                 ],
@@ -317,13 +318,27 @@
                     },
                     {
                       "type": "action",
-                      "icon": "mdi:cast",
+                      "icon": "mdi:sofa-outline",
                       "tap_action": {
                         "action": "call-service",
                         "service": "cast.show_lovelace_view",
                         "target": {},
                         "data": {
                           "entity_id": "media_player.living_room_display",
+                          "dashboard_path": "live-energy",
+                          "view_path": "cast"
+                        }
+                      }
+                    },
+                    {
+                      "type": "action",
+                      "icon": "mdi:kettle-pour-over",
+                      "tap_action": {
+                        "action": "call-service",
+                        "service": "cast.show_lovelace_view",
+                        "target": {},
+                        "data": {
+                          "entity_id": "media_player.kitchen_display",
                           "dashboard_path": "live-energy",
                           "view_path": "cast"
                         }
@@ -435,6 +450,12 @@
               "span": {
                 "start": "day"
               },
+              "yaxis": [
+                {
+                  "min": 0,
+                  "max": 40
+                }
+              ],
               "apex_config": {
                 "dataLabels": {
                   "offsetY": -10,
@@ -629,7 +650,14 @@
                       "type": "template",
                       "content": "{{'On' if states('sensor.mixergy_electric_pv_power') | float > 0 else 'Off' }}",
                       "icon": "mdi:solar-power",
-                      "icon_color": "{{'green' if states('sensor.mixergy_electric_pv_power') | float > 0}}"
+                      "icon_color": "{{'green' if states('sensor.mixergy_electric_pv_power') | float > 0}}",
+                      "tap_action": {
+                        "action": "call-service",
+                        "service": "switch.toggle",
+                        "target": {
+                          "entity_id": "switch.pv_divert_enabled"
+                        }
+                      }
                     },
                     {
                       "type": "entity",
