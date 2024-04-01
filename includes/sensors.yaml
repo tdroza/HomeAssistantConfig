@@ -4,20 +4,6 @@
       friendly_name: 'Daytime'
       value_template: '{% if is_state("sun.sun","above_horizon") %}1{% else %}0{% endif %}}'
       icon_template: '{% if is_state("sun.sun","above_horizon") %}mdi:weather-sunny{% else %}mdi:weather-night{% endif %}}'
-    central_heating:
-      friendly_name: 'Central heating'
-      value_template: '{% if is_state_attr("climate.nest_thermostat", "hvac_action", "heating") %}1{% else %}0{% endif %}'
-      icon_template: '{% if is_state_attr("climate.nest_thermostat", "hvac_action", "heating") %}mdi:fire1{% else %}mdi:clock-outline{% endif %}'
-    weather_condition:
-      value_template: '{{ states.weather.millview.state }}'
-    weather_temperature:
-      value_template: '{{ states.weather.millview.attributes.temperature }}'
-    weather_humidity:
-      value_template: '{{ states.weather.millview.attributes.humidity }}'
-    weather_windspeed:
-      value_template: '{{ states.weather.millview.attributes.wind_speed }}'
-    weather_windbearing:
-      value_template: '{{ states.weather.millview.attributes.wind_bearing }}'
     coinbase_portfolio_balance:
       value_template: >
         {%- set btc = state_attr('sensor.coinbase_btc_wallet','Balance in native currency')[:-4] | float -%}

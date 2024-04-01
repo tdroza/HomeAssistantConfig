@@ -270,4 +270,27 @@
       unit_of_measurement: "W"
       device_class: "power"
       
-    
+- trigger:
+  - platform: time_pattern
+    minutes: "/5"
+  action:
+    - service: weather.get_forecasts
+      data:
+        type: hourly
+      target:
+        entity_id: weather.forecast_home
+      response_variable: hourlyforecast
+    - service: weather.get_forecasts
+      data:
+        type: daily
+      target:
+        entity_id: weather.forecast_home
+      response_variable: dailyforecast      
+  sensor:
+    - name: "Weather Forecast Home"
+      unique_id: tdr202404011552
+      icon: mdi:weather-cloudy-clock
+      state: "{{ now().isoformat() }}"
+      attributes:
+        forecast_hourly: "{{ hourlyforecast['weather.forecast_home']['forecast'] }}"
+        forecast_daily: "{{ dailyforecast['weather.forecast_home']['forecast'] }}"

@@ -3659,12 +3659,6 @@
     after: 07:00:00
     before: '22:00:00'
   action:
-  - service: weather.get_forecasts
-    target:
-      entity_id: weather.forecast_home
-    data:
-      type: hourly
-    response_variable: forecast
   - service: open_epaper_link.drawcustom
     data:
       dry-run: false
@@ -3698,8 +3692,8 @@
         color: black
         value: '{{state_attr(''sun.sun'',''next_setting'') | as_timestamp() | timestamp_custom(''%H:%M'')}}'
       - type: text
-        value: '{{ as_timestamp(state_attr(''weather.home_hourly'',''forecast'')[0].datetime)
-          | timestamp_custom(''%I'') | int }} {{ as_timestamp(state_attr(''weather.home_hourly'',''forecast'')[0].datetime)
+        value: '{{ as_timestamp(state_attr(''sensor.weather_forecast_home'',''forecast_hourly'')[0].datetime)
+          | timestamp_custom(''%I'') | int }} {{ as_timestamp(state_attr(''sensor.weather_forecast_home'',''forecast_hourly'')[0].datetime)
           | timestamp_custom(''%p'') | upper }}'
         font: ../../media/GothamRnd-Bold.ttf
         x: 125
@@ -3708,26 +3702,27 @@
         color: black
         anchor: mt
       - type: text
-        value: '{{ state_attr(''weather.home_hourly'',''forecast'')[0].temperature
-          | string }}{{ state_attr(''weather.home_hourly'',''temperature_unit'') }}'
+        value: '{{ state_attr(''sensor.weather_forecast_home'',''forecast_hourly'')[0].temperature
+          | string }}{{ state_attr(''sensor.weather_forecast_home'',''temperature_unit'')
+          }}'
         font: ../../media/GothamRnd-Bold.ttf
         x: 125
         y: 50
         size: 14
-        color: '{{''black'' if state_attr(''weather.home_hourly'',''forecast'')[0].temperature
+        color: '{{''black'' if state_attr(''sensor.weather_forecast_home'',''forecast_hourly'')[0].temperature
           | float > severe_temp_low else ''red'' }}'
         anchor: mt
       - type: icon
-        value: weather-{{ weather[state_attr('weather.home_hourly','forecast')[0].condition]
+        value: weather-{{ weather[state_attr('sensor.weather_forecast_home','forecast_hourly')[0].condition]
           }}
         x: 108
         y: 13
         size: 34
-        color: '{{''red'' if state_attr(''weather.home_hourly'',''forecast'')[0].condition
+        color: '{{''red'' if state_attr(''sensor.weather_forecast_home'',''forecast_hourly'')[0].condition
           in severe_weather else ''black'' }}'
       - type: text
-        value: '{{ as_timestamp(state_attr(''weather.home_hourly'',''forecast'')[1].datetime)
-          | timestamp_custom(''%I'') | int }} {{ as_timestamp(state_attr(''weather.home_hourly'',''forecast'')[1].datetime)
+        value: '{{ as_timestamp(state_attr(''sensor.weather_forecast_home'',''forecast_hourly'')[1].datetime)
+          | timestamp_custom(''%I'') | int }} {{ as_timestamp(state_attr(''sensor.weather_forecast_home'',''forecast_hourly'')[1].datetime)
           | timestamp_custom(''%p'') | upper }}'
         font: ../../media/GothamRnd-Bold.ttf
         x: 174
@@ -3736,26 +3731,26 @@
         color: black
         anchor: mt
       - type: text
-        value: '{{ state_attr(''weather.home_hourly'',''forecast'')[1].temperature
-          }}{{ state_attr(''weather.home_hourly'',''temperature_unit'') }}'
+        value: '{{ state_attr(''sensor.weather_forecast_home'',''forecast_hourly'')[1].temperature
+          }}{{ state_attr(''sensor.weather_forecast_home'',''temperature_unit'') }}'
         font: ../../media/GothamRnd-Bold.ttf
         x: 174
         y: 50
         size: 14
-        color: '{{''black'' if state_attr(''weather.home_hourly'',''forecast'')[1].temperature
+        color: '{{''black'' if state_attr(''sensor.weather_forecast_home'',''forecast_hourly'')[1].temperature
           | float > severe_temp_low else ''red'' }}'
         anchor: mt
       - type: icon
-        value: weather-{{ weather[state_attr('weather.home_hourly','forecast')[1].condition]
+        value: weather-{{ weather[state_attr('sensor.weather_forecast_home','forecast_hourly')[1].condition]
           }}
         x: 157
         y: 13
         size: 34
-        color: '{{''red'' if state_attr(''weather.home_hourly'',''forecast'')[1].condition
+        color: '{{''red'' if state_attr(''sensor.weather_forecast_home'',''forecast_hourly'')[1].condition
           in severe_weather else ''black'' }}    '
       - type: text
-        value: '{{ as_timestamp(state_attr(''weather.home_hourly'',''forecast'')[2].datetime)
-          | timestamp_custom(''%I'') | int }} {{ as_timestamp(state_attr(''weather.home_hourly'',''forecast'')[2].datetime)
+        value: '{{ as_timestamp(state_attr(''sensor.weather_forecast_home'',''forecast_hourly'')[2].datetime)
+          | timestamp_custom(''%I'') | int }} {{ as_timestamp(state_attr(''sensor.weather_forecast_home'',''forecast_hourly'')[2].datetime)
           | timestamp_custom(''%p'') | upper }}'
         font: ../../media/GothamRnd-Bold.ttf
         x: 223
@@ -3764,26 +3759,26 @@
         color: black
         anchor: mt
       - type: text
-        value: '{{ state_attr(''weather.home_hourly'',''forecast'')[2].temperature  }}{{
-          state_attr(''weather.home_hourly'',''temperature_unit'') }}'
+        value: '{{ state_attr(''sensor.weather_forecast_home'',''forecast_hourly'')[2].temperature  }}{{
+          state_attr(''sensor.weather_forecast_home'',''temperature_unit'') }}'
         font: ../../media/GothamRnd-Bold.ttf
         x: 223
         y: 50
         size: 14
-        color: '{{''black'' if state_attr(''weather.home_hourly'',''forecast'')[2].temperature
+        color: '{{''black'' if state_attr(''sensor.weather_forecast_home'',''forecast_hourly'')[2].temperature
           | float > severe_temp_low else ''red'' }}'
         anchor: mt
       - type: icon
-        value: weather-{{ weather[state_attr('weather.home_hourly','forecast')[2].condition]
+        value: weather-{{ weather[state_attr('sensor.weather_forecast_home','forecast_hourly')[2].condition]
           }}
         x: 206
         y: 13
         size: 34
-        color: '{{''red'' if state_attr(''weather.home_hourly'',''forecast'')[2].condition
+        color: '{{''red'' if state_attr(''sensor.weather_forecast_home'',''forecast_hourly'')[2].condition
           in severe_weather else ''black'' }}'
       - type: text
-        value: '{{ as_timestamp(state_attr(''weather.home_hourly'',''forecast'')[3].datetime)
-          | timestamp_custom(''%I'') | int }} {{ as_timestamp(state_attr(''weather.home_hourly'',''forecast'')[3].datetime)
+        value: '{{ as_timestamp(state_attr(''sensor.weather_forecast_home'',''forecast_hourly'')[3].datetime)
+          | timestamp_custom(''%I'') | int }} {{ as_timestamp(state_attr(''sensor.weather_forecast_home'',''forecast_hourly'')[3].datetime)
           | timestamp_custom(''%p'') | upper }}'
         font: ../../media/GothamRnd-Bold.ttf
         x: 272
@@ -3792,29 +3787,30 @@
         color: black
         anchor: mt
       - type: text
-        value: '{{ state_attr(''weather.home_hourly'',''forecast'')[3].temperature
-          }}{{ state_attr(''weather.home_hourly'',''temperature_unit'') }}'
+        value: '{{ state_attr(''sensor.weather_forecast_home'',''forecast_hourly'')[3].temperature
+          }}{{ state_attr(''sensor.weather_forecast_home'',''temperature_unit'') }}'
         font: ../../media/GothamRnd-Bold.ttf
         x: 272
         y: 50
         size: 14
-        color: '{{''black'' if state_attr(''weather.home_hourly'',''forecast'')[3].temperature
+        color: '{{''black'' if state_attr(''sensor.weather_forecast_home'',''forecast_hourly'')[3].temperature
           | float > severe_temp_low else ''red'' }}'
         anchor: mt
       - type: icon
-        value: weather-{{ weather[state_attr('weather.home_hourly','forecast')[3].condition]  }}
+        value: weather-{{ weather[state_attr('sensor.weather_forecast_home','forecast_hourly')[3].condition]  }}
         x: 255
         y: 13
         size: 34
-        color: '{{''red'' if state_attr(''weather.home_hourly'',''forecast'')[3].condition
+        color: '{{''red'' if state_attr(''sensor.weather_forecast_home'',''forecast_hourly'')[3].condition
           in severe_weather else ''black'' }}        '
       - type: text
-        value: '{{ state_attr(''weather.millview'',''forecast'')[1].temperature }}'
+        value: '{{ state_attr(''sensor.weather_forecast_home'',''forecast_daily'')[1].temperature
+          }}'
         font: ../../media/GothamRnd-Bold.ttf
         x: 122
         y: 111
         size: 12
-        color: '{{''black'' if state_attr(''weather.millview'',''forecast'')[1].temperature
+        color: '{{''black'' if state_attr(''sensor.weather_forecast_home'',''forecast_daily'')[1].temperature
           | float > severe_temp_low else ''red'' }}'
         anchor: rt
       - type: text
@@ -3826,28 +3822,30 @@
         color: black
         anchor: mt
       - type: text
-        value: '{{ state_attr(''weather.millview'',''forecast'')[1].templow }}'
+        value: '{{ state_attr(''sensor.weather_forecast_home'',''forecast_daily'')[1].templow
+          }}'
         font: ../../media/GothamRnd-Bold.ttf
         x: 126
         y: 118
         size: 12
-        color: '{{''black'' if state_attr(''weather.millview'',''forecast'')[1].templow
+        color: '{{''black'' if state_attr(''sensor.weather_forecast_home'',''forecast_daily'')[1].templow
           | float > severe_temp_low else ''red'' }}'
         anchor: lt
       - type: icon
-        value: weather-{{ weather[state_attr('weather.millview','forecast')[1].condition]}}
+        value: weather-{{ weather[state_attr('sensor.weather_forecast_home','forecast_daily')[1].condition]}}
         x: 108
         y: 78
         size: 34
-        color: '{{''red'' if state_attr(''weather.millview'',''forecast'')[1].condition
+        color: '{{''red'' if state_attr(''sensor.weather_forecast_home'',''forecast_daily'')[1].condition
           in severe_weather else ''black'' }}'
       - type: text
-        value: '{{ state_attr(''weather.millview'',''forecast'')[2].temperature }}'
+        value: '{{ state_attr(''sensor.weather_forecast_home'',''forecast_daily'')[2].temperature
+          }}'
         font: ../../media/GothamRnd-Bold.ttf
         x: 171
         y: 111
         size: 12
-        color: '{{''black'' if state_attr(''weather.millview'',''forecast'')[2].temperature
+        color: '{{''black'' if state_attr(''sensor.weather_forecast_home'',''forecast_daily'')[2].temperature
           | float > severe_temp_low else ''red'' }}'
         anchor: rt
       - type: text
@@ -3859,29 +3857,30 @@
         color: black
         anchor: mt
       - type: text
-        value: '{{ state_attr(''weather.millview'',''forecast'')[2].templow }}'
+        value: '{{ state_attr(''sensor.weather_forecast_home'',''forecast_daily'')[2].templow
+          }}'
         font: ../../media/GothamRnd-Bold.ttf
         x: 175
         y: 118
         size: 12
-        color: '{{''black'' if state_attr(''weather.millview'',''forecast'')[2].templow
+        color: '{{''black'' if state_attr(''sensor.weather_forecast_home'',''forecast_daily'')[2].templow
           | float > severe_temp_low else ''red'' }}'
         anchor: lt
       - type: icon
-        value: weather-{{ weather[state_attr('weather.millview','forecast')[2].condition]
+        value: weather-{{ weather[state_attr('sensor.weather_forecast_home','forecast_daily')[2].condition]
           }}
         x: 157
         y: 78
         size: 34
-        color: '{{''red'' if state_attr(''weather.millview'',''forecast'')[2].condition
+        color: '{{''red'' if state_attr(''sensor.weather_forecast_home'',''forecast_daily'')[2].condition
           in severe_weather else ''black'' }}'
       - type: text
-        value: '{{ state_attr(''weather.millview'',''forecast'')[3].temperature  }}'
+        value: '{{ state_attr(''sensor.weather_forecast_home'',''forecast_daily'')[3].temperature  }}'
         font: ../../media/GothamRnd-Bold.ttf
         x: 220
         y: 111
         size: 12
-        color: '{{''black'' if state_attr(''weather.millview'',''forecast'')[3].temperature
+        color: '{{''black'' if state_attr(''sensor.weather_forecast_home'',''forecast_daily'')[3].temperature
           | float > severe_temp_low else ''red'' }}'
         anchor: rt
       - type: text
@@ -3893,28 +3892,29 @@
         color: black
         anchor: mt
       - type: text
-        value: '{{ state_attr(''weather.millview'',''forecast'')[3].templow  }}'
+        value: '{{ state_attr(''sensor.weather_forecast_home'',''forecast_daily'')[3].templow  }}'
         font: ../../media/GothamRnd-Bold.ttf
         x: 224
         y: 118
         size: 12
-        color: '{{''black'' if state_attr(''weather.millview'',''forecast'')[3].templow
+        color: '{{''black'' if state_attr(''sensor.weather_forecast_home'',''forecast_daily'')[3].templow
           | float > severe_temp_low else ''red'' }}'
         anchor: lt
       - type: icon
-        value: weather-{{ weather[state_attr('weather.millview','forecast')[3].condition]}}
+        value: weather-{{ weather[state_attr('sensor.weather_forecast_home','forecast_daily')[3].condition]}}
         x: 204
         y: 78
         size: 34
-        color: '{{''red'' if state_attr(''weather.millview'',''forecast'')[3].condition
+        color: '{{''red'' if state_attr(''sensor.weather_forecast_home'',''forecast_daily'')[3].condition
           in severe_weather else ''black'' }}'
       - type: text
-        value: '{{ state_attr(''weather.millview'',''forecast'')[4].temperature }}'
+        value: '{{ state_attr(''sensor.weather_forecast_home'',''forecast_daily'')[4].temperature
+          }}'
         font: ../../media/GothamRnd-Bold.ttf
         x: 267
         y: 111
         size: 12
-        color: '{{''black'' if state_attr(''weather.millview'',''forecast'')[4].temperature
+        color: '{{''black'' if state_attr(''sensor.weather_forecast_home'',''forecast_daily'')[4].temperature
           | float > severe_temp_low else ''red'' }}'
         anchor: rt
       - type: text
@@ -3926,24 +3926,25 @@
         color: black
         anchor: mt
       - type: text
-        value: '{{ state_attr(''weather.millview'',''forecast'')[4].templow }}'
+        value: '{{ state_attr(''sensor.weather_forecast_home'',''forecast_daily'')[4].templow
+          }}'
         font: ../../media/GothamRnd-Bold.ttf
         x: 273
         y: 118
         size: 12
-        color: '{{''black'' if state_attr(''weather.millview'',''forecast'')[4].templow
+        color: '{{''black'' if state_attr(''sensor.weather_forecast_home'',''forecast_daily'')[4].templow
           | float > severe_temp_low else ''red'' }}'
         anchor: lt
       - type: icon
-        value: weather-{{ weather[state_attr('weather.millview','forecast')[4].condition]
+        value: weather-{{ weather[state_attr('sensor.weather_forecast_home','forecast_daily')[4].condition]
           }}
         x: 255
         y: 78
         size: 34
-        color: "{{'red' if state_attr('weather.millview','forecast')[4].condition
+        color: "{{'red' if state_attr('sensor.weather_forecast_home','forecast_daily')[4].condition
           in severe_weather else 'black' }}\n    "
       - type: text
-        value: '{{ as_timestamp(state_attr(''weather.millview'',''forecast'')[1].datetime)
+        value: '{{ as_timestamp(state_attr(''sensor.weather_forecast_home'',''forecast_daily'')[1].datetime)
           | timestamp_custom(''%a'') | upper }}'
         font: ../../media/GothamRnd-Bold.ttf
         x: 125
@@ -3952,7 +3953,7 @@
         color: black
         anchor: mt
       - type: text
-        value: '{{ as_timestamp(state_attr(''weather.millview'',''forecast'')[2].datetime)
+        value: '{{ as_timestamp(state_attr(''sensor.weather_forecast_home'',''forecast_daily'')[2].datetime)
           | timestamp_custom(''%a'') | upper }}'
         font: ../../media/GothamRnd-Bold.ttf
         x: 174
@@ -3961,7 +3962,7 @@
         color: black
         anchor: mt
       - type: text
-        value: '{{ as_timestamp(state_attr(''weather.millview'',''forecast'')[3].datetime)
+        value: '{{ as_timestamp(state_attr(''sensor.weather_forecast_home'',''forecast_daily'')[3].datetime)
           | timestamp_custom(''%a'') | upper }}'
         font: ../../media/GothamRnd-Bold.ttf
         x: 223
@@ -3970,7 +3971,7 @@
         color: black
         anchor: mt
       - type: text
-        value: '{{ as_timestamp(state_attr(''weather.millview'',''forecast'')[4].datetime)
+        value: '{{ as_timestamp(state_attr(''sensor.weather_forecast_home'',''forecast_daily'')[4].datetime)
           | timestamp_custom(''%a'') | upper }}'
         font: ../../media/GothamRnd-Bold.ttf
         x: 272
@@ -3986,22 +3987,23 @@
         x_end: 272
         y_end: 63
       - type: text
-        value: '{{ state_attr(''weather.millview'',''temperature'') | float | round
-          | int(0)}}{{ state_attr(''weather.millview'',''temperature_unit'') }}'
+        value: '{{ state_attr(''sensor.weather_forecast_home'',''forecast_hourly'')[0].temperature
+          | float | round | int(0)}}°C'
         font: ../../media/GothamRnd-Bold.ttf
         x: 56
         y: 126
         size: 38
         anchor: mb
-        color: '{{''black'' if state_attr(''weather.millview'',''temperature'') |
-          float | round > severe_temp_low else ''red'' }}'
+        color: '{{''black'' if state_attr(''sensor.weather_forecast_home'',''forecast_hourly'')[0].temperature
+          | float | round  > severe_temp_low else ''red'' }}'
       - type: icon
-        value: weather-{{ weather[states('weather.millview')] }}
+        value: weather-{{ weather[state_attr('sensor.weather_forecast_home','forecast_hourly')[0].condition]
+          }}
         x: 6
         y: 6
         size: 92
-        color: '{{''red'' if states(''weather.millview'') in severe_weather else ''black''
-          }}'
+        color: '{{''red'' if state_attr(''sensor.weather_forecast_home'',''forecast_hourly'')[0].condition
+          in severe_weather else ''black'' }}'
     target:
       entity_id:
       - open_epaper_link.0000021f40f13b1f
