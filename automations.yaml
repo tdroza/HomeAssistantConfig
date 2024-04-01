@@ -3064,7 +3064,13 @@
         data: {}
         target:
           entity_id: media_player.reuben_s_room_speaker
-      button_bottom_right_triple_press: []
+      button_bottom_right_triple_press:
+      - service: light.turn_on
+        target:
+          entity_id: light.rname
+        data:
+          effect: '{{ state_attr(''light.rname'', ''effect_list'') | random }}'
+      button_top_right_triple_press: []
 - id: '1688998873268'
   alias: Heat Pump Water Toggle Control
   description: ''
@@ -3253,7 +3259,7 @@
   condition:
   - condition: time
     after: 07:30:00
-    before: '20:00:00'
+    before: '19:30:00'
   - condition: state
     entity_id: light.rname
     state: 'on'
@@ -3653,6 +3659,12 @@
     after: 07:00:00
     before: '22:00:00'
   action:
+  - service: weather.get_forecasts
+    target:
+      entity_id: weather.forecast_home
+    data:
+      type: hourly
+    response_variable: forecast
   - service: open_epaper_link.drawcustom
     data:
       dry-run: false
@@ -4363,7 +4375,10 @@
     entity_id:
     - sensor.solax_local_load_power
     below: 2000
-  condition: []
+  condition:
+  - condition: template
+    value_template: '{{state_attr(''automation.notify_oven_hot'',''last_triggered'').strftime("%Y%m%d")
+      != now().strftime("%Y%m%d") }}'
   action:
   - service: notify.mobile_app_toms_phone
     metadata: {}
