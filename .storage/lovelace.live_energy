@@ -123,122 +123,127 @@
           "title": "Home",
           "cards": [
             {
-              "type": "custom:auto-entities",
-              "card": {
-                "type": "custom:mushroom-chips-card"
-              },
-              "card_param": "chips",
-              "filter": {
-                "include": [
-                  {
-                    "entity_id": "climate.hive_thermostat",
-                    "attributes": {
-                      "hvac_action": "heating"
-                    },
-                    "options": {
-                      "type": "template",
-                      "tap_action": "none",
-                      "icon": "mdi:fire",
-                      "icon_color": "red",
-                      "content": "{{state_attr('climate.hive_thermostat','current_temperature')}} ⁰C"
-                    }
-                  },
-                  {
-                    "entity_id": "sensor.mixergy_heatpump_heat",
-                    "options": {
-                      "type": "entity",
-                      "icon": "mdi:water-boiler",
-                      "icon_color": "purple",
-                      "content_info": "none"
-                    }
-                  },
-                  {
-                    "entity_id": "switch.heated_airer",
-                    "options": {
-                      "type": "entity",
-                      "content_info": "none",
-                      "icon_color": "green"
-                    }
-                  },
-                  {
-                    "entity_id": "binary_sensor.washer",
-                    "options": {
-                      "type": "template",
-                      "icon": "mdi:washing-machine",
-                      "icon_color": "#D0CC5B",
-                      "content": "{{(states('sensor.sonoff_10003a0e20_power')|int / 1000) | round(2)}}kW"
-                    }
-                  },
-                  {
-                    "entity_id": "binary_sensor.dishwasher",
-                    "options": {
-                      "type": "template",
-                      "icon": "mdi:dishwasher",
-                      "icon_color": "orange",
-                      "content": "{{(states('sensor.sonoff_dishwasher_power')|int / 1000) | round(2)}}kW"
-                    }
-                  },
-                  {
-                    "entity_id": "sensor.mixergy_electric_pv_power",
-                    "options": {
-                      "type": "template",
-                      "icon": "mdi:water-boiler",
-                      "icon_color": "#2196f3",
-                      "tap_action": "none",
-                      "content": "{{states('sensor.mixergy_electric_pv_power') | round(2)}} kW"
-                    }
-                  },
-                  {
-                    "entity_id": "sensor.mixergy_electric_heat_power",
-                    "options": {
-                      "type": "template",
-                      "icon": "mdi:water-boiler",
-                      "icon_color": "red",
-                      "content": "{{states('sensor.mixergy_electric_heat_power') | int /1000 }} kW"
-                    }
-                  }
-                ],
-                "exclude": [
-                  {
-                    "state": "off"
-                  },
-                  {
-                    "state": "unavailable"
-                  },
-                  {
-                    "state": "<=0"
-                  }
-                ]
-              }
-            },
-            {
-              "type": "custom:decluttering-card",
-              "template": "power-flow",
-              "variables": [
+              "type": "vertical-stack",
+              "cards": [
                 {
-                  "title": "Live Energy"
-                }
-              ]
-            },
-            {
-              "type": "conditional",
-              "conditions": [
-                {
-                  "entity": "sensor.solax_local_battery_soc",
-                  "state_not": "100"
+                  "type": "custom:auto-entities",
+                  "card": {
+                    "type": "custom:mushroom-chips-card"
+                  },
+                  "card_param": "chips",
+                  "filter": {
+                    "include": [
+                      {
+                        "entity_id": "climate.hive_thermostat",
+                        "attributes": {
+                          "hvac_action": "heating"
+                        },
+                        "options": {
+                          "type": "template",
+                          "tap_action": "none",
+                          "icon": "mdi:fire",
+                          "icon_color": "red",
+                          "content": "{{state_attr('climate.hive_thermostat','current_temperature')}} ⁰C"
+                        }
+                      },
+                      {
+                        "entity_id": "sensor.mixergy_heatpump_heat",
+                        "options": {
+                          "type": "entity",
+                          "icon": "mdi:water-thermometer",
+                          "icon_color": "purple",
+                          "content_info": "none"
+                        }
+                      },
+                      {
+                        "entity_id": "switch.heated_airer",
+                        "options": {
+                          "type": "entity",
+                          "content_info": "none",
+                          "icon_color": "green"
+                        }
+                      },
+                      {
+                        "entity_id": "binary_sensor.washer",
+                        "options": {
+                          "type": "template",
+                          "icon": "mdi:washing-machine",
+                          "icon_color": "#D0CC5B",
+                          "content": "{{(states('sensor.sonoff_10003a0e20_power')|int / 1000) | round(2)}}kW"
+                        }
+                      },
+                      {
+                        "entity_id": "binary_sensor.dishwasher",
+                        "options": {
+                          "type": "template",
+                          "icon": "mdi:dishwasher",
+                          "icon_color": "orange",
+                          "content": "{{(states('sensor.sonoff_dishwasher_power')|int / 1000) | round(2)}}kW"
+                        }
+                      },
+                      {
+                        "entity_id": "sensor.mixergy_electric_pv_power",
+                        "options": {
+                          "type": "template",
+                          "icon": "mdi:water-boiler",
+                          "icon_color": "#2196f3",
+                          "tap_action": "none",
+                          "content": "{{states('sensor.mixergy_electric_pv_power') | round(2)}} kW"
+                        }
+                      },
+                      {
+                        "entity_id": "sensor.mixergy_electric_heat_power",
+                        "options": {
+                          "type": "template",
+                          "icon": "mdi:water-boiler",
+                          "icon_color": "red",
+                          "content": "{{states('sensor.mixergy_electric_heat_power') | int /1000 }} kW"
+                        }
+                      }
+                    ],
+                    "exclude": [
+                      {
+                        "state": "off"
+                      },
+                      {
+                        "state": "unavailable"
+                      },
+                      {
+                        "state": "<=0"
+                      }
+                    ]
+                  }
                 },
                 {
-                  "entity": "sensor.solax_local_battery_power_in",
-                  "state_not": "0"
+                  "type": "custom:decluttering-card",
+                  "template": "power-flow",
+                  "variables": [
+                    {
+                      "title": "Live Energy"
+                    }
+                  ]
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "entity": "sensor.solax_local_battery_soc",
+                      "state_not": "100"
+                    },
+                    {
+                      "entity": "sensor.solax_local_battery_power_in",
+                      "state_not": "0"
+                    }
+                  ],
+                  "card": {
+                    "type": "custom:mushroom-template-card",
+                    "primary": "Time to 100%",
+                    "secondary": "{{(60 * (58*((100-states('sensor.solax_local_battery_soc') | int) )) / states('sensor.solax_local_battery_power_in') | int )|round}} minutes",
+                    "icon": "mdi:battery-charging",
+                    "badge_icon": ""
+                  }
                 }
-              ],
-              "card": {
-                "type": "custom:mushroom-template-card",
-                "primary": "Time to 100%",
-                "secondary": "{{(60 * (58*((100-states('sensor.solax_local_battery_soc') | int) )) / states('sensor.solax_local_battery_power_in') | int )|round}} minutes",
-                "icon": "mdi:battery-charging",
-                "badge_icon": ""
-              }
+              ]
             },
             {
               "type": "vertical-stack",
