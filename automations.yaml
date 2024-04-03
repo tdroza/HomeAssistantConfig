@@ -4387,3 +4387,24 @@
       title: ♨️Oven Temperature
       message: It looks like the oven is hot
   mode: single
+- id: '1712065994854'
+  alias: 'Notify: Mixergy PV Diverter Issue'
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - sensor.mixergy_clamp_power
+    to: '0'
+    for:
+      hours: 0
+      minutes: 5
+      seconds: 0
+  condition: []
+  action:
+  - service: notify.mobile_app_toms_phone
+    metadata: {}
+    data:
+      message: "\U0001F304Check the Mixregy PV diverter. It hasn't reported any data
+        for 5minutes an might need a disconnect/reconnect."
+      title: Mixergy PV Issue
+  mode: single
