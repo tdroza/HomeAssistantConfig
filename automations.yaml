@@ -2805,73 +2805,91 @@
     entity_id: switch.immersion_heater
     domain: switch
   mode: single
-- id: '1687424935982'
-  alias: Open main bedroom blinds on weekdays
-  description: Opens the blinds at 25% increments every 10 minutes from 6am
-  trigger:
-  - platform: time
-    at: 06:00:00
-  condition:
-  - condition: time
-    weekday:
-    - mon
-    - tue
-    - wed
-    - thu
-    - fri
-  action:
-  - service: cover.set_cover_position
-    data:
-      position: 25
-    target:
-      area_id: main_bedroom
-  - delay:
-      hours: 0
-      minutes: 10
-      seconds: 0
-      milliseconds: 0
-  - service: cover.set_cover_position
-    data:
-      position: 50
-    target:
-      area_id: main_bedroom
-  - delay:
-      hours: 0
-      minutes: 10
-      seconds: 0
-      milliseconds: 0
-  - service: cover.set_cover_position
-    data:
-      position: 75
-    target:
-      area_id: main_bedroom
-  - delay:
-      hours: 0
-      minutes: 10
-      seconds: 0
-      milliseconds: 0
-  - service: cover.set_cover_position
-    data:
-      position: 100
-    target:
-      area_id: main_bedroom
-  mode: single
 - id: '1687424997925'
-  alias: Open main bedroom blinds at weekends
-  description: Opens the blinds at 07:30
+  alias: Open main bedroom blinds in the morning
+  description: Opens the blinds at 07:30 on weekends and gradually from 06:00 on weekdays
   trigger:
   - platform: time
     at: 07:30:00
+    id: weekend
+  - platform: time
+    at: 06:00:00
+    id: weekday
   condition:
-  - condition: time
-    weekday:
-    - sat
-    - sun
+  - condition: and
+    conditions:
+    - condition: trigger
+      id:
+      - weekend
+    - condition: time
+      weekday:
+      - sat
+      - sun
+    alias: it's a weekend
+  - alias: it's a weekday
+    condition: and
+    conditions:
+    - condition: trigger
+      id:
+      - weekday
+    - condition: time
+      weekday:
+      - mon
+      - tue
+      - wed
+      - thu
+      - fri
   action:
-  - service: cover.open_cover
-    data: {}
-    target:
-      area_id: main_bedroom
+  - choose:
+    - conditions:
+      - condition: trigger
+        id:
+        - weekend
+      sequence:
+      - service: cover.open_cover
+        data: {}
+        target:
+          area_id: main_bedroom
+    - conditions:
+      - condition: trigger
+        id:
+        - weekday
+      sequence:
+      - service: cover.set_cover_position
+        data:
+          position: 25
+        target:
+          area_id: main_bedroom
+      - delay:
+          hours: 0
+          minutes: 10
+          seconds: 0
+          milliseconds: 0
+      - service: cover.set_cover_position
+        data:
+          position: 50
+        target:
+          area_id: main_bedroom
+      - delay:
+          hours: 0
+          minutes: 10
+          seconds: 0
+          milliseconds: 0
+      - service: cover.set_cover_position
+        data:
+          position: 75
+        target:
+          area_id: main_bedroom
+      - delay:
+          hours: 0
+          minutes: 10
+          seconds: 0
+          milliseconds: 0
+      - service: cover.set_cover_position
+        data:
+          position: 100
+        target:
+          area_id: main_bedroom
   mode: single
 - id: '1688978901597'
   alias: 'Lightswitch: Seb''s Opple'
@@ -4036,32 +4054,6 @@
     - exceptional
     severe_temp_low: 3
   mode: restart
-- id: '1701429230401'
-  alias: 'OEPL: Teams Status'
-  description: ''
-  trigger:
-  - platform: state
-    entity_id:
-    - binary_sensor.tom_in_meeting
-  condition: []
-  action:
-  - service: open_epaper_link.drawcustom
-    data:
-      dry-run: false
-      background: white
-      rotate: 0
-      payload:
-      - type: icon
-        x: 0
-        y: 0
-        size: 152
-        color: '{{''red'' if is_state(''binary_sensor.tom_in_meeting'',''on'') else
-          ''black''}}'
-        value: '{{''video-account'' if is_state(''binary_sensor.tom_in_meeting'',''on'')
-          else ''video-off-outline''}}'
-    target:
-      entity_id: open_epaper_link.0000021eedc53411
-  mode: single
 - id: '1701697431464'
   alias: Presence - home office
   description: ''
