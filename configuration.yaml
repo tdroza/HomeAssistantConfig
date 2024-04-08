@@ -18,7 +18,6 @@ binary_sensor: !include includes/binary_sensors.yaml
 camera: !include includes/camera.yaml
 cover: !include includes/covers.yaml
 device_tracker: !include includes/device_trackers.yaml
-downloader: !include includes/downloader.yaml
 energy:
 google_assistant: !include includes/google_assistant.yaml
 group: !include includes/groups.yaml
