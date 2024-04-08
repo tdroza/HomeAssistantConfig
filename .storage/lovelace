@@ -1941,9 +1941,9 @@
                   "name": "Solar forecast"
                 },
                 {
-                  "entity": "weather.home_hourly",
+                  "entity": "weather.forecast_home",
                   "yaxis_id": "temp",
-                  "data_generator": "const data = [];\nentity.attributes.forecast.forEach(forecast => data.push([ forecast['datetime'],forecast['temperature'] ] ));\nreturn data.reverse();\n",
+                  "data_generator": "const data = [];\nentity.attributes.forecast_hourly.forEach(forecast => data.push([ forecast['datetime'],forecast['temperature'] ] ));\nreturn data.reverse();\n",
                   "type": "line",
                   "name": "Temperature forecast"
                 }
@@ -2724,6 +2724,15 @@
                   "show_color_temp_control": true,
                   "show_color_control": true,
                   "collapsible_controls": false
+                },
+                {
+                  "type": "custom:mushroom-light-card",
+                  "entity": "light.solar_lamp",
+                  "use_light_color": true,
+                  "show_brightness_control": true,
+                  "show_color_temp_control": true,
+                  "show_color_control": true,
+                  "collapsible_controls": true
                 },
                 {
                   "type": "horizontal-stack",
