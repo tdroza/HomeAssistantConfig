@@ -1883,7 +1883,10 @@
       media_content_id: '{{ tags[trigger.event.data.tag_id].media_content_id }}'
       media_content_type: '{{ tags[trigger.event.data.tag_id].media_content_type }}'
   - service: media_player.volume_set
-    data: {}
+    data:
+      volume_level: 0.5
+    target:
+      entity_id: '{{ media_player_entity_id }}'
   - service: media_player.select_source
     data:
       source: '{{ media_player_entity_id }}'
@@ -2816,29 +2819,31 @@
     at: 06:00:00
     id: weekday
   condition:
-  - condition: and
+  - condition: or
     conditions:
-    - condition: trigger
-      id:
-      - weekend
-    - condition: time
-      weekday:
-      - sat
-      - sun
-    alias: it's a weekend
-  - alias: it's a weekday
-    condition: and
-    conditions:
-    - condition: trigger
-      id:
-      - weekday
-    - condition: time
-      weekday:
-      - mon
-      - tue
-      - wed
-      - thu
-      - fri
+    - alias: it's a weekday
+      condition: and
+      conditions:
+      - condition: trigger
+        id:
+        - weekday
+      - condition: time
+        weekday:
+        - mon
+        - tue
+        - wed
+        - thu
+        - fri
+    - alias: it's the weekend
+      condition: and
+      conditions:
+      - condition: trigger
+        id:
+        - weekend
+      - condition: time
+        weekday:
+        - sat
+        - sun
   action:
   - choose:
     - conditions:
@@ -4378,6 +4383,12 @@
     data:
       title: ♨️Oven Temperature
       message: It looks like the oven is hot
+  - service: automation.turn_off
+    metadata: {}
+    data:
+      stop_actions: true
+    target:
+      entity_id: automation.notify_oven_hot
   mode: single
 - id: '1712065994854'
   alias: 'Notify: Mixergy PV Diverter Issue'
