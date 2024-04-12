@@ -3189,7 +3189,7 @@
       sequence:
       - service: rest_command.solax_local_charge_battery_from_grid
         data:
-          level: 10
+          level: 100
       - delay:
           seconds: 10
       - service: rest_command.solax_local_set_forced_charge_start
@@ -3197,6 +3197,7 @@
           value: '{{0 + 0 * 256}}
 
             '
+        enabled: false
       - delay:
           seconds: 10
       - service: homeassistant.update_entity
@@ -3205,8 +3206,7 @@
           entity_id: sensor.solax_rest_local_settings
       until:
       - condition: template
-        value_template: '{{ (states(''sensor.solax_local_battery_setting_start_charge'')
-          == ''03:05'' and states(''sensor.solax_local_battery_charge_from_grid_to'')|int==states(''input_number.solax_battery_soc_target'')|int)
+        value_template: '{{ (states(''sensor.solax_local_battery_charge_from_grid_to'')|int==100)
           or repeat.index == 3 }}      '
   mode: single
 - id: '1693819732477'
@@ -3219,7 +3219,7 @@
   condition:
   - condition: numeric_state
     entity_id: sensor.solcast_pv_forecast_forecast_today
-    below: 13
+    below: input_number.average_daily_kwh_consumed
   - condition: state
     entity_id: input_boolean.holiday_mode
     state: 'off'
@@ -3231,8 +3231,8 @@
   - service: input_number.set_value
     data:
       value: "{% set forecast_kwh = states('sensor.solcast_pv_forecast_forecast_today')|float
-        %}  {% set battery_usable_kwh = 5.8*0.9 %} {% set charge_from_grid_kwh = (13
-        - forecast_kwh) %} {% set charge_from_grid_pc = 10 + 100*charge_from_grid_kwh/battery_usable_kwh%}
+        %}  {% set battery_usable_kwh = 5.8*0.9 %} {% set charge_from_grid_kwh = (states('input_number.average_daily_kwh_consumed')|int
+        - forecast_kwh) %}  {% set charge_from_grid_pc = 10 + 100*charge_from_grid_kwh/battery_usable_kwh%}
         {{max(0,min(charge_from_grid_pc|int,100))}}    \n"
     target:
       entity_id: input_number.solax_battery_soc_target
@@ -3245,11 +3245,13 @@
             '
       - delay:
           seconds: 10
+        enabled: false
       - service: rest_command.solax_local_set_forced_charge_start
         data:
           value: '{{3 + 5 * 256}}
 
             '
+        enabled: false
       - service: notify.mobile_app_toms_phone
         data:
           message: 'Home battery set to charge from grid. Target: {{states(''input_number.solax_battery_soc_target'')}}%
@@ -3266,8 +3268,7 @@
           seconds: 10
       until:
       - condition: template
-        value_template: '{{ (states(''sensor.solax_local_battery_setting_start_charge'')
-          == ''03:05'' and states(''sensor.solax_local_battery_charge_from_grid_to'')|int==states(''input_number.solax_battery_soc_target'')|int)
+        value_template: '{{ (states(''sensor.solax_local_battery_charge_from_grid_to'')|int==states(''input_number.solax_battery_soc_target'')|int)
           or repeat.index == 3 }}      '
   mode: single
 - id: '1696098127864'
