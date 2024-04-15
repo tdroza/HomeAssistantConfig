@@ -13,10 +13,6 @@
         {%- set doge = state_attr('sensor.coinbase_doge_wallet','Balance in native currency')[:-4] | float %}
         {%- set sol = state_attr('sensor.coinbase_sol_wallet','Balance in native currency')[:-4] | float %}
         {{ btc + eth + ltc + xlm + doge + sol}}
-    calendar_family_next_title: 
-      value_template: '{{ states.calendar.family.attributes.message}}'
-    calendar_family_next_start: 
-      value_template: '{{ as_timestamp(states.calendar.family.attributes.start_time) | timestamp_custom("%A %H:%M") }}'
     youtube_music_artist:
       value_template: >
         {% if (state_attr("media_player.ytube_music_player", "media_artist")==None) %}

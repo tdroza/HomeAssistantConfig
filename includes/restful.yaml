@@ -1,5 +1,5 @@
 - resource: !secret album_a_day
-  scan_interval: 120
+  scan_interval: 7200
   sensor:
     - name: "album_a_day"
       value_template: "OK"
@@ -11,7 +11,7 @@
         - "youtubeMusicId"
         - "images"
 - resource_template: "https://tdroza.duckdns.org/local/times/{{now().strftime('%H_%M')}}.json"
-  scan_interval: 1
+  scan_interval: 900
   sensor:
     - name: "Quote Clock"
       value_template: "{{ value_json['time'] }}"
@@ -22,4 +22,19 @@
         - "quote_last"
         - "title"
         - "author"
-
+- resource: https://www.stands4.com/services/v2/quotes.php
+  params:
+    uid: !secret quotes_uid
+    tokenid: !secret quotes_token
+    searchtype: RANDOM
+    format: json
+  scan_interval: 3600
+  sensor: 
+    - name: "Quotes"
+      unique_id: 202403151536
+      icon: mdi:comment-quote
+      json_attributes_path: "$.result"
+      value_template: "{{now()}}"
+      json_attributes:
+        - "quote"
+        - "author"

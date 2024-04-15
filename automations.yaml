@@ -4412,3 +4412,58 @@
         for 5minutes an might need a disconnect/reconnect."
       title: Mixergy PV Issue
   mode: single
+- id: '1713194068751'
+  alias: 'OEPL: Quotes'
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - sensor.quotes
+  condition:
+  - condition: time
+    after: 09:00:00
+    before: '19:00:00'
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+  action:
+  - service: open_epaper_link.drawcustom
+    data:
+      dry-run: false
+      background: white
+      rotate: '{{180 if now().hour < 12 else 0 }}'
+      payload:
+      - type: icon
+        x: 0
+        y: -20
+        size: 96
+        value: format-quote-open
+        color: red
+      - type: icon
+        x: 200
+        y: 60
+        size: 96
+        value: format-quote-close
+        color: red
+      - type: text
+        x: 25
+        y: 40
+        size: 14
+        max_width: 250
+        value: '{{state_attr(''sensor.quotes'',''quote'')}}'
+        color: black
+        font: ../../media/CourierPrime-Regular.ttf
+      - type: text
+        x: 296
+        y: 128
+        size: 10
+        anchor: rd
+        value: '{{state_attr(''sensor.quotes'',''author'')}}'
+        color: black
+        font: ../../media/CourierPrime-Regular.ttf
+    target:
+      entity_id: open_epaper_link.0000021f40f13b1f
+  mode: single
