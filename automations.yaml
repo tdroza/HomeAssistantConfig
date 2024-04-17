@@ -3175,14 +3175,12 @@
       - input_boolean.immersion_heater
   mode: single
 - id: '1693819219757'
-  alias: 'Solax: Reset grid charge'
+  alias: 'Solax: Reset grid charge at 7am'
   description: Reset grid charge params every morning, after possible overnight charging
     completed
   trigger:
   - platform: time
     at: 06:59:00
-  - platform: time
-    at: '15:58:00'
   condition: []
   action:
   - repeat:
@@ -3200,6 +3198,7 @@
         enabled: false
       - delay:
           seconds: 10
+        enabled: false
       - service: homeassistant.update_entity
         data: {}
         target:
@@ -4434,16 +4433,16 @@
     data:
       dry-run: false
       background: white
-      rotate: '{{180 if now().hour < 12 else 0 }}'
+      rotate: '{{180 if now().day < 15 else 0 }}'
       payload:
       - type: icon
-        x: 0
+        x: -15
         y: -20
         size: 96
         value: format-quote-open
         color: red
       - type: icon
-        x: 200
+        x: 215
         y: 60
         size: 96
         value: format-quote-close
@@ -4458,12 +4457,37 @@
         font: ../../media/CourierPrime-Regular.ttf
       - type: text
         x: 296
-        y: 128
-        size: 10
-        anchor: rd
+        y: 3
+        size: 12
+        anchor: rt
         value: '{{state_attr(''sensor.quotes'',''author'')}}'
         color: black
         font: ../../media/CourierPrime-Regular.ttf
     target:
       entity_id: open_epaper_link.0000021f40f13b1f
+  mode: single
+- id: '1713342045966'
+  alias: 'Solax: Reset battery charge target at 4pm'
+  description: Reset grid charge params every afternoon, after possible forced charging
+    completed during Cosy rate
+  trigger:
+  - platform: time
+    at: '15:58:00'
+  condition: []
+  action:
+  - repeat:
+      sequence:
+      - service: rest_command.solax_local_charge_battery_from_grid
+        data:
+          level: 10
+      - delay:
+          seconds: 10
+      - service: homeassistant.update_entity
+        data: {}
+        target:
+          entity_id: sensor.solax_rest_local_settings
+      until:
+      - condition: template
+        value_template: '{{ (states(''sensor.solax_local_battery_charge_from_grid_to'')|int==10)
+          or repeat.index == 3 }}      '
   mode: single
