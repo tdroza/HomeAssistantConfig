@@ -445,9 +445,9 @@
     service: automation.turn_off
   - data:
       title: Washing Machine
-      message: '{{weather_icons[states(''weather.millview'')]}}Great! The forecast
-        for today is: {{ state_attr(''weather.millview'', ''temperature'') }}°C, {{
-        states(''weather.millview'')}}. Wind speed is {{ state_attr(''weather.millview'',
+      message: '{{weather_icons[states(''weather.forecast_home'')]}}Great! The forecast
+        for today is: {{ state_attr(''weather.forecast_home'', ''temperature'') }}°C,
+        {{ states(''weather.forecast_home'')}}. Wind speed is {{ state_attr(''weather.forecast_home'',
         ''wind_speed'') }}km/h.'
       data:
         group: Washing machine
@@ -1915,10 +1915,6 @@
         media_content_id: PLbNmRtwuOMuijrqEgfJowKcaKiqeBATG2
         media_content_type: playlist
         title: Sebs Favourite Music (card)
-      D0-50-B3-32:
-        media_content_id: PLbNmRtwuOMuihM4wbhdfbhyvnoHt5Rs0P
-        media_content_type: playlist
-        title: Reubens Favourite Music
       8A-CB-65-85:
         media_content_id: PLbNmRtwuOMuijrqEgfJowKcaKiqeBATG2
         media_content_type: playlist
@@ -3366,15 +3362,19 @@
         y: 1
         size: 20
         color: white
-        value: '{{state_attr(''sensor.family_events'', ''events'')[0].summary}}'
+        value: '{{state_attr(''sensor.family_events'', ''events'')[0].summary | truncate(28,
+          true)}}'
       - type: text
         x: 295
         y: 31
         size: 12
         color: white
         anchor: rb
-        value: '{{as_timestamp(state_attr(''sensor.family_events'', ''events'')[0].start)
-          | timestamp_custom(''%a, %H:%M'')}}'
+        value: '{% set startTimestamp = as_timestamp(state_attr(''sensor.family_events'',
+          ''events'')[0].start)%} {% set endTimestamp = as_timestamp(state_attr(''sensor.family_events'',
+          ''events'')[0].end)%} {% set time = ''All day'' if endTimestamp - startTimestamp
+          == 86400 else startTimestamp | timestamp_custom(''%H:%M'') %} {{startTimestamp
+          | timestamp_custom(''%a, '')}}{{time}}'
       - type: line
         x_start: 0
         x_end: 295
@@ -3394,8 +3394,11 @@
         size: 12
         color: white
         anchor: rb
-        value: '{{as_timestamp(state_attr(''sensor.family_events'', ''events'')[1].start)
-          | timestamp_custom(''%a, %H:%M'')}}'
+        value: '{% set startTimestamp = as_timestamp(state_attr(''sensor.family_events'',
+          ''events'')[1].start)%} {% set endTimestamp = as_timestamp(state_attr(''sensor.family_events'',
+          ''events'')[1].end)%} {% set time = ''All day'' if endTimestamp - startTimestamp
+          == 86400 else startTimestamp | timestamp_custom(''%H:%M'') %} {{startTimestamp
+          | timestamp_custom(''%a, '')}}{{time}}'
       - type: line
         x_start: 0
         x_end: 295
@@ -3415,8 +3418,11 @@
         size: 12
         color: white
         anchor: rb
-        value: '{{as_timestamp(state_attr(''sensor.family_events'', ''events'')[2].start)
-          | timestamp_custom(''%a, %H:%M'')}}'
+        value: '{% set startTimestamp = as_timestamp(state_attr(''sensor.family_events'',
+          ''events'')[2].start)%} {% set endTimestamp = as_timestamp(state_attr(''sensor.family_events'',
+          ''events'')[2].end)%} {% set time = ''All day'' if endTimestamp - startTimestamp
+          == 86400 else startTimestamp | timestamp_custom(''%H:%M'') %} {{startTimestamp
+          | timestamp_custom(''%a, '')}}{{time}}'
       - type: line
         x_start: 0
         x_end: 295
@@ -3436,8 +3442,11 @@
         size: 12
         color: white
         anchor: rb
-        value: '{{as_timestamp(state_attr(''sensor.family_events'', ''events'')[3].start)
-          | timestamp_custom(''%a, %H:%M'')}}'
+        value: '{% set startTimestamp = as_timestamp(state_attr(''sensor.family_events'',
+          ''events'')[3].start)%} {% set endTimestamp = as_timestamp(state_attr(''sensor.family_events'',
+          ''events'')[3].end)%} {% set time = ''All day'' if endTimestamp - startTimestamp
+          == 86400 else startTimestamp | timestamp_custom(''%H:%M'') %} {{startTimestamp
+          | timestamp_custom(''%a, '')}}{{time}}'
     target:
       entity_id: open_epaper_link.00000218cf5d3b19
   mode: restart
@@ -4075,8 +4084,8 @@
     id: office_left
     for:
       hours: 0
-      minutes: 2
-      seconds: 30
+      minutes: 5
+      seconds: 0
   condition: []
   action:
   - choose:
@@ -4089,10 +4098,12 @@
         device_id: a4b059569334cd311559fcb877f3deba
         entity_id: 06eeebc1e5fcf9143cc03a5b54f13885
         domain: light
+        enabled: false
       - type: turn_off
         device_id: 63e528584034c3704aa0ea7b8d0c6adb
         entity_id: f24328478d5751eff84f7aafecbbebc8
         domain: switch
+        enabled: false
     - conditions:
       - condition: trigger
         id:
@@ -4443,7 +4454,7 @@
         color: red
       - type: icon
         x: 215
-        y: 60
+        y: 55
         size: 96
         value: format-quote-close
         color: red
