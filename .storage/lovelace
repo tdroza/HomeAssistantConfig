@@ -110,17 +110,18 @@
                 "name": "Turn everything off",
                 "tap_action": {
                   "action": "call-service",
-                  "service": "automation.trigger",
+                  "service": "light.turn_off",
                   "service_data": {
-                    "entity_id": "automation.telegram_off"
+                    "entity_id": "all"
                   }
                 },
                 "type": "custom:button-card"
               },
               "conditions": [
                 {
-                  "entity": "group.all_my_lights",
-                  "state_not": "off"
+                  "condition": "state",
+                  "entity": "binary_sensor.lights_are_on",
+                  "state": "on"
                 }
               ],
               "type": "conditional"

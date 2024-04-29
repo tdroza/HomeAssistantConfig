@@ -37,7 +37,7 @@
     to: not_home
   condition:
   - condition: state
-    entity_id: group.all_my_lights
+    entity_id: binary_sensor.lights_are_on 
     state: 'on'
   - condition: state
     entity_id: input_boolean.do_not_disturb
@@ -59,7 +59,7 @@
           minutes: 15
       until:
       - condition: state
-        entity_id: group.all_my_lights
+        entity_id: binary_sensor.lights_are_on 
         state: 'off'
   mode: single
 - id: '1576773012546'
