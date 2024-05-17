@@ -37,7 +37,7 @@
     to: not_home
   condition:
   - condition: state
-    entity_id: binary_sensor.lights_are_on 
+    entity_id: binary_sensor.lights_are_on
     state: 'on'
   - condition: state
     entity_id: input_boolean.do_not_disturb
@@ -59,7 +59,7 @@
           minutes: 15
       until:
       - condition: state
-        entity_id: binary_sensor.lights_are_on 
+        entity_id: binary_sensor.lights_are_on
         state: 'off'
   mode: single
 - id: '1576773012546'
@@ -2595,11 +2595,11 @@
   description: ''
   trigger:
   - platform: time
-    at: 07:00:00
+    at: 07:02:12
   - platform: time
-    at: '12:00:00'
+    at: '12:02:08'
   - platform: time
-    at: '17:00:00'
+    at: '17:04:14'
   condition: []
   action:
   - service: solcast_solar.update_forecasts
@@ -4203,6 +4203,10 @@
     - input_number.coffee_grind_setting_decaf
   - platform: template
     value_template: '{{now().day == 1 or now().day == 15}}'
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 30
   condition: []
   action:
   - service: open_epaper_link.drawcustom
@@ -4501,4 +4505,20 @@
       - condition: template
         value_template: '{{ (states(''sensor.solax_local_battery_charge_from_grid_to'')|int==10)
           or repeat.index == 3 }}      '
+  mode: single
+- id: '1714474918088'
+  alias: Handle clear garage notification msg
+  description: ''
+  trigger:
+  - platform: event
+    event_type: mobile_app_notification_action
+    event_data:
+      action: ACK_GARAGE
+  condition: []
+  action:
+  - service: alert.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id: alert.garage_door
   mode: single
