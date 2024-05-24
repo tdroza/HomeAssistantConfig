@@ -3,3 +3,15 @@
   services:
     - service: mobile_app_anna_s_phone
     - service: mobile_app_toms_phone
+- name: living_room_tts
+  platform: tts
+  entity_id: tts.google_en_co_uk
+  media_player: media_player.living_room_display
+- name: hallway_tts
+  platform: tts
+  entity_id: tts.google_en_co_uk
+  media_player: media_player.hallway_home
+- name: kitchen_tts
+  platform: tts
+  entity_id: tts.google_en_co_uk
+  media_player: media_player.kitchen_display

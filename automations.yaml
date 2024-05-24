@@ -574,18 +574,8 @@
     to: 'off'
   condition: []
   action:
-  - service: notify.tom_and_anna
-    data:
-      title: Garage door
-      message: The garage door was closed
-      data:
-        group: Garage
-        channel: Garage
-        vibrationPattern: 10, 100, 500, 100, 500, 500
   - data:
-      entity_id:
-      - media_player.living_room_display
-      - media_player.hallway_home
+      entity_id: media_player.living_room_display
       message: The garage door was closed
       cache: false
     service: tts.google_translate_say
@@ -2595,7 +2585,7 @@
   description: ''
   trigger:
   - platform: time
-    at: 07:02:12
+    at: 03:58:12
   - platform: time
     at: '12:02:08'
   - platform: time
@@ -4521,4 +4511,53 @@
     data: {}
     target:
       entity_id: alert.garage_door
+  mode: single
+- id: '1716365991212'
+  alias: Wedding anniversary wake-up music
+  description: Play music from YouTube Music on 23/05
+  trigger:
+  - platform: template
+    value_template: '{{now().strftime("%H:%M %d %m") == "06:50 23 05"}}'
+  action:
+  - service: media_player.volume_set
+    data:
+      volume_level: 0.5
+    target:
+      entity_id: media_player.lenovosmartclock9603
+  - service: media_player.select_source
+    data:
+      source: media_player.lenovosmartclock9603
+      entity_id: media_player.ytube_music_player
+  - service: media_player.play_media
+    data:
+      media_content_id: 3Z_4Y4DrYAE
+      media_content_type: track
+    target:
+      entity_id: media_player.ytube_music_player
+  mode: single
+- id: '1716377345280'
+  alias: 'AI: Solar forecast summary'
+  description: ''
+  trigger: []
+  condition: []
+  action:
+  - service: conversation.process
+    metadata: {}
+    data:
+      agent_id: conversation.openai_conversation
+      text: For this task, you are solar energy consultant.   Please provide your
+        thoughts on today's predicted solar yield as it relates to the time of year
+        in Yorkshire United Kingdom and the provided forecast for the upcoming days
+        Today's solar yield {{states('sensor.solcast_pv_forecast_forecast_today')}}
+        kWh JSON array of forecasted solar yield for the next 6 days, the first entry
+        is tomorrow followed by subsequent days [ {{states('sensor.solcast_pv_forecast_forecast_tomorrow')}},
+        {{states('sensor.solcast_pv_forecast_forecast_day_3')}}, {{states('sensor.solcast_pv_forecast_forecast_day_4')}},
+        {{states('sensor.solcast_pv_forecast_forecast_day_5')}}, {{states('sensor.solcast_pv_forecast_forecast_day_6')}},
+        {{states('sensor.solcast_pv_forecast_forecast_day_7')}} ]
+    response_variable: reply
+  - service: notify.mobile_app_toms_phone
+    metadata: {}
+    data:
+      title: Solar forecast summary
+      message: '{{reply.response.speech.plain.speech}}'
   mode: single

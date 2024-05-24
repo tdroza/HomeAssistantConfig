@@ -1,13 +1,26 @@
 garage_door:
-    name: Garage is open
-    done_message: "Now fixed"
-    entity_id: counter.reuben_tablet
-    state: "21"
+    name: "Garage is open"
+    message: "The garage door was opened {{states.binary_sensor.garage_door.last_changed | relative_time + ' ago' if as_timestamp(now()) - as_timestamp(states.binary_sensor.garage_door.last_changed) | float > 300}}"
+    done_message: "The garage door was closed"
+    entity_id: binary_sensor.garage_door
+    state: "on"
     repeat:
         - 2
         - 5
+        - 10
+        - 15
+        - 30
+
     can_acknowledge: true
     notifiers:
         - mobile_app_toms_phone
+        - mobile_app_anna_s_phone
+        - living_room_tts
+        - hallway_tts
+        - kitchen_tts
     data:
-        tag: tablets
+        tag: garage-door
+        notification-icon: mdi:garage-open
+        actions:
+            - action: "ACK_GARAGE"
+              title: "Turn off"
