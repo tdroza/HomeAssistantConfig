@@ -242,6 +242,42 @@
                     "icon": "mdi:battery-charging",
                     "badge_icon": ""
                   }
+                },
+                {
+                  "type": "custom:mushroom-chips-card",
+                  "chips": [
+                    {
+                      "type": "spacer"
+                    },
+                    {
+                      "type": "action",
+                      "icon": "mdi:sofa-outline",
+                      "tap_action": {
+                        "action": "call-service",
+                        "service": "cast.show_lovelace_view",
+                        "target": {},
+                        "data": {
+                          "entity_id": "media_player.living_room_display",
+                          "dashboard_path": "live-energy",
+                          "view_path": "cast"
+                        }
+                      }
+                    },
+                    {
+                      "type": "action",
+                      "icon": "mdi:kettle-pour-over",
+                      "tap_action": {
+                        "action": "call-service",
+                        "service": "cast.show_lovelace_view",
+                        "target": {},
+                        "data": {
+                          "entity_id": "media_player.kitchen_display",
+                          "dashboard_path": "live-energy",
+                          "view_path": "cast"
+                        }
+                      }
+                    }
+                  ]
                 }
               ]
             },
@@ -314,42 +350,6 @@
                   "title": "Solax Inverter",
                   "show_header_toggle": false,
                   "state_color": true
-                },
-                {
-                  "type": "custom:mushroom-chips-card",
-                  "chips": [
-                    {
-                      "type": "spacer"
-                    },
-                    {
-                      "type": "action",
-                      "icon": "mdi:sofa-outline",
-                      "tap_action": {
-                        "action": "call-service",
-                        "service": "cast.show_lovelace_view",
-                        "target": {},
-                        "data": {
-                          "entity_id": "media_player.living_room_display",
-                          "dashboard_path": "live-energy",
-                          "view_path": "cast"
-                        }
-                      }
-                    },
-                    {
-                      "type": "action",
-                      "icon": "mdi:kettle-pour-over",
-                      "tap_action": {
-                        "action": "call-service",
-                        "service": "cast.show_lovelace_view",
-                        "target": {},
-                        "data": {
-                          "entity_id": "media_player.kitchen_display",
-                          "dashboard_path": "live-energy",
-                          "view_path": "cast"
-                        }
-                      }
-                    }
-                  ]
                 }
               ]
             },
