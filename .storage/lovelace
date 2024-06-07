@@ -3209,6 +3209,15 @@
                     {
                       "type": "tile",
                       "entity": "binary_sensor.dishwasher"
+                    },
+                    {
+                      "type": "custom:mushroom-entity-card",
+                      "entity": "automation.notify_oven_hot",
+                      "tap_action": {
+                        "action": "toggle"
+                      },
+                      "name": "Oven alert",
+                      "icon": "mdi:stove"
                     }
                   ]
                 },
@@ -3754,9 +3763,27 @@
                   "entity": "number.target_charge"
                 },
                 {
-                  "type": "custom:mushroom-number-card",
-                  "entity": "number.pv_charge_limit",
-                  "icon": "mdi:solar-power"
+                  "type": "custom:mushroom-entity-card",
+                  "entity": "switch.pv_divert_enabled",
+                  "tap_action": {
+                    "action": "toggle"
+                  }
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "condition": "state",
+                      "entity": "switch.pv_divert_enabled",
+                      "state": "on"
+                    }
+                  ],
+                  "card": {
+                    "type": "custom:mushroom-number-card",
+                    "entity": "number.pv_charge_limit",
+                    "fill_container": false,
+                    "display_mode": "slider"
+                  }
                 },
                 {
                   "type": "custom:mushroom-chips-card",
