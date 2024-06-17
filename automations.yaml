@@ -3594,6 +3594,14 @@
         anchor: mt
         color: black
         value: '{{state_attr(''sun.sun'',''next_setting'') | as_timestamp() | timestamp_custom(''%H:%M'')}}'
+      - type: rectangle
+        x_start: 105
+        y_start: 0
+        x_end: 294
+        y_end: 12
+        fill: black
+        outline: black
+        width: 1
       - type: text
         value: '{{ as_timestamp(state_attr(''sensor.weather_forecast_home'',''forecast_hourly'')[0].datetime)
           | timestamp_custom(''%I'') | int }} {{ as_timestamp(state_attr(''sensor.weather_forecast_home'',''forecast_hourly'')[0].datetime)
@@ -3602,7 +3610,7 @@
         x: 125
         y: 2
         size: 12
-        color: black
+        color: white
         anchor: mt
       - type: text
         value: '{{ state_attr(''sensor.weather_forecast_home'',''forecast_hourly'')[0].temperature
@@ -3630,7 +3638,7 @@
         x: 174
         y: 2
         size: 12
-        color: black
+        color: white
         anchor: mt
       - type: text
         value: '{{ state_attr(''sensor.weather_forecast_home'',''forecast_hourly'')[1].temperature
@@ -3658,7 +3666,7 @@
         x: 223
         y: 2
         size: 12
-        color: black
+        color: white
         anchor: mt
       - type: text
         value: '{{ state_attr(''sensor.weather_forecast_home'',''forecast_hourly'')[2].temperature  }}°C'
@@ -3685,7 +3693,7 @@
         x: 272
         y: 2
         size: 12
-        color: black
+        color: white
         anchor: mt
       - type: text
         value: '{{ state_attr(''sensor.weather_forecast_home'',''forecast_hourly'')[3].temperature
@@ -3842,8 +3850,16 @@
         x: 255
         y: 78
         size: 34
-        color: "{{'red' if state_attr('sensor.weather_forecast_home','forecast_daily')[4].condition
-          in severe_weather else 'black' }}\n    "
+        color: '{{''red'' if state_attr(''sensor.weather_forecast_home'',''forecast_daily'')[4].condition
+          in severe_weather else ''black'' }}'
+      - type: rectangle
+        x_start: 105
+        y_start: 65
+        x_end: 294
+        y_end: 77
+        fill: black
+        outline: black
+        width: 1
       - type: text
         value: '{{ as_timestamp(state_attr(''sensor.weather_forecast_home'',''forecast_daily'')[1].datetime)
           | timestamp_custom(''%a'') | upper }}'
@@ -3851,7 +3867,7 @@
         x: 125
         y: 67
         size: 12
-        color: black
+        color: white
         anchor: mt
       - type: text
         value: '{{ as_timestamp(state_attr(''sensor.weather_forecast_home'',''forecast_daily'')[2].datetime)
@@ -3860,7 +3876,7 @@
         x: 174
         y: 67
         size: 12
-        color: black
+        color: white
         anchor: mt
       - type: text
         value: '{{ as_timestamp(state_attr(''sensor.weather_forecast_home'',''forecast_daily'')[3].datetime)
@@ -3869,7 +3885,7 @@
         x: 223
         y: 67
         size: 12
-        color: black
+        color: white
         anchor: mt
       - type: text
         value: '{{ as_timestamp(state_attr(''sensor.weather_forecast_home'',''forecast_daily'')[4].datetime)
@@ -3878,15 +3894,8 @@
         x: 272
         y: 67
         size: 12
-        color: black
+        color: white
         anchor: mt
-      - type: line
-        fill: black
-        width: 1
-        x_start: 125
-        y_start: 63
-        x_end: 272
-        y_end: 63
       - type: text
         value: '{{ state_attr(''sensor.weather_forecast_home'',''forecast_hourly'')[0].temperature
           | float | round | int(0)}}°C'
@@ -4289,7 +4298,7 @@
       seconds: 0
   condition: []
   action:
-  - service: notify.mobile_app_toms_phone
+  - service: notify.tom_and_anna
     metadata: {}
     data:
       message: "\U0001F304Check the Mixregy PV diverter. It hasn't reported any data
@@ -4440,4 +4449,20 @@
     data:
       title: Solar forecast summary
       message: '{{reply.response.speech.plain.speech}}'
+  mode: single
+- id: '1718027777948'
+  alias: Reuben's tablet daily reminder
+  description: ''
+  trigger:
+  - platform: time
+    at: '19:45:00'
+  condition:
+  - condition: template
+    value_template: '{{as_datetime(states.counter.reuben_tablet.last_updated).day
+      - now().day < 0}}'
+  action:
+  - service: notify.tom_and_anna
+    data:
+      message: "\U0001F48A Reuben hasn't had his tablet today"
+      title: Reuben's tablets
   mode: single
