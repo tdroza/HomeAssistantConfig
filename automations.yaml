@@ -670,37 +670,25 @@
       binary_sensor.reu_d1_motion: light.reubens_ceiling
   mode: single
 - id: '1592899929119'
-  alias: 'Lights: Turn off the main bedroom lights at 8am'
+  alias: 'Lights: Turn off all bedroom lights at 8am'
   description: ''
   trigger:
   - at: 08:00:00
     platform: time
   condition: []
   action:
-  - type: turn_off
-    device_id: b9c88a37811e285dc2b594f847e29cf1
-    entity_id: light.main_bedroom_bloom
-    domain: light
-  - type: turn_off
-    device_id: 61f89eb89fac9724606bb7e0ffc52c9b
-    entity_id: light.reubens_ceiling
-    domain: light
-  - type: turn_off
-    device_id: e04b748fc61f7ca1d9a4a202ddcefe7a
-    entity_id: light.rname
-    domain: light
-  - type: turn_off
-    device_id: 4fcff377266e9e7d5f9b7098401120b6
-    entity_id: light.sebs_lamp
-    domain: light
-  - type: turn_off
-    device_id: f5cda250d456ab9d753117c612f812c4
-    entity_id: d8d3d88474f3161c637f50a46ea6671d
-    domain: light
-  - type: turn_off
-    device_id: d06086fc62c3d9eb55cc76e0ae5de10a
-    entity_id: 8cbf964adee97b7aa253dbe942e02997
-    domain: light
+  - service: light.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id:
+      - light.rname
+      - light.sebs_lamp
+      - light.sebs_floorlamp
+      - light.main_bedroom_ceiling
+      - light.sebs_ceiling
+      - light.main_bedroom_bloom
+      - light.reubens_ceiling
   mode: single
 - id: '1600335652412'
   alias: ESP32 Cam timelapse
@@ -1332,6 +1320,7 @@
       - light.reubens_ceiling
       - light.sebs_ceiling
       - light.rname
+      - light.sebs_floorlamp
   mode: restart
 - id: '1611402292310'
   alias: 'Lights: turn on main bedroom light when door opens'
@@ -1681,6 +1670,16 @@
     from: power_off
     to: Watch TV
     enabled: true
+  - platform: device
+    device_id: 950cead3239f24a85e11164841b585b6
+    domain: media_player
+    entity_id: c4c429171cd810093748e765e3b24134
+    type: turned_on
+  - platform: device
+    type: turned_on
+    device_id: 427e7a9ff36f4bf621ea13ec82dbd04d
+    entity_id: b107dddc5eef60160330d956f715d0bf
+    domain: remote
   condition: []
   action:
   - service: light.turn_on
@@ -1709,14 +1708,6 @@
   - condition: state
     entity_id: light.living_room_light_group
     state: 'off'
-  - condition: not
-    conditions:
-    - condition: state
-      entity_id: select.living_room_activities
-      state: Watch TV
-    - condition: state
-      entity_id: select.living_room_activities
-      state: Watch a Movie
   action:
   - service: light.turn_off
     target:
@@ -2898,6 +2889,10 @@
         device_id: 4fcff377266e9e7d5f9b7098401120b6
         entity_id: 0f90b36a06ba8e8df751b30d18eac37c
         domain: light
+      - type: turn_off
+        device_id: 7bbe5608917bc2dbac2783f3e8b14d44
+        entity_id: 11b037cbafc13a4e0d80af31407060b3
+        domain: light
       button_bottom_left_double_press:
       - type: turn_off
         device_id: d06086fc62c3d9eb55cc76e0ae5de10a
@@ -2917,6 +2912,10 @@
         device_id: 4fcff377266e9e7d5f9b7098401120b6
         entity_id: 0f90b36a06ba8e8df751b30d18eac37c
         domain: light
+      - type: turn_on
+        device_id: 7bbe5608917bc2dbac2783f3e8b14d44
+        entity_id: 11b037cbafc13a4e0d80af31407060b3
+        domain: light
       button_bottom_right_double_press:
       - type: turn_on
         device_id: d06086fc62c3d9eb55cc76e0ae5de10a
@@ -2927,18 +2926,9 @@
         device_id: 4fcff377266e9e7d5f9b7098401120b6
         entity_id: 0f90b36a06ba8e8df751b30d18eac37c
         domain: light
-      button_bottom_right_hold_in:
-      - service: media_player.volume_up
-        data: {}
-        target:
-          entity_id: media_player.seb_s_home
-      button_bottom_right_triple_press:
-      - service: media_player.play_media
-        data:
-          media_content_id: https://firebasestorage.googleapis.com/v0/b/storytime-7c623.appspot.com/o/stories%2F4Z0FQvDMnNyIOtJeBa93%2Frecordings%2FHzFp8GQRWwFEbkB4hSLw%2Frecordings%2Faudio.mp3?alt=media&token=b107fb98-e8af-4d60-908c-3be902cc76f6
-          media_content_type: music
-        target:
-          device_id: 63ae3e04c8c840288b8dba1a6b818dae
+      button_bottom_right_hold_in: []
+      button_bottom_right_triple_press: []
+      button_bottom_right_hold_release:
 - id: '1688981578290'
   alias: 'Lightswitch: Reu''s Room Opple'
   description: ''
