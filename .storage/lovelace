@@ -51,7 +51,7 @@
                     },
                     {
                       "entity": "sensor.toms_phone_wifi_connection",
-                      "name": "SSID"
+                      "name": "Wifi"
                     },
                     {
                       "entity": "sensor.toms_phone_wifi_connection",
@@ -59,8 +59,15 @@
                       "name": false
                     },
                     {
+                      "entity": "binary_sensor.toms_phone_android_auto",
+                      "icon": true,
+                      "name": false,
+                      "state_color": true
+                    },
+                    {
                       "entity": "sensor.toms_phone_battery_level",
                       "icon": true,
+                      "state_color": true,
                       "name": false
                     }
                   ],
@@ -88,8 +95,15 @@
                       "name": false
                     },
                     {
+                      "entity": "binary_sensor.annas_phone_android_auto",
+                      "icon": true,
+                      "state_color": true,
+                      "name": false
+                    },
+                    {
                       "entity": "sensor.annas_phone_battery_level",
                       "icon": true,
+                      "state_color": true,
                       "name": false
                     }
                   ],
