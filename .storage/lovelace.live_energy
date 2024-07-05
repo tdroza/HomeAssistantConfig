@@ -354,26 +354,6 @@
               ]
             },
             {
-              "type": "custom:card-templater",
-              "entities": [
-                "sensor.solax_local_battery_soc"
-              ],
-              "card": {
-                "type": "custom:mini-graph-card",
-                "icon_template": "{% if states('sensor.solax_local_battery_soc') | int == 100 %} mdi:battery {% elif states('sensor.solax_local_battery_soc') | int > 10 %} mdi:battery-{{ ((states('sensor.solax_local_battery_soc') | int / 100) | round(1, 'floor')*100) |int}} {% else %} mdi:battery-alert {% endif %}",
-                "entities": [
-                  {
-                    "entity": "sensor.solax_local_battery_soc",
-                    "name": "Battery SoC"
-                  }
-                ],
-                "points_per_hour": 20,
-                "line_width": 3,
-                "lower_bound": 0,
-                "upper_bound": 100
-              }
-            },
-            {
               "type": "custom:apexcharts-card",
               "header": {
                 "show": true,
@@ -400,9 +380,23 @@
                   "func": "avg"
                 }
               },
+              "yaxis": [
+                {
+                  "id": "power",
+                  "show": true
+                },
+                {
+                  "id": "percent",
+                  "show": true,
+                  "opposite": true,
+                  "min": 0,
+                  "max": 100
+                }
+              ],
               "series": [
                 {
                   "entity": "sensor.solax_local_pv_output",
+                  "yaxis_id": "power",
                   "name": "PV",
                   "type": "area",
                   "opacity": 0.25,
@@ -412,6 +406,7 @@
                 },
                 {
                   "entity": "sensor.solax_local_pv1_output",
+                  "yaxis_id": "power",
                   "name": "East",
                   "show": {
                     "hidden_by_default": true
@@ -419,6 +414,7 @@
                 },
                 {
                   "entity": "sensor.solax_local_pv2_output",
+                  "yaxis_id": "power",
                   "name": "South",
                   "show": {
                     "hidden_by_default": true
@@ -426,10 +422,13 @@
                 },
                 {
                   "entity": "sensor.solax_local_grid_power",
-                  "name": "Grid"
+                  "yaxis_id": "power",
+                  "name": "Grid",
+                  "color": "#31526A"
                 },
                 {
                   "entity": "sensor.solax_local_load_power",
+                  "yaxis_id": "power",
                   "name": "House",
                   "show": {
                     "in_brush": true
@@ -437,7 +436,14 @@
                 },
                 {
                   "entity": "sensor.solax_local_battery_power",
+                  "yaxis_id": "power",
                   "name": "Battery"
+                },
+                {
+                  "entity": "sensor.solax_local_battery_soc",
+                  "yaxis_id": "percent",
+                  "name": "SoC",
+                  "color": "#397771"
                 }
               ]
             },
