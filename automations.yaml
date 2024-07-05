@@ -2846,14 +2846,14 @@
         entity_id: 8cbf964adee97b7aa253dbe942e02997
         domain: light
       button_top_left_double_press:
-      - type: turn_off
-        device_id: d06086fc62c3d9eb55cc76e0ae5de10a
-        entity_id: 8cbf964adee97b7aa253dbe942e02997
-        domain: light
-      - type: turn_off
-        device_id: 4fcff377266e9e7d5f9b7098401120b6
-        entity_id: 0f90b36a06ba8e8df751b30d18eac37c
-        domain: light
+      - service: light.turn_off
+        metadata: {}
+        data: {}
+        target:
+          entity_id:
+          - light.sebs_ceiling
+          - light.sebs_lamp
+          - light.sebs_floorlamp
       button_top_left_hold_in:
       - service: light.turn_on
         data:
@@ -2868,15 +2868,15 @@
         domain: light
         brightness_pct: 100
       button_top_right_double_press:
-      - type: turn_on
-        device_id: d06086fc62c3d9eb55cc76e0ae5de10a
-        entity_id: 8cbf964adee97b7aa253dbe942e02997
-        domain: light
-        brightness_pct: 100
-      - type: turn_on
-        device_id: 4fcff377266e9e7d5f9b7098401120b6
-        entity_id: 0f90b36a06ba8e8df751b30d18eac37c
-        domain: light
+      - service: light.turn_on
+        metadata: {}
+        data:
+          brightness_pct: 75
+        target:
+          entity_id:
+          - light.sebs_ceiling
+          - light.sebs_lamp
+          - light.sebs_floorlamp
       button_top_right_hold_release: []
       button_top_right_hold_in:
       - type: turn_on
@@ -2894,14 +2894,14 @@
         entity_id: 11b037cbafc13a4e0d80af31407060b3
         domain: light
       button_bottom_left_double_press:
-      - type: turn_off
-        device_id: d06086fc62c3d9eb55cc76e0ae5de10a
-        entity_id: 8cbf964adee97b7aa253dbe942e02997
-        domain: light
-      - type: turn_off
-        device_id: 4fcff377266e9e7d5f9b7098401120b6
-        entity_id: 0f90b36a06ba8e8df751b30d18eac37c
-        domain: light
+      - service: light.turn_off
+        metadata: {}
+        data: {}
+        target:
+          entity_id:
+          - light.sebs_ceiling
+          - light.sebs_lamp
+          - light.sebs_floorlamp
       button_bottom_left_hold_in:
       - service: media_player.volume_down
         data: {}
@@ -2917,15 +2917,15 @@
         entity_id: 11b037cbafc13a4e0d80af31407060b3
         domain: light
       button_bottom_right_double_press:
-      - type: turn_on
-        device_id: d06086fc62c3d9eb55cc76e0ae5de10a
-        entity_id: 8cbf964adee97b7aa253dbe942e02997
-        domain: light
-        brightness_pct: 100
-      - type: turn_on
-        device_id: 4fcff377266e9e7d5f9b7098401120b6
-        entity_id: 0f90b36a06ba8e8df751b30d18eac37c
-        domain: light
+      - service: light.turn_on
+        metadata: {}
+        data:
+          brightness_pct: 75
+        target:
+          entity_id:
+          - light.sebs_ceiling
+          - light.sebs_lamp
+          - light.sebs_floorlamp
       button_bottom_right_hold_in: []
       button_bottom_right_triple_press: []
       button_bottom_right_hold_release:
@@ -4455,4 +4455,29 @@
     data:
       message: "\U0001F48A Reuben hasn't had his tablet today"
       title: Reuben's tablets
+  mode: single
+- id: '1720005497233'
+  alias: 'HA: Disk usage'
+  description: Send notification when disk usage > 85%
+  trigger:
+  - platform: numeric_state
+    entity_id:
+    - sensor.system_monitor_disk_usage
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 0
+    above: 84.9
+  - platform: time
+    at: 09:30:00
+  condition:
+  - condition: numeric_state
+    entity_id: sensor.system_monitor_disk_usage
+    above: 85
+  action:
+  - service: notify.mobile_app_toms_phone
+    metadata: {}
+    data:
+      title: Home Assistant
+      message: HA disk usage is {{states('sensor.system_monitor_disk_usage')}}
   mode: single
