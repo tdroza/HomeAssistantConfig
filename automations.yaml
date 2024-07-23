@@ -1458,7 +1458,7 @@
       seconds: 0
   - platform: time
     at: 08:30
-    id: phone
+    id: time
   - type: not_plugged_in
     platform: device
     device_id: 9ff97222baf526d2a00bfe723a61cc3f
@@ -1498,6 +1498,7 @@
       - condition: trigger
         id:
         - phone
+        - time
       sequence:
       - type: turn_off
         device_id: 63119b10ea09a788da942a5fc8aa67ce
@@ -1507,6 +1508,7 @@
       - condition: trigger
         id:
         - watch
+        - time
       sequence:
       - type: turn_off
         device_id: b7ab635f3051f3c87e93b4b497b470ea
@@ -1704,6 +1706,15 @@
       hours: 0
       minutes: 0
       seconds: 0
+  - platform: state
+    entity_id:
+    - remote.halo
+    to:
+    from: 'on'
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 5
   condition:
   - condition: state
     entity_id: light.living_room_light_group
@@ -4480,4 +4491,148 @@
     data:
       title: Home Assistant
       message: HA disk usage is {{states('sensor.system_monitor_disk_usage')}}
+  mode: single
+- id: '1721404384264'
+  alias: 'OEPL: Flightradar24'
+  description: ''
+  trigger:
+  - platform: event
+    event_type: flightradar24_entry
+  condition: []
+  action:
+  - service: open_epaper_link.drawcustom
+    data:
+      dry-run: true
+      background: white
+      rotate: '{{180 if now().day < 15 else 0}}'
+      payload:
+      - type: rectangle
+        color: black
+        width: 2
+        x_start: 0
+        x_end: 296
+        y_start: 79
+        y_end: 128
+        fill: white
+        outline: black
+      - type: rectangle
+        color: black
+        width: 1
+        x_start: 0
+        x_end: 296
+        y_start: 75
+        y_end: 98
+        fill: black
+        outline: black
+      - type: text
+        x: 20
+        y: 5
+        size: 18
+        value: Ryanair
+      - type: text
+        x: 20
+        y: 30
+        size: 14
+        value: Airbus
+      - type: text
+        x: 20
+        y: 50
+        size: 14
+        value: A320
+      - type: dlimg
+        url: https://cdn.jetphotos.com/200/6/804137_1719035089_tb.jpg?v=0'
+        x: 167
+        y: 5
+        xsize: 124
+        ysize: 70
+        rotate: 0
+      - type: icon
+        x: 73
+        y: 80
+        size: 20
+        value: mdi:airplane-takeoff
+        anchor: mt
+        color: red
+      - type: dlimg
+        url: https://flagsapi.com/FR/flat/16.png
+        x: 70
+        y: 112
+        anchor: lt
+        xsize: 16
+        ysize: 16
+        rotate: 0
+      - type: text
+        x: 5
+        y: 105
+        size: 18
+        anchor: lt
+        color: black
+        value: 09:45
+      - type: text
+        x: 70
+        y: 100
+        size: 14
+        anchor: lt
+        color: black
+        value: Limoges
+      - type: text
+        x: 90
+        y: 115
+        size: 10
+        anchor: lt
+        color: black
+        value: France
+      - type: icon
+        x: 229
+        y: 80
+        size: 20
+        value: mdi:airplane-landing
+        color: red
+        anchor: mt
+      - type: dlimg
+        url: https://flagsapi.com/GB/flat/16.png
+        x: 186
+        y: 112
+        anchor: lt
+        xsize: 16
+        ysize: 16
+        rotate: 0
+      - type: text
+        x: 250
+        y: 105
+        size: 18
+        anchor: lt
+        color: black
+        value: '11:15'
+      - type: text
+        x: 186
+        y: 100
+        size: 14
+        anchor: lt
+        color: black
+        value: Leeds
+      - type: text
+        x: 206
+        y: 115
+        size: 10
+        anchor: lt
+        color: black
+        value: GB
+    target:
+      entity_id: open_epaper_link.0000021fb7d03b14
+  mode: single
+- id: '1721733404944'
+  alias: 'Mixergy: Reset PV charge limit'
+  description: ''
+  trigger:
+  - platform: time
+    at: '21:00:00'
+  condition: []
+  action:
+  - service: number.set_value
+    metadata: {}
+    data:
+      value: '30'
+    target:
+      entity_id: number.pv_charge_limit
   mode: single
