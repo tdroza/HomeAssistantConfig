@@ -17,3 +17,6 @@ wifi:
   ssid: !secret wifi_iot_ssid
   password: !secret wifi_iot_password
   domain: ".lan"
+
+ota:
+  - platform: esphome

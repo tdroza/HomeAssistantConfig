@@ -17,7 +17,8 @@ logger:
 api:
 
 ota:
-
+  - platform: esphome
+  
 substitutions:
   device_name: "sensor-d1mini-dht22-green"
   friendly_name: "Living Room"

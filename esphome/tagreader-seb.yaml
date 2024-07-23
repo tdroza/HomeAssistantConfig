@@ -152,7 +152,8 @@ api:
     
 # Enable OTA upgrade
 ota:
-
+  - platform: esphome
+  
 # Enable I2C interface
 i2c:
   scan: False

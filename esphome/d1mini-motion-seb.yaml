@@ -26,14 +26,16 @@ logger:
 api:
 
 ota:
+  - platform: esphome
 
-dallas:
+one_wire:
   - pin: D3
-    update_interval: 600s
+    platform: gpio
   
 sensor:
-  - platform: dallas
+  - platform: dallas_temp
     address: 0x760119500218FF28
+    update_interval: 600s
     name: "${friendly_name} Temperature"
     filters:
       - calibrate_linear:
