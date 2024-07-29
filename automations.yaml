@@ -4502,15 +4502,15 @@
   action:
   - service: open_epaper_link.drawcustom
     data:
-      dry-run: true
+      dry-run: false
       background: white
       rotate: '{{180 if now().day < 15 else 0}}'
       payload:
       - type: rectangle
         color: black
         width: 2
-        x_start: 0
-        x_end: 296
+        x_start: 5
+        x_end: 291
         y_start: 79
         y_end: 128
         fill: white
@@ -4518,29 +4518,38 @@
       - type: rectangle
         color: black
         width: 1
-        x_start: 0
-        x_end: 296
-        y_start: 75
+        x_start: 5
+        x_end: 291
+        y_start: 77
         y_end: 98
         fill: black
         outline: black
       - type: text
-        x: 20
+        x: 10
         y: 5
         size: 18
-        value: Ryanair
+        value: '{{trigger.event.data.airline}}'
       - type: text
-        x: 20
+        x: 10
         y: 30
         size: 14
-        value: Airbus
+        value: '{{trigger.event.data.aircraft_model}}'
       - type: text
-        x: 20
+        x: 10
         y: 50
         size: 14
-        value: A320
+        value: '{{trigger.event.data.aircraft_code}}'
+      - type: rectangle
+        color: black
+        width: 2
+        x_start: 165
+        x_end: 291
+        y_start: 3
+        y_end: 75
+        fill: white
+        outline: black
       - type: dlimg
-        url: https://cdn.jetphotos.com/200/6/804137_1719035089_tb.jpg?v=0'
+        url: '{{trigger.event.data.aircraft_photo_small}}'
         x: 167
         y: 5
         xsize: 124
@@ -4548,78 +4557,77 @@
         rotate: 0
       - type: icon
         x: 73
-        y: 80
+        y: 81
         size: 20
         value: mdi:airplane-takeoff
         anchor: mt
         color: red
       - type: dlimg
-        url: https://flagsapi.com/FR/flat/16.png
-        x: 70
+        url: https://flagsapi.com/{{trigger.event.data.airport_origin_country_code}}/flat/16.png
+        x: 7
         y: 112
         anchor: lt
         xsize: 16
         ysize: 16
         rotate: 0
       - type: text
-        x: 5
-        y: 105
+        x: 7
+        y: 81
+        color: white
         size: 18
-        anchor: lt
-        color: black
-        value: 09:45
+        value: '{{trigger.event.data.time_real_departure | timestamp_custom(''%H:%M'')}}'
       - type: text
-        x: 70
+        x: 7
         y: 100
         size: 14
         anchor: lt
         color: black
-        value: Limoges
+        value: '{{trigger.event.data.airport_origin_city}}'
       - type: text
-        x: 90
+        x: 27
         y: 115
         size: 10
         anchor: lt
         color: black
-        value: France
+        value: '{{trigger.event.data.airport_origin_country_name}}'
       - type: icon
         x: 229
-        y: 80
+        y: 81
         size: 20
         value: mdi:airplane-landing
         color: red
         anchor: mt
       - type: dlimg
-        url: https://flagsapi.com/GB/flat/16.png
-        x: 186
+        url: https://flagsapi.com/{{trigger.event.data.airport_destination_country_code}}/flat/16.png
+        x: 150
         y: 112
         anchor: lt
         xsize: 16
         ysize: 16
         rotate: 0
       - type: text
-        x: 250
-        y: 105
+        x: 289
+        y: 81
         size: 18
-        anchor: lt
-        color: black
-        value: '11:15'
+        anchor: rt
+        color: white
+        value: '{{trigger.event.data.time_estimated_arrival | timestamp_custom(''%H:%M'')}}'
       - type: text
-        x: 186
+        x: 150
         y: 100
         size: 14
         anchor: lt
         color: black
-        value: Leeds
+        value: '{{trigger.event.data.airport_destination_city}}'
       - type: text
-        x: 206
+        x: 170
         y: 115
         size: 10
         anchor: lt
         color: black
-        value: GB
+        value: '{{trigger.event.data.airport_destination_country_name}}'
     target:
-      entity_id: open_epaper_link.0000021fb7d03b14
+      entity_id: open_epaper_link.0000021f40f13b1f
   mode: single
 - id: '1721733404944'
   alias: 'Mixergy: Reset PV charge limit'
