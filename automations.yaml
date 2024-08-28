@@ -455,7 +455,7 @@
     service: notify.tom_and_anna
   variables:
     weather_icons:
-      cloudy: "\U0001F325️"
+      cloudy: ☁️
       rainy: "\U0001F326️"
       windy: "\U0001F4A8"
       sunny: ☀️
@@ -463,6 +463,7 @@
       hail: "\U0001F9CA"
       fog: "\U0001F32B️"
       snowy: ❄️
+      partlycloudy: ⛅
   mode: single
 - id: '1582836882523'
   alias: Blanket - turn off TD after 15m
@@ -1045,7 +1046,10 @@
     at: '22:00:00'
   - platform: time
     at: 06:00:00
-  condition: []
+  condition:
+  - condition: state
+    entity_id: input_boolean.holiday_mode
+    state: 'off'
   action:
   - type: turn_on
     device_id: 63119b10ea09a788da942a5fc8aa67ce
@@ -3047,7 +3051,7 @@
     completed
   trigger:
   - platform: time
-    at: 06:59:00
+    at: 06:59:45
   condition: []
   action:
   - repeat:
@@ -3192,14 +3196,16 @@
   description: ''
   trigger:
   - platform: time_pattern
-    minutes: /15
+    hours: /1
+  - platform: state
+    entity_id:
+    - sensor.family_events
   condition:
   - condition: time
     after: 07:00:00
     before: '23:00:00'
   action:
-  - service: open_epaper_link.drawcustom
-    data:
+  - data:
       dry-run: false
       background: white
       rotate: '{{180 if now().day < 15 else 0}}'
@@ -3258,18 +3264,21 @@
         y: 34
         size: 20
         color: white
-        value: '{{state_attr(''sensor.family_events'', ''events'')[1].summary}}'
+        value: "{% if (state_attr('sensor.family_events', 'events') | length)  > 1
+          %}\n  {{state_attr('sensor.family_events', 'events')[1].summary}}\n{% else
+          %}\n  -\n{% endif %}"
       - type: text
         x: 295
         y: 63
         size: 12
         color: white
         anchor: rb
-        value: '{% set startTimestamp = as_timestamp(state_attr(''sensor.family_events'',
-          ''events'')[1].start)%} {% set endTimestamp = as_timestamp(state_attr(''sensor.family_events'',
-          ''events'')[1].end)%} {% set time = ''All day'' if endTimestamp - startTimestamp
-          == 86400 else startTimestamp | timestamp_custom(''%H:%M'') %} {{startTimestamp
-          | timestamp_custom(''%a, '')}}{{time}}'
+        value: "{% if (state_attr('sensor.family_events', 'events') | length)  > 1
+          %}  {%   set startTimestamp = as_timestamp(state_attr('sensor.family_events',
+          'events')[1].start)%}  {%   set endTimestamp = as_timestamp(state_attr('sensor.family_events',
+          'events')[1].end)%}  {%  set time = 'All day' if endTimestamp - startTimestamp
+          == 86400 else startTimestamp | timestamp_custom('%H:%M') %} \n   {{startTimestamp
+          | timestamp_custom('%a, ')}}{{time}}\n{% endif %}"
       - type: line
         x_start: 0
         x_end: 295
@@ -3282,18 +3291,21 @@
         y: 66
         size: 20
         color: white
-        value: '{{state_attr(''sensor.family_events'', ''events'')[2].summary}}'
+        value: "{% if (state_attr('sensor.family_events', 'events') | length)  > 2
+          %}\n  {{state_attr('sensor.family_events', 'events')[2].summary}}\n{% else
+          %}\n  -\n{% endif %}        "
       - type: text
         x: 295
         y: 95
         size: 12
         color: white
         anchor: rb
-        value: '{% set startTimestamp = as_timestamp(state_attr(''sensor.family_events'',
-          ''events'')[2].start)%} {% set endTimestamp = as_timestamp(state_attr(''sensor.family_events'',
-          ''events'')[2].end)%} {% set time = ''All day'' if endTimestamp - startTimestamp
-          == 86400 else startTimestamp | timestamp_custom(''%H:%M'') %} {{startTimestamp
-          | timestamp_custom(''%a, '')}}{{time}}'
+        value: "{% if (state_attr('sensor.family_events', 'events') | length)  > 2
+          %}  {%   set startTimestamp = as_timestamp(state_attr('sensor.family_events',
+          'events')[2].start)%}  {%   set endTimestamp = as_timestamp(state_attr('sensor.family_events',
+          'events')[2].end)%} {%\n     set time = 'All day' if endTimestamp - startTimestamp
+          == 86400 else\nstartTimestamp | timestamp_custom('%H:%M') %} \n     {{startTimestamp
+          | timestamp_custom('%a, ')}}{{time}}\n{% endif %}"
       - type: line
         x_start: 0
         x_end: 295
@@ -3306,20 +3318,24 @@
         y: 98
         size: 20
         color: white
-        value: '{{state_attr(''sensor.family_events'', ''events'')[3].summary}}'
+        value: "{% if (state_attr('sensor.family_events', 'events') | length)  > 3
+          %} {{   state_attr('sensor.family_events', 'events')[3].summary}}  {% else
+          %}\n  -\n{% endif %}"
       - type: text
         x: 295
         y: 127
         size: 12
         color: white
         anchor: rb
-        value: '{% set startTimestamp = as_timestamp(state_attr(''sensor.family_events'',
-          ''events'')[3].start)%} {% set endTimestamp = as_timestamp(state_attr(''sensor.family_events'',
-          ''events'')[3].end)%} {% set time = ''All day'' if endTimestamp - startTimestamp
-          == 86400 else startTimestamp | timestamp_custom(''%H:%M'') %} {{startTimestamp
-          | timestamp_custom(''%a, '')}}{{time}}'
+        value: "{% if (state_attr('sensor.family_events', 'events') | length)  > 3
+          %}  {%   set startTimestamp = as_timestamp(state_attr('sensor.family_events',
+          'events')[3].start)%}  {%   set endTimestamp = as_timestamp(state_attr('sensor.family_events',
+          'events')[3].end) %}   {%   set time = 'All day' if endTimestamp - startTimestamp
+          == 86400 else startTimestamp | timestamp_custom('%H:%M') %} \n   {{startTimestamp
+          | timestamp_custom('%a, ')}}{{time}} \n{% endif %}"
     target:
       entity_id: open_epaper_link.00000218cf5d3b19
+    action: open_epaper_link.drawcustom
   mode: restart
 - id: '1700574169666'
   alias: OEPL Energy Dashboard
@@ -4498,7 +4514,16 @@
   trigger:
   - platform: event
     event_type: flightradar24_entry
-  condition: []
+  condition:
+  - condition: time
+    after: 08:45:00
+    before: '18:00:00'
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
   action:
   - service: open_epaper_link.drawcustom
     data:
@@ -4531,14 +4556,19 @@
         value: '{{trigger.event.data.airline}}'
       - type: text
         x: 10
-        y: 30
-        size: 14
+        y: 25
+        size: 12
         value: '{{trigger.event.data.aircraft_model}}'
       - type: text
         x: 10
-        y: 50
-        size: 14
+        y: 40
+        size: 12
         value: '{{trigger.event.data.aircraft_code}}'
+      - type: text
+        x: 10
+        y: 55
+        size: 12
+        value: '{{trigger.event.data.callsign}}'
       - type: rectangle
         color: black
         width: 2
