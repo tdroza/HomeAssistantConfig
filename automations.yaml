@@ -1832,8 +1832,8 @@
     state: 'off'
   action:
   - type: turn_on
-    device_id: 22c0538cfdefb04c6682e6307751aeab
-    entity_id: switch.toms_desk
+    device_id: ff6d43722edd09515d79924ee9576312
+    entity_id: 2df4ec6d77b615e006ddf9b94b2f2e11
     domain: switch
   - choose:
     - conditions:
@@ -1850,10 +1850,10 @@
       minutes: 15
       seconds: 0
       milliseconds: 0
-  - service: switch.turn_on
-    data: {}
+  - data: {}
     target:
       entity_id: switch.toms_monitor_light
+    action: switch.turn_on
   - condition: state
     entity_id: binary_sensor.workday_anna
     state: 'on'
@@ -1884,8 +1884,8 @@
     state: 'off'
   action:
   - type: turn_off
-    device_id: 22c0538cfdefb04c6682e6307751aeab
-    entity_id: switch.toms_desk
+    device_id: ff6d43722edd09515d79924ee9576312
+    entity_id: 2df4ec6d77b615e006ddf9b94b2f2e11
     domain: switch
   - type: turn_off
     device_id: b40eb804797ddfe20d5c56ae0b92c1a9
