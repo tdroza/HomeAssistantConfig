@@ -207,8 +207,7 @@
   description: ''
   trigger:
   - entity_id:
-    - media_player.kodi
-    - media_player.halo
+    - media_player.kodi_pi
     - media_player.kodi_halo
     platform: state
     to: playing
@@ -234,31 +233,31 @@
           attribute: elevation
           below: -2
       sequence:
-      - service: light.turn_on
-        data:
+      - data:
           brightness_pct: 15
           transition: 3
         target:
           entity_id: light.living_room
+        action: light.turn_on
     - conditions:
       - condition: trigger
         id: kodi
       sequence:
-      - service: light.turn_on
-        data:
+      - data:
           brightness_pct: 5
           transition: 3
         target:
           entity_id: light.living_room
+        action: light.turn_on
     - conditions:
       - condition: trigger
         id: chromecast
       sequence:
-      - service: light.turn_on
-        data:
+      - data:
           brightness_pct: 40
         target:
           entity_id: light.living_room
+        action: light.turn_on
     default: []
 - id: '1580937548623'
   alias: 'Kodi: Brighten lights when stop playing'
@@ -1081,6 +1080,17 @@
       hours: 0
       minutes: 0
       seconds: 5
+  - type: current
+    platform: device
+    device_id: d06d0cd9a4d1df684a518b6183d5ea1f
+    entity_id: db66cd235fadf6f43c06f191388b2e7c
+    domain: sensor
+    below: 2
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 5
+    id: phone
   condition:
   - condition: device
     type: is_on
@@ -1417,8 +1427,8 @@
   trigger:
   - type: battery_level
     platform: device
-    device_id: 28abb52456ef5ac4459a0ac810e7cf0b
-    entity_id: sensor.annas_phone_battery_level
+    device_id: f077cacd0f2cbb4b86567e2891d541e5
+    entity_id: f4acaeaca566bee2541c3c63f955b4a3
     domain: sensor
     above: 80
   condition:
@@ -1439,40 +1449,60 @@
   alias: Anna's watch & phone - turn off charger
   description: Turn off when fully charged, when unplugged, or at 08:30
   trigger:
-  - type: not_plugged_in
-    platform: device
-    device_id: 28abb52456ef5ac4459a0ac810e7cf0b
-    entity_id: b6abfb1a1ef994e70b4c1d4edea971c5
-    domain: binary_sensor
-    for:
-      hours: 0
-      minutes: 0
-      seconds: 5
-    id: phone
-  - type: battery_level
-    platform: device
-    device_id: 28abb52456ef5ac4459a0ac810e7cf0b
-    entity_id: ea87f75f153e1ad6b3e7f9b77b6f5845
-    domain: sensor
-    above: 99
-    id: phone
-    for:
-      hours: 0
-      minutes: 0
-      seconds: 0
   - platform: time
-    at: 08:30
+    at: 08:30:00
     id: time
   - type: not_plugged_in
     platform: device
-    device_id: 9ff97222baf526d2a00bfe723a61cc3f
-    entity_id: 6542a4248d595dcb21cf7b6a45335489
+    device_id: 7df9b28318e1f535b7d778b2ce767f41
+    entity_id: 38647301ac793871e60d3d9bd8712fd7
     domain: binary_sensor
+    id: watch
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 10
+  - type: battery_level
+    platform: device
+    device_id: f077cacd0f2cbb4b86567e2891d541e5
+    entity_id: f4acaeaca566bee2541c3c63f955b4a3
+    domain: sensor
+    above: 99
+    id: phone
+  - platform: state
+    entity_id:
+    - sensor.annas_phone_charger_type
+    from: ac
+    to: none
     for:
       hours: 0
       minutes: 0
       seconds: 5
+    id: phone
+  - type: power
+    platform: device
+    device_id: 63119b10ea09a788da942a5fc8aa67ce
+    entity_id: 92768c30d7c50874118c0b9f594800fc
+    domain: sensor
+    below: 2
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 10
+    id: phone
+    enabled: false
+  - type: power
+    platform: device
+    device_id: b7ab635f3051f3c87e93b4b497b470ea
+    entity_id: 0e8ceb13ceb9c50862c6e982a5e5055c
+    domain: sensor
+    below: 0.5
+    for:
+      hours: 0
+      minutes: 1
+      seconds: 0
     id: watch
+    enabled: false
   condition:
   - condition: or
     conditions:
@@ -1496,6 +1526,9 @@
         device_id: b7ab635f3051f3c87e93b4b497b470ea
         entity_id: 09a9cb7cf20ec52da102d4ee329c9d20
         domain: switch
+    - condition: trigger
+      id:
+      - time
   action:
   - choose:
     - conditions:
@@ -4098,15 +4131,14 @@
     - input_number.coffee_grind_setting_caf
     - input_number.coffee_grind_setting_decaf
   - platform: template
-    value_template: '{{now().day == 1 or now().day == 15}}'
+    value_template: '{{(now().day == 1 or now().day == 15) and now().hour == 7}}'
     for:
       hours: 0
       minutes: 0
       seconds: 30
   condition: []
   action:
-  - service: open_epaper_link.drawcustom
-    data:
+  - data:
       dry-run: false
       background: white
       rotate: '{{180 if now().day < 15 else 0}}'
@@ -4160,6 +4192,7 @@
         anchor: mm
     target:
       entity_id: open_epaper_link.0000021e69133b19
+    action: open_epaper_link.drawcustom
   mode: restart
 - id: '1704814686625'
   alias: 'OEPL: Literary clock'
