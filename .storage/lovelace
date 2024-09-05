@@ -595,7 +595,6 @@
                       "primary": "Hallway",
                       "secondary": "{{ states('sensor.hue_motion_sensor_temperature') }}°C",
                       "icon": "mdi:coat-rack",
-                      "entity": "light.living_room_light_group",
                       "tap_action": {
                         "action": "navigate",
                         "navigation_path": "/lovelace/hallway"
@@ -605,7 +604,8 @@
                       },
                       "icon_color": "{% if is_state('light.hallway','on') %}\norange\n{% endif %}",
                       "badge_icon": "{% if is_state('binary_sensor.hue_motion_sensor_motion', 'on') %}\nmdi:motion-sensor\n{% endif %}",
-                      "badge_color": "blue"
+                      "badge_color": "blue",
+                      "entity": "light.hallway"
                     },
                     {
                       "type": "custom:mushroom-template-card",
