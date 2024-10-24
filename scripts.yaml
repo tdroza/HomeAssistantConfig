@@ -171,6 +171,15 @@ nudge_light_dimmer:
         | int - 25]) }}'
   mode: single
   icon: mdi:upload
+kitchen_dashboard:
+  sequence:
+  - service: cast.show_lovelace_view
+    data:
+      entity_id: media_player.kitchen_display
+      dashboard_path: live-energy
+      view_path: cast
+  mode: single
+  icon: mdi:home-battery-outline
 energy_dashboard:
   alias: EnergyDashboard
   sequence:
@@ -184,56 +193,60 @@ energy_dashboard:
 solax_force_charge:
   alias: Force Charge Solax Battery
   sequence:
-  - service: rest_command.solax_local_charge_battery_from_grid
-    data:
+  - data:
       level: '{{states(''input_number.solax_battery_soc_target'') | int}}
 
         '
+    action: rest_command.solax_local_charge_battery_from_grid
   - delay:
       seconds: 10
-  - service: rest_command.solax_local_set_forced_charge_start
-    data:
+  - data:
       value: '{{now().hour + now().minute * 256}}
 
         '
-  - service: notify.mobile_app_toms_phone
-    data:
+    action: rest_command.solax_local_set_forced_charge_start
+  - data:
       message: 'Home battery set to charge from grid. Target: {{states(''input_number.solax_battery_soc_target'')}}%
         Solar Forecast: {{states(''sensor.solcast_pv_forecast_forecast_today'')| round(2)}}kWh'
       title: "\U0001F324 Solar"
+    action: notify.mobile_app_toms_phone
   - delay:
       seconds: 10
-  - service: homeassistant.update_entity
-    data: {}
+  - data: {}
     target:
       entity_id: sensor.solax_rest_local_settings
+    action: homeassistant.update_entity
   - wait_template: '{{states(''sensor.solax_local_battery_soc'')|int >= states(''input_number.solax_battery_soc_target'')|int}}'
     timeout:
       minutes: '{{states(''input_number.solax_force_charge_duration_mins'') | int}}'
-  - service: rest_command.solax_local_charge_battery_from_grid
-    data:
-      level: 10
-  - delay:
-      seconds: 10
-  - service: rest_command.solax_local_set_forced_charge_start
-    data:
-      value: "{{0 + 0 * 256}}  \n"
-solax_reset_force_charge:
-  sequence:
-  - service: rest_command.solax_local_charge_battery_from_grid
-    data:
-      level: 10
-  - delay:
-      seconds: 10
-  - service: rest_command.solax_local_set_forced_charge_start
-    data:
-      value: '{{0 + 0 * 256}}
+  - data:
+      level: '{{10 if now().hour > 16 else 100}}
 
         '
+    action: rest_command.solax_local_charge_battery_from_grid
   - delay:
       seconds: 10
-  - service: homeassistant.update_entity
-    data: {}
+  - data:
+      value: "{{5 + 30 * 256}}  \n"
+    action: rest_command.solax_local_set_forced_charge_start
+solax_reset_force_charge:
+  sequence:
+  - data:
+      level: '{{10 if now().hour > 16 else 100}}
+
+        '
+    action: rest_command.solax_local_charge_battery_from_grid
+  - delay:
+      seconds: 10
+  - data:
+      value: '{{5 + 30 * 256}}
+
+        '
+    action: rest_command.solax_local_set_forced_charge_start
+  - delay:
+      seconds: 10
+  - data: {}
     target:
       entity_id:
       - sensor.solax_rest_local_settings
+    action: homeassistant.update_entity

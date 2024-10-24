@@ -110,6 +110,13 @@ entity_config:
       aliases:
         - "Solar light"
       expose: true
+    script.kitchen_dashboard:
+      expose: true
+      name: "Kitchen dashboard"
+      room: "Kitchen"
+      aliases:
+        - "Kitchen dashboard"
+        - "Kitchen solar"
     script.energy_dashboard:
       expose: true
       name: "Energy dashboard"
