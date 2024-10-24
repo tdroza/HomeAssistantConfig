@@ -209,6 +209,7 @@
   - entity_id:
     - media_player.kodi_pi
     - media_player.kodi_halo
+    - media_player.halo
     platform: state
     to: playing
     id: kodi
@@ -264,7 +265,7 @@
   description: ''
   trigger:
   - entity_id:
-    - media_player.kodi
+    - media_player.kodi_pi
     - media_player.living_room_tv
     - media_player.halo
     - media_player.kodi_halo
@@ -276,7 +277,7 @@
       minutes: 0
       seconds: 0
   - entity_id:
-    - media_player.kodi
+    - media_player.kodi_pi
     - media_player.living_room_tv
     - media_player.halo
     - media_player.kodi_halo
@@ -288,7 +289,7 @@
       minutes: 0
       seconds: 2
   - entity_id:
-    - media_player.kodi
+    - media_player.kodi_pi
     - media_player.living_room_tv
     - media_player.halo
     - media_player.kodi_halo
@@ -303,7 +304,7 @@
   - data:
       brightness: 200
     entity_id: light.living_room_1, light.living_room_2
-    service: light.turn_on
+    action: light.turn_on
   mode: single
 - id: '1581026602537'
   alias: 'Dehumidifier: Turn on'
@@ -1014,14 +1015,14 @@
 - id: '1603396218827'
   alias: Tom's phone - smart charging
   description: Stop charging at 80%
-  trigger:
+  triggers:
   - type: battery_level
-    platform: device
     device_id: 477d49fc145f319f69ea1a3b8857f6ea
     entity_id: sensor.toms_phone_battery_level
     domain: sensor
     above: 80
-  condition:
+    trigger: device
+  conditions:
   - condition: time
     after: '22:00'
   - condition: device
@@ -1029,7 +1030,7 @@
     device_id: d06d0cd9a4d1df684a518b6183d5ea1f
     entity_id: cba274ca0aaf35bdde1082125786b1cf
     domain: switch
-  action:
+  actions:
   - type: turn_off
     device_id: d06d0cd9a4d1df684a518b6183d5ea1f
     entity_id: cba274ca0aaf35bdde1082125786b1cf
@@ -1060,17 +1061,16 @@
 - id: '1603396482626'
   alias: Tom's phone - turn off charger
   description: Turn off when fully charged or at 08:30
-  trigger:
-  - platform: time
-    at: 08:30
+  triggers:
+  - at: 08:30
+    trigger: time
   - type: battery_level
-    platform: device
     device_id: 477d49fc145f319f69ea1a3b8857f6ea
     entity_id: 3e73f1ade38098a05bc61ce0c592d789
     domain: sensor
     above: 99
-  - platform: state
-    entity_id:
+    trigger: device
+  - entity_id:
     - sensor.toms_phone_charger_type
     from: ac
     to: none
@@ -1078,24 +1078,26 @@
       hours: 0
       minutes: 0
       seconds: 5
+    trigger: state
   - type: current
-    platform: device
     device_id: d06d0cd9a4d1df684a518b6183d5ea1f
     entity_id: db66cd235fadf6f43c06f191388b2e7c
     domain: sensor
-    below: 2
+    below: 5
     for:
       hours: 0
       minutes: 0
-      seconds: 5
+      seconds: 30
     id: phone
-  condition:
+    trigger: device
+    enabled: true
+  conditions:
   - condition: device
     type: is_on
     device_id: d06d0cd9a4d1df684a518b6183d5ea1f
     entity_id: cba274ca0aaf35bdde1082125786b1cf
     domain: switch
-  action:
+  actions:
   - type: turn_off
     device_id: d06d0cd9a4d1df684a518b6183d5ea1f
     entity_id: cba274ca0aaf35bdde1082125786b1cf
@@ -1430,13 +1432,17 @@
     domain: sensor
     above: 80
   condition:
-  - condition: time
-    after: '22:00'
   - condition: device
     type: is_on
     device_id: 63119b10ea09a788da942a5fc8aa67ce
     entity_id: switch.annas_phone_charger
     domain: switch
+  - condition: or
+    conditions:
+    - condition: time
+      after: '22:00'
+    - condition: time
+      before: 02:00:00
   action:
   - type: turn_off
     device_id: 63119b10ea09a788da942a5fc8aa67ce
@@ -1768,25 +1774,68 @@
     entity_id: binary_sensor.hue_motion_sensor_motion
     from: 'off'
     to: 'on'
-  condition:
-  - condition: state
-    entity_id: sensor.hue_motion_sensor_light_level
-    state: true
-    attribute: dark
+    id: Motion
+  - type: no_motion
+    platform: device
+    device_id: 667e2d5ec0b25b71625f1f344472c575
+    entity_id: 1591cd09781ed617e5e3e1b19a2edead
+    domain: binary_sensor
+    id: Clear
+    for:
+      hours: 0
+      minutes: 2
+      seconds: 0
+  condition: []
   action:
-  - service: light.turn_on
-    target:
+  - target:
       area_id: b3e17bb69aba419bacc48dbbb6fa5f73
     data:
       brightness: 57
-  - delay:
-      hours: 0
-      minutes: 3
-      seconds: 0
-      milliseconds: 0
-  - service: light.turn_off
-    target:
+    action: light.turn_on
+  - target:
       area_id: b3e17bb69aba419bacc48dbbb6fa5f73
+    action: light.turn_off
+    data: {}
+  - type: turn_on
+    device_id: edf3520719888be0aa26efc14b1ce101
+    entity_id: 2df0efe30def236b7d598da9101e640b
+    domain: light
+  - choose:
+    - conditions:
+      - condition: trigger
+        id:
+        - Motion
+      - condition: time
+        before: '22:00:00'
+      sequence:
+      - action: light.turn_on
+        metadata: {}
+        data:
+          brightness_pct: 100
+        target:
+          device_id: edf3520719888be0aa26efc14b1ce101
+    - conditions:
+      - condition: trigger
+        id:
+        - Motion
+      - condition: time
+        after: '22:00:00'
+      sequence:
+      - action: light.turn_on
+        metadata: {}
+        data:
+          brightness_pct: 20
+        target:
+          device_id: edf3520719888be0aa26efc14b1ce101
+    - conditions:
+      - condition: trigger
+        id:
+        - Clear
+      sequence:
+      - type: turn_off
+        device_id: edf3520719888be0aa26efc14b1ce101
+        entity_id: 2df0efe30def236b7d598da9101e640b
+        domain: light
   mode: restart
 - id: '1627654587843'
   alias: Lights - Vacation Lighting
@@ -4415,19 +4464,21 @@
   trigger:
   - platform: time
     at: '15:58:00'
+  - platform: time
+    at: 00:00:00
   condition: []
   action:
   - repeat:
       sequence:
-      - service: rest_command.solax_local_charge_battery_from_grid
-        data:
+      - data:
           level: 10
+        action: rest_command.solax_local_charge_battery_from_grid
       - delay:
           seconds: 10
-      - service: homeassistant.update_entity
-        data: {}
+      - data: {}
         target:
           entity_id: sensor.solax_rest_local_settings
+        action: homeassistant.update_entity
       until:
       - condition: template
         value_template: '{{ (states(''sensor.solax_local_battery_charge_from_grid_to'')|int==10)
@@ -4704,4 +4755,34 @@
       value: '30'
     target:
       entity_id: number.pv_charge_limit
+  mode: single
+- id: '1729786913584'
+  alias: 'Solax: Force charge batter in evening'
+  description: At 22:00 force charge battery from grid for 90mins if tariff is low
+  triggers:
+  - trigger: time
+    at: '22:00:00'
+  conditions:
+  - condition: numeric_state
+    entity_id: sensor.solcast_pv_forecast_forecast_tomorrow
+    below: 20
+  - condition: numeric_state
+    entity_id: sensor.solax_local_battery_soc
+    below: 70
+  actions:
+  - action: input_number.set_value
+    metadata: {}
+    data:
+      value: 90
+    target:
+      entity_id: input_number.solax_force_charge_duration_mins
+  - action: input_number.set_value
+    metadata: {}
+    data:
+      value: 100
+    target:
+      entity_id: input_number.solax_battery_soc_target
+  - action: script.solax_force_charge
+    metadata: {}
+    data: {}
   mode: single
