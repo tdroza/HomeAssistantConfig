@@ -4757,7 +4757,7 @@
       entity_id: number.pv_charge_limit
   mode: single
 - id: '1729786913584'
-  alias: 'Solax: Force charge batter in evening'
+  alias: 'Solax: Force charge battery in evening'
   description: At 22:00 force charge battery from grid for 90mins if tariff is low
   triggers:
   - trigger: time
