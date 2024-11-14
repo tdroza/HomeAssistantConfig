@@ -1,18 +1,21 @@
 substitutions:
-  name: "esp32-bt-proxy-upstairs"
+  name: esp32-bt-proxy-upstairs
+  friendly_name: Bluetooth Proxy
 packages:
   esphome.bluetooth-proxy: github://esphome/bluetooth-proxies/esp32-generic.yaml@main
 esphome:
   name: ${name}
   name_add_mac_suffix: false
-
+  friendly_name: ${friendly_name}
+api:
+  encryption:
+    key: NEdOShmGS/sA+WtmJ+GaJ4fhr5Y7P3wVXyVrRpgk7g0=
 esp32:
   framework:
     type: esp-idf
+    version: 5.2.2
+    platform_version: 6.7.0
 
-bluetooth_proxy:
-  active: true
-  
 wifi:
   ssid: !secret wifi_iot_ssid
   password: !secret wifi_iot_password
@@ -20,3 +23,6 @@ wifi:
 
 ota:
   - platform: esphome
+
+bluetooth_proxy:
+  active: true
