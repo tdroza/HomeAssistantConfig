@@ -640,35 +640,58 @@
 - id: '1590597141876'
   alias: 'Lights: Turn off boys'' light when no motion'
   description: ''
-  trigger:
+  triggers:
   - entity_id:
     - binary_sensor.seb_d1_motion
     for:
       hours: 0
       minutes: 10
       seconds: 0
-    from: 'on'
-    platform: state
     to: 'off'
-  - entity_id: binary_sensor.reu_d1_motion
-    for: 00:10:00
+    trigger: state
     from: 'on'
-    platform: state
+    id: seb
+  - entity_id:
+    - binary_sensor.reu_d1_motion
+    for:
+      hours: 0
+      minutes: 10
+      seconds: 0
     to: 'off'
-  condition:
+    trigger: state
+    from: 'on'
+    id: reu
+  conditions:
   - after: 07:30
     condition: time
     before: '19:30'
-  action:
-  - service: light.turn_off
-    data:
-      entity_id: '{{ light_map[trigger.entity_id] }}'
-  variables:
-    light_map:
-      binary_sensor.seb_d1_motion:
-      - light.sebs_ceiling
-      - light.sebs_lamp
-      binary_sensor.reu_d1_motion: light.reubens_ceiling
+  actions:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id:
+        - seb
+      sequence:
+      - action: light.turn_off
+        metadata: {}
+        data: {}
+        target:
+          entity_id:
+          - light.sebs_lamp
+          - light.sebs_ceiling
+          - light.sebs_floorlamp
+    - conditions:
+      - condition: trigger
+        id:
+        - reu
+      sequence:
+      - action: light.turn_off
+        metadata: {}
+        data: {}
+        target:
+          entity_id:
+          - light.reubens_ceiling
+          - light.rname
   mode: single
 - id: '1592899929119'
   alias: 'Lights: Turn off all bedroom lights at 8am'
@@ -1077,7 +1100,7 @@
     for:
       hours: 0
       minutes: 0
-      seconds: 5
+      seconds: 10
     trigger: state
   - type: current
     device_id: d06d0cd9a4d1df684a518b6183d5ea1f
@@ -4785,4 +4808,35 @@
   - action: script.solax_force_charge
     metadata: {}
     data: {}
+  mode: single
+- id: '1731598967532'
+  alias: Birthday wakeup music
+  description: Play Happy Birthday by Altered Image on birthdays
+  triggers:
+  - value_template: '{{now().strftime("%H:%M %d %m") == "07:00 11 19"}}'
+    trigger: template
+  - value_template: '{{now().strftime("%H:%M %d %m") == "07:00 28 09"}}'
+    trigger: template
+  - value_template: '{{now().strftime("%H:%M %d %m") == "07:00 10 26"}}'
+    trigger: template
+  - value_template: '{{now().strftime("%H:%M %d %m") == "07:00 01 25"}}'
+    trigger: template
+  conditions: []
+  actions:
+  - data:
+      volume_level: 0.5
+    action: media_player.volume_set
+    target:
+      entity_id: media_player.upstairs
+  - data:
+      source: media_player.upstairs
+    action: media_player.select_source
+    target:
+      entity_id: media_player.ytube_music_player
+  - data:
+      media_content_id: 4skFDCjxHkU
+      media_content_type: track
+    target:
+      entity_id: media_player.ytube_music_player
+    action: media_player.play_media
   mode: single
