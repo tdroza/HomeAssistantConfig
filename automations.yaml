@@ -4808,18 +4808,18 @@
   - action: script.solax_force_charge
     metadata: {}
     data: {}
-  mode: single
+  mode: restart
 - id: '1731598967532'
   alias: Birthday wakeup music
   description: Play Happy Birthday by Altered Image on birthdays
   triggers:
-  - value_template: '{{now().strftime("%H:%M %d %m") == "07:00 11 19"}}'
+  - value_template: '{{now().strftime("%H:%M %m %d") == "07:05 11 19"}}'
     trigger: template
-  - value_template: '{{now().strftime("%H:%M %d %m") == "07:00 28 09"}}'
+  - value_template: '{{now().strftime("%H:%M %m %d") == "07:00 09 28"}}'
     trigger: template
-  - value_template: '{{now().strftime("%H:%M %d %m") == "07:00 10 26"}}'
+  - value_template: '{{now().strftime("%H:%M %m %d") == "07:00 10 26"}}'
     trigger: template
-  - value_template: '{{now().strftime("%H:%M %d %m") == "07:00 01 25"}}'
+  - value_template: '{{now().strftime("%H:%M %m %d") == "07:00 01 25"}}'
     trigger: template
   conditions: []
   actions:
