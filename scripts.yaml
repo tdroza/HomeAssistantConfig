@@ -193,25 +193,38 @@ energy_dashboard:
 solax_force_charge:
   alias: Force Charge Solax Battery
   sequence:
-  - data:
-      level: '{{states(''input_number.solax_battery_soc_target'') | int}}
+  - action: input_number.set_value
+    data:
+      value: '{{now().hour + now().minute * 256}}'
+    target:
+      entity_id: input_number.solax_forced_charge_start
+  - repeat:
+      sequence:
+      - data:
+          level: '{{states(''input_number.solax_battery_soc_target'') | int}}
 
-        '
-    action: rest_command.solax_local_charge_battery_from_grid
-  - delay:
-      seconds: 10
-  - data:
-      value: '{{now().hour + now().minute * 256}}
+            '
+        action: rest_command.solax_local_charge_battery_from_grid
+      - delay:
+          seconds: 10
+      - data:
+          value: '{{states(''input_number.solax_forced_charge_start'') | int}}
 
-        '
-    action: rest_command.solax_local_set_forced_charge_start
-  - data:
-      message: 'Home battery set to charge from grid. Target: {{states(''input_number.solax_battery_soc_target'')}}%
-        Solar Forecast: {{states(''sensor.solcast_pv_forecast_forecast_today'')| round(2)}}kWh'
-      title: "\U0001F324 Solar"
-    action: notify.mobile_app_toms_phone
-  - delay:
-      seconds: 10
+            '
+        action: rest_command.solax_local_set_forced_charge_start
+      - data:
+          message: 'Home battery set to charge from grid to {{states(''input_number.solax_battery_soc_target'')}}%
+            for {{states(''input_number.solax_force_charge_duration_mins'')}} minutes.
+            Attempt: {{repeat.index}}'
+          title: "\U0001F324 Solar"
+        action: notify.mobile_app_toms_phone
+      - delay:
+          seconds: 10
+      until:
+      - condition: template
+        value_template: '{{((states(''sensor.solax_local_battery_setting_start_charge'').split(":")[0]|int
+          + states(''sensor.solax_local_battery_setting_start_charge'').split(":")[1]|int
+          * 256) == states(''input_number.solax_forced_charge_start'') | int) or repeat.index==3}}'
   - data: {}
     target:
       entity_id: sensor.solax_rest_local_settings
@@ -229,24 +242,37 @@ solax_force_charge:
   - data:
       value: "{{5 + 30 * 256}}  \n"
     action: rest_command.solax_local_set_forced_charge_start
+  mode: restart
 solax_reset_force_charge:
   sequence:
-  - data:
-      level: '{{10 if now().hour > 16 else 100}}
+  - repeat:
+      sequence:
+      - data:
+          level: '{{10 if now().hour > 16 else 100}}
 
-        '
-    action: rest_command.solax_local_charge_battery_from_grid
-  - delay:
-      seconds: 10
-  - data:
-      value: '{{5 + 30 * 256}}
+            '
+        action: rest_command.solax_local_charge_battery_from_grid
+      - delay:
+          seconds: 10
+      - data:
+          value: '{{5 + 30 * 256}}
 
-        '
-    action: rest_command.solax_local_set_forced_charge_start
-  - delay:
-      seconds: 10
-  - data: {}
-    target:
-      entity_id:
-      - sensor.solax_rest_local_settings
-    action: homeassistant.update_entity
+            '
+        action: rest_command.solax_local_set_forced_charge_start
+      - delay:
+          seconds: 10
+      - data: {}
+        target:
+          entity_id:
+          - sensor.solax_rest_local_settings
+        action: homeassistant.update_entity
+      - delay:
+          seconds: 10
+      until:
+      - condition: template
+        value_template: '{{states(''sensor.solax_local_battery_charge_from_grid_to'')
+          | int == (10 if now().hour > 16 else 100)}}'
+      - condition: template
+        value_template: '{{(states(''sensor.solax_local_battery_setting_start_charge'').split('':'')[0]|int
+          + states(''sensor.solax_local_battery_setting_start_charge'').split('':'')[1]|int
+          * 256) == (5 + 30 * 256)}}'
