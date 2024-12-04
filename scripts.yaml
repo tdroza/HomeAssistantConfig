@@ -195,7 +195,9 @@ solax_force_charge:
   sequence:
   - action: input_number.set_value
     data:
-      value: '{{now().hour + now().minute * 256}}'
+      value: '{{now().hour + now().minute * 256}}
+
+        '
     target:
       entity_id: input_number.solax_forced_charge_start
   - repeat:
