@@ -3247,32 +3247,33 @@
 - id: '1696098127864'
   alias: Dino
   description: ''
-  trigger:
+  triggers:
   - type: motion
-    platform: device
     device_id: e8cd43fe0f2842bca71d1ee8b5adc5da
     entity_id: e7a3e2db6292b0b24b47623cb2d5cb60
     domain: binary_sensor
-  condition:
+    trigger: device
+  conditions:
   - condition: time
     after: 07:30:00
     before: '19:30:00'
+    enabled: true
   - condition: state
     entity_id: light.rname
     state: 'on'
-  action:
+  actions:
   - variables:
       dinos:
       - https://tdroza.duckdns.org/local/dinosaur/dino.mp3
       - https://tdroza.duckdns.org/local/dinosaur/dino2.wav
       - https://tdroza.duckdns.org/local/dinosaur/dino3.wav
       - https://tdroza.duckdns.org/local/dinosaur/dino4.mp3
-  - service: media_player.play_media
-    data:
+  - data:
       media_content_type: music
-      media_content_id: '{{dinos[range(0,2)|random|int]}}'
+      media_content_id: '{{dinos[range(0,3)|random|int]}}'
     target:
       entity_id: media_player.reuben_s_room_speaker
+    action: media_player.play_media
   mode: single
 - id: '1697812591018'
   alias: Album A Day
