@@ -95,9 +95,9 @@
                   "icon": "mdi:washing-machine"
                 },
                 {
-                  "entity": "sensor.mixergy_electric_pv_power",
-                  "name": "Mixergy",
-                  "icon": "mdi:water-boiler",
+                  "entity": "sensor.myenergi_zappi_internal_load_ct1",
+                  "name": "Zappi",
+                  "icon": "mdi:ev-station",
                   "color": "#2196f3"
                 },
                 {
