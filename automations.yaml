@@ -1890,31 +1890,32 @@
 - id: '1637928927711'
   alias: 'Office: Turn on'
   description: Turn on desk, and lights
-  trigger:
-  - platform: time
-    at: input_datetime.work_start
-  condition:
-  - condition: state
-    entity_id: binary_sensor.workday_sensor
-    state: 'on'
+  triggers:
+  - at: input_datetime.work_start
+    trigger: time
+  conditions:
   - condition: state
     entity_id: input_boolean.holiday_mode
     state: 'off'
-  action:
-  - type: turn_on
-    device_id: ff6d43722edd09515d79924ee9576312
-    entity_id: 2df4ec6d77b615e006ddf9b94b2f2e11
-    domain: switch
-  - choose:
-    - conditions:
-      - condition: state
-        entity_id: binary_sensor.workday_anna
-        state: 'on'
-      sequence:
-      - type: turn_on
-        device_id: b40eb804797ddfe20d5c56ae0b92c1a9
-        entity_id: switch.annas_desk
-        domain: switch
+  actions:
+  - if:
+    - condition: state
+      entity_id: binary_sensor.workday_sensor
+      state: 'on'
+    then:
+    - type: turn_on
+      device_id: ff6d43722edd09515d79924ee9576312
+      entity_id: 2df4ec6d77b615e006ddf9b94b2f2e11
+      domain: switch
+  - if:
+    - condition: state
+      entity_id: binary_sensor.workday_anna
+      state: 'on'
+    then:
+    - type: turn_on
+      device_id: b40eb804797ddfe20d5c56ae0b92c1a9
+      entity_id: ef5fa6715aaca9c2e4c37f60559be369
+      domain: switch
   - delay:
       hours: 0
       minutes: 15
@@ -1924,20 +1925,24 @@
     target:
       entity_id: switch.toms_monitor_light
     action: switch.turn_on
-  - condition: state
-    entity_id: binary_sensor.workday_anna
-    state: 'on'
-  - choose:
-    - conditions:
-      - condition: state
-        entity_id: binary_sensor.workday_anna
-        state: 'on'
-      sequence:
-      - type: turn_on
-        device_id: b4b84b4ae3fab4400b0e133c18da5980
-        entity_id: light.annas_desk
-        domain: light
-        brightness_pct: 100
+  - if:
+    - condition: state
+      entity_id: binary_sensor.workday_sensor
+      state: 'on'
+    then:
+    - type: turn_on
+      device_id: 63e528584034c3704aa0ea7b8d0c6adb
+      entity_id: f24328478d5751eff84f7aafecbbebc8
+      domain: switch
+  - if:
+    - condition: state
+      entity_id: binary_sensor.workday_anna
+      state: 'on'
+    then:
+    - type: turn_on
+      device_id: b4b84b4ae3fab4400b0e133c18da5980
+      entity_id: d07c71b67b702077ab16df38e1fa5063
+      domain: light
   mode: single
 - id: '1637929014156'
   alias: 'Office: Turn off'
