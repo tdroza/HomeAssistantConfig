@@ -15,9 +15,7 @@
       brightness: 180
       effect: rainbow
       entity_id: 
-        - light.advent
-        - light.christmas_star
-        - light.window
+        - light.xmas_light_group
     service: light.turn_on
 - id: '1575123574346'
   alias: Turn off the Xmas lights at 09:30 and 22:30
@@ -31,9 +29,7 @@
   - alias: ''
     data:
       entity_id:
-        - light.advent
-        - light.christmas_star
-        - light.window
+        - light.xmas_light_group
     service: light.turn_off
   
 - id: 'tree-lights-motion' 
@@ -67,7 +63,7 @@
           sequence:
             - service: light.turn_on
               target:
-                entity_id: light.tree_1
+                entity_id: light.twinkly
               data: {}
         - conditions:
             - condition: trigger
@@ -76,5 +72,5 @@
           sequence:
             - service: light.turn_off
               target:
-                entity_id: light.tree_1
+                entity_id: light.twinkly
               data: {}

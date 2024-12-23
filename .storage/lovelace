@@ -168,25 +168,23 @@
                           {
                             "entities": [
                               {
-                                "entity": "light.window",
-                                "name": "Window"
+                                "entity": "light.window"
                               },
                               {
-                                "entity": "light.tree_1"
-                              },
-                              {
-                                "entity": "light.tree_2"
+                                "entity": "light.twinkly"
                               },
                               {
                                 "entity": "light.tree_3"
                               },
-                              "light.christmas_star",
+                              {
+                                "entity": "light.christmas_star"
+                              },
                               {
                                 "entity": "light.advent"
                               }
                             ],
                             "head": {
-                              "entity": "group.xmas",
+                              "entity": "light.xmas_light_group",
                               "icon": "mdi:string-lights",
                               "name": "Christmas Lights"
                             },
