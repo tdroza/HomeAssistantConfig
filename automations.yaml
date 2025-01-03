@@ -1129,9 +1129,8 @@
 - id: '1603808684460'
   alias: Close the door
   description: Play a notification if door opened and not closed within 3 seconds
-  trigger:
+  triggers:
   - type: opened
-    platform: device
     device_id: 95b939ecf9f711eaa1fdcd4b4a1dccc0
     entity_id: binary_sensor.living_room_door
     domain: binary_sensor
@@ -1139,16 +1138,22 @@
       hours: 0
       minutes: 0
       seconds: 5
-  condition:
+    trigger: device
+  conditions:
   - condition: state
     state: 'off'
     entity_id: input_boolean.do_not_disturb
-  action:
-  - service: media_player.play_media
-    data:
+  - condition: not
+    conditions:
+    - condition: state
+      entity_id: media_player.living_room_display
+      state: playing
+  actions:
+  - data:
       media_content_id: https://www.dropbox.com/s/mov0prp7j7ir437/Close.wav?dl=1
       media_content_type: music
     entity_id: media_player.living_room_display
+    action: media_player.play_media
   mode: single
 - id: '1604341003387'
   alias: 'NFC: Podcast Player'
