@@ -108,9 +108,10 @@
                   "color": "orange"
                 },
                 {
-                  "entity": "sensor.heated_airer_power",
-                  "name": "Airer",
-                  "icon": "mdi:tumble-dryer",
+                  "entity": "sensor.myenergi_harvi_ct2_heatpump",
+                  "display_zero_tolerance": 100,
+                  "name": "Heat Pump",
+                  "icon": "mdi:heat-pump",
                   "color": "green"
                 }
               ]
