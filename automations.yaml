@@ -3306,19 +3306,19 @@
         image: '{{state_attr(''sensor.album_a_day'',''images'')[1].url}}'
   mode: single
 - id: '1700481098796'
-  alias: OEPL Family Calendar
+  alias: 'OEPL: Family Calendar'
   description: ''
-  trigger:
-  - platform: time_pattern
-    hours: /1
-  - platform: state
-    entity_id:
+  triggers:
+  - hours: /1
+    trigger: time_pattern
+  - entity_id:
     - sensor.family_events
-  condition:
+    trigger: state
+  conditions:
   - condition: time
     after: 07:00:00
     before: '23:00:00'
-  action:
+  actions:
   - data:
       dry-run: false
       background: white
@@ -3448,23 +3448,24 @@
           == 86400 else startTimestamp | timestamp_custom('%H:%M') %} \n   {{startTimestamp
           | timestamp_custom('%a, ')}}{{time}} \n{% endif %}"
     target:
-      entity_id: open_epaper_link.00000218cf5d3b19
+      device_id: e6eb2f23afd99f17690890eddb43bf6f
     action: open_epaper_link.drawcustom
   mode: restart
 - id: '1700574169666'
-  alias: OEPL Energy Dashboard
+  alias: 'OEPL: Energy Dashboard'
   description: ''
-  trigger:
-  - platform: time_pattern
-    minutes: /10
-  condition:
+  triggers:
+  - minutes: /10
+    trigger: time_pattern
+  conditions:
   - condition: time
     after: 08:00:00
     before: '18:00:00'
-  action:
-  - service: open_epaper_link.drawcustom
-    data:
+  actions:
+  - data:
       dry-run: false
+      dither: 2
+      ttl: 180
       background: white
       rotate: '{{270 if now().hour < 12 else 90 }}'
       payload:
@@ -3679,22 +3680,22 @@
         color: black
         value: 'Updated: {{now().strftime(''%H:%M'')}}'
     target:
-      entity_id: open_epaper_link.0000021fb7d03b14
+      device_id: 0388417b1a1df1c1c551658a23530afc
+    action: open_epaper_link.drawcustom
   mode: restart
 - id: '1701101378698'
   alias: 'OEPL: Custom Weather'
   description: ''
-  trigger:
-  - platform: time_pattern
-    minutes: '0'
+  triggers:
+  - minutes: '0'
     seconds: '30'
-  condition:
+    trigger: time_pattern
+  conditions:
   - condition: time
     after: 07:00:00
     before: '22:00:00'
-  action:
-  - service: open_epaper_link.drawcustom
-    data:
+  actions:
+  - data:
       dry-run: false
       background: white
       rotate: '{{180 if now().day < 15 else 0}}'
@@ -4046,8 +4047,8 @@
         color: '{{''red'' if state_attr(''sensor.weather_forecast_home'',''forecast_hourly'')[0].condition
           in severe_weather else ''black'' }}'
     target:
-      entity_id:
-      - open_epaper_link.0000021f40f13b1f
+      device_id: 6a9ce31143b3b3779ea0063fdfe4a047
+    action: open_epaper_link.drawcustom
   variables:
     weather:
       partlycloudy: partly-cloudy
@@ -4145,16 +4146,15 @@
 - id: '1701795669665'
   alias: 'OEPL: Electricity tariff'
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - sensor.octopus_energy_electricity_22l3131941_2380000814991_current_rate
     attribute: start
-  condition: []
-  action:
-  - service: open_epaper_link.drawcustom
-    target:
-      entity_id: open_epaper_link.0000021d19153414
+    trigger: state
+  conditions: []
+  actions:
+  - target:
+      device_id: 4dcff1fa335fcf1c0c022551b4ba3b2d
     data:
       background: white
       rotation: 0
@@ -4202,23 +4202,24 @@
         value: '{{state_attr(''sensor.octopus_energy_electricity_22l3131941_2380000814991_current_rate'',''start'')
           |as_timestamp()| timestamp_custom(''%H:%M'')}}-{{state_attr(''sensor.octopus_energy_electricity_22l3131941_2380000814991_current_rate'',''end'')
           |as_timestamp()| timestamp_custom(''%H:%M'')}}'
+    action: open_epaper_link.drawcustom
   mode: restart
 - id: '1702637553110'
   alias: 'OEPL: Coffee settings'
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - input_number.coffee_grind_setting_caf
     - input_number.coffee_grind_setting_decaf
-  - platform: template
-    value_template: '{{(now().day == 1 or now().day == 15) and now().hour == 7}}'
+    trigger: state
+  - value_template: '{{(now().day == 1 or now().day == 15) and now().hour == 7}}'
     for:
       hours: 0
       minutes: 0
       seconds: 30
-  condition: []
-  action:
+    trigger: template
+  conditions: []
+  actions:
   - data:
       dry-run: false
       background: white
@@ -4272,7 +4273,7 @@
         value: '{{states(''input_number.coffee_grind_setting_decaf'') | int}}'
         anchor: mm
     target:
-      entity_id: open_epaper_link.0000021e69133b19
+      device_id: 2b04c1e87f456ac9aa1bf9657381b3ca
     action: open_epaper_link.drawcustom
   mode: restart
 - id: '1704814686625'
@@ -4904,8 +4905,7 @@
         color: black
         anchor: mt
     target:
-      entity_id:
-      - open_epaper_link.0000021f40f13b1f
+      device_id: e6eb2f23afd99f17690890eddb43bf6f
     action: open_epaper_link.drawcustom
   mode: restart
   variables:
