@@ -2054,6 +2054,12 @@
                   ]
                 }
               ]
+            },
+            {
+              "type": "entities",
+              "entities": [
+                "binary_sensor.mmwave_living_room"
+              ]
             }
           ],
           "icon": "mdi:beta",
