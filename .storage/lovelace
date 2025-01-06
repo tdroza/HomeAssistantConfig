@@ -1647,7 +1647,7 @@
                   "show_name": true,
                   "camera_view": "auto",
                   "type": "picture-entity",
-                  "entity": "camera.0000021e69133b19_cam",
+                  "entity": "camera.coffee_grind_settings_content",
                   "hold_action": {
                     "action": "call-service",
                     "service": "automation.trigger",
@@ -1674,7 +1674,7 @@
                   "show_name": true,
                   "camera_view": "auto",
                   "type": "picture-entity",
-                  "entity": "camera.0000021f40f13b1f_cam",
+                  "entity": "camera.custom_weather_content",
                   "hold_action": {
                     "action": "call-service",
                     "service": "automation.trigger",
@@ -1701,7 +1701,7 @@
                   "show_name": true,
                   "camera_view": "auto",
                   "type": "picture-entity",
-                  "entity": "camera.0000021fb7d03b14_cam",
+                  "entity": "camera.energy_dashboard_content",
                   "hold_action": {
                     "action": "call-service",
                     "service": "automation.trigger",
@@ -1728,7 +1728,7 @@
                   "show_name": true,
                   "camera_view": "auto",
                   "type": "picture-entity",
-                  "entity": "camera.00000218cf5d3b19_cam",
+                  "entity": "camera.family_calendar_content",
                   "hold_action": {
                     "action": "call-service",
                     "service": "automation.trigger",
@@ -1746,7 +1746,7 @@
               "type": "vertical-stack",
               "cards": [
                 {
-                  "name": "Energy Tariff",
+                  "name": "Electricity Tariff",
                   "template": "button-card-headers",
                   "type": "custom:button-card"
                 },
@@ -1755,7 +1755,7 @@
                   "show_name": true,
                   "camera_view": "auto",
                   "type": "picture-entity",
-                  "entity": "camera.0000021d19153414_cam",
+                  "entity": "camera.electricity_tariff_content",
                   "hold_action": {
                     "action": "call-service",
                     "service": "automation.trigger",
