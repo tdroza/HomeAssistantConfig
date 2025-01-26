@@ -90,7 +90,7 @@
               "individual": [
                 {
                   "entity": "sensor.sonoff_10003a0e20_power",
-                  "display_zero_tolerance": 5,
+                  "display_zero_tolerance": 8,
                   "name": "Washer",
                   "icon": "mdi:washing-machine"
                 },
