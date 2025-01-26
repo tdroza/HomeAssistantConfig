@@ -2972,6 +2972,11 @@
                       "entity": "binary_sensor.lumi_lumi_sensor_motion_aq2_occupancy"
                     }
                   ]
+                },
+                {
+                  "type": "entity",
+                  "entity": "input_boolean.living_room_occupancy",
+                  "state_color": true
                 }
               ],
               "type": "vertical-stack"
@@ -4056,12 +4061,16 @@
                   "cards": [
                     {
                       "type": "tile",
-                      "name": "Motion",
-                      "entity": "binary_sensor.seb_d1_motion"
+                      "entity": "switch.sebs_galaxy",
+                      "state_content": [
+                        "state",
+                        "last_changed"
+                      ]
                     },
                     {
                       "type": "tile",
-                      "entity": "switch.sonoff_1000d4baef_1"
+                      "name": "Motion",
+                      "entity": "binary_sensor.seb_d1_motion"
                     }
                   ]
                 },
@@ -4197,6 +4206,28 @@
                 {
                   "cards": [
                     {
+                      "type": "tile",
+                      "entity": "switch.reus_galaxy",
+                      "name": "Galaxy",
+                      "show_entity_picture": false,
+                      "vertical": false,
+                      "hide_state": false,
+                      "state_content": [
+                        "state",
+                        "last_changed"
+                      ]
+                    },
+                    {
+                      "entity": "binary_sensor.reu_d1_motion",
+                      "icon": "mdi:motion-sensor",
+                      "type": "tile"
+                    }
+                  ],
+                  "type": "horizontal-stack"
+                },
+                {
+                  "cards": [
+                    {
                       "type": "custom:card-templater",
                       "entities": [
                         "sensor.temps_min_stats",
@@ -4273,11 +4304,6 @@
                         },
                         "type": "custom:mini-graph-card"
                       }
-                    },
-                    {
-                      "entity": "binary_sensor.reu_d1_motion",
-                      "icon": "mdi:motion-sensor",
-                      "type": "tile"
                     }
                   ],
                   "type": "horizontal-stack"
