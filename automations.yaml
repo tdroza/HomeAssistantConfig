@@ -1157,10 +1157,10 @@
   mode: single
 - id: '1604341003387'
   alias: 'NFC: Podcast Player'
-  trigger:
-  - platform: event
-    event_type: tag_scanned
-  condition:
+  triggers:
+  - event_type: tag_scanned
+    trigger: event
+  conditions:
   - condition: template
     value_template: '{{ trigger.event.data.tag_id in tags }}'
   - condition: template
@@ -1169,7 +1169,7 @@
     value_template: '{{ states(''sensor.time'') < states(''input_datetime.boys_bedtime'')
       }}'
     enabled: true
-  action:
+  actions:
   - variables:
       number_of_podcasts: '{{ state_attr(tags[trigger.event.data.tag_id].sensor, ''entries'')
         | length }}'
@@ -1182,43 +1182,43 @@
         value_template: '{{ states(podcast_counter) | int >= number_of_podcasts |
           int }}'
       sequence:
-      - service: counter.set_value
-        data:
+      - data:
           value: '{{ number_of_podcasts - 1}}'
           entity_id: '{{podcast_counter}}'
+        action: counter.set_value
     default: []
-  - service: media_player.volume_set
-    data:
+  - data:
       volume_level: 0.5
       entity_id: '{{ media_player_entity_id }}'
-  - service: tts.google_translate_say
-    data:
+    action: media_player.volume_set
+  - data:
       entity_id: '{{ media_player_entity_id }}'
       message: '{{tags[trigger.event.data.tag_id].title}} {{state_attr(podcast_sensor,''entries'')[states(podcast_counter)
         | int].title }}'
+    action: tts.google_translate_say
   - delay: 00:00:02
   - wait_template: '{{ states(media_player_entity_id) == ''idle'' }}'
     continue_on_timeout: true
     timeout: '10'
-  - service: media_player.play_media
-    data:
+  - data:
       media_content_id: '{{ (state_attr(podcast_sensor,''entries'')[states(podcast_counter)
         | int].links | selectattr(''rel'',''eq'',''enclosure'') | list)[0].href }}'
       media_content_type: music
       entity_id: '{{ media_player_entity_id }}'
+    action: media_player.play_media
   - choose:
     - conditions:
       - condition: template
         value_template: '{{ states(podcast_counter) | int == 0 }} '
       sequence:
-      - service: counter.set_value
-        data:
+      - data:
           value: '{{ number_of_podcasts | int - 1 }}'
           entity_id: '{{podcast_counter}}'
+        action: counter.set_value
     default:
-    - service: counter.decrement
-      data:
+    - data:
         entity_id: '{{podcast_counter}}'
+      action: counter.decrement
   mode: restart
   variables:
     media_players:
@@ -1320,13 +1320,14 @@
       threshold: 25
       exclude0: sensor.annas_phone_battery_level
       actions:
-      - service: notify.mobile_app_toms_phone
-        data:
+      - data:
           message: Low battery alert for {{sensors}}
         enabled: true
+        action: notify.mobile_app_toms_phone
       exclude1: sensor.toms_phone_battery_level
       exclude2: sensor.annas_watch_battery_level
       exclude3: sensor.toms_watch_battery_level
+      exclude4: sensor.openepaperlink_ap_battery_percentage
 - id: '1609885331052'
   alias: 'Lights: Turn off boys'' light at bedtime'
   description: ''
@@ -2519,15 +2520,15 @@
 - id: '1665133208840'
   alias: Close office blind when bright
   description: ''
-  trigger:
-  - platform: numeric_state
-    entity_id: sensor.cactus_illuminance
+  triggers:
+  - entity_id: sensor.cactus_illuminance
     for:
       hours: 0
       minutes: 1
       seconds: 0
     above: input_number.office_window_brightness_threshold
-  condition:
+    trigger: numeric_state
+  conditions:
   - condition: state
     entity_id: binary_sensor.workday_sensor
     state: 'on'
@@ -2538,43 +2539,44 @@
     entity_id: sun.sun
     attribute: azimuth
     above: 90
-    below: 150
-  action:
-  - service: cover.set_cover_position
-    data:
+    below: 160
+  actions:
+  - data:
       position: '{{ states(''input_number.office_window_blind_shade_percent'') }}'
     target:
       device_id: d900db50135294c1549bb9a9ecde74b0
+    action: cover.set_cover_position
   mode: single
 - id: '1665133518037'
   alias: Open office blind when not bright
   description: ''
-  trigger:
-  - platform: numeric_state
-    entity_id: sensor.cactus_illuminance
+  triggers:
+  - entity_id: sensor.cactus_illuminance
     for:
       hours: 0
       minutes: 5
       seconds: 0
     below: input_number.office_window_brightness_threshold
-  - platform: numeric_state
-    entity_id: sun.sun
+    trigger: numeric_state
+  - entity_id:
+    - sun.sun
     attribute: azimuth
-    above: 150
-  - platform: numeric_state
-    entity_id: sun.sun
+    above: 160
+    trigger: numeric_state
+  - entity_id: sun.sun
     below: 90
     attribute: azimuth
-  condition:
+    trigger: numeric_state
+  conditions:
   - condition: numeric_state
     entity_id: sun.sun
     attribute: elevation
     above: -1
-  action:
-  - service: cover.open_cover
-    data: {}
+  actions:
+  - data: {}
     target:
       device_id: d900db50135294c1549bb9a9ecde74b0
+    action: cover.open_cover
   mode: single
 - id: '1675701493281'
   alias: 'Matrix: Set text'
@@ -5015,4 +5017,46 @@
         data: {}
         target:
           entity_id: input_boolean.do_not_disturb
+  mode: single
+- id: '1736261661049'
+  alias: 'Presence: Living Room '
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - binary_sensor.mmwave_living_room
+    to: 'on'
+    id: detected
+  - trigger: state
+    entity_id:
+    - binary_sensor.mmwave_living_room
+    to: 'off'
+    id: clear
+    for:
+      hours: 0
+      minutes: 1
+      seconds: 0
+  conditions: []
+  actions:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id:
+        - detected
+      sequence:
+      - action: input_boolean.turn_on
+        metadata: {}
+        data: {}
+        target:
+          entity_id: input_boolean.living_room_occupancy
+    - conditions:
+      - condition: trigger
+        id:
+        - clear
+      sequence:
+      - action: input_boolean.turn_off
+        metadata: {}
+        data: {}
+        target:
+          entity_id: input_boolean.living_room_occupancy
   mode: single
