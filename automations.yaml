@@ -1429,27 +1429,6 @@
   - service: light.turn_off
     entity_id: all
   mode: single
-- id: '1611774100909'
-  alias: 'Lights: Toggle Reuben''s light with Zigbee button'
-  description: ''
-  use_blueprint:
-    path: SeanM/zha-aqara-wireless-mini-switch.yaml
-    input:
-      aqara_mini_switch: 2a892df040e90ca799578d576ddcc6ae
-      button_single_press:
-      - service: light.toggle
-        data: {}
-        entity_id: light.reubens_ceiling
-      button_double_press:
-      - service: light.toggle
-        data: {}
-        entity_id: light.rname
-      button_long_press:
-      - service: light.turn_on
-        target:
-          device_id: 61f89eb89fac9724606bb7e0ffc52c9b
-        data:
-          brightness_pct: 5
 - id: '1616499915162'
   alias: Anna's phone - smart charging
   description: ''
@@ -2030,20 +2009,20 @@
         media_content_type: playlist
         title: Sebs Favourite Music
 - id: '1645116168862'
-  alias: 'ZHA: Anna''s Desk Button'
+  alias: 'Lights: Anna''s Desk Button'
   description: ''
   use_blueprint:
     path: SeanM/zha-aqara-wireless-mini-switch.yaml
     input:
       aqara_mini_switch: 0f3089187d04d66ad82ae402722e0942
       button_single_press:
-      - service: light.toggle
-        data: {}
+      - data: {}
         target:
           entity_id: light.annas_desk
+        action: light.toggle
       button_double_press:
-      - service: light.turn_off
-        entity_id: all
+      - entity_id: all
+        action: light.turn_off
 - id: '1646231230823'
   alias: Office Cube
   description: ''
@@ -2720,40 +2699,40 @@
   alias: 'Airer: Turn off'
   description: Turn off heated airer after planned runtime, or insufficient excess
     solar
-  trigger:
-  - platform: numeric_state
-    entity_id: sensor.airer_run_time
+  triggers:
+  - entity_id: sensor.airer_run_time
     above: input_number.airer_target_runtime
     id: run_time_exceeded
-  - platform: state
-    entity_id:
+    trigger: numeric_state
+  - entity_id:
     - input_boolean.heated_airer
     from: 'on'
     to: 'off'
     id: manually_disable
-  - platform: template
-    value_template: '{{ states(''sensor.solar_excess'') | int < 10 and is_state(''input_boolean.heated_airer_solar_override'',
+    trigger: state
+  - value_template: '{{ states(''sensor.solar_excess'') | int < 10 and is_state(''input_boolean.heated_airer_solar_override'',
       ''off'') }}'
     for:
       hours: 0
       minutes: 3
       seconds: 0
     id: insufficient_solar
-  condition:
+    trigger: template
+  conditions:
   - condition: state
     entity_id: switch.heated_airer
     state: 'on'
-  action:
+  actions:
   - type: turn_off
-    device_id: b050da49473a618fe5a54f6fcd6737b2
-    entity_id: switch.heated_airer
+    device_id: 66cb9c45c0de7c33c7852969b279c177
+    entity_id: 769b6136dd22c4a0cda91b5ae4686004
     domain: switch
   - condition: trigger
     id: run_time_exceeded
-  - service: input_boolean.turn_off
-    data: {}
+  - data: {}
     target:
       entity_id: input_boolean.heated_airer
+    action: input_boolean.turn_off
   mode: single
 - id: '1681730931444'
   alias: 'Airer: Turn On'
@@ -3733,7 +3712,7 @@
         y_start: 0
         x_end: 294
         y_end: 12
-        fill: black
+        fill: half_black
         outline: black
         width: 1
       - type: text
@@ -3744,7 +3723,7 @@
         x: 125
         y: 2
         size: 12
-        color: white
+        color: black
         anchor: mt
       - type: text
         value: '{{ state_attr(''sensor.weather_forecast_home'',''forecast_hourly'')[0].temperature
@@ -3772,7 +3751,7 @@
         x: 174
         y: 2
         size: 12
-        color: white
+        color: black
         anchor: mt
       - type: text
         value: '{{ state_attr(''sensor.weather_forecast_home'',''forecast_hourly'')[1].temperature
@@ -3800,7 +3779,7 @@
         x: 223
         y: 2
         size: 12
-        color: white
+        color: black
         anchor: mt
       - type: text
         value: '{{ state_attr(''sensor.weather_forecast_home'',''forecast_hourly'')[2].temperature  }}°C'
@@ -3827,7 +3806,7 @@
         x: 272
         y: 2
         size: 12
-        color: white
+        color: black
         anchor: mt
       - type: text
         value: '{{ state_attr(''sensor.weather_forecast_home'',''forecast_hourly'')[3].temperature
@@ -3991,7 +3970,7 @@
         y_start: 65
         x_end: 294
         y_end: 77
-        fill: black
+        fill: half_black
         outline: black
         width: 1
       - type: text
@@ -4001,7 +3980,7 @@
         x: 125
         y: 67
         size: 12
-        color: white
+        color: black
         anchor: mt
       - type: text
         value: '{{ as_timestamp(state_attr(''sensor.weather_forecast_home'',''forecast_daily'')[2].datetime)
@@ -4010,7 +3989,7 @@
         x: 174
         y: 67
         size: 12
-        color: white
+        color: black
         anchor: mt
       - type: text
         value: '{{ as_timestamp(state_attr(''sensor.weather_forecast_home'',''forecast_daily'')[3].datetime)
@@ -4019,7 +3998,7 @@
         x: 223
         y: 67
         size: 12
-        color: white
+        color: black
         anchor: mt
       - type: text
         value: '{{ as_timestamp(state_attr(''sensor.weather_forecast_home'',''forecast_daily'')[4].datetime)
@@ -4028,7 +4007,7 @@
         x: 272
         y: 67
         size: 12
-        color: white
+        color: black
         anchor: mt
       - type: text
         value: '{{ state_attr(''sensor.weather_forecast_home'',''forecast_hourly'')[0].temperature
@@ -5059,4 +5038,44 @@
         data: {}
         target:
           entity_id: input_boolean.living_room_occupancy
+  mode: single
+- id: '1737982717750'
+  alias: 'Lights: Reuben''s zigbee button'
+  description: ''
+  triggers:
+  - trigger: event
+    event_type: zha_event
+    event_data:
+      device_id: abcdd35a9e1e4f0651b07b73cc92faae
+      command: remote_button_short_press
+    id: single-press
+  - trigger: event
+    event_type: zha_event
+    event_data:
+      device_id: abcdd35a9e1e4f0651b07b73cc92faae
+      command: remote_button_double_press
+    id: double-press
+  conditions: []
+  actions:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id:
+        - single-press
+      sequence:
+      - action: light.toggle
+        metadata: {}
+        data: {}
+        target:
+          entity_id: light.reubens_ceiling
+    - conditions:
+      - condition: trigger
+        id:
+        - double-press
+      sequence:
+      - action: light.toggle
+        metadata: {}
+        data: {}
+        target:
+          entity_id: light.rname
   mode: single
