@@ -1,14 +1,10 @@
 '1581685010172':
-  alias: Turn off all lights and switches
+  alias: Turn off all lights
   sequence:
   - data:
       entity_id: all
-    service: light.turn_off
-  - data: {}
-    entity_id: switch.christmas_star
-    service: switch.turn_off
-  - entity_id: switch.sonoff_10001f5fa0
-    service: switch.turn_off
+    action: light.turn_off
+  description: ''
 toggle_dnd:
   alias: Toggle DND
   sequence:
@@ -222,15 +218,17 @@ solax_force_charge:
         action: notify.mobile_app_toms_phone
       - delay:
           seconds: 10
+      - data: {}
+        target:
+          entity_id: sensor.solax_rest_local_settings
+        action: homeassistant.update_entity
+      - delay:
+          seconds: 10
       until:
       - condition: template
         value_template: '{{((states(''sensor.solax_local_battery_setting_start_charge'').split(":")[0]|int
           + states(''sensor.solax_local_battery_setting_start_charge'').split(":")[1]|int
           * 256) == states(''input_number.solax_forced_charge_start'') | int) or repeat.index==3}}'
-  - data: {}
-    target:
-      entity_id: sensor.solax_rest_local_settings
-    action: homeassistant.update_entity
   - wait_template: '{{states(''sensor.solax_local_battery_soc'')|int >= states(''input_number.solax_battery_soc_target'')|int}}'
     timeout:
       minutes: '{{states(''input_number.solax_force_charge_duration_mins'') | int}}'
