@@ -1111,7 +1111,7 @@
       hours: 0
       minutes: 0
       seconds: 30
-    id: phone
+    id: current
     trigger: device
     enabled: true
   conditions:
@@ -1120,6 +1120,13 @@
     device_id: d06d0cd9a4d1df684a518b6183d5ea1f
     entity_id: cba274ca0aaf35bdde1082125786b1cf
     domain: switch
+  - condition: and
+    conditions:
+    - condition: trigger
+      id:
+      - current
+    - condition: time
+      before: '22:00:00'
   actions:
   - type: turn_off
     device_id: d06d0cd9a4d1df684a518b6183d5ea1f
