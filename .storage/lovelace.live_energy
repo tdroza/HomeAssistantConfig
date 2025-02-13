@@ -161,7 +161,11 @@
                         "options": {
                           "type": "entity",
                           "content_info": "none",
-                          "icon_color": "green"
+                          "icon_color": "green",
+                          "tap_action": {
+                            "action": "navigate",
+                            "navigation_path": "/lovelace/utility"
+                          }
                         }
                       },
                       {
