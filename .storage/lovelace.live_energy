@@ -135,6 +135,22 @@
                   "filter": {
                     "include": [
                       {
+                        "entity_id": "sensor.myenergi_zappi_status",
+                        "options": {
+                          "type": "entity",
+                          "content_info": "none",
+                          "icon_color": null
+                        }
+                      },
+                      {
+                        "entity_id": "sensor.myenergi_harvi_ct2_heatpump",
+                        "options": {
+                          "type": "entity",
+                          "content_info": "none",
+                          "icon_color": "red"
+                        }
+                      },
+                      {
                         "entity_id": "climate.hive_thermostat",
                         "attributes": {
                           "hvac_action": "heating"
@@ -215,6 +231,9 @@
                       },
                       {
                         "state": "<=0"
+                      },
+                      {
+                        "state": "Paused"
                       }
                     ]
                   }
