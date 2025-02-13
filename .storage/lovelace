@@ -444,7 +444,7 @@
                               "type": "custom:slider-entity-row"
                             },
                             {
-                              "entity": "switch.sonoff_1000d4baef_1"
+                              "entity": "switch.sebs_galaxy"
                             }
                           ]
                         },
@@ -516,6 +516,9 @@
                               "entity": "light.rname",
                               "toggle": true,
                               "type": "custom:slider-entity-row"
+                            },
+                            {
+                              "entity": "switch.reus_galaxy"
                             }
                           ]
                         }
@@ -704,36 +707,24 @@
                   "type": "horizontal-stack",
                   "cards": [
                     {
-                      "type": "custom:mushroom-template-card",
-                      "primary": "Bathroom",
-                      "secondary": "{{ states('sensor.bathroom_climate_temperature') }}°C",
-                      "icon": "mdi:bathtub",
+                      "type": "tile",
                       "entity": "sensor.bathroom_climate_temperature",
                       "tap_action": {
                         "action": "navigate",
                         "navigation_path": "/lovelace/bathrooms"
                       },
-                      "hold_action": {
-                        "action": "none"
-                      },
-                      "icon_color": ""
+                      "name": "Bathroom",
+                      "icon": "mdi:bathtub-outline"
                     },
                     {
-                      "type": "custom:mushroom-template-card",
-                      "primary": "Ensuite",
-                      "secondary": "{{ states('sensor.ensuite_climate_temperature') }}°C",
-                      "icon": "mdi:shower-head",
-                      "entity": "sensor.bathroom_climate_temperature",
+                      "type": "tile",
+                      "entity": "sensor.ensuite_climate_temperature",
                       "tap_action": {
                         "action": "navigate",
                         "navigation_path": "/lovelace/bathrooms"
                       },
-                      "hold_action": {
-                        "action": "none"
-                      },
-                      "icon_color": "",
-                      "badge_color": "",
-                      "badge_icon": ""
+                      "name": "Ensuite",
+                      "icon": "mdi:shower-head"
                     }
                   ]
                 },
@@ -744,6 +735,13 @@
                       "type": "custom:mushroom-entity-card",
                       "entity": "binary_sensor.garage_door",
                       "secondary_info": "last-changed"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "sensor.outside_temperature_calibrated",
+                      "name": "Outside Temp",
+                      "show_entity_picture": false,
+                      "hide_state": false
                     }
                   ]
                 }
