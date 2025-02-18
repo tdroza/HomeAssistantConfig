@@ -135,7 +135,7 @@
                   "filter": {
                     "include": [
                       {
-                        "entity_id": "sensor.myenergi_zappi_status",
+                        "entity_id": "sensor.myenergi_zappi_internal_load_ct1",
                         "options": {
                           "type": "entity",
                           "content_info": "none",
@@ -231,9 +231,6 @@
                       },
                       {
                         "state": "<=0"
-                      },
-                      {
-                        "state": "Paused"
                       }
                     ]
                   }
