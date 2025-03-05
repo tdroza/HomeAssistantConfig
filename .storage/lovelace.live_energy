@@ -135,6 +135,14 @@
                   "filter": {
                     "include": [
                       {
+                        "entity_id": "sensor.myenergi_harvi_ct3_oven",
+                        "options": {
+                          "type": "entity",
+                          "icon_color": "green",
+                          "content_info": "none"
+                        }
+                      },
+                      {
                         "entity_id": "sensor.myenergi_zappi_internal_load_ct1",
                         "options": {
                           "type": "entity",
@@ -144,6 +152,7 @@
                       },
                       {
                         "entity_id": "sensor.myenergi_harvi_ct2_heatpump",
+                        "state": ">75",
                         "options": {
                           "type": "entity",
                           "content_info": "none",
