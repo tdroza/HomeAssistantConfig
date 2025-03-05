@@ -3471,6 +3471,22 @@
         size: 50
         color: red
         value: solar-power
+      - type: plot
+        x_start: 73
+        y_start: 36
+        x_end: 125
+        y_end: 51
+        duration: 43200
+        low: 0
+        high: '{{states(''sensor.solcast_pv_forecast_peak_forecast_today'') }}'
+        data:
+        - entity: sensor.solax_local_pv_output
+          color: red
+        ylegend:
+          width: 0
+          color: black
+          position: left
+          size: 1
       - type: text
         x: 55
         anchor: lm
@@ -3564,8 +3580,8 @@
         y: 168
         size: 50
         color: black
-        value: battery-{{(states('sensor.solax_local_battery_soc') | int / 10) | round(0)
-          * 10}}
+        value: 'battery-{{(states(''sensor.solax_local_battery_soc'') | int / 10)
+          | round(0) * 10}}            '
       - type: icon
         x: 55
         y: 185
@@ -3588,6 +3604,22 @@
         x_end: 126
         y_start: 173
         y_end: 183
+      - type: plot
+        x_start: 73
+        y_start: 202
+        x_end: 125
+        y_end: 217
+        duration: 43200
+        low: 0
+        high: 100
+        data:
+        - entity: sensor.solax_local_battery_soc
+          color: black
+        ylegend:
+          width: 0
+          color: black
+          position: left
+          size: 1
       - type: rectangle
         fill: black
         outline: black
@@ -4070,14 +4102,13 @@
 - id: '1701697431464'
   alias: Presence - home office
   description: ''
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - sensor.toms_phone_ble
     to: office
     id: office_entered
-  - platform: state
-    entity_id:
+    trigger: state
+  - entity_id:
     - sensor.toms_phone_ble
     from: office
     id: office_left
@@ -4085,8 +4116,9 @@
       hours: 0
       minutes: 5
       seconds: 0
-  condition: []
-  action:
+    trigger: state
+  conditions: []
+  actions:
   - choose:
     - conditions:
       - condition: trigger
@@ -4098,10 +4130,11 @@
         entity_id: 06eeebc1e5fcf9143cc03a5b54f13885
         domain: light
         enabled: false
-      - type: turn_off
-        device_id: 63e528584034c3704aa0ea7b8d0c6adb
-        entity_id: f24328478d5751eff84f7aafecbbebc8
-        domain: switch
+      - action: switch.turn_off
+        metadata: {}
+        data: {}
+        target:
+          entity_id: switch.3ch_usb_switch_port_3
         enabled: false
     - conditions:
       - condition: trigger
@@ -4109,13 +4142,14 @@
         - office_entered
       sequence:
       - type: turn_on
-        device_id: 63e528584034c3704aa0ea7b8d0c6adb
-        entity_id: f24328478d5751eff84f7aafecbbebc8
-        domain: switch
-      - type: turn_on
         device_id: a4b059569334cd311559fcb877f3deba
         entity_id: 06eeebc1e5fcf9143cc03a5b54f13885
         domain: light
+      - action: switch.turn_on
+        metadata: {}
+        data: {}
+        target:
+          entity_id: switch.3ch_usb_switch_port_3
   mode: single
 - id: '1701724272223'
   alias: Morning - Set main bedroom radiator
@@ -4382,27 +4416,27 @@
 - id: '1709651798349'
   alias: 'Notify: Oven hot'
   description: ''
-  trigger:
-  - platform: numeric_state
-    entity_id:
-    - sensor.solax_local_load_power
-    below: 2000
-  condition:
+  triggers:
+  - entity_id:
+    - sensor.myenergi_harvi_ct3_oven
+    below: 500
+    trigger: numeric_state
+  conditions:
   - condition: template
     value_template: '{{state_attr(''automation.notify_oven_hot'',''last_triggered'').strftime("%Y%m%d")
       != now().strftime("%Y%m%d") }}'
-  action:
-  - service: notify.mobile_app_toms_phone
-    metadata: {}
+  actions:
+  - metadata: {}
     data:
       title: ♨️Oven Temperature
       message: It looks like the oven is hot
-  - service: automation.turn_off
-    metadata: {}
+    action: notify.mobile_app_toms_phone
+  - metadata: {}
     data:
       stop_actions: true
     target:
       entity_id: automation.notify_oven_hot
+    action: automation.turn_off
   mode: single
 - id: '1712065994854'
   alias: 'Notify: Mixergy PV Diverter Issue'
@@ -4789,6 +4823,7 @@
   - condition: numeric_state
     entity_id: sensor.solcast_pv_forecast_forecast_tomorrow
     below: 20
+    enabled: false
   - condition: numeric_state
     entity_id: sensor.solax_local_battery_soc
     below: 70
@@ -4925,7 +4960,10 @@
     entity_id:
     - sensor.myenergi_zappi_plug_status
     to: Charging
-  conditions: []
+  conditions:
+  - condition: template
+    value_template: '{{now()  - state_attr(''automation.zappi_charging_started'',''last_triggered'')
+      > timedelta(minutes=5)}}'
   actions:
   - action: notify.tom_and_anna
     data:
@@ -4941,7 +4979,10 @@
     - sensor.myenergi_zappi_plug_status
     to:
     from: Charging
-  conditions: []
+  conditions:
+  - condition: template
+    value_template: '{{now()  - state_attr(''automation.zappi_charging_complete'',''last_triggered'')
+      > timedelta(minutes=5)}}'
   actions:
   - action: notify.tom_and_anna
     data:
@@ -5085,4 +5126,42 @@
         data: {}
         target:
           entity_id: light.rname
+  mode: single
+- id: '1739546783292'
+  alias: Restart OpenEPaperLink AP
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - sensor.openepaperlink_ap_state
+    to: Offline
+    for:
+      hours: 0
+      minutes: 5
+      seconds: 0
+  - trigger: state
+    entity_id:
+    - sensor.openepaperlink_ap_state
+    to: unavailable
+    for:
+      hours: 0
+      minutes: 5
+      seconds: 0
+  conditions: []
+  actions:
+  - action: switch.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id: switch.3ch_usb_switch_port_3
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 10
+      milliseconds: 0
+  - action: switch.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: switch.3ch_usb_switch_port_3
   mode: single
