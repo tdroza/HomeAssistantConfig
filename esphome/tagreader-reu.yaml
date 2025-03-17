@@ -26,11 +26,11 @@ substitutions:
   devicename: tagreader-reu
   friendly_name: TagReaderReu
 
+esp8266:
+  board: d1_mini
 esphome:
   name: $devicename
-  platform: ESP8266
-  board: d1_mini
-
+  
   project:
     name: adonno.tag_reader
     version: "1.4"
