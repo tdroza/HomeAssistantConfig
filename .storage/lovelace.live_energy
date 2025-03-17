@@ -113,6 +113,25 @@
                   "name": "Heat Pump",
                   "icon": "mdi:heat-pump",
                   "color": "green"
+                },
+                {
+                  "entity": "sensor.myenergi_harvi_ct3_oven",
+                  "name": "Oven",
+                  "icon": "mdi:stove",
+                  "color": "red"
+                },
+                {
+                  "entity": "sensor.mixergy_electric_pv_power",
+                  "display_zero_tolerance": 1,
+                  "name": "Mixergy PV",
+                  "icon": "mdi:water-boiler",
+                  "color": "#2196f3"
+                },
+                {
+                  "entity": "sensor.mixergy_electric_heat_power",
+                  "name": "Mixergy",
+                  "icon": "mdi:water-boiler",
+                  "color": "red"
                 }
               ]
             }
@@ -175,10 +194,10 @@
                       {
                         "entity_id": "sensor.mixergy_heatpump_heat",
                         "options": {
-                          "type": "entity",
+                          "type": "template",
                           "icon": "mdi:water-thermometer",
                           "icon_color": "purple",
-                          "content_info": "none"
+                          "content": "{{states('sensor.mixergy_current_charge')}}%"
                         }
                       },
                       {
@@ -213,6 +232,7 @@
                       },
                       {
                         "entity_id": "sensor.mixergy_electric_pv_power",
+                        "state": ">1",
                         "options": {
                           "type": "template",
                           "icon": "mdi:water-boiler",
