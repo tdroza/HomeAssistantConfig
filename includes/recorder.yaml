@@ -2,5 +2,3 @@ purge_keep_days: 7
 exclude:
   domains:
   - weather
-  entity_globs:
-  - sensor.flightradar24*
