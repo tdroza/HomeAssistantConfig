@@ -132,6 +132,12 @@
                   "name": "Mixergy",
                   "icon": "mdi:water-boiler",
                   "color": "red"
+                },
+                {
+                  "entity": "sensor.heated_airer_power",
+                  "name": "Airer",
+                  "icon": "mdi:water-boiler",
+                  "color": "green"
                 }
               ]
             }
@@ -705,19 +711,29 @@
                       "content": "{{states('sensor.mixergy_heatpump_heat') | title}}",
                       "entity": "sensor.mixergy_heatpump_heat",
                       "icon": "mdi:heat-pump-outline",
-                      "icon_color": "{{'green' if is_state('sensor.mixergy_heatpump_heat','on') }}"
+                      "icon_color": "{{'green' if is_state('sensor.mixergy_heatpump_heat','on') }}",
+                      "tap_action": {
+                        "action": "navigate",
+                        "navigation_path": "/lovelace/utility"
+                      }
                     },
                     {
                       "type": "template",
-                      "content": "{{'On' if states('sensor.mixergy_electric_pv_power') | float > 0 else 'Off' }}",
+                      "entity": "switch.pv_divert_enabled",
+                      "icon": "{{'mdi:toggle-switch-outline' if is_state('switch.pv_divert_enabled','on') else 'mdi:toggle-switch-off-outline'}}",
+                      "icon_color": "{{'green' if is_state('switch.pv_divert_enabled','on') else 'red'}}",
+                      "tap_action": {
+                        "action": "toggle"
+                      }
+                    },
+                    {
+                      "type": "template",
+                      "content": "{{states('sensor.mixergy_electric_pv_power') | float | round(2)}}kWh",
                       "icon": "mdi:solar-power",
                       "icon_color": "{{'green' if states('sensor.mixergy_electric_pv_power') | float > 0}}",
                       "tap_action": {
-                        "action": "call-service",
-                        "service": "switch.toggle",
-                        "target": {
-                          "entity_id": "switch.pv_divert_enabled"
-                        }
+                        "action": "navigate",
+                        "navigation_path": "/lovelace/utility"
                       }
                     },
                     {
