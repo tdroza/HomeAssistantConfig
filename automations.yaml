@@ -5014,3 +5014,49 @@
     target:
       entity_id: switch.3ch_usb_switch_port_3
   mode: single
+- id: '1743930646093'
+  alias: Play Seb's ABRSM music
+  description: ''
+  triggers:
+  - trigger: webhook
+    allowed_methods:
+    - GET
+    local_only: true
+    webhook_id: JuJF281oGfdflQb0Hr-1gkZC
+  conditions:
+  - condition: template
+    value_template: '{{ trigger.query.track_id in tracks }}'
+    enabled: true
+  actions:
+  - data:
+      volume_level: 0.3
+    target:
+      entity_id: media_player.living_room_display
+    action: media_player.volume_set
+  - data:
+      entity_id: media_player.living_room_display
+      message: Playing  {{tracks[trigger.query.track_id].title}}
+    action: tts.google_translate_say
+  - delay: 00:00:05
+  - action: media_player.play_media
+    target:
+      entity_id: media_player.living_room_display
+    data:
+      media_content_type: cast
+      media_content_id: ' { "app_name": "youtube", "media_id": "{{trigger.query.track_id}}"
+        }'
+  - action: notify.mobile_app_toms_phone
+    metadata: {}
+    data:
+      title: ABRSM
+      message: Playing {{tracks[trigger.query.track_id].title}}
+    enabled: false
+  mode: single
+  variables:
+    tracks:
+      DtEvuotfQf8:
+        titlec: Douchie ammie
+      8ZxFIpBKNL0:
+        title: Tarantella twist
+      twM_Il1l120:
+        title: The quiet of the night
