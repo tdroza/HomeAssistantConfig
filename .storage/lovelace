@@ -1522,21 +1522,6 @@
               "name": "Ads blocked (24h)"
             },
             {
-              "type": "custom:mini-graph-card",
-              "entities": [
-                {
-                  "entity": "sensor.broadband_mb_received"
-                }
-              ],
-              "points_per_hour": 1,
-              "unit": "GB",
-              "icon": "mdi:download",
-              "name": "Data Received (last 24h)",
-              "show": {
-                "graph": "bar"
-              }
-            },
-            {
               "type": "grid",
               "cards": [
                 {
@@ -1607,6 +1592,12 @@
                 "name": true,
                 "legend": true
               }
+            },
+            {
+              "type": "entities",
+              "entities": [
+                "switch.pi_hole"
+              ]
             }
           ],
           "icon": "mdi:network",
@@ -1791,18 +1782,6 @@
               "type": "entities",
               "entities": [
                 {
-                  "entity": "input_boolean.prevent_deep_sleep"
-                },
-                {
-                  "entity": "button.esp32_epaper_restart"
-                },
-                {
-                  "entity": "button.epaper_t5_restart"
-                },
-                {
-                  "entity": "input_select.epaper_page"
-                },
-                {
                   "entity": "automation.washer_notify_done",
                   "name": "Washing machine reminders",
                   "icon": "mdi:washing-machine"
@@ -1955,7 +1934,7 @@
                   "name": "Solar forecast"
                 },
                 {
-                  "entity": "weather.forecast_home",
+                  "entity": "sensor.weather_forecast_home",
                   "yaxis_id": "temp",
                   "data_generator": "const data = [];\nentity.attributes.forecast_hourly.forEach(forecast => data.push([ forecast['datetime'],forecast['temperature'] ] ));\nreturn data.reverse();\n",
                   "type": "line",
@@ -3523,6 +3502,13 @@
                 }
               ],
               "type": "vertical-stack"
+            },
+            {
+              "type": "entities",
+              "entities": [
+                "switch.pi_hole"
+              ],
+              "title": "Pi-Hole"
             }
           ]
         },
@@ -4238,6 +4224,100 @@
                 }
               ],
               "type": "vertical-stack"
+            }
+          ]
+        },
+        {
+          "type": "sections",
+          "max_columns": 4,
+          "title": "Presence",
+          "path": "presence",
+          "icon": "mdi:map-marker-radius",
+          "sections": [
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "New section"
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "condition": "state",
+                      "entity": "sensor.toms_phone_ble",
+                      "state": "office"
+                    }
+                  ],
+                  "card": {
+                    "alert_classes": [
+                      "motion",
+                      "moisture"
+                    ],
+                    "sensor_classes": [
+                      "temperature",
+                      "humidity"
+                    ],
+                    "type": "area",
+                    "area": "office",
+                    "navigation_path": "/lovelace/office"
+                  }
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "condition": "state",
+                      "entity": "sensor.toms_phone_ble",
+                      "state": "living_room"
+                    }
+                  ],
+                  "card": {
+                    "alert_classes": [
+                      "motion",
+                      "moisture"
+                    ],
+                    "sensor_classes": [
+                      "temperature",
+                      "humidity"
+                    ],
+                    "type": "area",
+                    "area": "20f98b0288cb453a85b1ad468ed4301e",
+                    "navigation_path": "/lovelace/living-room"
+                  }
+                },
+                {
+                  "type": "conditional",
+                  "conditions": [
+                    {
+                      "condition": "state",
+                      "entity": "sensor.toms_phone_ble",
+                      "state": "main_bedroom"
+                    }
+                  ],
+                  "card": {
+                    "alert_classes": [
+                      "motion",
+                      "moisture"
+                    ],
+                    "sensor_classes": [
+                      "temperature",
+                      "humidity"
+                    ],
+                    "type": "area",
+                    "area": "main_bedroom",
+                    "navigation_path": "/lovelace/main-bedroom"
+                  }
+                },
+                {
+                  "type": "custom:mushroom-template-card",
+                  "primary": "Hello, {{user}}",
+                  "secondary": "{{states('sensor.toms_phone_ble')}}",
+                  "icon": "mdi:map-marker"
+                }
+              ],
+              "column_span": 3
             }
           ]
         }
