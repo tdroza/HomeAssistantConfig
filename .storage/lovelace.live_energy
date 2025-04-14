@@ -338,78 +338,6 @@
               ]
             },
             {
-              "type": "vertical-stack",
-              "cards": [
-                {
-                  "type": "entities",
-                  "entities": [
-                    {
-                      "entity": "sensor.solax_local_pv_output",
-                      "name": "PV Combined",
-                      "icon": "mdi:solar-power-variant",
-                      "secondary_info": "none"
-                    },
-                    {
-                      "entity": "sensor.solax_local_pv1_output",
-                      "name": "PV East",
-                      "icon": "mdi:solar-panel-large"
-                    },
-                    {
-                      "entity": "sensor.solax_local_pv2_output",
-                      "name": "PV South",
-                      "icon": "mdi:solar-panel-large"
-                    },
-                    {
-                      "entity": "sensor.solax_local_load_power",
-                      "name": "House Load",
-                      "icon": "mdi:home-lightning-bolt"
-                    },
-                    {
-                      "entity": "sensor.solax_local_battery_soc",
-                      "icon": "mdi:battery",
-                      "name": "Battery SoC"
-                    },
-                    {
-                      "entity": "sensor.solax_local_grid_power",
-                      "icon": "mdi:transmission-tower",
-                      "name": "Grid Power"
-                    },
-                    {
-                      "entity": "sensor.solax_local",
-                      "name": "Last updated",
-                      "format": "time",
-                      "icon": "mdi:history",
-                      "secondary_info": "last-updated",
-                      "tap_action": {
-                        "confirmation": {
-                          "text": "Update Solax inverter data now?"
-                        },
-                        "action": "call-service",
-                        "service": "homeassistant.update_entity",
-                        "target": {
-                          "entity_id": "sensor.solax_rest_local"
-                        },
-                        "data": {}
-                      }
-                    },
-                    {
-                      "entity": "sensor.daily_pv",
-                      "name": "Generated today",
-                      "icon": "mdi:solar-power-variant-outline"
-                    },
-                    {
-                      "entity": "sensor.pv_daily_grid_export",
-                      "name": "Exported today",
-                      "icon": "mdi:home-export-outline"
-                    }
-                  ],
-                  "title": "Solax Inverter",
-                  "show_header_toggle": false,
-                  "state_color": true
-                }
-              ]
-            },
-            {
               "type": "custom:apexcharts-card",
               "header": {
                 "show": true,
@@ -572,128 +500,6 @@
               "type": "vertical-stack",
               "cards": [
                 {
-                  "type": "entities",
-                  "entities": [
-                    {
-                      "entity": "sensor.solcast_pv_forecast_forecast_today",
-                      "name": "Forecast Today",
-                      "secondary_info": "none"
-                    },
-                    {
-                      "entity": "sensor.solcast_pv_forecast_forecast_remaining_today",
-                      "name": " Remaining Today"
-                    },
-                    {
-                      "entity": "sensor.solcast_pv_forecast_peak_time_today",
-                      "name": "Peak Time Today"
-                    },
-                    {
-                      "entity": "sensor.solcast_pv_forecast_forecast_this_hour",
-                      "name": "Foecast This Hour"
-                    },
-                    {
-                      "entity": "sensor.solcast_pv_forecast_forecast_next_hour",
-                      "name": "Forecast Next Hour"
-                    },
-                    {
-                      "entity": "sensor.solcast_pv_forecast_peak_time_tomorrow",
-                      "name": "Peak Time Tomorrow"
-                    },
-                    {
-                      "entity": "sensor.solcast_pv_forecast_forecast_tomorrow",
-                      "name": "Forecast Tomorrow"
-                    },
-                    {
-                      "entity": "sensor.solcast_pv_forecast_api_used",
-                      "name": "API Used"
-                    },
-                    {
-                      "entity": "sensor.solcast_pv_forecast_api_last_polled",
-                      "name": "API Last Polled"
-                    }
-                  ],
-                  "title": "Solar Forecast"
-                },
-                {
-                  "type": "custom:mushroom-chips-card",
-                  "chips": [
-                    {
-                      "type": "spacer"
-                    },
-                    {
-                      "type": "template",
-                      "entity": "sensor.solax_local",
-                      "icon": "mdi:history",
-                      "content": "Updated {{states.sensor.solcast_pv_forecast_api_last_polled.last_changed | relative_time}} ago",
-                      "tap_action": {
-                        "action": "call-service",
-                        "service": "solcast_solar.update_forecasts",
-                        "data": {},
-                        "confirmation": {
-                          "text": "Update solar forecast now?"
-                        }
-                      }
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "type": "energy-solar-graph"
-            },
-            {
-              "type": "custom:apexcharts-card",
-              "header": {
-                "show": true,
-                "title": "Live Usage",
-                "show_states": true,
-                "colorize_states": true
-              },
-              "chart_type": "radialBar",
-              "all_series_config": {
-                "min": 0,
-                "stroke_width": 10,
-                "max": 7000
-              },
-              "series": [
-                {
-                  "entity": "sensor.solax_local_pv_output",
-                  "color": "#FF9800",
-                  "name": "Solar generation"
-                },
-                {
-                  "entity": "sensor.solax_local_battery_power_out",
-                  "color": "#F06292",
-                  "max": 3500,
-                  "name": "From battery"
-                },
-                {
-                  "entity": "sensor.solax_local_battery_power_in",
-                  "color": "#F06292",
-                  "max": 3500,
-                  "name": "To battery"
-                },
-                {
-                  "entity": "sensor.solax_local_grid_power_import",
-                  "color": "#4D92C3",
-                  "name": "Grid import"
-                },
-                {
-                  "entity": "sensor.solax_local_grid_power_export",
-                  "color": "#4D92C3",
-                  "name": "Grid export"
-                },
-                {
-                  "entity": "sensor.solax_local_load_power",
-                  "color": "#ff0000",
-                  "name": "House"
-                }
-              ]
-            },
-            {
-              "type": "vertical-stack",
-              "cards": [
-                {
                   "type": "custom:decluttering-card",
                   "template": "mixergy"
                 },
@@ -744,6 +550,9 @@
                   ]
                 }
               ]
+            },
+            {
+              "type": "energy-solar-graph"
             },
             {
               "type": "custom:expander-card",
@@ -830,6 +639,279 @@
               ],
               "clear": false,
               "expanded": false
+            },
+            {
+              "type": "vertical-stack",
+              "cards": [
+                {
+                  "type": "custom:local-conditional-card",
+                  "id": "solax_tab",
+                  "default": "show",
+                  "card": {
+                    "type": "vertical-stack",
+                    "cards": [
+                      {
+                        "type": "horizontal-stack",
+                        "cards": [
+                          {
+                            "type": "custom:mushroom-chips-card",
+                            "chips": [
+                              {
+                                "type": "template",
+                                "icon": "mdi:solar-power",
+                                "content": "Solax",
+                                "card_mod": {
+                                  "style": "ha-card {                                            \n  border: 2.5px solid white !important;                  \n  --chip-border-radius: 5px;\n}\n"
+                                },
+                                "tap_action": {
+                                  "action": "fire-dom-event",
+                                  "local_conditional_card": {
+                                    "action": "set",
+                                    "ids": [
+                                      {
+                                        "solax_tab": "show"
+                                      },
+                                      {
+                                        "solcast_tab": "hide"
+                                      }
+                                    ]
+                                  }
+                                }
+                              },
+                              {
+                                "type": "template",
+                                "content": "Solcast",
+                                "icon": "mdi:sun-clock",
+                                "card_mod": {
+                                  "style": "ha-card {                                                                    \n  --chip-border-radius: 5px;\n}                    \n"
+                                },
+                                "tap_action": {
+                                  "action": "fire-dom-event",
+                                  "local_conditional_card": {
+                                    "action": "set",
+                                    "ids": [
+                                      {
+                                        "solax_tab": "hide"
+                                      },
+                                      {
+                                        "solcast_tab": "show"
+                                      }
+                                    ]
+                                  }
+                                }
+                              }
+                            ],
+                            "alignment": "center"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "entities",
+                        "entities": [
+                          {
+                            "entity": "sensor.solax_local_pv_output",
+                            "name": "PV Combined",
+                            "icon": "mdi:solar-power-variant",
+                            "secondary_info": "none"
+                          },
+                          {
+                            "entity": "sensor.solax_local_pv1_output",
+                            "name": "PV East",
+                            "icon": "mdi:solar-panel-large"
+                          },
+                          {
+                            "entity": "sensor.solax_local_pv2_output",
+                            "name": "PV South",
+                            "icon": "mdi:solar-panel-large"
+                          },
+                          {
+                            "entity": "sensor.solax_local_load_power",
+                            "name": "House Load",
+                            "icon": "mdi:home-lightning-bolt"
+                          },
+                          {
+                            "entity": "sensor.solax_local_battery_soc",
+                            "icon": "mdi:battery",
+                            "name": "Battery SoC"
+                          },
+                          {
+                            "entity": "sensor.solax_local_grid_power",
+                            "icon": "mdi:transmission-tower",
+                            "name": "Grid Power"
+                          },
+                          {
+                            "entity": "sensor.daily_pv",
+                            "name": "Generated today",
+                            "icon": "mdi:solar-power-variant-outline"
+                          },
+                          {
+                            "entity": "sensor.pv_daily_grid_export",
+                            "name": "Exported today",
+                            "icon": "mdi:home-export-outline"
+                          }
+                        ],
+                        "title": "Solax Inverter",
+                        "show_header_toggle": false,
+                        "state_color": true
+                      },
+                      {
+                        "type": "custom:mushroom-chips-card",
+                        "chips": [
+                          {
+                            "type": "spacer"
+                          },
+                          {
+                            "type": "template",
+                            "entity": "sensor.solax_local",
+                            "content": "Updated {{states.sensor.solax_local.last_updated | relative_time}} ago                ",
+                            "format": "time",
+                            "icon": "mdi:history",
+                            "secondary_info": "last-updated",
+                            "tap_action": {
+                              "confirmation": {
+                                "text": "Update Solax inverter data now?"
+                              },
+                              "action": "call-service",
+                              "service": "homeassistant.update_entity",
+                              "target": {
+                                "entity_id": "sensor.solax_rest_local"
+                              },
+                              "data": {}
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "custom:local-conditional-card",
+                  "id": "solcast_tab",
+                  "default": "hide",
+                  "card": {
+                    "type": "vertical-stack",
+                    "cards": [
+                      {
+                        "type": "horizontal-stack",
+                        "cards": [
+                          {
+                            "type": "custom:mushroom-chips-card",
+                            "chips": [
+                              {
+                                "type": "template",
+                                "icon": "mdi:solar-power",
+                                "content": "Solax",
+                                "card_mod": {
+                                  "style": "ha-card {                                                                    \n  --chip-border-radius: 5px;\n}                   \n"
+                                },
+                                "tap_action": {
+                                  "action": "fire-dom-event",
+                                  "local_conditional_card": {
+                                    "action": "set",
+                                    "ids": [
+                                      {
+                                        "solax_tab": "show"
+                                      },
+                                      {
+                                        "solcast_tab": "hide"
+                                      }
+                                    ]
+                                  }
+                                }
+                              },
+                              {
+                                "type": "template",
+                                "content": "Solcast",
+                                "icon": "mdi:sun-clock",
+                                "card_mod": {
+                                  "style": "ha-card {                                            \n  border: 2.5px solid white !important;                  \n  --chip-border-radius: 5px;\n}                  \n"
+                                },
+                                "tap_action": {
+                                  "action": "fire-dom-event",
+                                  "local_conditional_card": {
+                                    "action": "set",
+                                    "ids": [
+                                      {
+                                        "solax_tab": "hide"
+                                      },
+                                      {
+                                        "solcast_tab": "show"
+                                      }
+                                    ]
+                                  }
+                                }
+                              }
+                            ],
+                            "alignment": "center"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "entities",
+                        "entities": [
+                          {
+                            "entity": "sensor.solcast_pv_forecast_forecast_today",
+                            "name": "Forecast Today",
+                            "secondary_info": "none"
+                          },
+                          {
+                            "entity": "sensor.solcast_pv_forecast_forecast_remaining_today",
+                            "name": " Remaining Today"
+                          },
+                          {
+                            "entity": "sensor.solcast_pv_forecast_peak_time_today",
+                            "name": "Peak Time Today"
+                          },
+                          {
+                            "entity": "sensor.solcast_pv_forecast_forecast_this_hour",
+                            "name": "Foecast This Hour"
+                          },
+                          {
+                            "entity": "sensor.solcast_pv_forecast_forecast_next_hour",
+                            "name": "Forecast Next Hour"
+                          },
+                          {
+                            "entity": "sensor.solcast_pv_forecast_peak_time_tomorrow",
+                            "name": "Peak Time Tomorrow"
+                          },
+                          {
+                            "entity": "sensor.solcast_pv_forecast_forecast_tomorrow",
+                            "name": "Forecast Tomorrow"
+                          }
+                        ],
+                        "title": "Solar Forecast"
+                      },
+                      {
+                        "type": "custom:mushroom-chips-card",
+                        "chips": [
+                          {
+                            "type": "template",
+                            "entity": "sensor.solcast_pv_forecast_api_used",
+                            "content": "API Used: {{states('sensor.solcast_pv_forecast_api_used')}}"
+                          },
+                          {
+                            "type": "spacer"
+                          },
+                          {
+                            "type": "template",
+                            "entity": "sensor.solcast_api_last_polled",
+                            "icon": "mdi:history",
+                            "content": "Updated {{states.sensor.solcast_pv_forecast_api_last_polled.last_changed | relative_time}} ago",
+                            "tap_action": {
+                              "action": "call-service",
+                              "service": "solcast_solar.update_forecasts",
+                              "data": {},
+                              "confirmation": {
+                                "text": "Update solar forecast now?"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ]
             }
           ]
         },
