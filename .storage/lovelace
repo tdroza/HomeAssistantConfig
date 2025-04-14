@@ -759,47 +759,6 @@
               "expanded": false
             },
             {
-              "type": "conditional",
-              "conditions": [
-                {
-                  "entity": "sensor.sourdough_height",
-                  "state_not": "unavailable"
-                }
-              ],
-              "card": {
-                "type": "vertical-stack",
-                "cards": [
-                  {
-                    "name": "Sourdough",
-                    "template": "button-card-headers",
-                    "type": "custom:button-card"
-                  },
-                  {
-                    "entities": [
-                      "sensor.sourdough_height",
-                      "sensor.sourdough_temperature"
-                    ],
-                    "type": "entities"
-                  },
-                  {
-                    "entities": [
-                      {
-                        "entity": "sensor.sourdough_height",
-                        "y_axis": "secondary"
-                      },
-                      "sensor.sourdough_temperature"
-                    ],
-                    "points_per_hour": 20,
-                    "show": {
-                      "icon": false,
-                      "name": false
-                    },
-                    "type": "custom:mini-graph-card"
-                  }
-                ]
-              }
-            },
-            {
               "type": "entities",
               "entities": [
                 {
@@ -1608,7 +1567,12 @@
           "title": "OEPL",
           "path": "oepl",
           "icon": "mdi:tablet-dashboard",
-          "badges": [],
+          "badges": [
+            {
+              "type": "entity",
+              "entity": "switch.3ch_usb_switch_port_3"
+            }
+          ],
           "cards": [
             {
               "type": "vertical-stack",
@@ -4242,73 +4206,65 @@
                   "heading": "New section"
                 },
                 {
-                  "type": "conditional",
-                  "conditions": [
+                  "alert_classes": [
+                    "motion",
+                    "moisture"
+                  ],
+                  "sensor_classes": [
+                    "temperature",
+                    "humidity",
+                    "power"
+                  ],
+                  "type": "area",
+                  "area": "office",
+                  "navigation_path": "/lovelace/office",
+                  "visibility": [
                     {
                       "condition": "state",
                       "entity": "sensor.toms_phone_ble",
                       "state": "office"
                     }
-                  ],
-                  "card": {
-                    "alert_classes": [
-                      "motion",
-                      "moisture"
-                    ],
-                    "sensor_classes": [
-                      "temperature",
-                      "humidity"
-                    ],
-                    "type": "area",
-                    "area": "office",
-                    "navigation_path": "/lovelace/office"
-                  }
+                  ]
                 },
                 {
-                  "type": "conditional",
-                  "conditions": [
+                  "alert_classes": [
+                    "motion",
+                    "moisture"
+                  ],
+                  "sensor_classes": [
+                    "temperature",
+                    "humidity"
+                  ],
+                  "type": "area",
+                  "area": "20f98b0288cb453a85b1ad468ed4301e",
+                  "navigation_path": "/lovelace/living-room",
+                  "visibility": [
                     {
                       "condition": "state",
                       "entity": "sensor.toms_phone_ble",
                       "state": "living_room"
                     }
-                  ],
-                  "card": {
-                    "alert_classes": [
-                      "motion",
-                      "moisture"
-                    ],
-                    "sensor_classes": [
-                      "temperature",
-                      "humidity"
-                    ],
-                    "type": "area",
-                    "area": "20f98b0288cb453a85b1ad468ed4301e",
-                    "navigation_path": "/lovelace/living-room"
-                  }
+                  ]
                 },
                 {
-                  "type": "conditional",
-                  "conditions": [
+                  "alert_classes": [
+                    "motion",
+                    "moisture"
+                  ],
+                  "sensor_classes": [
+                    "temperature",
+                    "humidity"
+                  ],
+                  "type": "area",
+                  "area": "main_bedroom",
+                  "navigation_path": "/lovelace/main-bedroom",
+                  "visibility": [
                     {
                       "condition": "state",
                       "entity": "sensor.toms_phone_ble",
                       "state": "main_bedroom"
                     }
-                  ],
-                  "card": {
-                    "alert_classes": [
-                      "motion",
-                      "moisture"
-                    ],
-                    "sensor_classes": [
-                      "temperature",
-                      "humidity"
-                    ],
-                    "type": "area",
-                    "area": "main_bedroom",
-                    "navigation_path": "/lovelace/main-bedroom"
-                  }
+                  ]
                 },
                 {
                   "type": "custom:mushroom-template-card",
