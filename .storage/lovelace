@@ -1615,7 +1615,7 @@
               "type": "vertical-stack",
               "cards": [
                 {
-                  "name": "Custom Weather",
+                  "name": "Reu's Calendar",
                   "template": "button-card-headers",
                   "type": "custom:button-card"
                 },
@@ -1623,13 +1623,14 @@
                   "show_state": false,
                   "show_name": true,
                   "camera_view": "auto",
+                  "fit_mode": "cover",
                   "type": "picture-entity",
-                  "entity": "camera.custom_weather_content",
+                  "entity": "camera.reus_calendar_content",
                   "hold_action": {
                     "action": "call-service",
                     "service": "automation.trigger",
                     "target": {
-                      "entity_id": "automation.oepl_custom_weather"
+                      "entity_id": "automation.oepl_family_calendar"
                     },
                     "data": {
                       "skip_condition": true
@@ -1642,7 +1643,7 @@
               "type": "vertical-stack",
               "cards": [
                 {
-                  "name": "Energy Dashboard",
+                  "name": "Seb's Calendar",
                   "template": "button-card-headers",
                   "type": "custom:button-card"
                 },
@@ -1650,13 +1651,14 @@
                   "show_state": false,
                   "show_name": true,
                   "camera_view": "auto",
+                  "fit_mode": "cover",
                   "type": "picture-entity",
-                  "entity": "camera.energy_dashboard_content",
+                  "entity": "camera.sebs_calendar_content",
                   "hold_action": {
                     "action": "call-service",
                     "service": "automation.trigger",
                     "target": {
-                      "entity_id": "automation.oepl_energy_dashboard"
+                      "entity_id": "automation.oepl_family_calendar"
                     },
                     "data": {
                       "skip_condition": true
@@ -3473,6 +3475,12 @@
                 "switch.pi_hole"
               ],
               "title": "Pi-Hole"
+            },
+            {
+              "type": "entities",
+              "entities": [
+                "button.wake_on_lan_synology"
+              ]
             }
           ]
         },
