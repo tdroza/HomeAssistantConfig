@@ -1,6 +1,6 @@
 - platform: template
   covers:
-    office_blind:
+    office_blind_old_template:
       device_class: blind
       friendly_name: "Office Blind"
       value_template: "{{ states.number.office_blind_analog_output.state | float == 0.0}}"
