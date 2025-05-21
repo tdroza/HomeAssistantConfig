@@ -1467,12 +1467,11 @@
 - id: '1616500250252'
   alias: Anna's watch & phone - turn off charger
   description: Turn off when fully charged, when unplugged, or at 08:30
-  trigger:
-  - platform: time
-    at: 08:30:00
+  triggers:
+  - at: 08:30:00
     id: time
+    trigger: time
   - type: not_plugged_in
-    platform: device
     device_id: 7df9b28318e1f535b7d778b2ce767f41
     entity_id: 38647301ac793871e60d3d9bd8712fd7
     domain: binary_sensor
@@ -1481,15 +1480,15 @@
       hours: 0
       minutes: 0
       seconds: 10
+    trigger: device
   - type: battery_level
-    platform: device
     device_id: f077cacd0f2cbb4b86567e2891d541e5
     entity_id: f4acaeaca566bee2541c3c63f955b4a3
     domain: sensor
     above: 99
     id: phone
-  - platform: state
-    entity_id:
+    trigger: device
+  - entity_id:
     - sensor.annas_phone_charger_type
     from: ac
     to: none
@@ -1498,8 +1497,8 @@
       minutes: 0
       seconds: 5
     id: phone
+    trigger: state
   - type: power
-    platform: device
     device_id: 63119b10ea09a788da942a5fc8aa67ce
     entity_id: 92768c30d7c50874118c0b9f594800fc
     domain: sensor
@@ -1510,8 +1509,8 @@
       seconds: 10
     id: phone
     enabled: false
+    trigger: device
   - type: power
-    platform: device
     device_id: b7ab635f3051f3c87e93b4b497b470ea
     entity_id: 0e8ceb13ceb9c50862c6e982a5e5055c
     domain: sensor
@@ -1522,7 +1521,8 @@
       seconds: 0
     id: watch
     enabled: false
-  condition:
+    trigger: device
+  conditions:
   - condition: or
     conditions:
     - condition: and
@@ -1548,7 +1548,7 @@
     - condition: trigger
       id:
       - time
-  action:
+  actions:
   - choose:
     - conditions:
       - condition: trigger
@@ -1560,6 +1560,7 @@
         device_id: 63119b10ea09a788da942a5fc8aa67ce
         entity_id: eaead4516bf95c532b1b30ca83611ff3
         domain: switch
+  - choose:
     - conditions:
       - condition: trigger
         id:
@@ -1597,16 +1598,18 @@
 - id: '1619433471864'
   alias: 'Lights: Boys'' wakeup light'
   description: Fade in ceiling lights 10min before wakeup time
-  trigger:
-  - platform: time
-    at: input_datetime.boys_wakeup
-  condition:
+  triggers:
+  - at: input_datetime.boys_wakeup
+    trigger: time
+  conditions:
   - condition: state
     entity_id: binary_sensor.workday_sensor
     state: 'on'
-  action:
-  - service: light.turn_on
-    data:
+  - condition: template
+    value_template: '{{state_attr(''sensor.family_events'',''events'')|selectattr(''summary'',''contains'',''oliday'')|list|length
+      == 0}}'
+  actions:
+  - data:
       transition: 600
       brightness_pct: 100
       color_name: wheat
@@ -1615,14 +1618,15 @@
       - light.reubens_ceiling
       - light.sebs_ceiling
     enabled: true
-  - service: light.turn_on
-    data:
+    action: light.turn_on
+  - data:
       transition: 600
       brightness_pct: 100
       color_name: wheat
     target:
       entity_id:
       - light.main_bedroom_bloom
+    action: light.turn_on
   mode: single
 - id: '1621850581589'
   alias: Close the fridge door
@@ -2252,16 +2256,16 @@
 - id: '1659533681253'
   alias: Open office blind in the morning
   description: ''
-  trigger:
-  - platform: time
-    at: 08:00:00
-  condition:
+  triggers:
+  - at: 08:00:00
+    trigger: time
+  conditions:
   - condition: numeric_state
-    entity_id: number.office_blind_analog_output
+    entity_id: cover.office_blind
     below: '100'
-  action:
-  - service: cover.open_cover
-    data: {}
+  actions:
+  - data: {}
+    action: cover.open_cover
     target:
       entity_id: cover.office_blind
   mode: single
@@ -2525,12 +2529,12 @@
     entity_id: sun.sun
     attribute: azimuth
     above: 90
-    below: 160
+    below: 120
   actions:
   - data:
       position: '{{ states(''input_number.office_window_blind_shade_percent'') }}'
     target:
-      device_id: d900db50135294c1549bb9a9ecde74b0
+      entity_id: cover.office_blind
     action: cover.set_cover_position
   mode: single
 - id: '1665133518037'
@@ -2560,9 +2564,9 @@
     above: -1
   actions:
   - data: {}
-    target:
-      device_id: d900db50135294c1549bb9a9ecde74b0
     action: cover.open_cover
+    target:
+      entity_id: cover.office_blind
   mode: single
 - id: '1675701493281'
   alias: 'Matrix: Set text'
@@ -3436,7 +3440,10 @@
           == 86400 else startTimestamp | timestamp_custom('%H:%M') %} \n   {{startTimestamp
           | timestamp_custom('%a, ')}}{{time}} \n{% endif %}"
     target:
-      device_id: e6eb2f23afd99f17690890eddb43bf6f
+      device_id:
+      - e6eb2f23afd99f17690890eddb43bf6f
+      - 0388417b1a1df1c1c551658a23530afc
+      - 6a9ce31143b3b3779ea0063fdfe4a047
     action: open_epaper_link.drawcustom
   mode: restart
 - id: '1700574169666'
@@ -3617,7 +3624,7 @@
           color: black
         ylegend:
           width: 0
-          color: black
+          color: red
           position: left
           size: 1
       - type: rectangle
@@ -3700,7 +3707,8 @@
         color: black
         value: 'Updated: {{now().strftime(''%H:%M'')}}'
     target:
-      device_id: 0388417b1a1df1c1c551658a23530afc
+      device_id:
+      - 0388417b1a1df1c1c551658a23530afc
     action: open_epaper_link.drawcustom
   mode: restart
 - id: '1701101378698'
@@ -4812,7 +4820,7 @@
   conditions:
   - condition: template
     value_template: '{{now()  - state_attr(''automation.zappi_charging_started'',''last_triggered'')
-      > timedelta(minutes=5)}}'
+      > timedelta(minutes=15)}}'
   actions:
   - action: notify.tom_and_anna
     data:
@@ -4831,7 +4839,7 @@
   conditions:
   - condition: template
     value_template: '{{now()  - state_attr(''automation.zappi_charging_complete'',''last_triggered'')
-      > timedelta(minutes=5)}}'
+      > timedelta(minutes=15)}}'
   actions:
   - action: notify.tom_and_anna
     data:
