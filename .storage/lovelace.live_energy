@@ -448,7 +448,7 @@
               "yaxis": [
                 {
                   "min": 0,
-                  "max": 40
+                  "max": 50
                 }
               ],
               "apex_config": {
@@ -661,7 +661,7 @@
                                 "icon": "mdi:solar-power",
                                 "content": "Solax",
                                 "card_mod": {
-                                  "style": "ha-card {                                            \n  border: 2.5px solid white !important;                  \n  --chip-border-radius: 5px;\n}\n"
+                                  "style": "ha-card {                                            \n  border: 2.5px solid #44739e !important;                  \n  --chip-border-radius: 5px;\n}\n"
                                 },
                                 "tap_action": {
                                   "action": "fire-dom-event",
@@ -745,6 +745,12 @@
                             "icon": "mdi:solar-power-variant-outline"
                           },
                           {
+                            "type": "custom:template-entity-row",
+                            "icon": "mdi:crystal-ball",
+                            "name": "Prediction today",
+                            "state": "{{(states('sensor.daily_pv') | float + states('sensor.solcast_pv_forecast_forecast_remaining_today') | float) | round(2)}} kWh"
+                          },
+                          {
                             "entity": "sensor.pv_daily_grid_export",
                             "name": "Exported today",
                             "icon": "mdi:home-export-outline"
@@ -824,7 +830,7 @@
                                 "content": "Solcast",
                                 "icon": "mdi:sun-clock",
                                 "card_mod": {
-                                  "style": "ha-card {                                            \n  border: 2.5px solid white !important;                  \n  --chip-border-radius: 5px;\n}                  \n"
+                                  "style": "ha-card {                                            \n  border: 2.5px solid #44739e !important;                  \n  --chip-border-radius: 5px;\n}                  \n"
                                 },
                                 "tap_action": {
                                   "action": "fire-dom-event",
