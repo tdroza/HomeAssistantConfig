@@ -2511,10 +2511,11 @@
   alias: Close office blind when bright
   description: ''
   triggers:
-  - entity_id: sensor.cactus_illuminance
+  - entity_id:
+    - sensor.office_motion_illuminance
     for:
       hours: 0
-      minutes: 1
+      minutes: 2
       seconds: 0
     above: input_number.office_window_brightness_threshold
     trigger: numeric_state
@@ -2541,7 +2542,8 @@
   alias: Open office blind when not bright
   description: ''
   triggers:
-  - entity_id: sensor.cactus_illuminance
+  - entity_id:
+    - sensor.office_motion_illuminance
     for:
       hours: 0
       minutes: 5
