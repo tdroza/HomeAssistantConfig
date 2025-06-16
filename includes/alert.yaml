@@ -5,7 +5,6 @@ garage_door:
     entity_id: binary_sensor.garage_door
     state: "on"
     repeat:
-        - 2
         - 5
         - 10
         - 15
