@@ -67,3 +67,9 @@
     name: Recycling
     track: true
     search: 'Recycling'
+
+- cal_id: tom.annalou@gmail.com
+  entities:
+  - device_id: tom_annalou_gmail_com
+    ignore_availability: true
+    name: tom.annalou@gmail.com
