@@ -1412,14 +1412,6 @@
               "type": "vertical-stack"
             },
             {
-              "entities": [
-                "sensor.shipley_to_bradford",
-                "sensor.shipley_to_leeds"
-              ],
-              "title": "Commute",
-              "type": "custom:travel-time-card"
-            },
-            {
               "entity": "input_number.diffuser_delay",
               "type": "entity"
             }
@@ -1596,8 +1588,9 @@
                   "show_state": false,
                   "show_name": true,
                   "camera_view": "auto",
+                  "fit_mode": "cover",
                   "type": "picture-entity",
-                  "entity": "camera.coffee_grind_settings_content",
+                  "entity": "camera.0000021e69133b19_content",
                   "hold_action": {
                     "action": "call-service",
                     "service": "automation.trigger",
@@ -1679,8 +1672,9 @@
                   "show_state": false,
                   "show_name": true,
                   "camera_view": "auto",
+                  "fit_mode": "cover",
                   "type": "picture-entity",
-                  "entity": "camera.family_calendar_content",
+                  "entity": "camera.00000218cf5d3b19_content",
                   "hold_action": {
                     "action": "call-service",
                     "service": "automation.trigger",
@@ -1706,8 +1700,9 @@
                   "show_state": false,
                   "show_name": true,
                   "camera_view": "auto",
+                  "fit_mode": "cover",
                   "type": "picture-entity",
-                  "entity": "camera.electricity_tariff_content",
+                  "entity": "camera.0000021d19153414_content",
                   "hold_action": {
                     "action": "call-service",
                     "service": "automation.trigger",
