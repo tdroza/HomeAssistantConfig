@@ -338,223 +338,6 @@
               ]
             },
             {
-              "type": "custom:apexcharts-card",
-              "header": {
-                "show": true,
-                "title": "5-min Average",
-                "show_states": true,
-                "colorize_states": true
-              },
-              "graph_span": "24h",
-              "experimental": {
-                "brush": true,
-                "hidden_by_default": true
-              },
-              "brush": {
-                "selection_span": "4h"
-              },
-              "span": {
-                "end": "minute"
-              },
-              "all_series_config": {
-                "stroke_width": 2,
-                "extend_to": "now",
-                "group_by": {
-                  "duration": "5min",
-                  "func": "avg"
-                }
-              },
-              "yaxis": [
-                {
-                  "id": "power",
-                  "show": true
-                },
-                {
-                  "id": "percent",
-                  "show": true,
-                  "opposite": true,
-                  "min": 0,
-                  "max": 100
-                }
-              ],
-              "series": [
-                {
-                  "entity": "sensor.solax_local_pv_output",
-                  "yaxis_id": "power",
-                  "name": "PV",
-                  "type": "area",
-                  "opacity": 0.25,
-                  "show": {
-                    "in_brush": true
-                  }
-                },
-                {
-                  "entity": "sensor.solax_local_pv1_output",
-                  "yaxis_id": "power",
-                  "name": "East",
-                  "show": {
-                    "hidden_by_default": true
-                  }
-                },
-                {
-                  "entity": "sensor.solax_local_pv2_output",
-                  "yaxis_id": "power",
-                  "name": "South",
-                  "show": {
-                    "hidden_by_default": true
-                  }
-                },
-                {
-                  "entity": "sensor.solax_local_grid_power",
-                  "yaxis_id": "power",
-                  "name": "Grid",
-                  "color": "#31526A"
-                },
-                {
-                  "entity": "sensor.solax_local_load_power",
-                  "yaxis_id": "power",
-                  "name": "House",
-                  "show": {
-                    "in_brush": true
-                  }
-                },
-                {
-                  "entity": "sensor.solax_local_battery_power",
-                  "yaxis_id": "power",
-                  "name": "Battery"
-                },
-                {
-                  "entity": "sensor.solax_local_battery_soc",
-                  "yaxis_id": "percent",
-                  "name": "SoC",
-                  "color": "#397771"
-                }
-              ]
-            },
-            {
-              "type": "custom:apexcharts-card",
-              "header": {
-                "show": true,
-                "title": "Solar Forecast",
-                "show_states": false
-              },
-              "experimental": {
-                "color_threshold": true
-              },
-              "graph_span": "6d",
-              "span": {
-                "start": "day"
-              },
-              "yaxis": [
-                {
-                  "min": 0,
-                  "max": 50
-                }
-              ],
-              "apex_config": {
-                "dataLabels": {
-                  "offsetY": -10,
-                  "position": "top",
-                  "background": {
-                    "enabled": false
-                  },
-                  "style": {
-                    "colors": [
-                      "#808080"
-                    ]
-                  }
-                }
-              },
-              "series": [
-                {
-                  "entity": "sensor.solcast_forecast_today",
-                  "type": "column",
-                  "show": {
-                    "datalabels": true,
-                    "extremas": true
-                  },
-                  "color_threshold": [
-                    {
-                      "value": 35,
-                      "color": "#ff5800"
-                    },
-                    {
-                      "value": 25,
-                      "color": "#f58025"
-                    },
-                    {
-                      "value": 15,
-                      "color": "#ffae42"
-                    },
-                    {
-                      "value": 5,
-                      "color": "#fed8b1"
-                    }
-                  ],
-                  "name": "Forecast",
-                  "data_generator": "const now = new Date(); const data = [];\ndata.push([now.setHours(0,0,0,0), hass.states['sensor.solcast_pv_forecast_forecast_today'].state]);\ndata.push([now.setDate(now.getDate()+1), hass.states['sensor.solcast_pv_forecast_forecast_tomorrow'].state]);\ndata.push([now.setDate(now.getDate()+1), hass.states['sensor.solcast_pv_forecast_forecast_day_3'].state]);\ndata.push([now.setDate(now.getDate()+1), hass.states['sensor.solcast_pv_forecast_forecast_day_4'].state]);\ndata.push([now.setDate(now.getDate()+1), hass.states['sensor.solcast_pv_forecast_forecast_day_5'].state]);\ndata.push([now.setDate(now.getDate()+1), hass.states['sensor.solcast_pv_forecast_forecast_day_6'].state]);\ndata.push([now.setDate(now.getDate()+1), hass.states['sensor.solcast_pv_forecast_forecast_day_7'].state]);\nreturn data.reverse();\n"
-                }
-              ]
-            },
-            {
-              "type": "vertical-stack",
-              "cards": [
-                {
-                  "type": "custom:decluttering-card",
-                  "template": "mixergy"
-                },
-                {
-                  "type": "custom:mushroom-chips-card",
-                  "alignment": "justify",
-                  "chips": [
-                    {
-                      "type": "entity",
-                      "entity": "sensor.mixergy_coldest_water_temperature",
-                      "icon_color": "blue"
-                    },
-                    {
-                      "type": "template",
-                      "content": "{{states('sensor.mixergy_heatpump_heat') | title}}",
-                      "entity": "sensor.mixergy_heatpump_heat",
-                      "icon": "mdi:heat-pump-outline",
-                      "icon_color": "{{'green' if is_state('sensor.mixergy_heatpump_heat','on') }}",
-                      "tap_action": {
-                        "action": "navigate",
-                        "navigation_path": "/lovelace/utility"
-                      }
-                    },
-                    {
-                      "type": "template",
-                      "entity": "switch.pv_divert_enabled",
-                      "icon": "{{'mdi:toggle-switch-outline' if is_state('switch.pv_divert_enabled','on') else 'mdi:toggle-switch-off-outline'}}",
-                      "icon_color": "{{'green' if is_state('switch.pv_divert_enabled','on') else 'red'}}",
-                      "tap_action": {
-                        "action": "toggle"
-                      }
-                    },
-                    {
-                      "type": "template",
-                      "content": "{{states('sensor.mixergy_electric_pv_power') | float | round(2)}}kWh",
-                      "icon": "mdi:solar-power",
-                      "icon_color": "{{'green' if states('sensor.mixergy_electric_pv_power') | float > 0}}",
-                      "tap_action": {
-                        "action": "navigate",
-                        "navigation_path": "/lovelace/utility"
-                      }
-                    },
-                    {
-                      "type": "entity",
-                      "entity": "sensor.mixergy_hot_water_temperature",
-                      "icon_color": "red"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "type": "energy-solar-graph"
-            },
-            {
               "type": "custom:expander-card",
               "title": "Force Charge",
               "cards": [
@@ -639,6 +422,64 @@
               ],
               "clear": false,
               "expanded": false
+            },
+            {
+              "type": "vertical-stack",
+              "cards": [
+                {
+                  "type": "custom:decluttering-card",
+                  "template": "mixergy"
+                },
+                {
+                  "type": "custom:mushroom-chips-card",
+                  "alignment": "justify",
+                  "chips": [
+                    {
+                      "type": "entity",
+                      "entity": "sensor.mixergy_coldest_water_temperature",
+                      "icon_color": "blue"
+                    },
+                    {
+                      "type": "template",
+                      "content": "{{states('sensor.mixergy_heatpump_heat') | title}}",
+                      "entity": "sensor.mixergy_heatpump_heat",
+                      "icon": "mdi:heat-pump-outline",
+                      "icon_color": "{{'green' if is_state('sensor.mixergy_heatpump_heat','on') }}",
+                      "tap_action": {
+                        "action": "navigate",
+                        "navigation_path": "/lovelace/utility"
+                      }
+                    },
+                    {
+                      "type": "template",
+                      "entity": "switch.pv_divert_enabled",
+                      "icon": "{{'mdi:toggle-switch-outline' if is_state('switch.pv_divert_enabled','on') else 'mdi:toggle-switch-off-outline'}}",
+                      "icon_color": "{{'green' if is_state('switch.pv_divert_enabled','on') else 'red'}}",
+                      "tap_action": {
+                        "action": "toggle"
+                      }
+                    },
+                    {
+                      "type": "template",
+                      "content": "{{states('sensor.mixergy_electric_pv_power') | float | round(2)}}kWh",
+                      "icon": "mdi:solar-power",
+                      "icon_color": "{{'green' if states('sensor.mixergy_electric_pv_power') | float > 0}}",
+                      "tap_action": {
+                        "action": "navigate",
+                        "navigation_path": "/lovelace/utility"
+                      }
+                    },
+                    {
+                      "type": "entity",
+                      "entity": "sensor.mixergy_hot_water_temperature",
+                      "icon_color": "red"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "energy-solar-graph"
             },
             {
               "type": "vertical-stack",
@@ -916,6 +757,165 @@
                       }
                     ]
                   }
+                }
+              ]
+            },
+            {
+              "type": "custom:apexcharts-card",
+              "header": {
+                "show": true,
+                "title": "5-min Average",
+                "show_states": true,
+                "colorize_states": true
+              },
+              "graph_span": "24h",
+              "experimental": {
+                "brush": true,
+                "hidden_by_default": true
+              },
+              "brush": {
+                "selection_span": "4h"
+              },
+              "span": {
+                "end": "minute"
+              },
+              "all_series_config": {
+                "stroke_width": 2,
+                "extend_to": "now",
+                "group_by": {
+                  "duration": "5min",
+                  "func": "avg"
+                }
+              },
+              "yaxis": [
+                {
+                  "id": "power",
+                  "show": true
+                },
+                {
+                  "id": "percent",
+                  "show": true,
+                  "opposite": true,
+                  "min": 0,
+                  "max": 100
+                }
+              ],
+              "series": [
+                {
+                  "entity": "sensor.solax_local_pv_output",
+                  "yaxis_id": "power",
+                  "name": "PV",
+                  "type": "area",
+                  "opacity": 0.25,
+                  "show": {
+                    "in_brush": true
+                  }
+                },
+                {
+                  "entity": "sensor.solax_local_pv1_output",
+                  "yaxis_id": "power",
+                  "name": "East",
+                  "show": {
+                    "hidden_by_default": true
+                  }
+                },
+                {
+                  "entity": "sensor.solax_local_pv2_output",
+                  "yaxis_id": "power",
+                  "name": "South",
+                  "show": {
+                    "hidden_by_default": true
+                  }
+                },
+                {
+                  "entity": "sensor.solax_local_grid_power",
+                  "yaxis_id": "power",
+                  "name": "Grid",
+                  "color": "#31526A"
+                },
+                {
+                  "entity": "sensor.solax_local_load_power",
+                  "yaxis_id": "power",
+                  "name": "House",
+                  "show": {
+                    "in_brush": true
+                  }
+                },
+                {
+                  "entity": "sensor.solax_local_battery_power",
+                  "yaxis_id": "power",
+                  "name": "Battery"
+                },
+                {
+                  "entity": "sensor.solax_local_battery_soc",
+                  "yaxis_id": "percent",
+                  "name": "SoC",
+                  "color": "#397771"
+                }
+              ]
+            },
+            {
+              "type": "custom:apexcharts-card",
+              "header": {
+                "show": true,
+                "title": "Solar Forecast",
+                "show_states": false
+              },
+              "experimental": {
+                "color_threshold": true
+              },
+              "graph_span": "6d",
+              "span": {
+                "start": "day"
+              },
+              "yaxis": [
+                {
+                  "min": 0,
+                  "max": 50
+                }
+              ],
+              "apex_config": {
+                "dataLabels": {
+                  "offsetY": -10,
+                  "position": "top",
+                  "background": {
+                    "enabled": false
+                  },
+                  "style": {
+                    "colors": [
+                      "#808080"
+                    ]
+                  }
+                }
+              },
+              "series": [
+                {
+                  "entity": "sensor.solcast_pv_forecast_forecast_today",
+                  "type": "column",
+                  "show": {
+                    "datalabels": true,
+                    "extremas": true
+                  },
+                  "color_threshold": [
+                    {
+                      "value": 35,
+                      "color": "#ff5800"
+                    },
+                    {
+                      "value": 25,
+                      "color": "#f58025"
+                    },
+                    {
+                      "value": 15,
+                      "color": "#ffae42"
+                    },
+                    {
+                      "value": 5,
+                      "color": "#fed8b1"
+                    }
+                  ],
+                  "name": "Forecast",
+                  "data_generator": "const now = new Date(); const data = [];\ndata.push([now.setHours(0,0,0,0), hass.states['sensor.solcast_pv_forecast_forecast_today'].state]);\ndata.push([now.setDate(now.getDate()+1), hass.states['sensor.solcast_pv_forecast_forecast_tomorrow'].state]);\ndata.push([now.setDate(now.getDate()+1), hass.states['sensor.solcast_pv_forecast_forecast_day_3'].state]);\ndata.push([now.setDate(now.getDate()+1), hass.states['sensor.solcast_pv_forecast_forecast_day_4'].state]);\ndata.push([now.setDate(now.getDate()+1), hass.states['sensor.solcast_pv_forecast_forecast_day_5'].state]);\ndata.push([now.setDate(now.getDate()+1), hass.states['sensor.solcast_pv_forecast_forecast_day_6'].state]);\ndata.push([now.setDate(now.getDate()+1), hass.states['sensor.solcast_pv_forecast_forecast_day_7'].state]);\nreturn data.reverse();\n"
                 }
               ]
             }

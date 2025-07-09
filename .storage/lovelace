@@ -1473,78 +1473,6 @@
               "name": "Ads blocked (24h)"
             },
             {
-              "type": "grid",
-              "cards": [
-                {
-                  "type": "gauge",
-                  "entity": "sensor.speedtest_download",
-                  "min": 0,
-                  "max": 72,
-                  "severity": {
-                    "green": 50,
-                    "yellow": 30,
-                    "red": 0
-                  },
-                  "name": "Download",
-                  "needle": true
-                },
-                {
-                  "type": "gauge",
-                  "entity": "sensor.speedtest_upload",
-                  "min": 0,
-                  "max": 25,
-                  "severity": {
-                    "green": 15,
-                    "yellow": 10,
-                    "red": 0
-                  },
-                  "name": "Upload",
-                  "needle": true
-                },
-                {
-                  "type": "gauge",
-                  "entity": "sensor.speedtest_ping",
-                  "min": 0,
-                  "max": 50,
-                  "severity": {
-                    "green": 0,
-                    "yellow": 15,
-                    "red": 25
-                  },
-                  "name": "Ping",
-                  "needle": true
-                }
-              ]
-            },
-            {
-              "type": "custom:mini-graph-card",
-              "entities": [
-                {
-                  "entity": "sensor.speedtest_download",
-                  "name": "Download"
-                },
-                {
-                  "entity": "sensor.speedtest_upload",
-                  "name": "Upload"
-                },
-                {
-                  "entity": "sensor.speedtest_ping",
-                  "name": "Ping",
-                  "y_axis": "secondary"
-                }
-              ],
-              "points_per_hour": 30,
-              "line_width": 2,
-              "logarithmic": true,
-              "name": "Bandwidth",
-              "show": {
-                "icon": true,
-                "labels": true,
-                "name": true,
-                "legend": true
-              }
-            },
-            {
               "type": "entities",
               "entities": [
                 "switch.pi_hole"
@@ -2575,6 +2503,17 @@
                 }
               ],
               "type": "vertical-stack"
+            },
+            {
+              "type": "custom:mini-graph-card",
+              "entities": [
+                {
+                  "entity": "sensor.office_motion_illuminance",
+                  "name": "Brightness"
+                }
+              ],
+              "points_per_hour": 5,
+              "line_width": 2
             }
           ]
         },
@@ -4279,6 +4218,12 @@
               "column_span": 3
             }
           ]
+        },
+        {
+          "type": "masonry",
+          "path": "test",
+          "title": "test",
+          "cards": []
         }
       ]
     }
