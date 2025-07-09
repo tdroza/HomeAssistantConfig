@@ -14,7 +14,22 @@ matrix_effect:
   url: http://192.168.1.163/json/state
   method: POST
   payload: '{"on": true, "bri": 128, "seg": {"id": {{segment}}, "fx": {{effect}} }}'
-  
+atom_matrix_text:
+  url: http://192.168.1.172/json/state
+  method: POST
+  payload: '{"on":true, "bri": 128, "seg": [{"id": {{segment}}, "n": "{{text}}","fx":122,"pal":"~"}]}'
+atom_matrix_image:
+  url: http://192.168.1.172/json/state
+  method: POST
+  payload: '{"on":true, "bri": 128, "seg": {"id": {{segment}}, "i":[{{image}}]} }'
+atom_matrix_default:
+  url: http://192.168.1.172/json/state
+  method: POST
+  payload: '{"on": true, "ps": 1, "bri": 128, "seg": {"n": ""}}'
+atom_matrix_effect:
+  url: http://192.168.1.172/json/state
+  method: POST
+  payload: '{"on": true, "bri": 128, "seg": {"id": {{segment}}, "fx": {{effect}} }}'  
 solax_local_charge_battery_from_grid:
     url: !secret solax_local_ip
     method: post

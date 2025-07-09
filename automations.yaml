@@ -1323,8 +1323,8 @@
   use_blueprint:
     path: sbyx/low-battery-level-detection-notification-for-all-battery-sensors.yaml
     input:
-      day: 0
-      threshold: 25
+      day: 6
+      threshold: 15
       exclude0: sensor.annas_phone_battery_level
       actions:
       - data:
@@ -1334,7 +1334,7 @@
       exclude1: sensor.toms_phone_battery_level
       exclude2: sensor.annas_watch_battery_level
       exclude3: sensor.toms_watch_battery_level
-      exclude4: sensor.openepaperlink_ap_battery_percentage
+      exclude4: sensor.840b2d9178ad0131_battery_percentage
 - id: '1609885331052'
   alias: 'Lights: Turn off boys'' light at bedtime'
   description: ''
@@ -3073,12 +3073,6 @@
         entity_id: f035cd56447801b7312fbce5f9453fa1
         domain: light
       button_top_left_hold_in:
-      - service: light.turn_on
-        data:
-          brightness_pct: 30
-        target:
-          device_id:
-          - d06086fc62c3d9eb55cc76e0ae5de10a
       - type: turn_on
         device_id: 61f89eb89fac9724606bb7e0ffc52c9b
         entity_id: c3b9816ec82bfeb67dcd86d19b0adac7
@@ -3121,10 +3115,10 @@
         entity_id: f035cd56447801b7312fbce5f9453fa1
         domain: light
       button_bottom_left_hold_in:
-      - service: media_player.volume_down
-        data: {}
+      - data: {}
         target:
           entity_id: media_player.reuben_s_room_speaker
+        action: media_player.volume_down
       button_bottom_right_single_press:
       - type: turn_on
         device_id: e04b748fc61f7ca1d9a4a202ddcefe7a
@@ -3141,16 +3135,16 @@
         entity_id: f035cd56447801b7312fbce5f9453fa1
         domain: light
       button_bottom_right_hold_in:
-      - service: media_player.volume_up
-        data: {}
+      - data: {}
         target:
           entity_id: media_player.reuben_s_room_speaker
+        action: media_player.volume_up
       button_bottom_right_triple_press:
-      - service: light.turn_on
-        target:
+      - target:
           entity_id: light.rname
         data:
           effect: '{{ state_attr(''light.rname'', ''effect_list'') | random }}'
+        action: light.turn_on
       button_top_right_triple_press: []
 - id: '1693819219757'
   alias: 'Solax: Reset grid charge at 7am'
@@ -4403,25 +4397,30 @@
 - id: '1708165342713'
   alias: 'Dishwasher: Finished notification'
   description: ''
-  trigger:
+  triggers:
   - entity_id:
     - binary_sensor.dishwasher
     from: 'on'
-    platform: state
     to: 'off'
-  condition: []
-  action:
+    trigger: state
+  conditions:
+  - condition: state
+    entity_id: input_boolean.do_not_disturb
+    state: 'off'
+  - condition: not
+    conditions:
+    - condition: state
+      entity_id: media_player.living_room_display
+      state: playing
+  actions:
   - data:
-      entity_id:
-      - media_player.kitchen_display
-      - media_player.living_room_display
-      - media_player.office_wifi
+      entity_id: media_player.kitchen_display
       message: The dishwasher has finished.
-    service: tts.google_translate_say
-  - service: notify.tom_and_anna
-    data:
+    action: tts.google_translate_say
+  - data:
       title: Dishwasher
       message: "\U0001F37D️ The dishwasher has finished"
+    action: notify.tom_and_anna
   mode: single
 - id: '1709651798349'
   alias: 'Notify: Oven hot'
@@ -5070,3 +5069,44 @@
         title: Tarantella twist
       twM_Il1l120:
         title: The quiet of the night
+- id: '1752057077234'
+  alias: Atom Matrix MtGox
+  description: ''
+  triggers:
+  - entity_id:
+    - sensor.mtgox_btc_payout
+    trigger: state
+  conditions:
+  - condition: time
+    after: 08:00:00
+    before: '18:00:00'
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+  - condition: state
+    entity_id: binary_sensor.workday_sensor
+    state: 'on'
+  actions:
+  - choose:
+    - conditions:
+      - condition: template
+        value_template: '{{ trigger.to_state.state | int - trigger.from_state.state
+          | int  > 0}}'
+      sequence:
+      - action: rest_command.atom_matrix_image
+        data:
+          image: '"000000","000000","ff2500","000000","000000","000000","000000","ff2500","000000","000000","ff2500","000000","ff2500","000000","ff2500","000000","ff2500","ff2500","ff2500","000000","000000","000000","ff2500","000000","000000"'
+          segment: 0
+    - conditions:
+      - condition: template
+        value_template: '{{ trigger.to_state.state | int - trigger.from_state.state
+          | int  < 0}}'
+      sequence:
+      - action: rest_command.atom_matrix_image
+        data:
+          image: '"000000","000000","00ff00","000000","000000","000000","00ff00","00ff00","00ff00","000000","00ff00","000000","00ff00","000000","00ff00","000000","000000","00ff00","000000","000000","000000","000000","00ff00","000000","000000"'
+          segment: 0
+  mode: single
