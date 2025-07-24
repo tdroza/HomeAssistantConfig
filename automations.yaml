@@ -1606,7 +1606,7 @@
     entity_id: binary_sensor.workday_sensor
     state: 'on'
   - condition: template
-    value_template: '{{state_attr(''sensor.family_events'',''events'')|selectattr(''summary'',''contains'',''oliday'')|list|length
+    value_template: '{{[state_attr(''sensor.family_events'',''events'')[0]]|selectattr(''summary'',''contains'',''oliday'')|list|length
       == 0}}'
   actions:
   - data:
@@ -5109,4 +5109,19 @@
         data:
           image: '"000000","000000","00ff00","000000","000000","000000","00ff00","00ff00","00ff00","000000","00ff00","000000","00ff00","000000","00ff00","000000","000000","00ff00","000000","000000","000000","000000","00ff00","000000","000000"'
           segment: 0
+  mode: single
+- id: '1753093071937'
+  alias: Speedtest update
+  description: Periodically poll speedtest.net to update bandwidth sensors
+  triggers:
+  - trigger: time_pattern
+    hours: /4
+    minutes: '17'
+  conditions: []
+  actions:
+  - action: homeassistant.update_entity
+    metadata: {}
+    data:
+      entity_id:
+      - sensor.speedtest_download
   mode: single
