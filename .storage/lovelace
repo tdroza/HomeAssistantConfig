@@ -1477,6 +1477,17 @@
               "entities": [
                 "switch.pi_hole"
               ]
+            },
+            {
+              "type": "custom:mini-graph-card",
+              "entities": [
+                "sensor.speedtest_download",
+                "sensor.speedtest_upload",
+                {
+                  "entity": "sensor.speedtest_ping",
+                  "y_axis": "secondary"
+                }
+              ]
             }
           ],
           "icon": "mdi:network",
@@ -2394,7 +2405,9 @@
                       "entity": "light.toms_desk_master",
                       "tap_action": {
                         "action": "toggle"
-                      }
+                      },
+                      "features_position": "bottom",
+                      "vertical": false
                     },
                     {
                       "color": "accent",
@@ -2403,6 +2416,13 @@
                       "tap_action": {
                         "action": "toggle"
                       }
+                    }
+                  ],
+                  "visibility": [
+                    {
+                      "condition": "state",
+                      "entity": "switch.toms_desk",
+                      "state": "on"
                     }
                   ]
                 },
@@ -2606,11 +2626,15 @@
                   "cards": [
                     {
                       "type": "tile",
-                      "entity": "climate.hive_thermostat"
+                      "entity": "climate.hive_thermostat",
+                      "features_position": "bottom",
+                      "vertical": false
                     },
                     {
                       "type": "tile",
-                      "entity": "binary_sensor.living_room_door"
+                      "entity": "binary_sensor.living_room_door",
+                      "features_position": "bottom",
+                      "vertical": false
                     }
                   ]
                 },
@@ -2653,112 +2677,108 @@
                         }
                       ],
                       "card": {
+                        "show_name": true,
+                        "show_icon": true,
                         "type": "button",
                         "tap_action": {
                           "action": "toggle"
                         },
                         "entity": "light.window"
                       }
-                    },
-                    {
-                      "type": "custom:card-templater",
-                      "entities": [
-                        "sensor.temps_min_stats",
-                        "sensor.temps_max_stats"
-                      ],
-                      "card": {
-                        "color_thresholds": [
-                          {
-                            "value_template": "{{ states(\"sensor.temps_min_stats\")|float - states(\"sensor.temps_min_stats\")|float }}",
-                            "color_template": "{{ states(\"input_text.colour_low\")}}"
-                          },
-                          {
-                            "value_template": "{{ states(\"sensor.temps_min_stats\")|float }}",
-                            "color_template": "{{ states(\"input_text.colour_medium_low\")}}"
-                          },
-                          {
-                            "value_template": "{{ (states(\"sensor.temps_min_stats\")|float +  states(\"sensor.temps_max_stats\")|float)/2 }}",
-                            "color_template": "{{ states(\"input_text.colour_medium\")}}"
-                          },
-                          {
-                            "value_template": "{{ states(\"sensor.temps_max_stats\")|float }}",
-                            "color_template": "{{ states(\"input_text.colour_medium_high\")}}"
-                          },
-                          {
-                            "value_template": "{{ states(\"sensor.temps_max_stats\")|float - states(\"sensor.temps_max_stats\")|float }}",
-                            "color_template": "{{ states(\"input_text.colour_high\")}}"
-                          }
-                        ],
-                        "entities": [
-                          {
-                            "entity": "climate.hive_thermostat",
-                            "attribute": "current_temperature",
-                            "name": "Hive Temp",
-                            "show_fill": false,
-                            "show_line": false,
-                            "smoothing": false,
-                            "show_state": true
-                          },
-                          {
-                            "entity": "climate.hive_thermostat",
-                            "attribute": "temperature",
-                            "index": 0,
-                            "name": "Target",
-                            "color": "lightblue",
-                            "show_fill": false
-                          },
-                          {
-                            "entity": "sensor.daytime",
-                            "y_axis": "secondary",
-                            "color": "orange",
-                            "name": "Day/Night",
-                            "show_fill": true,
-                            "show_line": false,
-                            "smoothing": false,
-                            "show_state": false
-                          },
-                          {
-                            "entity": "sensor.living_room_temp",
-                            "index": 0,
-                            "name": "D1Temp",
-                            "show_fill": false
-                          },
-                          {
-                            "entity": "climate.hive_thermostat",
-                            "attribute": "hvac_action",
-                            "y_axis": "secondary",
-                            "color": "grey",
-                            "name": "Heating",
-                            "show_fill": true,
-                            "show_line": false,
-                            "smoothing": false,
-                            "show_state": true
-                          }
-                        ],
-                        "state_map": [
-                          {
-                            "label": "Idle",
-                            "value": "idle"
-                          },
-                          {
-                            "label": "Heating",
-                            "value": "heating"
-                          }
-                        ],
-                        "name": "Living room",
-                        "points_per_hour": 20,
-                        "hours_to_show_template": "{{96 if states('input_boolean.extended_history')=='on' else 24}}",
-                        "line_width": 2,
-                        "lower_bound": 10,
-                        "show": {
-                          "icon": false,
-                          "labels": true,
-                          "name": false
-                        },
-                        "type": "custom:mini-graph-card"
-                      }
                     }
                   ]
+                },
+                {
+                  "type": "custom:card-templater",
+                  "entities": [
+                    "sensor.temps_min_stats",
+                    "sensor.temps_max_stats"
+                  ],
+                  "card": {
+                    "color_thresholds": [
+                      {
+                        "value_template": "{{ states(\"sensor.temps_min_stats\")|float - states(\"sensor.temps_min_stats\")|float }}",
+                        "color_template": "{{ states(\"input_text.colour_low\")}}"
+                      },
+                      {
+                        "value_template": "{{ states(\"sensor.temps_min_stats\")|float }}",
+                        "color_template": "{{ states(\"input_text.colour_medium_low\")}}"
+                      },
+                      {
+                        "value_template": "{{ (states(\"sensor.temps_min_stats\")|float +  states(\"sensor.temps_max_stats\")|float)/2 }}",
+                        "color_template": "{{ states(\"input_text.colour_medium\")}}"
+                      },
+                      {
+                        "value_template": "{{ states(\"sensor.temps_max_stats\")|float }}",
+                        "color_template": "{{ states(\"input_text.colour_medium_high\")}}"
+                      },
+                      {
+                        "value_template": "{{ states(\"sensor.temps_max_stats\")|float - states(\"sensor.temps_max_stats\")|float }}",
+                        "color_template": "{{ states(\"input_text.colour_high\")}}"
+                      }
+                    ],
+                    "entities": [
+                      {
+                        "entity": "climate.hive_thermostat",
+                        "attribute": "current_temperature",
+                        "name": "Hive Temp",
+                        "show_fill": false,
+                        "show_line": false,
+                        "smoothing": false,
+                        "show_state": true
+                      },
+                      {
+                        "entity": "climate.hive_thermostat",
+                        "attribute": "temperature",
+                        "index": 0,
+                        "name": "Target",
+                        "color": "lightblue",
+                        "show_fill": false
+                      },
+                      {
+                        "entity": "sensor.daytime",
+                        "y_axis": "secondary",
+                        "color": "orange",
+                        "name": "Day/Night",
+                        "show_fill": true,
+                        "show_line": false,
+                        "smoothing": false,
+                        "show_state": false
+                      },
+                      {
+                        "entity": "climate.hive_thermostat",
+                        "attribute": "hvac_action",
+                        "y_axis": "secondary",
+                        "color": "grey",
+                        "name": "Heating",
+                        "show_fill": true,
+                        "show_line": false,
+                        "smoothing": false,
+                        "show_state": true
+                      }
+                    ],
+                    "state_map": [
+                      {
+                        "label": "Idle",
+                        "value": "idle"
+                      },
+                      {
+                        "label": "Heating",
+                        "value": "heating"
+                      }
+                    ],
+                    "name": "Living room",
+                    "points_per_hour": 20,
+                    "hours_to_show_template": "{{96 if states('input_boolean.extended_history')=='on' else 24}}",
+                    "line_width": 2,
+                    "lower_bound": 10,
+                    "show": {
+                      "icon": false,
+                      "labels": true,
+                      "name": false
+                    },
+                    "type": "custom:mini-graph-card"
+                  }
                 },
                 {
                   "type": "custom:mushroom-chips-card",
@@ -2776,14 +2796,9 @@
                     },
                     {
                       "type": "entity",
-                      "entity": "binary_sensor.lumi_lumi_sensor_motion_aq2_occupancy"
+                      "entity": "input_boolean.living_room_occupancy"
                     }
                   ]
-                },
-                {
-                  "type": "entity",
-                  "entity": "input_boolean.living_room_occupancy",
-                  "state_color": true
                 }
               ],
               "type": "vertical-stack"
