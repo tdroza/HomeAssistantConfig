@@ -45,6 +45,7 @@ sensor:
           - 26.1 -> 19.9
           - 24.2 -> 18.7
           - 26.3 -> 20.7
+    accuracy_decimals: 1
           
 binary_sensor:
   - platform: gpio
