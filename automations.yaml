@@ -367,24 +367,24 @@
 - id: '1581776307274'
   alias: 'Washer: Notify done (repeat)'
   description: ''
-  trigger:
+  triggers:
   - minutes: /15
-    platform: time_pattern
-  condition:
+    trigger: time_pattern
+  conditions:
   - condition: template
     value_template: '{{ as_timestamp(now()) - as_timestamp(states.binary_sensor.washer.last_changed)
       > 10*60 }}'
   - condition: state
     entity_id: input_boolean.do_not_disturb
     state: 'off'
-  action:
+  actions:
   - data:
       entity_id:
       - media_player.living_room_display
       - media_player.hallway_home
-      message: The washing machine finished {{ relative_time(states.binary_sensor.washer.last_changed)
-        }} ago, please hang out the washing
-    service: tts.google_translate_say
+      message: '{{ "The washing machine finished " +  relative_time(states.binary_sensor.washer.last_changed)
+        +" ago, please hang out the washing" | regex_replace(find='' '',replace=''-'')}}'
+    action: tts.google_translate_say
   - data:
       title: Washing Machine
       message: "\U0001F9FA The washing machine finished {{ relative_time(states.binary_sensor.washer.last_changed)
@@ -396,7 +396,7 @@
         group: Washing machine
         channel: WashingMachine
         tag: washer-repeat
-    service: notify.tom_and_anna
+    action: notify.tom_and_anna
   mode: single
 - id: '1581777155699'
   alias: 'Washer: Machine finished'
