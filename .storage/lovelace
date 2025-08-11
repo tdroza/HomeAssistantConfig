@@ -549,30 +549,6 @@
                   "type": "horizontal-stack",
                   "cards": [
                     {
-                      "features": [
-                        {
-                          "type": "area-controls",
-                          "controls": [
-                            "light"
-                          ]
-                        }
-                      ],
-                      "alert_classes": [
-                        "door",
-                        "motion"
-                      ],
-                      "sensor_classes": [
-                        "temperature",
-                        "humidity"
-                      ],
-                      "features_position": "inline",
-                      "display_type": "compact",
-                      "type": "area",
-                      "area": "20f98b0288cb453a85b1ad468ed4301e",
-                      "color": "",
-                      "navigation_path": "/lovelace/living-room"
-                    },
-                    {
                       "alert_classes": [
                         "motion",
                         "moisture"
@@ -587,6 +563,16 @@
                       "area": "e843d7c555324a8fa8925f7a87a0831f",
                       "color": "",
                       "navigation_path": "/lovelace/kitchen"
+                    },
+                    {
+                      "alert_classes": [],
+                      "sensor_classes": [],
+                      "features_position": "bottom",
+                      "display_type": "compact",
+                      "type": "area",
+                      "area": "utility",
+                      "color": "",
+                      "navigation_path": "/lovelace/utility"
                     }
                   ]
                 },
@@ -610,22 +596,35 @@
                         "temperature",
                         "humidity"
                       ],
-                      "features_position": "inline",
+                      "features_position": "bottom",
+                      "display_type": "compact",
+                      "type": "area",
+                      "area": "20f98b0288cb453a85b1ad468ed4301e",
+                      "color": "",
+                      "navigation_path": "/lovelace/living-room"
+                    },
+                    {
+                      "features": [
+                        {
+                          "type": "area-controls",
+                          "controls": [
+                            "light"
+                          ]
+                        }
+                      ],
+                      "alert_classes": [
+                        "motion"
+                      ],
+                      "sensor_classes": [
+                        "temperature",
+                        "illuminance"
+                      ],
+                      "features_position": "bottom",
                       "display_type": "compact",
                       "type": "area",
                       "area": "b3e17bb69aba419bacc48dbbb6fa5f73",
                       "color": "",
                       "navigation_path": "/lovelace/hallway"
-                    },
-                    {
-                      "alert_classes": [],
-                      "sensor_classes": [],
-                      "features_position": "bottom",
-                      "display_type": "compact",
-                      "type": "area",
-                      "area": "utility",
-                      "color": "",
-                      "navigation_path": "/lovelace/utility"
                     }
                   ]
                 },
@@ -655,25 +654,26 @@
                       ]
                     },
                     {
+                      "features": [
+                        {
+                          "type": "area-controls"
+                        }
+                      ],
                       "alert_classes": [
                         "motion",
-                        "moisture"
+                        "occupancy"
                       ],
                       "sensor_classes": [
                         "temperature",
-                        "humidity"
+                        "humidity",
+                        "illuminance"
                       ],
                       "features_position": "bottom",
                       "display_type": "compact",
                       "type": "area",
                       "area": "office",
                       "color": "",
-                      "navigation_path": "/lovelace/office",
-                      "features": [
-                        {
-                          "type": "area-controls"
-                        }
-                      ]
+                      "navigation_path": "/lovelace/office"
                     }
                   ]
                 },
@@ -697,7 +697,7 @@
                         "temperature",
                         "humidity"
                       ],
-                      "features_position": "inline",
+                      "features_position": "bottom",
                       "display_type": "compact",
                       "type": "area",
                       "area": "4b995d6687c94e4f8f83b0784cf367f2",
@@ -722,7 +722,7 @@
                         "temperature",
                         "humidity"
                       ],
-                      "features_position": "inline",
+                      "features_position": "bottom",
                       "display_type": "compact",
                       "type": "area",
                       "area": "95dd572faf634c73a8de516c508ac206",
@@ -736,18 +736,7 @@
                   "type": "horizontal-stack",
                   "cards": [
                     {
-                      "features": [
-                        {
-                          "type": "area-controls",
-                          "controls": [
-                            "light"
-                          ]
-                        }
-                      ],
-                      "alert_classes": [
-                        "door",
-                        "motion"
-                      ],
+                      "alert_classes": [],
                       "sensor_classes": [
                         "temperature",
                         "humidity"
