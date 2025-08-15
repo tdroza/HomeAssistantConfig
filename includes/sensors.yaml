@@ -326,22 +326,26 @@
   type: min
   name: all_temps_min
   entity_ids:
-    - sensor.bed1_temperature
-    - sensor.seb_temperature
+    - sensor.bathroom_climate_temperature
+    - sensor.ensuite_climate_temperature
+    - sensor.kitchen_climate_temperature
+    - sensor.office_climate_temperature
+    - sensor.main_bedroom_temperature
+    - sensor.seb_d1_temperature
     - sensor.reu_d1_temperature
-    - sensor.bathroom_temperature
-    - sensor.ensuite_temperature
-    - sensor.living_room_temp
+    - sensor.living_room_climate_temperature
 - platform: min_max
   type: max
   name: all_temps_max
   entity_ids:
-    - sensor.bed1_temperature
-    - sensor.seb_temperature
+    - sensor.bathroom_climate_temperature
+    - sensor.ensuite_climate_temperature
+    - sensor.kitchen_climate_temperature
+    - sensor.office_climate_temperature
+    - sensor.main_bedroom_temperature
+    - sensor.seb_d1_temperature
     - sensor.reu_d1_temperature
-    - sensor.bathroom_temperature
-    - sensor.ensuite_temperature
-    - sensor.living_room_temp
+    - sensor.living_room_climate_temperature
 - platform: statistics
   state_characteristic: mean
   name: temps_min_stats

@@ -2489,7 +2489,7 @@
                       "card": {
                         "color_thresholds": [
                           {
-                            "value_template": "{{ states(\"sensor.temps_min_stats\")|float - states(\"sensor.temps_min_stats\")|float }}",
+                            "value_template": "{{ states(\"sensor.temps_min_stats\")|float }}",
                             "color_template": "{{ states(\"input_text.colour_low\")}}"
                           },
                           {
@@ -2497,15 +2497,15 @@
                             "color_template": "{{ states(\"input_text.colour_medium_low\")}}"
                           },
                           {
-                            "value_template": "{{ (states(\"sensor.temps_min_stats\")|float +  states(\"sensor.temps_max_stats\")|float)/2 }}",
+                            "value_template": "{{ states(\"sensor.temps_min_stats\") | float + (states(\"sensor.temps_max_stats\") | float - states(\"sensor.temps_min_stats\") | float )/3}}",
                             "color_template": "{{ states(\"input_text.colour_medium\")}}"
                           },
                           {
-                            "value_template": "{{ states(\"sensor.temps_max_stats\")|float }}",
+                            "value_template": "{{ states(\"sensor.temps_max_stats\") | float - (states(\"sensor.temps_max_stats\") | float - states(\"sensor.temps_min_stats\") | float )/3}}",
                             "color_template": "{{ states(\"input_text.colour_medium_high\")}}"
                           },
                           {
-                            "value_template": "{{ states(\"sensor.temps_max_stats\")|float - states(\"sensor.temps_max_stats\")|float }}",
+                            "value_template": "{{ states(\"sensor.temps_max_stats\")|float }}",
                             "color_template": "{{ states(\"input_text.colour_high\")}}"
                           }
                         ],
@@ -2743,7 +2743,7 @@
                   "card": {
                     "color_thresholds": [
                       {
-                        "value_template": "{{ states(\"sensor.temps_min_stats\")|float - states(\"sensor.temps_min_stats\")|float }}",
+                        "value_template": "{{ states(\"sensor.temps_min_stats\")|float }}",
                         "color_template": "{{ states(\"input_text.colour_low\")}}"
                       },
                       {
@@ -2751,15 +2751,15 @@
                         "color_template": "{{ states(\"input_text.colour_medium_low\")}}"
                       },
                       {
-                        "value_template": "{{ (states(\"sensor.temps_min_stats\")|float +  states(\"sensor.temps_max_stats\")|float)/2 }}",
+                        "value_template": "{{ states(\"sensor.temps_min_stats\") | float + (states(\"sensor.temps_max_stats\") | float - states(\"sensor.temps_min_stats\") | float )/3}}",
                         "color_template": "{{ states(\"input_text.colour_medium\")}}"
                       },
                       {
-                        "value_template": "{{ states(\"sensor.temps_max_stats\")|float }}",
+                        "value_template": "{{ states(\"sensor.temps_max_stats\") | float - (states(\"sensor.temps_max_stats\") | float - states(\"sensor.temps_min_stats\") | float )/3}}",
                         "color_template": "{{ states(\"input_text.colour_medium_high\")}}"
                       },
                       {
-                        "value_template": "{{ states(\"sensor.temps_max_stats\")|float - states(\"sensor.temps_max_stats\")|float }}",
+                        "value_template": "{{ states(\"sensor.temps_max_stats\")|float }}",
                         "color_template": "{{ states(\"input_text.colour_high\")}}"
                       }
                     ],
@@ -2965,7 +2965,7 @@
                       "card": {
                         "color_thresholds": [
                           {
-                            "value_template": "{{ states(\"sensor.temps_min_stats\")|float - states(\"sensor.temps_min_stats\")|float }}",
+                            "value_template": "{{ states(\"sensor.temps_min_stats\")|float }}",
                             "color_template": "{{ states(\"input_text.colour_low\")}}"
                           },
                           {
@@ -2973,15 +2973,15 @@
                             "color_template": "{{ states(\"input_text.colour_medium_low\")}}"
                           },
                           {
-                            "value_template": "{{ (states(\"sensor.temps_min_stats\")|float +  states(\"sensor.temps_max_stats\")|float)/2 }}",
+                            "value_template": "{{ states(\"sensor.temps_min_stats\") | float + (states(\"sensor.temps_max_stats\") | float - states(\"sensor.temps_min_stats\") | float )/3}}",
                             "color_template": "{{ states(\"input_text.colour_medium\")}}"
                           },
                           {
-                            "value_template": "{{ states(\"sensor.temps_max_stats\")|float }}",
+                            "value_template": "{{ states(\"sensor.temps_max_stats\") | float - (states(\"sensor.temps_max_stats\") | float - states(\"sensor.temps_min_stats\") | float )/3}}",
                             "color_template": "{{ states(\"input_text.colour_medium_high\")}}"
                           },
                           {
-                            "value_template": "{{ states(\"sensor.temps_max_stats\")|float - states(\"sensor.temps_max_stats\")|float }}",
+                            "value_template": "{{ states(\"sensor.temps_max_stats\")|float }}",
                             "color_template": "{{ states(\"input_text.colour_high\")}}"
                           }
                         ],
@@ -3184,7 +3184,7 @@
                   "card": {
                     "color_thresholds": [
                       {
-                        "value_template": "{{ states(\"sensor.temps_min_stats\")|float - states(\"sensor.temps_min_stats\")|float }}",
+                        "value_template": "{{ states(\"sensor.temps_min_stats\")|float }}",
                         "color_template": "{{ states(\"input_text.colour_low\")}}"
                       },
                       {
@@ -3192,15 +3192,15 @@
                         "color_template": "{{ states(\"input_text.colour_medium_low\")}}"
                       },
                       {
-                        "value_template": "{{ (states(\"sensor.temps_min_stats\")|float +  states(\"sensor.temps_max_stats\")|float)/2 }}",
+                        "value_template": "{{ states(\"sensor.temps_min_stats\") | float + (states(\"sensor.temps_max_stats\") | float - states(\"sensor.temps_min_stats\") | float )/3}}",
                         "color_template": "{{ states(\"input_text.colour_medium\")}}"
                       },
                       {
-                        "value_template": "{{ states(\"sensor.temps_max_stats\")|float }}",
+                        "value_template": "{{ states(\"sensor.temps_max_stats\") | float - (states(\"sensor.temps_max_stats\") | float - states(\"sensor.temps_min_stats\") | float )/3}}",
                         "color_template": "{{ states(\"input_text.colour_medium_high\")}}"
                       },
                       {
-                        "value_template": "{{ states(\"sensor.temps_max_stats\")|float - states(\"sensor.temps_max_stats\")|float }}",
+                        "value_template": "{{ states(\"sensor.temps_max_stats\")|float }}",
                         "color_template": "{{ states(\"input_text.colour_high\")}}"
                       }
                     ],
@@ -3391,7 +3391,7 @@
                   "card": {
                     "color_thresholds": [
                       {
-                        "value_template": "{{ states(\"sensor.temps_min_stats\")|float - states(\"sensor.temps_min_stats\")|float }}",
+                        "value_template": "{{ states(\"sensor.temps_min_stats\")|float }}",
                         "color_template": "{{ states(\"input_text.colour_low\")}}"
                       },
                       {
@@ -3399,15 +3399,15 @@
                         "color_template": "{{ states(\"input_text.colour_medium_low\")}}"
                       },
                       {
-                        "value_template": "{{ (states(\"sensor.temps_min_stats\")|float +  states(\"sensor.temps_max_stats\")|float)/2 }}",
+                        "value_template": "{{ states(\"sensor.temps_min_stats\") | float + (states(\"sensor.temps_max_stats\") | float - states(\"sensor.temps_min_stats\") | float )/3}}",
                         "color_template": "{{ states(\"input_text.colour_medium\")}}"
                       },
                       {
-                        "value_template": "{{ states(\"sensor.temps_max_stats\")|float }}",
+                        "value_template": "{{ states(\"sensor.temps_max_stats\") | float - (states(\"sensor.temps_max_stats\") | float - states(\"sensor.temps_min_stats\") | float )/3}}",
                         "color_template": "{{ states(\"input_text.colour_medium_high\")}}"
                       },
                       {
-                        "value_template": "{{ states(\"sensor.temps_max_stats\")|float - states(\"sensor.temps_max_stats\")|float }}",
+                        "value_template": "{{ states(\"sensor.temps_max_stats\")|float }}",
                         "color_template": "{{ states(\"input_text.colour_high\")}}"
                       }
                     ],
@@ -3763,7 +3763,7 @@
                       "card": {
                         "color_thresholds": [
                           {
-                            "value_template": "{{ states(\"sensor.temps_min_stats\")|float - states(\"sensor.temps_min_stats\")|float }}",
+                            "value_template": "{{ states(\"sensor.temps_min_stats\")|float }}",
                             "color_template": "{{ states(\"input_text.colour_low\")}}"
                           },
                           {
@@ -3771,15 +3771,15 @@
                             "color_template": "{{ states(\"input_text.colour_medium_low\")}}"
                           },
                           {
-                            "value_template": "{{ (states(\"sensor.temps_min_stats\")|float +  states(\"sensor.temps_max_stats\")|float)/2 }}",
+                            "value_template": "{{ states(\"sensor.temps_min_stats\") | float + (states(\"sensor.temps_max_stats\") | float - states(\"sensor.temps_min_stats\") | float )/3}}",
                             "color_template": "{{ states(\"input_text.colour_medium\")}}"
                           },
                           {
-                            "value_template": "{{ states(\"sensor.temps_max_stats\")|float }}",
+                            "value_template": "{{ states(\"sensor.temps_max_stats\") | float - (states(\"sensor.temps_max_stats\") | float - states(\"sensor.temps_min_stats\") | float )/3}}",
                             "color_template": "{{ states(\"input_text.colour_medium_high\")}}"
                           },
                           {
-                            "value_template": "{{ states(\"sensor.temps_max_stats\")|float - states(\"sensor.temps_max_stats\")|float }}",
+                            "value_template": "{{ states(\"sensor.temps_max_stats\")|float }}",
                             "color_template": "{{ states(\"input_text.colour_high\")}}"
                           }
                         ],
@@ -3814,7 +3814,7 @@
                       "card": {
                         "color_thresholds": [
                           {
-                            "value_template": "{{ states(\"sensor.temps_min_stats\")|float - states(\"sensor.temps_min_stats\")|float }}",
+                            "value_template": "{{ states(\"sensor.temps_min_stats\")|float }}",
                             "color_template": "{{ states(\"input_text.colour_low\")}}"
                           },
                           {
@@ -3822,15 +3822,15 @@
                             "color_template": "{{ states(\"input_text.colour_medium_low\")}}"
                           },
                           {
-                            "value_template": "{{ (states(\"sensor.temps_min_stats\")|float +  states(\"sensor.temps_max_stats\")|float)/2 }}",
+                            "value_template": "{{ states(\"sensor.temps_min_stats\") | float + (states(\"sensor.temps_max_stats\") | float - states(\"sensor.temps_min_stats\") | float )/3}}",
                             "color_template": "{{ states(\"input_text.colour_medium\")}}"
                           },
                           {
-                            "value_template": "{{ states(\"sensor.temps_max_stats\")|float }}",
+                            "value_template": "{{ states(\"sensor.temps_max_stats\") | float - (states(\"sensor.temps_max_stats\") | float - states(\"sensor.temps_min_stats\") | float )/3}}",
                             "color_template": "{{ states(\"input_text.colour_medium_high\")}}"
                           },
                           {
-                            "value_template": "{{ states(\"sensor.temps_max_stats\")|float - states(\"sensor.temps_max_stats\")|float }}",
+                            "value_template": "{{ states(\"sensor.temps_max_stats\")|float }}",
                             "color_template": "{{ states(\"input_text.colour_high\")}}"
                           }
                         ],
@@ -3964,7 +3964,7 @@
                   "card": {
                     "color_thresholds": [
                       {
-                        "value_template": "{{ states(\"sensor.temps_min_stats\")|float - states(\"sensor.temps_min_stats\")|float }}",
+                        "value_template": "{{ states(\"sensor.temps_min_stats\")|float }}",
                         "color_template": "{{ states(\"input_text.colour_low\")}}"
                       },
                       {
@@ -3972,15 +3972,15 @@
                         "color_template": "{{ states(\"input_text.colour_medium_low\")}}"
                       },
                       {
-                        "value_template": "{{ (states(\"sensor.temps_min_stats\")|float +  states(\"sensor.temps_max_stats\")|float)/2 }}",
+                        "value_template": "{{ states(\"sensor.temps_min_stats\") | float + (states(\"sensor.temps_max_stats\") | float - states(\"sensor.temps_min_stats\") | float )/3}}",
                         "color_template": "{{ states(\"input_text.colour_medium\")}}"
                       },
                       {
-                        "value_template": "{{ states(\"sensor.temps_max_stats\")|float }}",
+                        "value_template": "{{ states(\"sensor.temps_max_stats\") | float - (states(\"sensor.temps_max_stats\") | float - states(\"sensor.temps_min_stats\") | float )/3}}",
                         "color_template": "{{ states(\"input_text.colour_medium_high\")}}"
                       },
                       {
-                        "value_template": "{{ states(\"sensor.temps_max_stats\")|float - states(\"sensor.temps_max_stats\")|float }}",
+                        "value_template": "{{ states(\"sensor.temps_max_stats\")|float }}",
                         "color_template": "{{ states(\"input_text.colour_high\")}}"
                       }
                     ],
@@ -4117,7 +4117,7 @@
                       "card": {
                         "color_thresholds": [
                           {
-                            "value_template": "{{ states(\"sensor.temps_min_stats\")|float - states(\"sensor.temps_min_stats\")|float }}",
+                            "value_template": "{{ states(\"sensor.temps_min_stats\")|float }}",
                             "color_template": "{{ states(\"input_text.colour_low\")}}"
                           },
                           {
@@ -4125,15 +4125,15 @@
                             "color_template": "{{ states(\"input_text.colour_medium_low\")}}"
                           },
                           {
-                            "value_template": "{{ (states(\"sensor.temps_min_stats\")|float +  states(\"sensor.temps_max_stats\")|float)/2 }}",
+                            "value_template": "{{ states(\"sensor.temps_min_stats\") | float + (states(\"sensor.temps_max_stats\") | float - states(\"sensor.temps_min_stats\") | float )/3}}",
                             "color_template": "{{ states(\"input_text.colour_medium\")}}"
                           },
                           {
-                            "value_template": "{{ states(\"sensor.temps_max_stats\")|float }}",
+                            "value_template": "{{ states(\"sensor.temps_max_stats\") | float - (states(\"sensor.temps_max_stats\") | float - states(\"sensor.temps_min_stats\") | float )/3}}",
                             "color_template": "{{ states(\"input_text.colour_medium_high\")}}"
                           },
                           {
-                            "value_template": "{{ states(\"sensor.temps_max_stats\")|float - states(\"sensor.temps_max_stats\")|float }}",
+                            "value_template": "{{ states(\"sensor.temps_max_stats\")|float }}",
                             "color_template": "{{ states(\"input_text.colour_high\")}}"
                           }
                         ],
