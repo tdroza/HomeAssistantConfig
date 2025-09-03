@@ -492,57 +492,81 @@
                     "type": "vertical-stack",
                     "cards": [
                       {
-                        "type": "horizontal-stack",
-                        "cards": [
+                        "type": "custom:paper-buttons-row",
+                        "styles": {
+                          "background-color": "var(--secondary-background-color)",
+                          "border-radius": "24px",
+                          "border": "4px solid var(--secondary-background-color)",
+                          "justify-content": "center",
+                          "width": "max-content",
+                          "margin": "0 auto"
+                        },
+                        "buttons": [
                           {
-                            "type": "custom:mushroom-chips-card",
-                            "chips": [
-                              {
-                                "type": "template",
-                                "icon": "mdi:solar-power",
-                                "content": "Solax",
-                                "card_mod": {
-                                  "style": "ha-card {                                            \n  border: 2.5px solid #44739e !important;                  \n  --chip-border-radius: 5px;\n}\n"
-                                },
-                                "tap_action": {
-                                  "action": "fire-dom-event",
-                                  "local_conditional_card": {
-                                    "action": "set",
-                                    "ids": [
-                                      {
-                                        "solax_tab": "show"
-                                      },
-                                      {
-                                        "solcast_tab": "hide"
-                                      }
-                                    ]
+                            "layout": "icon|name",
+                            "name": "Inverter",
+                            "icon": "mdi:solar-power",
+                            "tap_action": {
+                              "action": "fire-dom-event",
+                              "local_conditional_card": {
+                                "action": "set",
+                                "ids": [
+                                  {
+                                    "solax_tab": "show"
+                                  },
+                                  {
+                                    "solcast_tab": "hide"
                                   }
-                                }
-                              },
-                              {
-                                "type": "template",
-                                "content": "Solcast",
-                                "icon": "mdi:sun-clock",
-                                "card_mod": {
-                                  "style": "ha-card {                                                                    \n  --chip-border-radius: 5px;\n}                    \n"
-                                },
-                                "tap_action": {
-                                  "action": "fire-dom-event",
-                                  "local_conditional_card": {
-                                    "action": "set",
-                                    "ids": [
-                                      {
-                                        "solax_tab": "hide"
-                                      },
-                                      {
-                                        "solcast_tab": "show"
-                                      }
-                                    ]
-                                  }
-                                }
+                                ]
                               }
-                            ],
-                            "alignment": "center"
+                            },
+                            "styles": {
+                              "name": {
+                                "color": "var(--primary-text-color)"
+                              },
+                              "icon": {
+                                "color": "var(--primary-text-color)"
+                              },
+                              "button": {
+                                "background": "#44739e",
+                                "border-radius": "24px;",
+                                "height": "28px",
+                                "display": "flex"
+                              }
+                            }
+                          },
+                          {
+                            "layout": "icon|name",
+                            "name": "Forecast",
+                            "icon": "mdi:sun-clock",
+                            "tap_action": {
+                              "action": "fire-dom-event",
+                              "local_conditional_card": {
+                                "action": "set",
+                                "ids": [
+                                  {
+                                    "solax_tab": "hide"
+                                  },
+                                  {
+                                    "solcast_tab": "show"
+                                  }
+                                ]
+                              }
+                            },
+                            "styles": {
+                              "name": {
+                                "color": "var(--secondary-text-color)"
+                              },
+                              "icon": {
+                                "color": "var(--secondary-text-color)"
+                              },
+                              "button": {
+                                "background": "none",
+                                "border-radius": "24px;",
+                                "height": "24px",
+                                "display": "flex"
+                              }
+                            }
                           }
                         ]
                       },
@@ -639,57 +663,81 @@
                     "type": "vertical-stack",
                     "cards": [
                       {
-                        "type": "horizontal-stack",
-                        "cards": [
+                        "type": "custom:paper-buttons-row",
+                        "styles": {
+                          "background-color": "var(--secondary-background-color)",
+                          "border-radius": "24px",
+                          "border": "4px solid var(--secondary-background-color)",
+                          "justify-content": "center",
+                          "width": "max-content",
+                          "margin": "0 auto"
+                        },
+                        "buttons": [
                           {
-                            "type": "custom:mushroom-chips-card",
-                            "chips": [
-                              {
-                                "type": "template",
-                                "icon": "mdi:solar-power",
-                                "content": "Solax",
-                                "card_mod": {
-                                  "style": "ha-card {                                                                    \n  --chip-border-radius: 5px;\n}                   \n"
-                                },
-                                "tap_action": {
-                                  "action": "fire-dom-event",
-                                  "local_conditional_card": {
-                                    "action": "set",
-                                    "ids": [
-                                      {
-                                        "solax_tab": "show"
-                                      },
-                                      {
-                                        "solcast_tab": "hide"
-                                      }
-                                    ]
+                            "layout": "icon|name",
+                            "name": "Inverter",
+                            "icon": "mdi:solar-power",
+                            "tap_action": {
+                              "action": "fire-dom-event",
+                              "local_conditional_card": {
+                                "action": "set",
+                                "ids": [
+                                  {
+                                    "solax_tab": "show"
+                                  },
+                                  {
+                                    "solcast_tab": "hide"
                                   }
-                                }
-                              },
-                              {
-                                "type": "template",
-                                "content": "Solcast",
-                                "icon": "mdi:sun-clock",
-                                "card_mod": {
-                                  "style": "ha-card {                                            \n  border: 2.5px solid #44739e !important;                  \n  --chip-border-radius: 5px;\n}                  \n"
-                                },
-                                "tap_action": {
-                                  "action": "fire-dom-event",
-                                  "local_conditional_card": {
-                                    "action": "set",
-                                    "ids": [
-                                      {
-                                        "solax_tab": "hide"
-                                      },
-                                      {
-                                        "solcast_tab": "show"
-                                      }
-                                    ]
-                                  }
-                                }
+                                ]
                               }
-                            ],
-                            "alignment": "center"
+                            },
+                            "styles": {
+                              "name": {
+                                "color": "var(--secondary-text-color)"
+                              },
+                              "icon": {
+                                "color": "var(--secondary-text-color)"
+                              },
+                              "button": {
+                                "background": "var(--secondary-background-color)",
+                                "border-radius": "24px;",
+                                "height": "28px",
+                                "display": "flex"
+                              }
+                            }
+                          },
+                          {
+                            "layout": "icon|name",
+                            "name": "Forecast",
+                            "icon": "mdi:sun-clock",
+                            "tap_action": {
+                              "action": "fire-dom-event",
+                              "local_conditional_card": {
+                                "action": "set",
+                                "ids": [
+                                  {
+                                    "solax_tab": "hide"
+                                  },
+                                  {
+                                    "solcast_tab": "show"
+                                  }
+                                ]
+                              }
+                            },
+                            "styles": {
+                              "name": {
+                                "color": "var(--primary-text-color)"
+                              },
+                              "icon": {
+                                "color": "var(--primary-text-color)"
+                              },
+                              "button": {
+                                "background": "#44739e",
+                                "border-radius": "24px;",
+                                "height": "24px",
+                                "display": "flex"
+                              }
+                            }
                           }
                         ]
                       },
