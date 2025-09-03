@@ -1338,32 +1338,31 @@
 - id: '1609885331052'
   alias: 'Lights: Turn off boys'' light at bedtime'
   description: ''
-  trigger:
-  - platform: time
-    at: input_datetime.boys_bedtime
-  condition: []
-  action:
-  - service: light.turn_on
-    target:
+  triggers:
+  - at: input_datetime.boys_bedtime
+    trigger: time
+  conditions: []
+  actions:
+  - target:
       entity_id:
       - light.sebs_ceiling
     data:
       brightness: 25
-      color_name: green
-  - service: light.turn_on
-    target:
+      color_name: white
+    action: light.turn_on
+  - target:
       entity_id:
       - light.reubens_ceiling
     data:
       brightness: 25
       color_name: orange
+    action: light.turn_on
   - delay:
       hours: 0
       minutes: 15
       seconds: 0
       milliseconds: 0
-  - service: light.turn_off
-    data: {}
+  - data: {}
     target:
       entity_id:
       - light.sebs_lamp
@@ -1371,6 +1370,7 @@
       - light.sebs_ceiling
       - light.rname
       - light.sebs_floorlamp
+    action: light.turn_off
   mode: restart
 - id: '1611402292310'
   alias: 'Lights: turn on main bedroom light when door opens'
@@ -1609,6 +1609,7 @@
     value_template: '{{[state_attr(''sensor.family_events'',''events'')[0]]|selectattr(''summary'',''contains'',''oliday'')|list|length
       == 0 and (as_timestamp(strptime(state_attr(''sensor.family_events'',''events'')[0].start,''%Y-%m-%d''))
       | timestamp_local | as_datetime) < now}}'
+    enabled: false
   actions:
   - data:
       transition: 600
