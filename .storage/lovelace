@@ -791,9 +791,23 @@
               "title": "Weather",
               "cards": [
                 {
-                  "entity": "weather.millview",
+                  "entity": "weather.forecast_home",
                   "type": "custom:weather-card",
-                  "number_of_forecasts": "5"
+                  "number_of_forecasts": "2"
+                },
+                {
+                  "type": "custom:hourly-weather",
+                  "entity": "weather.forecast_home",
+                  "icons": true,
+                  "num_segments": 12,
+                  "show_precipitation_probability": true,
+                  "show_precipitation_amounts": true,
+                  "show_wind": true
+                },
+                {
+                  "type": "custom:clock-weather-card",
+                  "entity": "weather.forecast_home",
+                  "hide_today_section": true
                 }
               ],
               "clear": false,
