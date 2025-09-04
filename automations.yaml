@@ -5127,3 +5127,22 @@
       entity_id:
       - sensor.speedtest_download
   mode: single
+- id: '1756994419719'
+  alias: Tom's Phone Alarm
+  description: ''
+  triggers:
+  - trigger: time
+    at:
+      entity_id: sensor.tom_s_phone_next_alarm
+      offset: -00:00:01
+  conditions:
+  - condition: zone
+    entity_id: person.tom
+    zone: zone.home
+  actions:
+  - action: notify.mobile_app_toms_phone
+    metadata: {}
+    data:
+      message: ⏰ Tom's phone alarm just triggered
+      title: ⏰Wake Up!
+  mode: single
