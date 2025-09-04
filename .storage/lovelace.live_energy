@@ -496,8 +496,8 @@
                         "styles": {
                           "background-color": "var(--secondary-background-color)",
                           "border-radius": "24px",
-                          "border": "4px solid var(--secondary-background-color)",
                           "justify-content": "center",
+                          "height": "40px",
                           "width": "max-content",
                           "margin": "0 auto"
                         },
@@ -528,9 +528,9 @@
                                 "color": "var(--primary-text-color)"
                               },
                               "button": {
-                                "background": "#44739e",
+                                "background": "var(--primary-color)",
                                 "border-radius": "24px;",
-                                "height": "28px",
+                                "border": "4px solid var(--primary-color)",
                                 "display": "flex"
                               }
                             }
@@ -563,7 +563,6 @@
                               "button": {
                                 "background": "none",
                                 "border-radius": "24px;",
-                                "height": "24px",
                                 "display": "flex"
                               }
                             }
@@ -667,7 +666,7 @@
                         "styles": {
                           "background-color": "var(--secondary-background-color)",
                           "border-radius": "24px",
-                          "border": "4px solid var(--secondary-background-color)",
+                          "height": "40px",
                           "justify-content": "center",
                           "width": "max-content",
                           "margin": "0 auto"
@@ -732,7 +731,8 @@
                                 "color": "var(--primary-text-color)"
                               },
                               "button": {
-                                "background": "#44739e",
+                                "background": "var(--primary-color)",
+                                "border": "4px solid var(--primary-color)",
                                 "border-radius": "24px;",
                                 "height": "24px",
                                 "display": "flex"
