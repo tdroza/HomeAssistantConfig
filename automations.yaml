@@ -1468,7 +1468,7 @@
   alias: Anna's watch & phone - turn off charger
   description: Turn off when fully charged, when unplugged, or at 08:30
   triggers:
-  - at: 08:30:00
+  - at: 09:30:00
     id: time
     trigger: time
   - type: not_plugged_in
@@ -5090,6 +5090,9 @@
     - fri
   - condition: state
     entity_id: binary_sensor.workday_sensor
+    state: 'on'
+  - condition: state
+    entity_id: light.atommatrix
     state: 'on'
   actions:
   - choose:
