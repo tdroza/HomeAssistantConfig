@@ -1617,7 +1617,7 @@
                   "camera_view": "auto",
                   "fit_mode": "cover",
                   "type": "picture-entity",
-                  "entity": "camera.reus_calendar_content",
+                  "entity": "camera.0000021f40f13b1f_content",
                   "hold_action": {
                     "action": "call-service",
                     "service": "automation.trigger",
@@ -1645,7 +1645,7 @@
                   "camera_view": "auto",
                   "fit_mode": "cover",
                   "type": "picture-entity",
-                  "entity": "camera.sebs_calendar_content",
+                  "entity": "camera.0000021fb7d03b14_content",
                   "hold_action": {
                     "action": "call-service",
                     "service": "automation.trigger",
@@ -2666,25 +2666,14 @@
                   ]
                 },
                 {
-                  "type": "thermostat",
-                  "entity": "climate.hive_thermostat",
-                  "show_current_as_primary": true,
-                  "features": [
-                    {
-                      "style": "icons",
-                      "preset_modes": [
-                        "boost",
-                        "none"
-                      ],
-                      "type": "climate-preset-modes"
-                    }
-                  ],
-                  "name": "Hive"
-                },
-                {
                   "type": "horizontal-stack",
                   "cards": [
                     {
+                      "features": [
+                        {
+                          "type": "target-temperature"
+                        }
+                      ],
                       "type": "tile",
                       "entity": "climate.hive_thermostat",
                       "features_position": "bottom",
@@ -4293,12 +4282,6 @@
               "column_span": 3
             }
           ]
-        },
-        {
-          "type": "masonry",
-          "path": "test",
-          "title": "test",
-          "cards": []
         }
       ]
     }
