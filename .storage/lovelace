@@ -1589,7 +1589,7 @@
                   "camera_view": "auto",
                   "fit_mode": "cover",
                   "type": "picture-entity",
-                  "entity": "camera.0000021e69133b19_content",
+                  "entity": "image.0000021e69133b19_content",
                   "hold_action": {
                     "action": "call-service",
                     "service": "automation.trigger",
@@ -1617,7 +1617,7 @@
                   "camera_view": "auto",
                   "fit_mode": "cover",
                   "type": "picture-entity",
-                  "entity": "camera.0000021f40f13b1f_content",
+                  "entity": "image.0000021f40f13b1f_content",
                   "hold_action": {
                     "action": "call-service",
                     "service": "automation.trigger",
@@ -1645,7 +1645,7 @@
                   "camera_view": "auto",
                   "fit_mode": "cover",
                   "type": "picture-entity",
-                  "entity": "camera.0000021fb7d03b14_content",
+                  "entity": "image.0000021fb7d03b14_content",
                   "hold_action": {
                     "action": "call-service",
                     "service": "automation.trigger",
@@ -1673,7 +1673,7 @@
                   "camera_view": "auto",
                   "fit_mode": "cover",
                   "type": "picture-entity",
-                  "entity": "camera.00000218cf5d3b19_content",
+                  "entity": "image.00000218cf5d3b19_content",
                   "hold_action": {
                     "action": "call-service",
                     "service": "automation.trigger",
@@ -1701,7 +1701,7 @@
                   "camera_view": "auto",
                   "fit_mode": "cover",
                   "type": "picture-entity",
-                  "entity": "camera.0000021d19153414_content",
+                  "entity": "image.0000021d19153414_content",
                   "hold_action": {
                     "action": "call-service",
                     "service": "automation.trigger",
