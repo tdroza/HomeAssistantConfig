@@ -5149,3 +5149,97 @@
       message: ⏰ Tom's phone alarm just triggered
       title: ⏰Wake Up!
   mode: single
+- id: '1757519853810'
+  alias: 'Solax: Force discharge battery before free electricity'
+  description: ''
+  triggers:
+  - trigger: template
+    value_template: '{% if state_attr(''binary_sensor.octopus_energy_a_ffeaa20a_octoplus_free_electricity_session'',''next_event_duration_in_minutes'')   %}
+
+      {{(state_attr(''binary_sensor.octopus_energy_a_ffeaa20a_octoplus_free_electricity_session'',''next_event_start''))
+      - timedelta(minutes=state_attr(''binary_sensor.octopus_energy_a_ffeaa20a_octoplus_free_electricity_session'',''next_event_duration_in_minutes''))
+      < now()}}
+
+      {% else  %}
+
+      {{false }}
+
+      {% endif %}'
+  conditions: []
+  actions:
+  - action: rest_command.solax_local_set_inverter_mode
+    data:
+      inverter_mode: '{{state_attr(''input_select.solax_inverter_mode'',''options'').index(''Manual'')}}
+
+        '
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 5
+      milliseconds: 0
+  - action: rest_command.solax_local_set_manual_mode
+    data:
+      manual_mode: '{{ state_attr(''input_select.solax_manual_mode'',''options'').index(''Forced
+        discharge'')}}
+
+        '
+  mode: single
+- id: '1757520265683'
+  alias: 'Solax: Force charge battery during free electricity'
+  description: ''
+  triggers:
+  - trigger: template
+    value_template: '{{ (state_attr(''binary_sensor.octopus_energy_a_ffeaa20a_octoplus_free_electricity_session'',''next_event_start''))
+      < now()}}'
+  conditions: []
+  actions:
+  - action: notify.tom_and_anna
+    data:
+      title: ⚡Free electricity!
+      message: There is free electricity for the next {{ state_attr('binary_sensor.octopus_energy_a_ffeaa20a_octoplus_free_electricity_session','next_event_duration_in_minutes')|int}}
+        minutes.
+  - action: rest_command.solax_local_set_inverter_mode
+    data:
+      inverter_mode: '{{ state_attr(''input_select.solax_inverter_mode'',''options'').index(''Manual'')
+        }}
+
+        '
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 5
+      milliseconds: 0
+  - action: rest_command.solax_local_set_manual_mode
+    data:
+      manual_mode: '{{ state_attr(''input_select.solax_manual_mode'',''options'').index(''Forced
+        charge'')}}
+
+        '
+  mode: single
+- id: '1757520352730'
+  alias: 'Solax: Reset inverter to Self-use after free electricity'
+  description: ''
+  triggers:
+  - trigger: template
+    value_template: '{% if state_attr(''binary_sensor.octopus_energy_a_ffeaa20a_octoplus_free_electricity_session'',''next_event_duration_in_minutes'')   %}
+
+      {{ (state_attr(''binary_sensor.octopus_energy_a_ffeaa20a_octoplus_free_electricity_session'',''next_event_start''))
+      < now() + timedelta(minutes=state_attr(''binary_sensor.octopus_energy_a_ffeaa20a_octoplus_free_electricity_session'',''next_event_duration_in_minutes''))}}
+
+      {% else  %}
+
+      {{false }}
+
+      {% endif %}
+
+
+      '
+  conditions: []
+  actions:
+  - action: rest_command.solax_local_set_inverter_mode
+    data:
+      inverter_mode: '{{ state_attr(''input_select.solax_inverter_mode'',''options'').index(''Self-use'')
+        }}
+
+        '
+  mode: single

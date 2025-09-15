@@ -160,54 +160,53 @@
                   "filter": {
                     "include": [
                       {
-                        "entity_id": "sensor.myenergi_harvi_ct3_oven",
                         "options": {
                           "type": "entity",
-                          "icon_color": "green",
+                          "icon_color": "red",
                           "content_info": "none"
-                        }
+                        },
+                        "entity_id": "sensor.myenergi_harvi_ct3_oven"
                       },
                       {
-                        "entity_id": "sensor.myenergi_zappi_internal_load_ct1",
                         "options": {
                           "type": "entity",
                           "content_info": "none",
-                          "icon_color": null
-                        }
+                          "icon_color": "blue"
+                        },
+                        "entity_id": "sensor.myenergi_zappi_internal_load_ct1"
                       },
                       {
-                        "entity_id": "sensor.myenergi_harvi_ct2_heatpump",
-                        "state": ">75",
                         "options": {
                           "type": "entity",
                           "content_info": "none",
                           "icon_color": "red"
-                        }
+                        },
+                        "entity_id": "sensor.myenergi_harvi_ct2_heatpump",
+                        "state": ">75"
                       },
                       {
-                        "entity_id": "climate.hive_thermostat",
-                        "attributes": {
-                          "hvac_action": "heating"
-                        },
                         "options": {
                           "type": "template",
                           "tap_action": "none",
                           "icon": "mdi:fire",
                           "icon_color": "red",
                           "content": "{{state_attr('climate.hive_thermostat','current_temperature')}} ⁰C"
+                        },
+                        "entity_id": "climate.hive_thermostat",
+                        "attributes": {
+                          "hvac_action": "heating"
                         }
                       },
                       {
-                        "entity_id": "sensor.mixergy_heatpump_heat",
                         "options": {
                           "type": "template",
                           "icon": "mdi:water-thermometer",
                           "icon_color": "purple",
                           "content": "{{states('sensor.mixergy_current_charge')}}%"
-                        }
+                        },
+                        "entity_id": "sensor.mixergy_heatpump_heat"
                       },
                       {
-                        "entity_id": "switch.heated_airer",
                         "options": {
                           "type": "entity",
                           "content_info": "none",
@@ -216,55 +215,59 @@
                             "action": "navigate",
                             "navigation_path": "/lovelace/utility"
                           }
-                        }
+                        },
+                        "entity_id": "switch.heated_airer"
                       },
                       {
-                        "entity_id": "binary_sensor.washer",
                         "options": {
                           "type": "template",
                           "icon": "mdi:washing-machine",
                           "icon_color": "#D0CC5B",
                           "content": "{{(states('sensor.sonoff_10003a0e20_power')|int / 1000) | round(2)}}kW"
-                        }
+                        },
+                        "entity_id": "binary_sensor.washer"
                       },
                       {
-                        "entity_id": "binary_sensor.dishwasher",
                         "options": {
                           "type": "template",
                           "icon": "mdi:dishwasher",
                           "icon_color": "orange",
                           "content": "{{(states('sensor.sonoff_dishwasher_power')|int / 1000) | round(2)}}kW"
-                        }
+                        },
+                        "entity_id": "binary_sensor.dishwasher"
                       },
                       {
-                        "entity_id": "sensor.mixergy_electric_pv_power",
-                        "state": ">1",
                         "options": {
                           "type": "template",
                           "icon": "mdi:water-boiler",
                           "icon_color": "#2196f3",
                           "tap_action": "none",
                           "content": "{{states('sensor.mixergy_electric_pv_power') | round(2)}} kW"
-                        }
+                        },
+                        "entity_id": "sensor.mixergy_electric_pv_power",
+                        "state": ">1"
                       },
                       {
-                        "entity_id": "sensor.mixergy_electric_heat_power",
                         "options": {
                           "type": "template",
                           "icon": "mdi:water-boiler",
                           "icon_color": "red",
                           "content": "{{states('sensor.mixergy_electric_heat_power') | int /1000 }} kW"
-                        }
+                        },
+                        "entity_id": "sensor.mixergy_electric_heat_power"
                       }
                     ],
                     "exclude": [
                       {
+                        "options": {},
                         "state": "off"
                       },
                       {
+                        "options": {},
                         "state": "unavailable"
                       },
                       {
+                        "options": {},
                         "state": "<=0"
                       }
                     ]
@@ -572,6 +575,26 @@
                       {
                         "type": "entities",
                         "entities": [
+                          {
+                            "entity": "sensor.solax_local_work_mode",
+                            "name": "Work Mode",
+                            "icon": "mdi:auto-mode",
+                            "secondary_info": "none"
+                          },
+                          {
+                            "type": "conditional",
+                            "conditions": [
+                              {
+                                "entity": "sensor.solax_local_work_mode",
+                                "state": "Manual"
+                              }
+                            ],
+                            "row": {
+                              "entity": "sensor.solax_local_manual_mode",
+                              "name": "Manual mode",
+                              "icon": "mdi:align-vertical-center"
+                            }
+                          },
                           {
                             "entity": "sensor.solax_local_pv_output",
                             "name": "PV Combined",

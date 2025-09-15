@@ -93,11 +93,22 @@
 ### Make the settings look like sensor data by embedding the info in the Data attribute 
     - name: solax_local_settings
       state: > 
-            {{ now().strftime("%H:%M:%S") }}
+        {{ now().strftime("%H:%M:%S") }}
       attributes: 
         Data: >-
           {{ (states('sensor.solax_rest_local_settings')) }}
-
+    - name: solax_local_work_mode
+      state: > 
+        {{ state_attr('input_select.solax_inverter_mode','options')[state_attr('sensor.solax_local_settings', 'Data')[8]  | int(default=0)] }}
+      attributes:
+        Data: >-
+          {{ state_attr('sensor.solax_local_settings', 'Data')[8]  | int(default=0) }}
+    - name: solax_local_manual_mode
+      state: > 
+        {{ state_attr('input_select.solax_manual_mode','options')[state_attr('sensor.solax_local_settings', 'Data')[9]  | int(default=0)] }}
+      attributes:
+        Data: >-
+          {{ state_attr('sensor.solax_local_settings', 'Data')[9]  | int(default=0) }}           
 #### PV1 and PV2 output ####
     - name: "Solax Local PV1 Output"
       unique_id: solax_local_pv1_output

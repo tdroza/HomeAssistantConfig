@@ -30,6 +30,14 @@ atom_matrix_effect:
   url: http://192.168.1.172/json/state
   method: POST
   payload: '{"on": true, "bri": 40, "seg": {"id": {{segment}}, "fx": {{effect}} }}'  
+solax_local_set_inverter_mode:
+    url: !secret solax_local_ip
+    method: post
+    payload: !secret solax_local_set_inverter_mode_payload
+solax_local_set_manual_mode:
+    url: !secret solax_local_ip
+    method: post
+    payload: !secret solax_local_set_manual_mode_payload
 solax_local_charge_battery_from_grid:
     url: !secret solax_local_ip
     method: post
