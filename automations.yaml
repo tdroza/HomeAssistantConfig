@@ -5137,17 +5137,34 @@
   - trigger: time
     at:
       entity_id: sensor.tom_s_phone_next_alarm
-      offset: -00:00:01
+      offset: -00:00:03
+    id: tom
   conditions:
-  - condition: zone
-    entity_id: person.tom
-    zone: zone.home
+  - condition: and
+    conditions:
+    - condition: trigger
+      id:
+      - tom
+    - condition: zone
+      entity_id: person.tom
+      zone: zone.home
   actions:
   - action: notify.mobile_app_toms_phone
     metadata: {}
     data:
       message: ⏰ Tom's phone alarm just triggered
       title: ⏰Wake Up!
+  - delay:
+      hours: 0
+      minutes: 5
+      seconds: 0
+      milliseconds: 0
+  - action: light.turn_on
+    metadata: {}
+    data:
+      transition: 300
+    target:
+      entity_id: light.main_bedroom_ceiling
   mode: single
 - id: '1757519853810'
   alias: 'Solax: Force discharge battery before free electricity'
