@@ -101,12 +101,12 @@ nudge_blind_open:
         entity:
           domain: cover
   sequence:
-  - service: cover.set_cover_position
-    target:
+  - target:
       entity_id: '{{target_blind}}'
     data_template:
-      position: '{{  min([100,states.number.office_blind_analog_output.state | int
-        + 10]) }}'
+      position: '{{  min([100,state_attr(''cover.office_blind'',''current_position'')
+        | int + 10]) }}'
+    action: cover.set_cover_position
   mode: single
   icon: mdi:archive-arrow-up
 nudge_blind_closed:
@@ -121,12 +121,12 @@ nudge_blind_closed:
         entity:
           domain: cover
   sequence:
-  - service: cover.set_cover_position
-    target:
+  - target:
       entity_id: '{{target_blind}}'
     data_template:
-      position: '{{  max([0,states.number.office_blind_analog_output.state | int -
-        10]) }}'
+      position: '{{  max([0, state_attr(''cover.office_blind'',''current_position'')
+        | int - 10]) }}'
+    action: cover.set_cover_position
   mode: single
   icon: mdi:archive-arrow-down
 nudge_light_brighter:
