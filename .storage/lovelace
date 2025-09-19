@@ -1514,7 +1514,7 @@
             {
               "entities": [
                 {
-                  "entity": "sensor.pi_hole_ads_blocked_today"
+                  "entity": "sensor.pi_hole_ads_blocked"
                 }
               ],
               "show": {
