@@ -982,28 +982,28 @@
   alias: Bedtime - phone charging and radiator
   description: Turn off light, turn on lamp, set radiator to low when phone or watch
     starts charging
-  trigger:
+  triggers:
   - type: plugged_in
-    platform: device
-    device_id: 477d49fc145f319f69ea1a3b8857f6ea
-    entity_id: binary_sensor.toms_phone_is_charging
+    device_id: 62e190f5e6f45c72a4b4fc4e8eafcb33
+    entity_id: 70b6304073219feeb10e65ed35e0fc80
     domain: binary_sensor
+    trigger: device
   - type: plugged_in
-    platform: device
     device_id: c51d67872c3edb614fac7a32412e6d7c
     entity_id: binary_sensor.toms_watch_is_charging
     domain: binary_sensor
+    trigger: device
   - type: plugged_in
-    platform: device
     device_id: f077cacd0f2cbb4b86567e2891d541e5
     entity_id: d7fc079832a774243bc42d0b9fcf7cc3
     domain: binary_sensor
+    trigger: device
   - type: plugged_in
-    platform: device
     device_id: 7df9b28318e1f535b7d778b2ce767f41
     entity_id: 38647301ac793871e60d3d9bd8712fd7
     domain: binary_sensor
-  condition:
+    trigger: device
+  conditions:
   - condition: time
     after: '21:30'
     before: '23:30:00'
@@ -1015,7 +1015,7 @@
     - condition: zone
       entity_id: person.tom
       zone: zone.home
-  action:
+  actions:
   - data:
       temperature: 16
     target:
@@ -1040,11 +1040,11 @@
   description: Stop charging at 80%
   triggers:
   - type: battery_level
-    device_id: 477d49fc145f319f69ea1a3b8857f6ea
-    entity_id: sensor.toms_phone_battery_level
+    device_id: 62e190f5e6f45c72a4b4fc4e8eafcb33
+    entity_id: 24cfbadabb11b3cb51214e68df595c16
     domain: sensor
-    above: 80
     trigger: device
+    above: 80
   conditions:
   - condition: time
     after: '22:00'
@@ -1088,11 +1088,11 @@
   - at: 08:30
     trigger: time
   - type: battery_level
-    device_id: 477d49fc145f319f69ea1a3b8857f6ea
-    entity_id: 3e73f1ade38098a05bc61ce0c592d789
+    device_id: 62e190f5e6f45c72a4b4fc4e8eafcb33
+    entity_id: 24cfbadabb11b3cb51214e68df595c16
     domain: sensor
-    above: 99
     trigger: device
+    above: 99
   - entity_id:
     - sensor.toms_phone_charger_type
     from: ac
@@ -4710,12 +4710,19 @@
   triggers:
   - value_template: '{{now().strftime("%H:%M %m %d") == "07:05 11 19"}}'
     trigger: template
+    id: birthday
   - value_template: '{{now().strftime("%H:%M %m %d") == "07:00 09 28"}}'
     trigger: template
+    id: birthday
   - value_template: '{{now().strftime("%H:%M %m %d") == "07:00 10 26"}}'
     trigger: template
+    id: birthday
   - value_template: '{{now().strftime("%H:%M %m %d") == "07:00 01 25"}}'
     trigger: template
+    id: birthday
+  - value_template: '{{now().strftime("%H:%M %m %d") == "08:00 09 21"}}'
+    trigger: template
+    id: Sept21
   conditions: []
   actions:
   - data:
@@ -4728,12 +4735,33 @@
     action: media_player.select_source
     target:
       entity_id: media_player.ytube_music_player
-  - data:
-      media_content_id: 4skFDCjxHkU
-      media_content_type: track
-    target:
-      entity_id: media_player.ytube_music_player
-    action: media_player.play_media
+  - choose:
+    - conditions:
+      - condition: trigger
+        id:
+        - birthday
+      sequence:
+      - data:
+          media:
+            media_content_id: 4skFDCjxHkU
+            media_content_type: track
+            metadata: {}
+        target:
+          entity_id: media_player.ytube_music_player
+        action: media_player.play_media
+    - conditions:
+      - condition: trigger
+        id:
+        - Sept21
+      sequence:
+      - data:
+          media:
+            media_content_id: 3cKtSlsYVEU
+            media_content_type: track
+            metadata: {}
+        target:
+          entity_id: media_player.ytube_music_player
+        action: media_player.play_media
   mode: single
 - id: '1733399277741'
   alias: 'OEPL: Xmas Advent Countdown'
