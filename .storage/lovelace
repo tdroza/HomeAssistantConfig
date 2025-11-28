@@ -3102,7 +3102,9 @@
                   "cards": [
                     {
                       "type": "tile",
-                      "entity": "binary_sensor.fridge_door"
+                      "entity": "binary_sensor.fridge_door",
+                      "vertical": false,
+                      "features_position": "bottom"
                     },
                     {
                       "type": "tile",
@@ -3120,63 +3122,208 @@
                   ]
                 },
                 {
-                  "type": "custom:vacuum-card",
-                  "entity": "vacuum.ditto",
-                  "image": "default",
-                  "stats": {
-                    "default": [
-                      {
-                        "entity_id": "sensor.vacuum_last_qm",
-                        "subtitle": "Last clean area"
-                      },
-                      {
-                        "entity_id": "sensor.vacuum_last_run",
-                        "subtitle": "Last clean date"
-                      }
-                    ]
+                  "type": "custom:xiaomi-vacuum-map-card",
+                  "map_source": {
+                    "camera": "image.clyde_downstairs_custom"
                   },
-                  "shortcuts": [
+                  "calibration_source": {
+                    "camera": true
+                  },
+                  "entity": "vacuum.clyde",
+                  "vacuum_platform": "Roborock",
+                  "map_locked": false,
+                  "two_finger_pan": true,
+                  "tiles": [
                     {
-                      "name": "Clean living room",
-                      "service": "neato.custom_cleaning",
-                      "service_data": {
-                        "entity_id": "vacuum.ditto",
-                        "zone": "Living room"
-                      },
-                      "icon": "mdi:sofa"
+                      "label": "Status",
+                      "icon": "mdi:robot-vacuum",
+                      "entity": "sensor.clyde_status"
                     },
                     {
-                      "name": "Clean Whole Room",
-                      "service": "neato.custom_cleaning",
-                      "service_data": {
-                        "entity_id": "vacuum.ditto",
-                        "zone": "Whole room"
-                      },
-                      "icon": "mdi:silverware-fork-knife"
+                      "label": "Battery",
+                      "icon": "mdi:battery",
+                      "entity": "sensor.clyde_battery"
                     },
                     {
-                      "name": "Clean Kitchen",
-                      "service": "neato.custom_cleaning",
-                      "service_data": {
-                        "entity_id": "vacuum.ditto",
-                        "zone": "Kitchen"
-                      },
-                      "icon": "mdi:fridge-variant"
+                      "tile_id": "main_brush_left",
+                      "icon": "mdi:brush",
+                      "label": "Main brush left",
+                      "unit": "h",
+                      "entity": "sensor.clyde_main_brush_time_left",
+                      "precision": 0,
+                      "translations": {}
                     },
                     {
-                      "name": "Clean Hallway",
-                      "service": "neato.custom_cleaning",
-                      "service_data": {
-                        "entity_id": "vacuum.ditto",
-                        "zone": "Hallway"
-                      },
-                      "icon": "mdi:coat-rack"
+                      "tile_id": "sensor_dirty_left",
+                      "icon": "mdi:eye-outline",
+                      "label": "Sensors left",
+                      "unit": "h",
+                      "entity": "sensor.clyde_sensor_time_left",
+                      "precision": 0,
+                      "translations": {}
+                    },
+                    {
+                      "tile_id": "filter_left",
+                      "icon": "mdi:air-filter",
+                      "label": "Filter left",
+                      "unit": "h",
+                      "entity": "sensor.clyde_filter_time_left",
+                      "precision": 0,
+                      "translations": {}
+                    },
+                    {
+                      "tile_id": "side_brush_left",
+                      "icon": "mdi:brush",
+                      "label": "Side brush left",
+                      "unit": "h",
+                      "entity": "sensor.clyde_side_brush_time_left",
+                      "precision": 0,
+                      "translations": {}
+                    },
+                    {
+                      "tile_id": "cleaned_area",
+                      "icon": "mdi:texture-box",
+                      "label": "Cleaned area",
+                      "unit": "m²",
+                      "precision": 2,
+                      "entity": "sensor.clyde_cleaning_area",
+                      "translations": {}
+                    },
+                    {
+                      "tile_id": "cleaning_time",
+                      "icon": "mdi:history",
+                      "label": "Cleaning time",
+                      "unit": "min",
+                      "entity": "sensor.clyde_cleaning_time",
+                      "precision": 0,
+                      "translations": {}
+                    },
+                    {
+                      "tile_id": "cleaning_count",
+                      "icon": "mdi:counter",
+                      "label": "Cleaning count",
+                      "entity": "sensor.clyde_total_cleaning_count",
+                      "precision": 0,
+                      "translations": {}
+                    },
+                    {
+                      "tile_id": "total_cleaning_time",
+                      "icon": "mdi:counter",
+                      "label": "Σ Cleaning Time",
+                      "entity": "sensor.clyde_total_cleaning_time",
+                      "precision": 2,
+                      "translations": {}
                     }
                   ],
-                  "compact_view": false,
-                  "show_name": true,
-                  "show_status": true,
-                  "show_toolbar": true
+                  "map_modes": [
+                    {
+                      "template": "vacuum_clean_segment",
+                      "predefined_selections": [
+                        {
+                          "id": "1",
+                          "icon": {
+                            "name": "mdi:sofa",
+                            "x": 21175,
+                            "y": 25000
+                          },
+                          "label": {
+                            "text": "Living room",
+                            "x": 21175,
+                            "y": 25000,
+                            "offset_y": 35
+                          },
+                          "outline": [
+                            [
+                              17750,
+                              23250
+                            ],
+                            [
+                              24600,
+                              23250
+                            ],
+                            [
+                              24600,
+                              26750
+                            ],
+                            [
+                              17750,
+                              26750
+                            ]
+                          ]
+                        },
+                        {
+                          "id": "2",
+                          "icon": {
+                            "name": "mdi:fridge-variant",
+                            "x": 27525,
+                            "y": 26100
+                          },
+                          "label": {
+                            "text": "Kitchen",
+                            "x": 27525,
+                            "y": 26100,
+                            "offset_y": 35
+                          },
+                          "outline": [
+                            [
+                              24800,
+                              23300
+                            ],
+                            [
+                              30250,
+                              23300
+                            ],
+                            [
+                              30250,
+                              28900
+                            ],
+                            [
+                              24800,
+                              28900
+                            ]
+                          ]
+                        },
+                        {
+                          "id": "3",
+                          "icon": {
+                            "name": "mdi:coat-rack",
+                            "x": 21325,
+                            "y": 27675
+                          },
+                          "label": {
+                            "text": "Hall",
+                            "x": 21325,
+                            "y": 27675,
+                            "offset_y": 35
+                          },
+                          "outline": [
+                            [
+                              17850,
+                              26650
+                            ],
+                            [
+                              24800,
+                              26650
+                            ],
+                            [
+                              24800,
+                              28700
+                            ],
+                            [
+                              17850,
+                              28700
+                            ]
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "template": "vacuum_clean_zone"
+                    },
+                    {
+                      "template": "vacuum_goto"
+                    }
+                  ]
                 },
                 {
                   "type": "custom:card-templater",
@@ -3351,6 +3498,10 @@
                 }
               ],
               "type": "vertical-stack"
+            },
+            {
+              "type": "custom:mushroom-vacuum-card",
+              "entity": "vacuum.clyde"
             }
           ]
         },
