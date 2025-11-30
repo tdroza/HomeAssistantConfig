@@ -5331,3 +5331,58 @@
         image: /api/image_proxy/image.clyde_downstairs
       title: Clyde has finished cleaning
   mode: single
+- id: '1764512651708'
+  alias: Twizy charging finished notification
+  description: ''
+  triggers:
+  - type: power
+    device_id: 8e4343f7a61589568dbc620dc0ed6528
+    entity_id: ad98d1e153808a10924655c17fbefe16
+    domain: sensor
+    trigger: device
+    below: 100
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 10
+  conditions:
+  - condition: device
+    type: is_on
+    device_id: 8e4343f7a61589568dbc620dc0ed6528
+    entity_id: 30f6cec3d626c0cb1089a50b7d2795ea
+    domain: switch
+  actions:
+  - action: notify.mobile_app_toms_phone
+    metadata: {}
+    data:
+      title: ⚡Twizy
+      message: Twizy has finished charging.\n {{ states('sensor.outside_socket_energy')
+        | round(2)}} kWh
+  mode: single
+- id: '1764512707402'
+  alias: Twizy Started Charging
+  description: ''
+  triggers:
+  - type: power
+    device_id: 8e4343f7a61589568dbc620dc0ed6528
+    entity_id: ad98d1e153808a10924655c17fbefe16
+    domain: sensor
+    trigger: device
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 10
+    above: 1500
+  conditions:
+  - condition: device
+    type: is_on
+    device_id: 8e4343f7a61589568dbc620dc0ed6528
+    entity_id: 30f6cec3d626c0cb1089a50b7d2795ea
+    domain: switch
+  actions:
+  - action: notify.mobile_app_toms_phone
+    metadata: {}
+    data:
+      title: ⚡Twizy
+      message: Twizy has started charging.
+  mode: single
