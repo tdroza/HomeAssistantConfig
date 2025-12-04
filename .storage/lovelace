@@ -741,12 +741,13 @@
                         "temperature",
                         "humidity"
                       ],
-                      "features_position": "inline",
                       "display_type": "compact",
+                      "features_position": "inline",
                       "type": "area",
                       "area": "bathroom",
                       "color": "",
-                      "navigation_path": "/lovelace/bathrooms"
+                      "navigation_path": "/lovelace/bathrooms",
+                      "vertical": false
                     },
                     {
                       "alert_classes": [
@@ -757,12 +758,13 @@
                         "temperature",
                         "humidity"
                       ],
-                      "features_position": "inline",
                       "display_type": "compact",
+                      "features_position": "inline",
                       "type": "area",
                       "area": "ensuite",
                       "color": "",
-                      "navigation_path": "/lovelace/bathrooms"
+                      "navigation_path": "/lovelace/bathrooms",
+                      "vertical": false
                     }
                   ]
                 },
@@ -770,9 +772,24 @@
                   "type": "horizontal-stack",
                   "cards": [
                     {
-                      "type": "custom:mushroom-entity-card",
-                      "entity": "binary_sensor.garage_door",
-                      "secondary_info": "last-changed"
+                      "alert_classes": [
+                        "garage_door"
+                      ],
+                      "sensor_classes": [],
+                      "display_type": "compact",
+                      "features_position": "inline",
+                      "type": "area",
+                      "area": "52eb5749fa8f11eaa30693e63b90a918",
+                      "color": "",
+                      "vertical": false,
+                      "features": [
+                        {
+                          "type": "area-controls",
+                          "controls": [
+                            "switch"
+                          ]
+                        }
+                      ]
                     },
                     {
                       "type": "tile",
