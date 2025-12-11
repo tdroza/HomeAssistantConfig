@@ -1,0 +1,169 @@
+esphome:
+  name: geekmagic
+  friendly_name: GeekMagicOrange
+
+
+esp8266:
+  board: esp01_1m
+
+
+# Enable logging
+logger:
+
+
+# Enable Home Assistant API
+api:
+
+
+web_server:
+  port: 80
+
+
+ota:
+  - platform: esphome
+
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  min_auth_mode: WPA2
+  
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Mini-Display-Orange"
+    password: !secret wifi_password
+
+
+captive_portal:
+
+
+# -- First time install:
+# ---- Use this file as a template for a new device ('Import from File') in the ESPHome Builder
+# ---- Delete everything below these comments
+# ---- Select 'INSTALL' then 'Manual download' to download the required binary (.bin) file
+# ---- Flash the downloaded .bin file to the device via the GeekMagic web portal (bottom of Settings tab)
+# ---- The now-ESPHome device should become 'ONLINE' in the ESPHome Builder
+# ---- YAML updates can now be deployed OTA ('INSTALL' -> 'Wirelessly')
+
+
+spi:
+  clk_pin: GPIO14
+  mosi_pin: GPIO13
+  interface: hardware
+  id: spihwd
+    
+# status_led:
+#   pin: GPIO2
+  
+output:
+  - platform: esp8266_pwm
+    pin: GPIO05
+    frequency: 20 Hz
+    id: pwm_output
+
+
+light:
+  - platform: monochromatic
+    output: pwm_output
+    name: "Backlight"
+
+
+font:
+  - file: "gfonts://Stack+Sans+Notch"
+    id: font_small
+    size: 12
+
+
+  - file: "gfonts://Stack+Sans+Notch"
+    id: font_large
+    size: 24
+
+
+color:
+  - id: color_green
+    red: 0%
+    green: 100%
+    blue: 0%
+
+
+display:  
+  - platform: mipi_spi
+    model: st7789v
+    spi_id: spihwd
+    dimensions: 
+      height: 240
+      width: 240
+      offset_height: 0
+      offset_width: 0
+    invert_colors: true    
+    dc_pin: GPIO00
+    reset_pin: GPIO02
+    #backlight_pin: GPIO25
+    color_depth: 8
+    #update_interval: never
+    update_interval: 30s
+    id: disp
+    spi_mode: mode3
+    lambda: |-
+      it.fill(Color::BLACK);
+
+      it.printf(10, 5, id(font_large), Color::WHITE, "Solar:");
+      it.printf(140, 5, id(font_large), Color(0, 255, 0), "%.0f W", id(solar).state);
+      it.printf(10, 30, id(font_large), Color::WHITE, "Grid:");
+      it.printf(140, 30, id(font_large), Color(255, 0, 0), "%.0f W", id(grid).state);
+      it.printf(10, 55, id(font_large), Color::WHITE, "Battery:");
+      it.printf(140, 55, id(font_large), Color(255, 0, 0), "%.0f W", id(solar_battery).state);
+      it.printf(10, 80, id(font_large), Color::WHITE, "Forecast:");
+      it.printf(140, 80, id(font_large), Color(0, 0, 255), "%.2f kWh", id(solar_forecast).state);
+      it.printf(10, 105, id(font_large), Color::WHITE, "Prediction:");
+      it.printf(140, 105, id(font_large), Color(0, 0, 255), "%.2f kWh", id(solar_generated).state);
+
+
+      std::string raw = id(tom).state;
+      std::string tom_status = "Away";
+      if (raw == "home") tom_status = "Home";
+      it.printf(10, 150, id(font_large), Color(200, 200, 200), "Tom: %s", tom_status.c_str());
+
+      raw = id(anna).state;
+      std::string anna_status = "Away";
+      if (raw == "home") anna_status = "Home";
+      it.printf(10, 170, id(font_large), Color(200, 200, 200), "Anna: %s", anna_status.c_str());
+
+sensor:
+  - platform: homeassistant
+    id: solar
+    entity_id: sensor.solax_local_pv_output
+
+
+  - platform: homeassistant
+    id: grid
+    entity_id: sensor.solax_local_grid_power
+
+
+  - platform: homeassistant
+    id: solar_forecast
+    entity_id: sensor.solcast_pv_forecast_forecast_today
+    
+  - platform: homeassistant
+    id: solar_generated
+    internal: true
+    entity_id: sensor.daily_pv
+
+  - platform: homeassistant
+    id: solar_battery
+    internal: true
+    entity_id: sensor.solax_local_battery_power
+
+text_sensor:
+  - platform: homeassistant
+    id: tom
+    entity_id: person.tom
+
+  - platform: homeassistant
+    id: anna
+    entity_id: person.anna
+
+
+time:
+  - platform: homeassistant
+    id: current_time
