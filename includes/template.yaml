@@ -1,3 +1,121 @@
+# DO NOTHING HELPER
+# Use this sensor as a dummy placeholder in the blueprint automation
+- sensor:
+    default_entity_id: sensor.do_nothing
+    name: 'Do Nothing - Dummy Sensor'
+    state: 'off'
+  
+# Rain Gauge- platform: time_date
+- sensor:
+    default_entity_id: sensor.raingauge_tips
+    state: "{{ states('sensor.raingauge_tips_on') |int + states('sensor.raingauge_tips_off') | int  - 1}}"
+
+- sensor:
+    default_entity_id: sensor.daytime
+    name: 'Daytime'
+    state: '{% if is_state("sun.sun","above_horizon") %}1{% else %}0{% endif %}}'
+    icon: '{% if is_state("sun.sun","above_horizon") %}mdi:weather-sunny{% else %}mdi:weather-night{% endif %}}'
+- sensor: 
+    default_entity_id: sensor.coinbase_portfolio_balance
+    state: >
+        {%- set btc = state_attr('sensor.coinbase_btc_wallet','Balance in native currency')[:-4] | float -%}
+        {%- set eth = state_attr('sensor.coinbase_eth_wallet','Balance in native currency')[:-4] | float %}
+        {%- set ltc = state_attr('sensor.coinbase_ltc_wallet','Balance in native currency')[:-4] | float %}
+        {%- set xlm = state_attr('sensor.coinbase_xlm_wallet','Balance in native currency')[:-4] | float %}
+        {%- set doge = state_attr('sensor.coinbase_doge_wallet','Balance in native currency')[:-4] | float %}
+        {%- set sol = state_attr('sensor.coinbase_sol_wallet','Balance in native currency')[:-4] | float %}
+        {{ btc + eth + ltc + xlm + doge + sol}}
+- sensor: 
+    default_entity_id: sensor.youtube_music_artist
+    state: >
+        {% if (state_attr("media_player.ytube_music_player", "media_artist")==None) %}
+          {{""}}
+        {% else %}
+          {{state_attr("media_player.ytube_music_player", "media_artist") }}
+        {% endif %}
+- sensor: 
+    default_entity_id: sensor.youtube_music_title
+    state: >
+        {% if (state_attr("media_player.ytube_music_player", "media_title")==None) %}
+          {{""}}
+        {% else %}
+          {{state_attr("media_player.ytube_music_player", "media_title") }}
+        {% endif %}
+- binary_sensor:
+    default_entity_id: binary_sensor.washer
+    name: "Washing machine"
+    state: >-
+        {{ states('sensor.sonoff_10003a0e20_power')|float > 10 }}
+    icon: >
+        {% if is_state("binary_sensor.washer", "on") %}
+          mdi:washing-machine
+        {% else %}
+          mdi:washing-machine-off
+        {% endif %}
+    delay_on: 
+        minutes: 2
+    delay_off:
+        seconds: 90            
+- binary_sensor:
+    default_entity_id: binary_sensor.dishwasher
+    name: "Dishwasher"
+    state: >-
+        {{ states('sensor.sonoff_dishwasher_power')|float > 5 }}
+    icon: >
+        {% if is_state("binary_sensor.dishwasher", "on") %}
+            mdi:dishwasher
+        {% else %}
+            mdi:dishwasher-off
+        {% endif %}
+    delay_on: 
+        minutes: 1
+    delay_off:
+        seconds: 30    
+- sensor:
+    name: "Rainfall Today"
+    default_entity_id: sensor.rainfall_today
+    unit_of_measurement: mm
+    state: >-
+        {% set count = states('sensor.raingauge_tips') | int %}
+        {% set mm_per_pulse = 1.25 %}
+        {% set mm = count * mm_per_pulse %}
+        {{ mm|round(1, 'floor') }}
+- sensor:
+    default_entity_id: sensor.hallway_motion_sensor_temperature_rounded
+    name: 'Hall Temp'
+    state: '{{states.sensor.hue_motion_sensor_temperature.state |round(0, default=0)}}'
+- sensor:
+    default_entity_id: sensor.bed1_temperature_rounded
+    name: 'Bed1 Temp'
+    state: '{{states.sensor.bed1_temperature.state |round(0, default=0)}}'
+- sensor:
+    default_entity_id: sensor.office_temperature_rounded
+    name: 'Bed 2 Temp'
+    state: '{{states.sensor.office_climate_temperature.state |round(0, default=0)}}'
+- sensor:
+    default_entity_id: sensor.seb_temperature_rounded
+    name: 'Seb Temp'
+    state: '{{states.sensor.seb_d1_temperature.state |round(0, default=0)}}'
+- sensor:
+    default_entity_id: sensor.reuben_temperature_rounded
+    name: 'Reuben Temp'
+    state: '{{states.sensor.reu_d1_temperature.state |round(0, default=0)}}'
+- sensor:
+    default_entity_id: sensor.bathroom_temperature_rounded
+    name: 'Bathroom Temp'
+    state: '{{states.sensor.bathroom_climate_temperature.state |round(0, default=0)}}'
+- sensor:
+    default_entity_id: sensor.ensuite_temperature_rounded
+    name: 'Ensuite Temp'
+    state: '{{states.sensor.ensuite_climate_temperature.state |round(0, default=0)}}'
+- sensor:
+    default_entity_id: sensor.air_quality_temperature_rounded
+    name: 'Air Quality Temp'
+    state: '{{states.sensor.air_quality_temperature.state |round(0, default=0)}}'
+- sensor:
+    default_entity_id: sensor.kitchen_temperature_rounded
+    name: 'Kitchen temperature'
+    state: '{{states.sensor.kitchen_climate_temperature.state |round(0, default=0)}}'        
 - trigger:
   - platform: state
     entity_id: input_boolean.heated_airer

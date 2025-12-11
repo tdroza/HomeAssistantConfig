@@ -4304,53 +4304,6 @@
       device_id: 2b04c1e87f456ac9aa1bf9657381b3ca
     action: open_epaper_link.drawcustom
   mode: restart
-- id: '1704814686625'
-  alias: 'OEPL: Literary clock'
-  description: ''
-  trigger: []
-  condition: []
-  action:
-  - service: open_epaper_link.drawcustom
-    target:
-      entity_id: open_epaper_link.00000218cf5d3b19
-    data:
-      background: white
-      dry-run: false
-      rotate:
-        '[object Object]':
-      payload:
-      - type: rectangle
-        x_start: 0
-        y_start: 0
-        x_end: 296
-        y_end: 14
-        fill: red
-        outline: red
-        width: 1
-      - type: text
-        x: 5
-        y: 15
-        size: '{% set quote_length = state_attr(''sensor.quote_clock'',''quote_first'')
-          | length %}  {% set quote_length = quote_length + state_attr(''sensor.quote_clock'',''quote_time_case'')
-          | length + 2 %}  {% set quote_length = quote_length + state_attr(''sensor.quote_clock'',''quote_last'')
-          | length %}  {{10 if quote_length > 300 else 12 if quote_length > 150 else
-          14 }}'
-        value: '{{state_attr(''sensor.quote_clock'',''quote_first'') | striptags}}
-          [{{state_attr(''sensor.quote_clock'',''quote_time_case'') | upper}}] {{state_attr(''sensor.quote_clock'',''quote_last'')
-          | striptags}}'
-        font: ../../media/CourierPrime-Regular.ttf
-        max_width: 280
-      - type: text
-        color: white
-        size: 14
-        x: 0
-        y: 0
-        align: right
-        value: '{{(state_attr(''sensor.quote_clock'',''author'') +'': '' + state_attr(''sensor.quote_clock'',''title'')
-          )| truncate(35, True)}}
-
-          '
-  mode: single
 - id: '1706642170148'
   alias: 'NFC: Reuben''s tablets'
   description: ''
@@ -5356,7 +5309,7 @@
     metadata: {}
     data:
       title: ⚡Twizy
-      message: Twizy has finished charging.\n {{ states('sensor.outside_socket_energy')
+      message: Twizy has finished charging.\n {{ states('sensor.outside_socket_energy_spent')
         | round(2)}} kWh
   mode: single
 - id: '1764512707402'

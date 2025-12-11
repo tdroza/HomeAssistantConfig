@@ -1,75 +1,8 @@
-- platform: template
-  sensors:
-    daytime:
-      friendly_name: 'Daytime'
-      value_template: '{% if is_state("sun.sun","above_horizon") %}1{% else %}0{% endif %}}'
-      icon_template: '{% if is_state("sun.sun","above_horizon") %}mdi:weather-sunny{% else %}mdi:weather-night{% endif %}}'
-    coinbase_portfolio_balance:
-      value_template: >
-        {%- set btc = state_attr('sensor.coinbase_btc_wallet','Balance in native currency')[:-4] | float -%}
-        {%- set eth = state_attr('sensor.coinbase_eth_wallet','Balance in native currency')[:-4] | float %}
-        {%- set ltc = state_attr('sensor.coinbase_ltc_wallet','Balance in native currency')[:-4] | float %}
-        {%- set xlm = state_attr('sensor.coinbase_xlm_wallet','Balance in native currency')[:-4] | float %}
-        {%- set doge = state_attr('sensor.coinbase_doge_wallet','Balance in native currency')[:-4] | float %}
-        {%- set sol = state_attr('sensor.coinbase_sol_wallet','Balance in native currency')[:-4] | float %}
-        {{ btc + eth + ltc + xlm + doge + sol}}
-    youtube_music_artist:
-      value_template: >
-        {% if (state_attr("media_player.ytube_music_player", "media_artist")==None) %}
-          {{""}}
-        {% else %}
-          {{state_attr("media_player.ytube_music_player", "media_artist") }}
-        {% endif %}
-    youtube_music_title:
-      value_template: >
-        {% if (state_attr("media_player.ytube_music_player", "media_title")==None) %}
-          {{""}}
-        {% else %}
-          {{state_attr("media_player.ytube_music_player", "media_title") }}
-        {% endif %}
 
-    vacuum_state:
-      value_template: 'Ditto: {{ states.vacuum.ditto.attributes.status }}'
-    vacuum_last_run:
-      value_template: '{{ as_timestamp(states.vacuum.ditto.attributes.clean_start) | timestamp_custom("%a, %d %b %Y %H:%M") }}'
-    vacuum_last_qm:
-      value_template: '{{ states.vacuum.ditto.attributes.clean_area | round(0) }} m²'
-    vacuum_battery:
-      value_template: '{{ states.vacuum.ditto.attributes.battery_level }} %'
-      icon_template: '{{ states.vacuum.ditto.attributes.battery_icon }}'
 - platform: time_date
   display_options:
     - 'time'
     - 'date'
-- platform: template
-  sensors:
-    hallway_motion_sensor_temperature_rounded:
-      friendly_name: 'Hall Temp'
-      value_template: '{{states.sensor.hue_motion_sensor_temperature.state |round(0, default=0)}}'
-    bed1_temperature_rounded:
-      friendly_name: 'Bed1 Temp'
-      value_template: '{{states.sensor.bed1_temperature.state |round(0, default=0)}}'
-    office_temperature_rounded:
-      friendly_name: 'Bed 2 Temp'
-      value_template: '{{states.sensor.office_climate_temperature.state |round(0, default=0)}}'
-    seb_temperature_rounded:
-      friendly_name: 'Seb Temp'
-      value_template: '{{states.sensor.seb_d1_temperature.state |round(0, default=0)}}'
-    reuben_temperature_rounded:
-      friendly_name: 'Reuben Temp'
-      value_template: '{{states.sensor.reu_d1_temperature.state |round(0, default=0)}}'
-    bathroom_temperature_rounded:
-      friendly_name: 'Bathroom Temp'
-      value_template: '{{states.sensor.bathroom_climate_temperature.state |round(0, default=0)}}'
-    ensuite_temperature_rounded:
-      friendly_name: 'Ensuite Temp'
-      value_template: '{{states.sensor.ensuite_climate_temperature.state |round(0, default=0)}}'
-    air_quality_temperature_rounded:
-      friendly_name: 'Air Quality Temp'
-      value_template: '{{states.sensor.air_quality_temperature.state |round(0, default=0)}}'
-    kitchen_temperature_rounded:
-      friendly_name: 'Kitchen temperature'
-      value_template: '{{states.sensor.kitchen_climate_temperature.state |round(0, default=0)}}'
 - platform: feedparser
   scan_interval: 43200
   name: podcast_brains_on
@@ -284,20 +217,7 @@
   start: >
     {{ as_timestamp(now()) - (7*86400) }}
   duration: 00:00:30  
-    
-# DO NOTHING HELPER
-# Use this sensor as a dummy placeholder in the blueprint automation
-- platform: template
-  sensors:
-    do_nothing:
-      friendly_name: 'Do Nothing - Dummy Sensor'
-      value_template: 'off'
-- platform: template
-  sensors:
-    raingauge_tips:
-      value_template: "{{ states('sensor.raingauge_tips_on') |int + states('sensor.raingauge_tips_off') | int  - 1}}"
 
-# Rain Gauge
 - platform: history_stats
   name: Raingauge tips on
   entity_id: binary_sensor.rain_gauge
@@ -312,16 +232,6 @@
   type: count
   start: '{{ now().replace(hour=0, minute=0, second=0) }}'
   end: '{{ now() }}'  
-- platform: template
-  sensors:
-      rainfall_today:
-          friendly_name: Rainfall today
-          unit_of_measurement: mm
-          value_template: >-
-            {% set count = states('sensor.raingauge_tips') | int %}
-            {% set mm_per_pulse = 1.25 %}
-            {% set mm = count * mm_per_pulse %}
-            {{ mm|round(1, 'floor') }}
 - platform: min_max
   type: min
   name: all_temps_min

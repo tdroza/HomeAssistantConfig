@@ -92,7 +92,8 @@
                   "entity": "sensor.outside_socket_power",
                   "name": "Twizy",
                   "icon": "local:twizy",
-                  "color": "#f00000"
+                  "color": "#f00000",
+                  "display_zero_tolerance": 20
                 },
                 {
                   "entity": "sensor.sonoff_10003a0e20_power",

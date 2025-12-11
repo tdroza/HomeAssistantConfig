@@ -1,0 +1,27 @@
+- id: '1589828753165'
+  name: Reu Night Light
+  entities:
+    light.reuben_ceiling:
+      friendly_name: Reuben's bedroom
+      icon: mdi:ceiling-light
+      state: 'off'
+      supported_features: 41
+- id: '1589828851500'
+  name: Test
+  entities:
+    light.reuben_ceiling:
+      friendly_name: Reuben's bedroom
+      icon: mdi:ceiling-light
+      state: unavailable
+      supported_features: 41
+- id: '1589828899507'
+  name: Test
+  entities:
+    light.main_bedroom_bloom:
+      effect_list:
+      - colorloop
+      - random
+      friendly_name: Main Bedroom Bloom
+      icon: mdi:track-light
+      state: 'off'
+      supported_features: 61
