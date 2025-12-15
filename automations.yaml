@@ -401,24 +401,16 @@
 - id: '1581777155699'
   alias: 'Washer: Machine finished'
   description: ''
-  trigger:
+  triggers:
   - entity_id: binary_sensor.washer
     from: 'on'
-    platform: state
     to: 'off'
-  condition: []
-  action:
+    trigger: state
+  conditions: []
+  actions:
   - entity_id: automation.washer_notify_done
-    service: automation.turn_on
+    action: automation.turn_on
   - data:
-      entity_id:
-      - media_player.living_room_display
-      - media_player.kitchen_display
-      - media_player.office_wifi
-      message: The washing machine has finished.
-    service: tts.google_translate_say
-  - service: notify.tom_and_anna
-    data:
       title: Washing Machine
       message: "\U0001F9FA The washing machine has finished, please hang out the washing"
       data:
@@ -428,6 +420,20 @@
         group: Washing machine
         channel: WashingMachine
         vibrationPattern: 10, 100, 500, 100, 500, 500
+    action: notify.tom_and_anna
+  - if:
+    - condition: state
+      entity_id: input_boolean.do_not_disturb
+      state:
+      - 'off'
+    then:
+    - data:
+        entity_id:
+        - media_player.living_room_display
+        - media_player.kitchen_display
+        - media_player.office_wifi
+        message: The washing machine has finished.
+      action: tts.google_translate_say
   mode: single
 - id: '1581777529393'
   alias: 'Washer: Handle *washer_emptied* notification response'
@@ -5338,4 +5344,20 @@
     data:
       title: ⚡Twizy
       message: Twizy has started charging.
+  mode: single
+- id: '1765816092976'
+  alias: GeekMagic Cycle screens
+  description: ''
+  triggers:
+  - trigger: time_pattern
+    seconds: '30'
+  conditions: []
+  actions:
+  - action: button.press
+    metadata: {}
+    target:
+      entity_id:
+      - button.geekmagic_white_next_screen
+      - button.geekmagic_orange_next_screen
+    data: {}
   mode: single
