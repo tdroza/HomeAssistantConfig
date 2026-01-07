@@ -168,13 +168,16 @@
                           {
                             "entities": [
                               {
-                                "entity": "light.window"
+                                "entity": "light.garland"
                               },
                               {
                                 "entity": "light.twinkly"
                               },
                               {
-                                "entity": "light.tree_3"
+                                "entity": "light.tree_1"
+                              },
+                              {
+                                "entity": "light.tree_2"
                               },
                               {
                                 "entity": "light.christmas_star"
@@ -2480,19 +2483,38 @@
                     {
                       "type": "tile",
                       "entity": "light.toms_desk_master",
+                      "vertical": true,
                       "tap_action": {
                         "action": "toggle"
                       },
-                      "features_position": "bottom",
-                      "vertical": false
+                      "features_position": "bottom"
                     },
                     {
-                      "color": "accent",
                       "type": "tile",
                       "entity": "switch.toms_monitor_light",
+                      "icon": "mdi:monitor-star",
+                      "color": "accent",
+                      "show_entity_picture": false,
+                      "hide_state": false,
+                      "vertical": true,
                       "tap_action": {
                         "action": "toggle"
-                      }
+                      },
+                      "features_position": "bottom"
+                    },
+                    {
+                      "type": "tile",
+                      "entity": "switch.tom_s_desk_3ch_usb_cloud_switch_2",
+                      "name": "GeekMagic",
+                      "icon": "mdi:tablet-dashboard",
+                      "color": "accent",
+                      "show_entity_picture": false,
+                      "hide_state": false,
+                      "vertical": true,
+                      "tap_action": {
+                        "action": "toggle"
+                      },
+                      "features_position": "bottom"
                     }
                   ],
                   "visibility": [
@@ -2722,7 +2744,7 @@
                         "tap_action": {
                           "action": "toggle"
                         },
-                        "entity": "light.xmas_tree"
+                        "entity": "light.twinkly"
                       },
                       {
                         "entity": "light.christmas_star",
