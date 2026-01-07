@@ -1381,13 +1381,13 @@
 - id: '1611402292310'
   alias: 'Lights: turn on main bedroom light when door opens'
   description: ''
-  trigger:
+  triggers:
   - type: opened
-    platform: device
     device_id: 95b8d0def9f711eaa7bd15994734a55a
     entity_id: binary_sensor.main_bedroom_door
     domain: binary_sensor
-  condition:
+    trigger: device
+  conditions:
   - condition: time
     before: '22:45:00'
     after: '15:00:00'
@@ -1396,8 +1396,9 @@
     attribute: elevation
     below: -2
   - condition: state
-    entity_id: binary_sensor.toms_phone_is_charging
-    state: 'off'
+    state:
+    - 'off'
+    entity_id: binary_sensor.tom_s_phone_is_charging
   - condition: state
     entity_id: binary_sensor.annas_phone_is_charging
     state: 'off'
@@ -1407,24 +1408,24 @@
   - condition: state
     entity_id: light.main_bedroom_light_group
     state: 'off'
-  action:
-  - service: light.turn_on
-    data:
+  actions:
+  - data:
       brightness_pct: 80
     target:
       entity_id:
       - light.main_bedroom_ceiling
+    action: light.turn_on
   - delay:
       hours: 0
       minutes: 7
       seconds: 0
       milliseconds: 0
-  - service: light.turn_off
-    data: {}
+  - data: {}
     target:
       entity_id:
       - light.main_bedroom_ceiling
       - light.test_bulb
+    action: light.turn_off
   mode: restart
 - id: '1611525664637'
   alias: 'Lights: turn off house button'
@@ -3314,6 +3315,8 @@
   - condition: time
     after: 07:00:00
     before: '23:00:00'
+  - condition: template
+    value_template: '{{ now().month != 12 or now().day > 25}}'
   actions:
   - data:
       dry-run: false
@@ -4166,16 +4169,16 @@
 - id: '1701724272223'
   alias: Morning - Set main bedroom radiator
   description: ''
-  trigger:
-  - platform: time
-    at: 07:00:00
-  condition: []
-  action:
-  - service: climate.set_temperature
-    data:
-      temperature: 18
+  triggers:
+  - at: 07:00:00
+    trigger: time
+  conditions: []
+  actions:
+  - data:
+      temperature: 18.5
     target:
       entity_id: climate.main_bedroom_radiator_thermostat
+    action: climate.set_temperature
   mode: single
 - id: '1701795669665'
   alias: 'OEPL: Electricity tariff'
@@ -4246,6 +4249,10 @@
     - input_number.coffee_grind_setting_caf
     - input_number.coffee_grind_setting_decaf
     trigger: state
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 3
   - value_template: '{{(now().day == 1 or now().day == 15) and now().hour == 7}}'
     for:
       hours: 0
@@ -4732,6 +4739,9 @@
   triggers:
   - at: 07:02:00
     trigger: time
+  conditions:
+  - condition: template
+    value_template: '{{ now().month == 12 and now().day < 25}}'
   actions:
   - data:
       background: white
@@ -4774,7 +4784,10 @@
         color: black
         anchor: mt
     target:
-      device_id: e6eb2f23afd99f17690890eddb43bf6f
+      device_id:
+      - e6eb2f23afd99f17690890eddb43bf6f
+      - 6a9ce31143b3b3779ea0063fdfe4a047
+      - 0388417b1a1df1c1c551658a23530afc
     action: open_epaper_link.drawcustom
   mode: restart
   variables:
@@ -5286,9 +5299,10 @@
     data:
       message: Cleaned {{states('sensor.clyde_cleaning_area')}}sq m in {{states('sensor.clyde_cleaning_time')|round(2)}}
         mins
+      title: Clyde has finished cleaning
       data:
         image: /api/image_proxy/image.clyde_downstairs
-      title: Clyde has finished cleaning
+        clickAction: entityId:image.clyde_downstairs
   mode: single
 - id: '1764512651708'
   alias: Twizy charging finished notification
