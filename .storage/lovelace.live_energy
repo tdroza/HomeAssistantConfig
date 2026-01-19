@@ -304,9 +304,10 @@
                   "card": {
                     "type": "custom:mushroom-template-card",
                     "primary": "Time to 100%",
-                    "secondary": "{{(60 * (58*((100-states('sensor.solax_local_battery_soc') | int) )) / states('sensor.solax_local_battery_power_in') | int )|round}} minutes",
+                    "secondary": "{%set mins = (60 * (58*((100-states('sensor.solax_local_battery_soc') | int) )) / states('sensor.solax_local_battery_power_in') | int) | int%} \n\n{% if mins > 59 %}{{ (mins // 60) }}h {{(mins % 60) }}m{% else %}{{ mins }} min{% endif %}",
                     "icon": "mdi:battery-charging",
-                    "badge_icon": ""
+                    "badge_icon": "",
+                    "features_position": "bottom"
                   }
                 },
                 {
