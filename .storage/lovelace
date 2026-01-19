@@ -1568,6 +1568,12 @@
                   "y_axis": "secondary"
                 }
               ]
+            },
+            {
+              "type": "entities",
+              "entities": [
+                "button.wake_on_lan_synology"
+              ]
             }
           ],
           "icon": "mdi:network",
@@ -1769,6 +1775,9 @@
                 {
                   "entity": "input_boolean.holiday_mode",
                   "name": "Holiday mode"
+                },
+                {
+                  "entity": "input_boolean.xmas_mode"
                 }
               ]
             },
@@ -1919,26 +1928,6 @@
                   "data_generator": "const data = [];\nentity.attributes.forecast_hourly.forEach(forecast => data.push([ forecast['datetime'],forecast['temperature'] ] ));\nreturn data.reverse();\n",
                   "type": "line",
                   "name": "Temperature forecast"
-                }
-              ]
-            },
-            {
-              "type": "vertical-stack",
-              "cards": [
-                {
-                  "name": "Coffee",
-                  "template": "button-card-headers",
-                  "type": "custom:button-card"
-                },
-                {
-                  "type": "custom:mushroom-number-card",
-                  "entity": "input_number.coffee_grind_setting_caf",
-                  "icon": "",
-                  "display_mode": ""
-                },
-                {
-                  "type": "custom:mushroom-number-card",
-                  "entity": "input_number.coffee_grind_setting_decaf"
                 }
               ]
             },
