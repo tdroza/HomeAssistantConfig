@@ -205,24 +205,25 @@
 - id: '1580937267396'
   alias: 'TV: Dim lights when playing'
   description: ''
-  trigger:
+  triggers:
   - entity_id:
     - media_player.kodi_pi
     - media_player.kodi_halo
     - media_player.halo
-    platform: state
     to: playing
     id: kodi
-  - platform: state
-    entity_id:
+    trigger: state
+  - entity_id:
     - media_player.living_room_tv
     to: playing
     id: chromecast
-  condition:
+    trigger: state
+    enabled: true
+  conditions:
   - condition: state
     entity_id: light.living_room
     state: 'on'
-  action:
+  actions:
   - choose:
     - conditions:
       - condition: and
@@ -256,55 +257,113 @@
       sequence:
       - data:
           brightness_pct: 40
-        target:
-          entity_id: light.living_room
         action: light.turn_on
+        target:
+          entity_id: light.main_bedroom_light_group
     default: []
 - id: '1580937548623'
   alias: 'Kodi: Brighten lights when stop playing'
   description: ''
-  trigger:
+  triggers:
   - entity_id:
     - media_player.kodi_pi
-    - media_player.living_room_tv
     - media_player.halo
     - media_player.kodi_halo
-    from: playing
-    platform: state
-    to: paused
+    from:
+    - playing
+    to:
+    - paused
     for:
       hours: 0
       minutes: 0
       seconds: 0
+    trigger: state
+    id: kodi
   - entity_id:
-    - media_player.kodi_pi
     - media_player.living_room_tv
-    - media_player.halo
-    - media_player.kodi_halo
-    from: playing
-    platform: state
-    to: idle
+    from:
+    - playing
+    to:
+    - paused
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 0
+    trigger: state
+    id: chromecast
+  - entity_id:
+    - media_player.living_room_tv
+    from:
+    - playing
+    to:
+    - idle
     for:
       hours: 0
       minutes: 0
       seconds: 2
+    trigger: state
+    id: chromecast
   - entity_id:
     - media_player.kodi_pi
-    - media_player.living_room_tv
     - media_player.halo
     - media_player.kodi_halo
-    from: paused
-    platform: state
-    to: idle
-  condition:
+    from:
+    - playing
+    to:
+    - idle
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 2
+    trigger: state
+    id: kodi
+  - entity_id:
+    - media_player.kodi_pi
+    - media_player.halo
+    - media_player.kodi_halo
+    from:
+    - paused
+    to:
+    - idle
+    trigger: state
+    id: kodi
+  - entity_id:
+    - media_player.living_room_tv
+    from:
+    - paused
+    to:
+    - idle
+    trigger: state
+    id: chromecast
+  conditions:
   - condition: state
     entity_id: light.living_room
     state: 'on'
-  action:
-  - data:
-      brightness: 200
-    entity_id: light.living_room_1, light.living_room_2
-    action: light.turn_on
+  actions:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id:
+        - kodi
+      sequence:
+      - data:
+          brightness: 200
+        action: light.turn_on
+        target:
+          entity_id:
+          - light.living_room_1
+          - light.living_room_2
+    - conditions:
+      - condition: trigger
+        id:
+        - chromecast
+      sequence:
+      - data:
+          brightness: 200
+        action: light.turn_on
+        target:
+          entity_id:
+          - light.main_bedroom_light_group
   mode: single
 - id: '1581026602537'
   alias: 'Dehumidifier: Turn on'
@@ -5303,6 +5362,12 @@
       data:
         image: /api/image_proxy/image.clyde_downstairs
         clickAction: entityId:image.clyde_downstairs
+  - action: geekmagic.notify
+    data:
+      duration: 10
+      device_id: 17542893a549a191f210fecbccd12a64
+      message: Vacuum complete!
+      image: image.clyde_downstairs_custom
   mode: single
 - id: '1764512651708'
   alias: Twizy charging finished notification
@@ -5313,7 +5378,7 @@
     entity_id: ad98d1e153808a10924655c17fbefe16
     domain: sensor
     trigger: device
-    below: 100
+    below: 50
     for:
       hours: 0
       minutes: 0
@@ -5329,7 +5394,7 @@
     metadata: {}
     data:
       title: ⚡Twizy
-      message: Twizy has finished charging.\n {{ states('sensor.outside_socket_energy_spent')
+      message: Twizy has finished charging.\n {{ states('sensor.outside_socket_daily_kwh')
         | round(2)}} kWh
   mode: single
 - id: '1764512707402'
