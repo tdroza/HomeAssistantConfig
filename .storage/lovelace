@@ -209,15 +209,18 @@
                           "entities": [
                             {
                               "entity": "light.living_room_ceiling",
-                              "type": "custom:slider-entity-row"
+                              "type": "custom:slider-entity-row",
+                              "toggle": true
                             },
                             {
                               "entity": "light.living_room_1",
-                              "type": "custom:slider-entity-row"
+                              "type": "custom:slider-entity-row",
+                              "toggle": true
                             },
                             {
                               "entity": "light.living_room_2",
-                              "type": "custom:slider-entity-row"
+                              "type": "custom:slider-entity-row",
+                              "toggle": true
                             },
                             "light.tv_backlight",
                             "light.solar_lamp"
@@ -251,7 +254,7 @@
                               "entity": "light.main_bedroom_ceiling",
                               "name": "Ceiling",
                               "toggle": true,
-                              "ype": "custom:slider-entity-row"
+                              "type": "custom:slider-entity-row"
                             },
                             {
                               "type": "custom:rgb-light-card",
@@ -2666,15 +2669,6 @@
                   "collapsible_controls": false
                 },
                 {
-                  "type": "custom:mushroom-light-card",
-                  "entity": "light.solar_lamp",
-                  "use_light_color": true,
-                  "show_brightness_control": true,
-                  "show_color_temp_control": true,
-                  "show_color_control": true,
-                  "collapsible_controls": true
-                },
-                {
                   "type": "horizontal-stack",
                   "cards": [
                     {
@@ -2687,9 +2681,13 @@
                       "collapsible_controls": true
                     },
                     {
-                      "type": "custom:mushroom-entity-card",
-                      "name": "Kodi",
-                      "entity": "switch.media_centre"
+                      "type": "custom:mushroom-light-card",
+                      "entity": "light.solar_lamp",
+                      "use_light_color": true,
+                      "show_brightness_control": true,
+                      "show_color_temp_control": true,
+                      "show_color_control": true,
+                      "collapsible_controls": true
                     }
                   ]
                 },
@@ -2970,8 +2968,11 @@
                   "cards": [
                     {
                       "type": "tile",
-                      "entity": "binary_sensor.main_bedroom_door",
-                      "name": "Bedroom Door"
+                      "entity": "switch.blanket_tom",
+                      "name": "Tom's blanket",
+                      "icon": "mdi:radiator",
+                      "vertical": false,
+                      "features_position": "bottom"
                     },
                     {
                       "entity": "switch.annas_watch_charger",
