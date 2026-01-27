@@ -1505,26 +1505,24 @@
               "cards": null,
               "entities": [
                 {
-                  "entity": "sensor.octoprint_current_state",
+                  "entity": "sensor.bambulab_a1_current_stage",
                   "name": "Status"
                 },
                 {
-                  "entity": "sensor.octoprint_start_time",
+                  "entity": "sensor.bambulab_a1_start_time",
                   "name": "Started"
                 },
                 {
-                  "entity": "sensor.octoprint_estimated_finish_time",
+                  "entity": "sensor.bambulab_a1_end_time",
                   "name": "ETA"
                 }
               ],
               "type": "glance"
             },
             {
-              "show_state": false,
-              "show_name": false,
-              "camera_view": "live",
-              "type": "picture-entity",
-              "entity": "camera.octoprint_camera"
+              "type": "custom:ha-bambulab-print_status-card",
+              "printer": "1ae9a9fc8e3106c1fa4be4329f39085f",
+              "style": "simple"
             }
           ],
           "icon": "mdi:printer-3d",

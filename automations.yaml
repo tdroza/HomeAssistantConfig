@@ -396,32 +396,37 @@
   alias: Printer - Notify when complete
   description: Send an app notification with photo and broadcast to Google Home when
     Printer is done
-  trigger:
+  triggers:
   - entity_id: binary_sensor.octoprint_printing
     from: 'on'
-    platform: state
     to: 'off'
-  condition:
+    trigger: state
+  - trigger: state
+    entity_id:
+    - sensor.bambulab_a1_current_stage
+    from:
+    - printing
+  conditions:
   - condition: numeric_state
     entity_id: sensor.octoprint_job_percentage
     above: '95'
   - condition: state
     entity_id: input_boolean.do_not_disturb
     state: 'off'
-  action:
+  actions:
   - data:
       entity_id: media_player.living_room_display
       message: The 3D printer has finished
-    service: tts.google_translate_say
-  - service: notify.mobile_app_toms_phone
-    data:
+    action: tts.google_translate_say
+  - data:
       message: The 3D Printer has finished
       data:
-        image: /api/camera_proxy/camera.octoprint
+        image: /api/camera_proxy/camera.bambulab_a1_camera
         actions:
         - action: URI
           title: View live camera
           uri: lovelace/printer
+    action: notify.mobile_app_toms_phone
   mode: single
 - id: '1581776307274'
   alias: 'Washer: Notify done (repeat)'
