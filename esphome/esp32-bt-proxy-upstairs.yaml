@@ -18,6 +18,7 @@ wifi:
   ssid: !secret wifi_iot_ssid
   password: !secret wifi_iot_password
   domain: ".lan"
+  min_auth_mode: WPA2
 
 ota:
   - platform: esphome
