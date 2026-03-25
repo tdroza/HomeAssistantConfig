@@ -406,18 +406,13 @@
     - sensor.bambulab_a1_current_stage
     from:
     - printing
+    to:
+    - idle
   conditions:
-  - condition: numeric_state
-    entity_id: sensor.octoprint_job_percentage
-    above: '95'
   - condition: state
     entity_id: input_boolean.do_not_disturb
     state: 'off'
   actions:
-  - data:
-      entity_id: media_player.living_room_display
-      message: The 3D printer has finished
-    action: tts.google_translate_say
   - data:
       message: The 3D Printer has finished
       data:
@@ -427,6 +422,10 @@
           title: View live camera
           uri: lovelace/printer
     action: notify.mobile_app_toms_phone
+  - data:
+      entity_id: media_player.living_room_display
+      message: The 3D printer has finished
+    action: tts.google_translate_say
   mode: single
 - id: '1581776307274'
   alias: 'Washer: Notify done (repeat)'
@@ -443,13 +442,6 @@
     state: 'off'
   actions:
   - data:
-      entity_id:
-      - media_player.living_room_display
-      - media_player.hallway_home
-      message: '{{ "The washing machine finished " +  relative_time(states.binary_sensor.washer.last_changed)
-        +" ago, please hang out the washing" | regex_replace(find='' '',replace=''-'')}}'
-    action: tts.google_translate_say
-  - data:
       title: Washing Machine
       message: "\U0001F9FA The washing machine finished {{ relative_time(states.binary_sensor.washer.last_changed)
         }} ago, please hang out the washing"
@@ -461,6 +453,13 @@
         channel: WashingMachine
         tag: washer-repeat
     action: notify.tom_and_anna
+  - data:
+      entity_id:
+      - media_player.living_room_display
+      - media_player.hallway_home
+      message: '{{ "The washing machine finished " +  relative_time(states.binary_sensor.washer.last_changed)
+        +" ago, please hang out the washing" | regex_replace(find='' '',replace=''-'')}}'
+    action: tts.google_translate_say
   mode: single
 - id: '1581777155699'
   alias: 'Washer: Machine finished'
@@ -2336,6 +2335,8 @@
   - condition: numeric_state
     entity_id: cover.office_blind
     below: '100'
+    attribute: current_position
+    enabled: false
   actions:
   - data: {}
     action: cover.open_cover
@@ -2462,11 +2463,11 @@
         entity_id: light.second_bedroom_ceiling
         domain: light
       button_top_left_hold_in:
-      - service: light.turn_on
-        data:
+      - data:
           brightness_pct: 29
         target:
           device_id: cffb061e300b83a901a07ad99b0abaa4
+        action: light.turn_on
       button_top_right_single_press:
       - type: turn_on
         device_id: cffb061e300b83a901a07ad99b0abaa4
@@ -2495,11 +2496,11 @@
         brightness_pct: 100
       button_top_right_hold_release: []
       button_top_right_hold_in:
-      - service: light.turn_on
-        data:
+      - data:
           brightness_pct: 60
         target:
           device_id: cffb061e300b83a901a07ad99b0abaa4
+        action: light.turn_on
       button_bottom_left_single_press:
       - type: turn_off
         device_id: b4b84b4ae3fab4400b0e133c18da5980
@@ -2531,13 +2532,13 @@
         entity_id: light.second_bedroom_ceiling
         domain: light
       button_bottom_left_hold_in:
-      - service: light.turn_on
-        data:
+      - data:
           brightness_pct: 30
         target:
           device_id:
           - b4b84b4ae3fab4400b0e133c18da5980
           - 63e528584034c3704aa0ea7b8d0c6adb
+        action: light.turn_on
       button_bottom_right_single_press:
       - type: turn_on
         device_id: b4b84b4ae3fab4400b0e133c18da5980
@@ -2573,13 +2574,37 @@
         entity_id: switch.toms_monitor_light
         domain: switch
       button_bottom_right_hold_in:
-      - service: light.turn_on
-        data:
+      - data:
           brightness_step: 60
         target:
           device_id:
           - b4b84b4ae3fab4400b0e133c18da5980
           - 63e528584034c3704aa0ea7b8d0c6adb
+        action: light.turn_on
+      button_bottom_left_triple_press:
+      - action: switch.turn_off
+        metadata: {}
+        target:
+          entity_id: switch.toms_desk
+        data: {}
+      button_bottom_right_triple_press:
+      - action: switch.turn_on
+        metadata: {}
+        target:
+          entity_id: switch.toms_desk
+        data: {}
+      button_top_right_triple_press:
+      - action: switch.turn_on
+        metadata: {}
+        target:
+          entity_id: switch.annas_desk
+        data: {}
+      button_top_left_triple_press:
+      - action: switch.turn_off
+        metadata: {}
+        target:
+          entity_id: switch.annas_desk
+        data: {}
 - id: '1665133208840'
   alias: Close office blind when bright
   description: ''
@@ -5445,3 +5470,98 @@
       - button.geekmagic_orange_next_screen
     data: {}
   mode: single
+- id: '1773928873001'
+  alias: 'OEPL: Small weather'
+  description: ''
+  triggers:
+  - trigger: time_pattern
+    hours: /3
+  conditions:
+  - condition: time
+    after: 06:59:00
+    before: '21:01:00'
+  actions:
+  - data:
+      background: white
+      rotation: 0
+      dry-run: false
+      payload:
+      - type: text
+        x: 76
+        y: 3
+        size: 25
+        anchor: mt
+        color: black
+        value: '{{now().strftime(''%A'')}}'
+      - type: icon
+        x: 38
+        y: 42
+        size: 25
+        anchor: rm
+        value: '{{  ["arrow-up-thin-circle-outline", "arrow-top-right-thin-circle-outline",
+          "arrow-right-thin-circle-outline", "arrow-bottom-right-thin-circle-outline",
+          "arrow-down-thin-circle-outline", "arrow-bottom-left-thin-circle-outline",
+          "arrow-left-thin-circle-outline", "arrow-up-left-thin-circle-outline"][((state_attr(''sensor.weather_forecast_home'',''forecast_hourly'')[0].wind_bearing
+          | float) / 45) | round % 8]}}'
+      - type: text
+        x: 37
+        y: 44
+        size: 15
+        anchor: lm
+        value: '{{state_attr(''sensor.weather_forecast_home'',''forecast_hourly'')[0].wind_speed
+          | float | round }}     '
+      - type: icon
+        x: 76
+        y: 40
+        size: 40
+        anchor: mm
+        value: 'weather-{{ weather[state_attr(''sensor.weather_forecast_home'',''forecast_hourly'')[0].condition]
+          }}      '
+      - type: icon
+        x: 105
+        y: 40
+        size: 25
+        anchor: mm
+        value: thermometer
+      - type: text
+        x: 110
+        y: 44
+        size: 15
+        anchor: lm
+        value: '{{state_attr(''sensor.weather_forecast_home'',''forecast_hourly'')[0].temperature
+          | float | round}}°'
+      - type: text
+        x: 76
+        y: 60
+        size: 90
+        anchor: mt
+        color: red
+        value: '{{now().strftime(''%d'')}}'
+      - type: text
+        x: 76
+        y: 149
+        size: 25
+        anchor: mb
+        color: black
+        value: '{{now().strftime(''%B'')}}'
+    target:
+      device_id: 96d06ee9ec53aff3fcc86408324edef6
+    action: open_epaper_link.drawcustom
+  variables:
+    weather:
+      partlycloudy: partly-cloudy
+      clear-night: night
+      rainy: rainy
+      sunny: sunny
+      cloudy: cloudy
+      fog: fog
+      hail: hail
+      lightning: lightning
+      lightning-rainy: lightning-rainy
+      pouring: pouring
+      snowy: snowy
+      snowy-rainy: snowy-rainy
+      windy: windy
+      windy-variant: windy-variant
+      exceptional: exceptional
+  mode: restart
