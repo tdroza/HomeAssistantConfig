@@ -1,7 +1,7 @@
 {
   "version": 1,
   "minor_version": 1,
-  "key": "lovelace",
+  "key": "lovelace.lovelace",
   "data": {
     "config": {
       "button_card_templates": {
@@ -1947,52 +1947,15 @@
           "badges": [],
           "cards": [
             {
-              "aspect_ratio": "0%",
-              "camera_image": "camera.ip_webcam",
+              "camera_view": "auto",
+              "camera_image": "camera.doorbell",
               "entities": [
                 {
-                  "entity": "camera.ip_webcam"
-                },
-                {
-                  "entity": "sensor.ip_webcam_battery_level"
-                },
-                {
-                  "entity": "switch.ip_webcam_front_facing_camera"
-                },
-                {
-                  "entity": "sensor.ip_webcam_battery_voltage"
-                }
-              ],
-              "image": "https://demo.home-assistant.io/stub_config/kitchen.png",
-              "title": "Green Lane",
-              "type": "picture-glance"
-            },
-            {
-              "type": "picture-glance",
-              "camera_image": "camera.officecam",
-              "title": "OfficeCam",
-              "aspect_ratio": "0%",
-              "entities": [
-                {
-                  "entity": "camera.officecam"
-                }
-              ],
-              "image": "https://demo.home-assistant.io/stub_config/kitchen.png"
-            },
-            {
-              "aspect_ratio": "0%",
-              "camera_image": "camera.esp32cam_lastimage",
-              "entities": [
-                {
-                  "entity": "camera.esp32cam_one"
-                },
-                {
-                  "entity": "input_text.image_timestamp"
+                  "entity": "sensor.eufyhomebase_current_mode"
                 }
               ],
               "entity": "input_text.image_timestamp",
-              "image": "c",
-              "title": "ESP32Cam Last image",
+              "title": "Doorbell",
               "type": "picture-glance"
             },
             {
@@ -2009,23 +1972,19 @@
             {
               "camera_view": "auto",
               "type": "picture-glance",
-              "title": "Octoprint",
+              "title": "Bambulab A1",
               "entities": [
                 {
-                  "entity": "sensor.octoprint_current_state"
+                  "entity": "sensor.bambulab_a1_current_stage"
                 },
                 {
-                  "entity": "sensor.octoprint_job_percentage"
+                  "entity": "sensor.bambulab_a1_end_time"
                 },
                 {
-                  "entity": "sensor.octoprint_estimated_finish_time"
-                },
-                {
-                  "entity": "binary_sensor.octoprint_printing"
+                  "entity": "binary_sensor.bambulab_a1_extruder_filament_state"
                 }
               ],
-              "camera_image": "camera.octoprint",
-              "style": "hui-image {\n  transform: rotate(270deg);\n}\n"
+              "camera_image": "camera.bambulab_a1_camera"
             }
           ],
           "icon": "mdi:cctv",
@@ -3741,15 +3700,16 @@
                         "cards": [
                           {
                             "type": "custom:mushroom-template-card",
-                            "primary": "Heating Airer",
+                            "primary": "Heated Airer",
                             "secondary": "Requested: {{ as_timestamp(states('sensor.airer_requested_power')) | timestamp_custom('%H:%M')}}",
                             "icon": "mdi:power",
-                            "icon_color": "green",
-                            "fill_container": true,
-                            "multiline_secondary": false
+                            "multiline_secondary": false,
+                            "color": "green",
+                            "features_position": "bottom"
                           },
                           {
                             "type": "custom:mushroom-entity-card",
+                            "name": "Airer Current Status",
                             "entity": "switch.heated_airer",
                             "fill_container": true
                           }
