@@ -229,6 +229,9 @@
                         "options": {
                           "type": "template",
                           "icon": "mdi:washing-machine",
+                          "tap-action": {
+                            "action": "more-info"
+                          },
                           "icon_color": "#D0CC5B",
                           "content": "{{(states('sensor.sonoff_10003a0e20_power')|int / 1000) | round(2)}}kW"
                         },
@@ -239,6 +242,9 @@
                           "type": "template",
                           "icon": "mdi:dishwasher",
                           "icon_color": "orange",
+                          "tap-action": {
+                            "action": "more-info"
+                          },
                           "content": "{{(states('sensor.sonoff_dishwasher_power')|int / 1000) | round(2)}}kW"
                         },
                         "entity_id": "binary_sensor.dishwasher"
