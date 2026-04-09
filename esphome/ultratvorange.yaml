@@ -104,6 +104,7 @@ display:
     update_interval: 30s
     id: disp
     spi_mode: mode3
+
     lambda: |-
       it.fill(Color::BLACK);
 
@@ -120,14 +121,15 @@ display:
 
 
       std::string raw = id(tom).state;
-      std::string tom_status = "Away";
-      if (raw == "home") tom_status = "Home";
+      std::string tom_status = "Loading...";
+      tom_status = (raw == "home")?"Home":"Away";
       it.printf(10, 150, id(font_large), Color(200, 200, 200), "Tom: %s", tom_status.c_str());
 
       raw = id(anna).state;
-      std::string anna_status = "Away";
-      if (raw == "home") anna_status = "Home";
+      std::string anna_status = "Loading...";
+      anna_status =  (raw == "home")?"Home":"Away";
       it.printf(10, 170, id(font_large), Color(200, 200, 200), "Anna: %s", anna_status.c_str());
+
 
 sensor:
   - platform: homeassistant
