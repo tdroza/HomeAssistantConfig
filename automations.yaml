@@ -3279,13 +3279,13 @@
           or repeat.index == 3 }}      '
   mode: single
 - id: '1693819732477'
-  alias: 'Solax: Force grid charge'
+  alias: 'Solax: Force grid charge in morning '
   description: Every morning during flux import period, charge battery if solar forecast
     for the day is low
-  trigger:
-  - platform: time
-    at: 04:00:00
-  condition:
+  triggers:
+  - at: 04:00:00
+    trigger: time
+  conditions:
   - condition: numeric_state
     entity_id: sensor.solcast_pv_forecast_forecast_today
     below: input_number.average_daily_kwh_consumed
@@ -3296,43 +3296,43 @@
     entity_id: sensor.solax_local_battery_soc
     below: 45
     enabled: false
-  action:
-  - service: input_number.set_value
-    data:
+  actions:
+  - data:
       value: "{% set forecast_kwh = states('sensor.solcast_pv_forecast_forecast_today')|float
         %}  {% set battery_usable_kwh = 5.8*0.9 %} {% set charge_from_grid_kwh = (states('input_number.average_daily_kwh_consumed')|int
         - forecast_kwh) %}  {% set charge_from_grid_pc = 10 + 100*charge_from_grid_kwh/battery_usable_kwh%}
         {{max(0,min(charge_from_grid_pc|int,100))}}    \n"
     target:
       entity_id: input_number.solax_battery_soc_target
+    action: input_number.set_value
   - repeat:
       sequence:
-      - service: rest_command.solax_local_charge_battery_from_grid
-        data:
+      - data:
           level: '{{states(''input_number.solax_battery_soc_target'') | int}}
 
             '
+        action: rest_command.solax_local_charge_battery_from_grid
       - delay:
           seconds: 10
         enabled: false
-      - service: rest_command.solax_local_set_forced_charge_start
-        data:
+      - data:
           value: '{{3 + 5 * 256}}
 
             '
         enabled: false
-      - service: notify.mobile_app_toms_phone
-        data:
+        action: rest_command.solax_local_set_forced_charge_start
+      - data:
           message: 'Home battery set to charge from grid. Target: {{states(''input_number.solax_battery_soc_target'')}}%
             Solar Forecast: {{states(''sensor.solcast_pv_forecast_forecast_today'')|
             round(2)}}kWh Attempt: {{repeat.index}}'
           title: "\U0001F324 Solar "
+        action: notify.mobile_app_toms_phone
       - delay:
           seconds: 10
-      - service: homeassistant.update_entity
-        data: {}
+      - data: {}
         target:
           entity_id: sensor.solax_rest_local_settings
+        action: homeassistant.update_entity
       - delay:
           seconds: 10
       until:
@@ -4275,8 +4275,15 @@
   triggers:
   - entity_id:
     - sensor.octopus_energy_electricity_22l3131941_2380000814991_current_rate
-    attribute: start
     trigger: state
+  - trigger: state
+    entity_id:
+    - binary_sensor.octopus_energy_electricity_22l3131941_2380000814991_off_peak
+    from:
+    - 'off'
+    to:
+    - 'on'
+    enabled: false
   conditions: []
   actions:
   - target:
@@ -4329,7 +4336,8 @@
           |as_timestamp()| timestamp_custom(''%H:%M'')}}-{{state_attr(''sensor.octopus_energy_electricity_22l3131941_2380000814991_current_rate'',''end'')
           |as_timestamp()| timestamp_custom(''%H:%M'')}}'
     action: open_epaper_link.drawcustom
-  mode: restart
+  mode: queued
+  max: 3
 - id: '1702637553110'
   alias: 'OEPL: Coffee settings'
   description: ''
@@ -5532,14 +5540,14 @@
           | float | round}}°'
       - type: text
         x: 76
-        y: 60
+        y: 58
         size: 90
         anchor: mt
         color: red
         value: '{{now().strftime(''%d'')}}'
       - type: text
         x: 76
-        y: 149
+        y: 155
         size: 25
         anchor: mb
         color: black
@@ -5565,3 +5573,129 @@
       windy-variant: windy-variant
       exceptional: exceptional
   mode: restart
+- id: '1774880811553'
+  alias: Octopus off-peak notification
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - binary_sensor.octopus_energy_electricity_22l3131941_2380000814991_off_peak
+    from:
+    - 'off'
+    to:
+    - 'on'
+    id: start
+  - trigger: state
+    entity_id:
+    - binary_sensor.octopus_energy_electricity_22l3131941_2380000814991_off_peak
+    from:
+    - 'on'
+    to:
+    - 'off'
+    id: end
+  conditions: []
+  actions:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id:
+        - start
+      sequence:
+      - action: notify.tom_and_anna
+        data:
+          data:
+            tag: octopus-off-peak
+          title: Octopus off-peak
+          message: ⚡Off peak electricity until {{ state_attr("binary_sensor.octopus_energy_electricity_22l3131941_2380000814991_off_peak","current_end")
+            | as_timestamp() | timestamp_custom("%H:%M")}}
+    - conditions:
+      - condition: trigger
+        id:
+        - end
+      sequence:
+      - action: notify.tom_and_anna
+        data:
+          data:
+            tag: octopus-off-peak
+          title: Octopus off-peak
+          message: clear_notification
+  mode: single
+- id: '1775060521187'
+  alias: 'Octopus: Force charge battery during cheap rates'
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - binary_sensor.octopus_energy_electricity_22l3131941_2380000814991_off_peak
+    from:
+    - 'off'
+    id: offpeak_start
+    to:
+    - 'on'
+  - trigger: state
+    entity_id:
+    - binary_sensor.octopus_energy_electricity_22l3131941_2380000814991_off_peak
+    from:
+    - 'on'
+    id: offpeak_clear
+    to:
+    - 'off'
+  conditions: []
+  actions:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id:
+        - offpeak_start
+      sequence:
+      - repeat:
+          until:
+          - condition: state
+            entity_id: sensor.solax_local_work_mode
+            state:
+            - Manual
+          sequence:
+          - action: rest_command.solax_local_set_inverter_mode
+            data:
+              inverter_mode: '{{ state_attr(''input_select.solax_inverter_mode'',''options'').index(''Manual'')
+                }}
+
+                '
+          - delay:
+              hours: 0
+              minutes: 0
+              seconds: 5
+              milliseconds: 0
+          - action: rest_command.solax_local_set_manual_mode
+            data:
+              manual_mode: '{{ state_attr(''input_select.solax_manual_mode'',''options'').index(''Forced
+                charge'')}}
+
+                '
+          - delay:
+              hours: 0
+              minutes: 0
+              seconds: 5
+              milliseconds: 0
+          - action: homeassistant.update_entity
+            metadata: {}
+            data:
+              entity_id:
+              - sensor.solax_rest_local_settings
+          - delay:
+              hours: 0
+              minutes: 0
+              seconds: 10
+              milliseconds: 0
+    - conditions:
+      - condition: trigger
+        id:
+        - offpeak_clear
+      sequence:
+      - action: rest_command.solax_local_set_inverter_mode
+        data:
+          inverter_mode: '{{ state_attr(''input_select.solax_inverter_mode'',''options'').index(''Self-use'')
+            }}
+
+            '
+  mode: single

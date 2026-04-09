@@ -349,6 +349,13 @@
                           "view_path": "cast"
                         }
                       }
+                    },
+                    {
+                      "type": "template",
+                      "content": "{{(states('sensor.octopus_energy_electricity_22l3131941_2380000814991_current_rate') |float * 100)| round(2)}}p/kWh",
+                      "icon": "mdi:transmission-tower-import",
+                      "icon_color": "{{\"green\" if states('sensor.octopus_energy_electricity_22l3131941_2380000814991_current_rate') |float < 15 else \"red\"}}",
+                      "entity": "sensor.octopus_energy_electricity_22l3131941_2380000814991_current_rate"
                     }
                   ]
                 }
@@ -842,100 +849,6 @@
                       }
                     ]
                   }
-                }
-              ]
-            },
-            {
-              "type": "custom:apexcharts-card",
-              "header": {
-                "show": true,
-                "title": "5-min Average",
-                "show_states": true,
-                "colorize_states": true
-              },
-              "graph_span": "24h",
-              "experimental": {
-                "brush": true,
-                "hidden_by_default": true
-              },
-              "brush": {
-                "selection_span": "4h"
-              },
-              "span": {
-                "end": "minute"
-              },
-              "all_series_config": {
-                "stroke_width": 2,
-                "extend_to": "now",
-                "group_by": {
-                  "duration": "5min",
-                  "func": "avg"
-                }
-              },
-              "yaxis": [
-                {
-                  "id": "power",
-                  "show": true
-                },
-                {
-                  "id": "percent",
-                  "show": true,
-                  "opposite": true,
-                  "min": 0,
-                  "max": 100
-                }
-              ],
-              "series": [
-                {
-                  "entity": "sensor.solax_local_pv_output",
-                  "yaxis_id": "power",
-                  "name": "PV",
-                  "type": "area",
-                  "opacity": 0.25,
-                  "show": {
-                    "in_brush": true
-                  }
-                },
-                {
-                  "entity": "sensor.solax_local_pv1_output",
-                  "yaxis_id": "power",
-                  "name": "East",
-                  "show": {
-                    "hidden_by_default": true
-                  }
-                },
-                {
-                  "entity": "sensor.solax_local_pv2_output",
-                  "yaxis_id": "power",
-                  "name": "South",
-                  "show": {
-                    "hidden_by_default": true
-                  }
-                },
-                {
-                  "entity": "sensor.solax_local_grid_power",
-                  "yaxis_id": "power",
-                  "name": "Grid",
-                  "color": "#31526A"
-                },
-                {
-                  "entity": "sensor.solax_local_load_power",
-                  "yaxis_id": "power",
-                  "name": "House",
-                  "show": {
-                    "in_brush": true
-                  }
-                },
-                {
-                  "entity": "sensor.solax_local_battery_power",
-                  "yaxis_id": "power",
-                  "name": "Battery"
-                },
-                {
-                  "entity": "sensor.solax_local_battery_soc",
-                  "yaxis_id": "percent",
-                  "name": "SoC",
-                  "color": "#397771"
                 }
               ]
             },
