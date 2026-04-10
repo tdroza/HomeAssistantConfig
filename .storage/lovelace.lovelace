@@ -1761,7 +1761,7 @@
                     "action": "call-service",
                     "service": "automation.trigger",
                     "target": {
-                      "entity_id": "automation.oepl_electricity_tariff"
+                      "entity_id": "automation.oepll_small_weather"
                     },
                     "data": {
                       "skip_condition": true
