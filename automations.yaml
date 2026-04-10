@@ -5496,14 +5496,14 @@
       payload:
       - type: text
         x: 76
-        y: 3
+        y: 58
         size: 25
-        anchor: mt
+        anchor: mb
         color: black
         value: '{{now().strftime(''%A'')}}'
       - type: icon
         x: 38
-        y: 42
+        y: 15
         size: 25
         anchor: rm
         value: '{{  ["arrow-up-thin-circle-outline", "arrow-top-right-thin-circle-outline",
@@ -5513,27 +5513,27 @@
           | float) / 45) | round % 8]}}'
       - type: text
         x: 37
-        y: 44
+        y: 15
         size: 15
         anchor: lm
         value: '{{state_attr(''sensor.weather_forecast_home'',''forecast_hourly'')[0].wind_speed
           | float | round }}     '
       - type: icon
         x: 76
-        y: 40
+        y: 15
         size: 40
         anchor: mm
         value: 'weather-{{ weather[state_attr(''sensor.weather_forecast_home'',''forecast_hourly'')[0].condition]
           }}      '
       - type: icon
         x: 105
-        y: 40
+        y: 15
         size: 25
         anchor: mm
         value: thermometer
       - type: text
         x: 110
-        y: 44
+        y: 15
         size: 15
         anchor: lm
         value: '{{state_attr(''sensor.weather_forecast_home'',''forecast_hourly'')[0].temperature
@@ -5698,4 +5698,52 @@
             }}
 
             '
+  mode: single
+- id: '1775731797132'
+  alias: Update car location
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - binary_sensor.annas_phone_in_car
+    from:
+    - 'on'
+    to:
+    - 'off'
+    id: anna
+  - trigger: state
+    entity_id:
+    - binary_sensor.toms_phone_in_car
+    from:
+    - 'on'
+    to:
+    - 'off'
+    id: tom
+  conditions: []
+  actions:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id:
+        - anna
+      sequence:
+      - action: device_tracker.see
+        metadata: {}
+        data:
+          dev_id: ioniq5_gps
+          gps:
+          - '{{state_attr(''device_tracker.annas_phone'',''latitude'')}}'
+          - '{{state_attr(''device_tracker.annas_phone'',''longitude'')}}'
+    - conditions:
+      - condition: trigger
+        id:
+        - tom
+      sequence:
+      - action: device_tracker.see
+        metadata: {}
+        data:
+          dev_id: ioniq5_gps
+          gps:
+          - '{{state_attr(''device_tracker.toms_phone'',''latitude'')}}'
+          - '{{state_attr(''device_tracker.toms_phone'',''longitude'')}}'
   mode: single

@@ -1741,6 +1741,34 @@
                   }
                 }
               ]
+            },
+            {
+              "type": "vertical-stack",
+              "cards": [
+                {
+                  "name": "Tom's Date",
+                  "template": "button-card-headers",
+                  "type": "custom:button-card"
+                },
+                {
+                  "show_state": false,
+                  "show_name": true,
+                  "camera_view": "auto",
+                  "fit_mode": "cover",
+                  "type": "picture-entity",
+                  "entity": "image.tom_s_date_content",
+                  "hold_action": {
+                    "action": "call-service",
+                    "service": "automation.trigger",
+                    "target": {
+                      "entity_id": "automation.oepl_electricity_tariff"
+                    },
+                    "data": {
+                      "skip_condition": true
+                    }
+                  }
+                }
+              ]
             }
           ]
         },
