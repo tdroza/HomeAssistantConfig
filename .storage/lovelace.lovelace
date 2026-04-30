@@ -1593,6 +1593,10 @@
           ],
           "cards": [
             {
+              "type": "entity",
+              "entity": "switch.3ch_usb_switch_port_3"
+            },
+            {
               "type": "vertical-stack",
               "cards": [
                 {
@@ -1700,7 +1704,7 @@
                   "camera_view": "auto",
                   "fit_mode": "cover",
                   "type": "picture-entity",
-                  "entity": "image.00000218cf5d3b19_content",
+                  "entity": "image.office_calendar_content",
                   "hold_action": {
                     "action": "call-service",
                     "service": "automation.trigger",
