@@ -21,7 +21,7 @@ atom_matrix_text:
 atom_matrix_image:
   url: http://192.168.1.172/json/state
   method: POST
-  payload: '{"on":true, "bri": 40, "seg": {"id": {{segment}}, "i":[{{image}}], "rY": true} }'
+  payload: '{"on":true, "bri": 40, "seg": {"id": {{segment}}, "i":{{image}}, "rY": false} }'
 atom_matrix_default:
   url: http://192.168.1.172/json/state
   method: POST

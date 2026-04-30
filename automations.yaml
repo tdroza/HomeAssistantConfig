@@ -5216,7 +5216,7 @@
       sequence:
       - action: rest_command.atom_matrix_image
         data:
-          image: '"000000","000000","ff2500","000000","000000","000000","000000","ff2500","000000","000000","ff2500","000000","ff2500","000000","ff2500","000000","ff2500","ff2500","ff2500","000000","000000","000000","ff2500","000000","000000"'
+          image: '["000000","000000","ff2500","000000","000000","000000","000000","ff2500","000000","000000","ff2500","000000","ff2500","000000","ff2500","000000","ff2500","ff2500","ff2500","000000","000000","000000","ff2500","000000","000000"]'
           segment: 0
     - conditions:
       - condition: template
@@ -5225,7 +5225,7 @@
       sequence:
       - action: rest_command.atom_matrix_image
         data:
-          image: '"000000","000000","00ff00","000000","000000","000000","00ff00","00ff00","00ff00","000000","00ff00","000000","00ff00","000000","00ff00","000000","000000","00ff00","000000","000000","000000","000000","00ff00","000000","000000"'
+          image: '["000000","000000","00ff00","000000","000000","000000","00ff00","00ff00","00ff00","000000","00ff00","000000","00ff00","000000","00ff00","000000","000000","00ff00","000000","000000","000000","000000","00ff00","000000","000000"]'
           segment: 0
   mode: single
 - id: '1753093071937'
@@ -5552,9 +5552,9 @@
         anchor: mb
         color: black
         value: '{{now().strftime(''%B'')}}'
+    action: open_epaper_link.drawcustom
     target:
       device_id: 96d06ee9ec53aff3fcc86408324edef6
-    action: open_epaper_link.drawcustom
   variables:
     weather:
       partlycloudy: partly-cloudy
@@ -5746,4 +5746,51 @@
           gps:
           - '{{state_attr(''device_tracker.toms_phone'',''latitude'')}}'
           - '{{state_attr(''device_tracker.toms_phone'',''longitude'')}}'
+  mode: single
+- id: '1777293785120'
+  alias: BTC History Display
+  description: ''
+  triggers:
+  - trigger: time_pattern
+    minutes: '1'
+    id: timed
+  - type: turned_on
+    device_id: 13936064797ee66cdae3d2fbc0e73e93
+    entity_id: 3e9e7a3b82d401edccc8e5307f18e2a6
+    domain: light
+    trigger: device
+    id: turned_on
+  conditions: []
+  actions:
+  - if:
+    - condition: time
+      before: 01:00:00
+    then:
+    - action: input_text.set_value
+      metadata: {}
+      target:
+        entity_id: input_text.btc_display_history
+      data:
+        value: ''
+  - if:
+    - condition: trigger
+      id:
+      - timed
+    then:
+    - action: input_text.set_value
+      metadata: {}
+      target:
+        entity_id: input_text.btc_display_history
+      data:
+        value: '{{states(''input_text.btc_display_history'')}}{{1 if states(''sensor.coinbase_f17e_btc_derivative'')|float
+          >= 0 else 0}}'
+  - variables:
+      history: '{% set black = [''000000'',''000000'',''000000'',''000000'',''000000'',''000000'',''000000'',''000000'',''000000'',''000000'',''000000'',''000000'',''000000'',''000000'',''000000'',''000000'',''000000'',''000000'',''000000'',''000000'',''000000'',''000000'',''000000'']
+        %} {%- set data = namespace(image=[],matrix=[]) %} {%- for i in states(''input_text.btc_display_history'')
+        | list %} {%- set pixel=("ff0000" if i|int==0 else "00ff00")%} {%- set data.image
+        = data.image + [pixel]%} {%- endfor %} {{ data.image + black }}'
+  - action: rest_command.atom_matrix_image
+    data:
+      image: '{{history}}'
+      segment: 0
   mode: single
