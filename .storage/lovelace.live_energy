@@ -354,7 +354,7 @@
                       "type": "template",
                       "content": "{{(states('sensor.octopus_energy_electricity_22l3131941_2380000814991_current_rate') |float * 100)| round(2)}}p/kWh",
                       "icon": "mdi:transmission-tower-import",
-                      "icon_color": "{{\"green\" if states('sensor.octopus_energy_electricity_22l3131941_2380000814991_current_rate') |float < 15 else \"red\"}}",
+                      "icon_color": "{{\"green\" if states('sensor.octopus_energy_electricity_22l3131941_2380000814991_current_rate') |float < 0.15 else \"red\"}}",
                       "entity": "sensor.octopus_energy_electricity_22l3131941_2380000814991_current_rate"
                     }
                   ]
