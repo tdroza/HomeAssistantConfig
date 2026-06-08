@@ -85,6 +85,22 @@
     - published
 - platform: feedparser
   scan_interval: 43200
+  name: podcast_smash_boom_best
+  feed_url: https://feeds.megaphone.fm/LEME2157145514
+  inclusions: 
+    - title
+    - links
+    - published
+- platform: feedparser
+  scan_interval: 43200
+  name: podcast_infinite_monkey_cage
+  feed_url: https://podcasts.files.bbci.co.uk/b00snr0w.rss
+  inclusions: 
+    - title
+    - links
+    - published    
+- platform: feedparser
+  scan_interval: 43200
   name: QOTD
   feed_url: http://feeds.feedburner.com/theysaidso/qod/inspire
 - platform: feedparser
