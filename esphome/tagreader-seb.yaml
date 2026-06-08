@@ -36,7 +36,7 @@ esphome:
     - wait_until:
         api.connected:
     - logger.log: API is connected!
-    - rtttl.play: "success:d=24,o=5,b=100:c,g,b"
+    - rtttl.play: "success:d=16,o=5,b=100:c,g,b"
     - light.turn_on:
         id: activity_led
         brightness: 100%
@@ -169,7 +169,7 @@ pn532_i2c:
         condition:
           switch.is_on: buzzer_enabled
         then:
-        - rtttl.play: "success:d=24,o=5,b=100:c,g,b"
+        - rtttl.play: "success:d=16,o=5,b=100:c,g,b"
     - if:
         condition:
           switch.is_on: led_enabled
