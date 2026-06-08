@@ -2063,6 +2063,10 @@
                   "color": "#397771"
                 }
               ]
+            },
+            {
+              "type": "entity",
+              "entity": "sensor.mtgox_btc_payout"
             }
           ],
           "icon": "mdi:beta",
@@ -3741,6 +3745,12 @@
               "type": "entities",
               "entities": [
                 "button.wake_on_lan_synology"
+              ]
+            },
+            {
+              "type": "entities",
+              "entities": [
+                "switch.3ch_usb_switch_port_3"
               ]
             }
           ]
