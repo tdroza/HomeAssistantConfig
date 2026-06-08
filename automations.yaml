@@ -1233,6 +1233,7 @@
   mode: single
 - id: '1604341003387'
   alias: 'NFC: Podcast Player'
+  description: ''
   triggers:
   - event_type: tag_scanned
     trigger: event
@@ -1277,10 +1278,13 @@
     continue_on_timeout: true
     timeout: '10'
   - data:
-      media_content_id: '{{ (state_attr(podcast_sensor,''entries'')[states(podcast_counter)
-        | int].links | selectattr(''rel'',''eq'',''enclosure'') | list)[0].href }}'
-      media_content_type: music
       entity_id: '{{ media_player_entity_id }}'
+      media:
+        media_content_id: '{{ (state_attr(podcast_sensor,''entries'')[states(podcast_counter)
+          | int].links | selectattr(''rel'',''eq'',''enclosure'') | list)[0].href
+          }}'
+        media_content_type: music
+        metadata: {}
     action: media_player.play_media
   - choose:
     - conditions:
@@ -1349,6 +1353,14 @@
         title: Peace Out
         podcast_counter: counter.podcast_peace_out
         sensor: sensor.podcast_peace_out
+      04-6A-6E-62-90-6B-80:
+        title: Infinite Monkey Cage
+        podcast_counter: counter.podcast_infinite_monkey_cage
+        sensor: sensor.podcast_infinite_monkey_cage
+      04-66-6E-62-90-6B-80:
+        title: Smash Boom Best
+        podcast_counter: counter.podcast_smash_boom_best
+        sensor: sensor.podcast_smash_boom_best
 - id: '1604656539815'
   alias: Turn on living room lights when door opened
   description: ''
@@ -5483,7 +5495,7 @@
   description: ''
   triggers:
   - trigger: time_pattern
-    hours: /3
+    hours: /2
   conditions:
   - condition: time
     after: 06:59:00
@@ -5509,7 +5521,7 @@
         value: '{{  ["arrow-up-thin-circle-outline", "arrow-top-right-thin-circle-outline",
           "arrow-right-thin-circle-outline", "arrow-bottom-right-thin-circle-outline",
           "arrow-down-thin-circle-outline", "arrow-bottom-left-thin-circle-outline",
-          "arrow-left-thin-circle-outline", "arrow-up-left-thin-circle-outline"][((state_attr(''sensor.weather_forecast_home'',''forecast_hourly'')[0].wind_bearing
+          "arrow-left-thin-circle-outline", "arrow-top-left-thin-circle-outline"][((state_attr(''sensor.weather_forecast_home'',''forecast_hourly'')[0].wind_bearing
           | float) / 45) | round % 8]}}'
       - type: text
         x: 37
@@ -5547,7 +5559,7 @@
         value: '{{now().strftime(''%d'')}}'
       - type: text
         x: 76
-        y: 155
+        y: 145
         size: 25
         anchor: mb
         color: black
