@@ -3224,7 +3224,9 @@
                     },
                     {
                       "type": "tile",
-                      "entity": "binary_sensor.dishwasher"
+                      "entity": "binary_sensor.dishwasher",
+                      "vertical": false,
+                      "features_position": "bottom"
                     },
                     {
                       "type": "custom:mushroom-entity-card",

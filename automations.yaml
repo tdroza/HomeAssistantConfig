@@ -4477,27 +4477,30 @@
   triggers:
   - entity_id:
     - binary_sensor.dishwasher
-    from: 'on'
-    to: 'off'
+    from:
+    - 'on'
+    to:
+    - 'off'
     trigger: state
   conditions:
   - condition: state
     entity_id: input_boolean.do_not_disturb
     state: 'off'
-  - condition: not
-    conditions:
-    - condition: state
-      entity_id: media_player.living_room_display
-      state: playing
   actions:
-  - data:
-      entity_id: media_player.kitchen_display
-      message: The dishwasher has finished.
-    action: tts.google_translate_say
   - data:
       title: Dishwasher
       message: "\U0001F37D️ The dishwasher has finished"
     action: notify.tom_and_anna
+  - condition: not
+    conditions:
+    - condition: state
+      entity_id: media_player.living_room_display
+      state:
+      - playing
+  - data:
+      entity_id: media_player.kitchen_display
+      message: The dishwasher has finished.
+    action: tts.google_translate_say
   mode: single
 - id: '1709651798349'
   alias: 'Notify: Oven hot'
