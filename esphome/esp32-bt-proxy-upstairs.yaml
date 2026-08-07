@@ -9,7 +9,7 @@ esphome:
   friendly_name: ${friendly_name}
 api:
   encryption:
-    key: NEdOShmGS/sA+WtmJ+GaJ4fhr5Y7P3wVXyVrRpgk7g0=
+    key: !secret esp32_bt_proxy_upstairs__encryption_key
 esp32:
   framework:
     type: esp-idf

@@ -80,6 +80,8 @@ logger:
 
 # Enable Home Assistant API
 api:
+  encryption:
+    key: !secret tagreader_reu__encryption_key
   services:
   - service: rfidreader_tag_ok
     then:
