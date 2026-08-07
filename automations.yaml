@@ -5562,7 +5562,7 @@
         value: '{{now().strftime(''%d'')}}'
       - type: text
         x: 76
-        y: 145
+        y: 150
         size: 25
         anchor: mb
         color: black
