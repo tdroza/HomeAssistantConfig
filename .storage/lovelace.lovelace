@@ -590,7 +590,10 @@
                         {
                           "type": "area-controls",
                           "controls": [
-                            "light"
+                            "light",
+                            {
+                              "entity_id": "switch.media_centre"
+                            }
                           ]
                         }
                       ],
@@ -602,12 +605,16 @@
                         "temperature",
                         "humidity"
                       ],
-                      "features_position": "bottom",
                       "display_type": "compact",
+                      "features_position": "bottom",
                       "type": "area",
                       "area": "20f98b0288cb453a85b1ad468ed4301e",
                       "color": "",
-                      "navigation_path": "/lovelace/living-room"
+                      "tap_action": {
+                        "action": "navigate",
+                        "navigation_path": "/lovelace/living-room"
+                      },
+                      "vertical": false
                     },
                     {
                       "features": [
@@ -1621,6 +1628,9 @@
                   "fit_mode": "cover",
                   "type": "picture-entity",
                   "entity": "image.0000021e69133b19_content",
+                  "card_mod": {
+                    "style": "ha-card {\n  transform: rotate( {% if now().day < 15 %}180deg{% else %}0deg {% endif %});\n  transition: 0s;\n}\n"
+                  },
                   "hold_action": {
                     "action": "call-service",
                     "service": "automation.trigger",
@@ -1649,6 +1659,9 @@
                   "fit_mode": "cover",
                   "type": "picture-entity",
                   "entity": "image.0000021f40f13b1f_content",
+                  "card_mod": {
+                    "style": "ha-card {\n  transform: rotate( {% if now().day < 15 %}180deg{% else %}0deg {% endif %});\n  transition: 0s;\n}\n"
+                  },
                   "hold_action": {
                     "action": "call-service",
                     "service": "automation.trigger",
@@ -1677,6 +1690,9 @@
                   "fit_mode": "cover",
                   "type": "picture-entity",
                   "entity": "image.0000021fb7d03b14_content",
+                  "card_mod": {
+                    "style": "ha-card {\n  transform: rotate( {% if now().day < 15 %}180deg{% else %}0deg {% endif %});\n  transition: 0s;\n}\n"
+                  },
                   "hold_action": {
                     "action": "call-service",
                     "service": "automation.trigger",
@@ -1705,6 +1721,9 @@
                   "fit_mode": "cover",
                   "type": "picture-entity",
                   "entity": "image.office_calendar_content",
+                  "card_mod": {
+                    "style": "ha-card {\n  transform: rotate( {% if now().day < 15 %}180deg{% else %}0deg {% endif %});\n  transition: 0s;\n}\n"
+                  },
                   "hold_action": {
                     "action": "call-service",
                     "service": "automation.trigger",
@@ -2562,6 +2581,9 @@
                     {
                       "type": "tile",
                       "entity": "light.toms_desk_master",
+                      "name": {
+                        "type": "device"
+                      },
                       "vertical": true,
                       "tap_action": {
                         "action": "toggle"
@@ -2571,6 +2593,9 @@
                     {
                       "type": "tile",
                       "entity": "switch.toms_monitor_light",
+                      "name": {
+                        "type": "entity"
+                      },
                       "icon": "mdi:monitor-star",
                       "color": "accent",
                       "show_entity_picture": false,
