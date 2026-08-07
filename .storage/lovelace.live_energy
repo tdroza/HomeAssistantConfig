@@ -108,7 +108,7 @@
                   "color": "#2196f3"
                 },
                 {
-                  "entity": "sensor.sonoff_dishwasher_power",
+                  "entity": "sensor.dishwasher_power",
                   "display_zero_tolerance": 5,
                   "name": "Dishwasher",
                   "icon": "mdi:dishwasher",
@@ -245,7 +245,7 @@
                           "tap-action": {
                             "action": "more-info"
                           },
-                          "content": "{{(states('sensor.sonoff_dishwasher_power')|int / 1000) | round(2)}}kW"
+                          "content": "{{(states('sensor.dishwasher_power')|int / 1000) | round(2)}}kW"
                         },
                         "entity_id": "binary_sensor.dishwasher"
                       },
