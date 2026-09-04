@@ -1,3 +1,42 @@
+- binary_sensor:
+    name: "TD in car"
+    state: >
+      {{state_attr('sensor.toms_phone_bluetooth_connection', 'connected_paired_devices') != []  and (('CC:88:26:F3:A2:FE (Ioniq 5)' in state_attr('sensor.toms_phone_bluetooth_connection','connected_paired_devices')))}}
+    attributes:
+      latitude: "{{state_attr('device_tracker.toms_phone','latitude')}}"
+      longitude: "{{state_attr('device_tracker.toms_phone','longitude')}}"
+
+- binary_sensor:
+    name: "AD in car"
+    state: >
+      {{state_attr('sensor.annas_phone_bluetooth_connection', 'connected_paired_devices') != []  and (('CC:88:26:F3:A2:FE (Ioniq 5)' in state_attr('sensor.annas_phone_bluetooth_connection','connected_paired_devices')))}}
+    attributes:
+      latitude: "{{state_attr('device_tracker.annas_phone','latitude')}}"
+      longitude: "{{state_attr('device_tracker.annas_phone','longitude')}}"
+
+- triggers:
+  - trigger: state
+    entity_id:
+      - binary_sensor.ad_in_car
+    from:
+      - 'on'
+    to:
+      - 'off'
+    id: anna
+  - trigger: state
+    entity_id:
+      - binary_sensor.td_in_car
+    from:
+      - 'on'
+    to:
+      - 'off'
+  device_tracker: 
+    - name: ioniq5
+      picture: '/local/avatars/ioniq5.png'
+      unique_id: 'b2e2048b-66ea-42bb-a0e7-1d6f1e423661'
+      latitude: "{{ state_attr(trigger.entity_id,'latitude') }}"
+      longitude: "{{ state_attr(trigger.entity_id,'longitude') }}"
+      
 # DO NOTHING HELPER
 # Use this sensor as a dummy placeholder in the blueprint automation
 - sensor:
