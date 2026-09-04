@@ -236,7 +236,7 @@
           below: -2
       sequence:
       - data:
-          brightness_pct: 15
+          brightness_pct: 25
           transition: 3
         target:
           entity_id: light.living_room
@@ -246,7 +246,7 @@
         id: kodi
       sequence:
       - data:
-          brightness_pct: 5
+          brightness_pct: 15
           transition: 3
         target:
           entity_id: light.living_room
@@ -351,8 +351,7 @@
         action: light.turn_on
         target:
           entity_id:
-          - light.living_room_1
-          - light.living_room_2
+          - light.living_room
     - conditions:
       - condition: trigger
         id:
@@ -3553,6 +3552,7 @@
       - 0388417b1a1df1c1c551658a23530afc
       - 6a9ce31143b3b3779ea0063fdfe4a047
     action: open_epaper_link.drawcustom
+    continue_on_error: true
   mode: restart
 - id: '1700574169666'
   alias: 'OEPL: Energy Dashboard'
@@ -5714,54 +5714,6 @@
 
             '
   mode: single
-- id: '1775731797132'
-  alias: Update car location
-  description: ''
-  triggers:
-  - trigger: state
-    entity_id:
-    - binary_sensor.annas_phone_in_car
-    from:
-    - 'on'
-    to:
-    - 'off'
-    id: anna
-  - trigger: state
-    entity_id:
-    - binary_sensor.toms_phone_in_car
-    from:
-    - 'on'
-    to:
-    - 'off'
-    id: tom
-  conditions: []
-  actions:
-  - choose:
-    - conditions:
-      - condition: trigger
-        id:
-        - anna
-      sequence:
-      - action: device_tracker.see
-        metadata: {}
-        data:
-          dev_id: ioniq5_gps
-          gps:
-          - '{{state_attr(''device_tracker.annas_phone'',''latitude'')}}'
-          - '{{state_attr(''device_tracker.annas_phone'',''longitude'')}}'
-    - conditions:
-      - condition: trigger
-        id:
-        - tom
-      sequence:
-      - action: device_tracker.see
-        metadata: {}
-        data:
-          dev_id: ioniq5_gps
-          gps:
-          - '{{state_attr(''device_tracker.toms_phone'',''latitude'')}}'
-          - '{{state_attr(''device_tracker.toms_phone'',''longitude'')}}'
-  mode: single
 - id: '1777293785120'
   alias: BTC History Display
   description: ''
@@ -5809,3 +5761,28 @@
       image: '{{history}}'
       segment: 0
   mode: single
+- id: '1788441913885'
+  alias: 'Octopus: Saving session notification'
+  description: ''
+  triggers:
+  - trigger: calendar
+    entity_id: calendar.octopus_energy_a_ffeaa20a_octoplus_saving_sessions
+    event: start
+    offset: 0:-5:0
+    id: start
+  actions:
+  - action: notify.mobile_app_toms_phone
+    data:
+      title: Saving Session Starting
+      message: '{% set minutes = ((state_attr(trigger.entity_id, ''end_time'') | as_datetime
+        - state_attr(trigger.entity_id, ''start_time'') | as_datetime).seconds / 60)
+        | round(0) | string %} {% set start_time = (state_attr(trigger.entity_id,
+        ''start_time'') | as_datetime).strftime(''%H:%M'') %} Saving session starts
+        at {{ start_time }} for {{ minutes }} minutes.
+
+        '
+      data:
+        tag: octopus
+        timeout: '{{minutes | int * 60}}
+
+          '
