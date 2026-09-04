@@ -213,12 +213,12 @@
                               "toggle": true
                             },
                             {
-                              "entity": "light.living_room_1",
+                              "entity": "light.living_room_lamp_1",
                               "type": "custom:slider-entity-row",
                               "toggle": true
                             },
                             {
-                              "entity": "light.living_room_2",
+                              "entity": "light.living_room_lamp_2",
                               "type": "custom:slider-entity-row",
                               "toggle": true
                             },
