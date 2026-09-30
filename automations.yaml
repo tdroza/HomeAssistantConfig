@@ -1444,12 +1444,9 @@
       milliseconds: 0
   - data: {}
     target:
-      entity_id:
-      - light.sebs_lamp
-      - light.reubens_ceiling
-      - light.sebs_ceiling
-      - light.rname
-      - light.sebs_floorlamp
+      area_id:
+      - 4b995d6687c94e4f8f83b0784cf367f2
+      - 95dd572faf634c73a8de516c508ac206
     action: light.turn_off
   mode: restart
 - id: '1611402292310'

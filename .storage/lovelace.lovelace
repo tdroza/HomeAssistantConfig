@@ -4234,7 +4234,7 @@
                 },
                 {
                   "type": "custom:mushroom-light-card",
-                  "entity": "light.sebs_lamp",
+                  "entity": "light.sebs_desk_light",
                   "use_light_color": true,
                   "show_brightness_control": true,
                   "show_color_temp_control": true,
