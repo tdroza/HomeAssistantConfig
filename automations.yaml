@@ -4811,7 +4811,8 @@
   - action: media_player.select_source
     data:
       source: media_player.whole_house
-      entity_id: media_player.ytube_music_player
+    target:
+      device_id: 0c914eec6343c569126d86b5d78f7675
   - choose:
     - conditions:
       - condition: trigger
