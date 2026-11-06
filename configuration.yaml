@@ -43,3 +43,4 @@ homeassistant:
   allowlist_external_dirs:
     - /tmp
     - /config/www/cams
+hive_patch:
