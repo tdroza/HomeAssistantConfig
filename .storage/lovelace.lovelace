@@ -436,13 +436,63 @@
                               ]
                             },
                             {
-                              "entity": "light.sebs_floorlamp",
-                              "name": "Floorlamp",
-                              "toggle": true,
-                              "type": "custom:slider-entity-row"
+                              "entity": "light.sebs_desk_light",
+                              "type": "custom:slider-entity-row",
+                              "toggle": true
                             },
                             {
-                              "entity": "light.sebs_lamp",
+                              "type": "custom:rgb-light-card",
+                              "entity": "light.sebs_desk_light",
+                              "hide_when_off": true,
+                              "justify": "center",
+                              "colors": [
+                                {
+                                  "rgb_color": [
+                                    255,
+                                    0,
+                                    0
+                                  ]
+                                },
+                                {
+                                  "rgb_color": [
+                                    255,
+                                    165,
+                                    0
+                                  ]
+                                },
+                                {
+                                  "rgb_color": [
+                                    255,
+                                    255,
+                                    0
+                                  ]
+                                },
+                                {
+                                  "rgb_color": [
+                                    0,
+                                    255,
+                                    0
+                                  ]
+                                },
+                                {
+                                  "rgb_color": [
+                                    0,
+                                    0,
+                                    255
+                                  ]
+                                },
+                                {
+                                  "rgb_color": [
+                                    255,
+                                    0,
+                                    255
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "entity": "light.sebs_floorlamp",
+                              "name": "Floorlamp",
                               "toggle": true,
                               "type": "custom:slider-entity-row"
                             },
@@ -2764,7 +2814,7 @@
                 },
                 {
                   "type": "custom:mushroom-light-card",
-                  "entity": "light.living_room_1",
+                  "entity": "light.living_room_lamp_1",
                   "use_light_color": true,
                   "show_brightness_control": true,
                   "show_color_temp_control": true,
@@ -2773,7 +2823,7 @@
                 },
                 {
                   "type": "custom:mushroom-light-card",
-                  "entity": "light.living_room_2",
+                  "entity": "light.living_room_lamp_2",
                   "use_light_color": true,
                   "show_brightness_control": true,
                   "show_color_temp_control": true,

@@ -81,14 +81,14 @@ entity_config:
       expose: true
     light.window1:
       name: "Window 1"
-      expsose: false
+      expose: false
     light.sebs_floorlamp:
       name: "Sebs lamp"
       expose: true
     light.sebs_desk_light:
-      name: "Seb's desk lamp"
-      room: "Seb's bedroom"
+      name: "Seb's desk light"
       aliases:
+        - "Seb's desk lamp"
         - "Seb's desk"
         - "Desk lamp"
       expose: true

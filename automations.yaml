@@ -711,14 +711,16 @@
   triggers:
   - entity_id:
     - binary_sensor.seb_d1_motion
+    to:
+    - 'off'
+    trigger: state
+    from:
+    - 'on'
+    id: seb
     for:
       hours: 0
       minutes: 10
       seconds: 0
-    to: 'off'
-    trigger: state
-    from: 'on'
-    id: seb
   - entity_id:
     - binary_sensor.reu_d1_motion
     for:
@@ -744,10 +746,7 @@
         metadata: {}
         data: {}
         target:
-          entity_id:
-          - light.sebs_lamp
-          - light.sebs_ceiling
-          - light.sebs_floorlamp
+          area_id: 4b995d6687c94e4f8f83b0784cf367f2
     - conditions:
       - condition: trigger
         id:
@@ -757,9 +756,7 @@
         metadata: {}
         data: {}
         target:
-          entity_id:
-          - light.reubens_ceiling
-          - light.rname
+          area_id: 95dd572faf634c73a8de516c508ac206
   mode: single
 - id: '1592899929119'
   alias: 'Lights: Turn off all bedroom lights at 8am'
@@ -3074,21 +3071,19 @@
         entity_id: 8cbf964adee97b7aa253dbe942e02997
         domain: light
       button_top_left_double_press:
-      - service: light.turn_off
-        metadata: {}
+      - metadata: {}
         data: {}
         target:
           entity_id:
-          - light.sebs_ceiling
-          - light.sebs_lamp
-          - light.sebs_floorlamp
+          - light.sebs_bedroom_light_group
+        action: light.turn_off
       button_top_left_hold_in:
-      - service: light.turn_on
-        data:
+      - data:
           brightness_pct: 30
         target:
           device_id:
           - d06086fc62c3d9eb55cc76e0ae5de10a
+        action: light.turn_on
       button_top_right_single_press:
       - type: turn_on
         device_id: d06086fc62c3d9eb55cc76e0ae5de10a
@@ -3096,15 +3091,13 @@
         domain: light
         brightness_pct: 100
       button_top_right_double_press:
-      - service: light.turn_on
-        metadata: {}
+      - metadata: {}
         data:
           brightness_pct: 75
         target:
           entity_id:
-          - light.sebs_ceiling
-          - light.sebs_lamp
-          - light.sebs_floorlamp
+          - light.sebs_bedroom_light_group
+        action: light.turn_on
       button_top_right_hold_release: []
       button_top_right_hold_in:
       - type: turn_on
@@ -3122,19 +3115,17 @@
         entity_id: 11b037cbafc13a4e0d80af31407060b3
         domain: light
       button_bottom_left_double_press:
-      - service: light.turn_off
-        metadata: {}
+      - metadata: {}
         data: {}
         target:
           entity_id:
-          - light.sebs_ceiling
-          - light.sebs_lamp
-          - light.sebs_floorlamp
+          - light.sebs_bedroom_light_group
+        action: light.turn_off
       button_bottom_left_hold_in:
-      - service: media_player.volume_down
-        data: {}
+      - data: {}
         target:
           entity_id: media_player.seb_s_home
+        action: media_player.volume_down
       button_bottom_right_single_press:
       - type: turn_on
         device_id: 4fcff377266e9e7d5f9b7098401120b6
@@ -3145,18 +3136,39 @@
         entity_id: 11b037cbafc13a4e0d80af31407060b3
         domain: light
       button_bottom_right_double_press:
-      - service: light.turn_on
-        metadata: {}
+      - metadata: {}
         data:
           brightness_pct: 75
         target:
           entity_id:
-          - light.sebs_ceiling
-          - light.sebs_lamp
-          - light.sebs_floorlamp
+          - light.sebs_bedroom_light_group
+        action: light.turn_on
       button_bottom_right_hold_in: []
-      button_bottom_right_triple_press: []
+      button_bottom_right_triple_press:
+      - action: light.turn_on
+        metadata: {}
+        target:
+          entity_id: light.sebs_desk_light
+        data: {}
       button_bottom_right_hold_release:
+      button_bottom_left_triple_press:
+      - action: light.turn_off
+        metadata: {}
+        target:
+          entity_id: light.sebs_desk_light
+        data: {}
+      button_top_right_triple_press:
+      - action: light.turn_on
+        metadata: {}
+        target:
+          entity_id: light.sebs_desk_light
+        data: {}
+      button_top_left_triple_press:
+      - action: light.turn_off
+        metadata: {}
+        target:
+          entity_id: light.sebs_desk_light
+        data: {}
 - id: '1688981578290'
   alias: 'Lightswitch: Reu''s Room Opple'
   description: ''
